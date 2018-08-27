@@ -1,2 +1,2 @@
-# beol
+# BEOL
 Bernoulli-Euler OnLine
