@@ -8,7 +8,45 @@
   flex-shrink: 1;
 }
 
+.full-size {
+  height: 100%;
+  width: 100%;
+}
 
+.scroll-y-only {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
 
+.content {
+  padding: 48px;
+}
 
+// the logo is also the home button
+.app-logo {
+  height: 60px;
+  margin: 6px;
 
+  img {
+    height: 60px;
+  }
+}
+
+// optimize search-bar from @knora/search module
+.search-bar-elements {
+
+  border-bottom: 1px solid $primary;
+  position: relative;
+  top: 15px;
+
+  .search-panel {
+
+    &:hover {
+      box-shadow: none !important;
+    }
+
+    &.active {
+
+    }
+  }
+}

@@ -1,28 +1,41 @@
-<header class="main-header">
-    <mat-toolbar>
-        <!-- on the left: logo = home button -->
-        <div class="app-logo">
-            <a routerLink="/">
-                <img src="assets/images/beol-logo.png" />
-            </a>
-        </div>
+<div class="main-container scroll-y-only">
+    <!-- main header with logo and search panel
+            - this element has a fixed position
+            - it's displayed on each page
+    -->
+    <header class="main-header">
+        <mat-toolbar>
+            <!-- on the left: logo = home button -->
+            <div class="app-logo">
+                <a routerLink="/">
+                    <img src="assets/images/beol-logo.png" />
+                </a>
+            </div>
 
-        <div class="fill-remaining-space"></div>
+            <div class="fill-remaining-space"></div>
 
-        <!-- center: search bar -->
-        <kui-search [route]="'/search'"></kui-search>
+            <!-- center: search bar -->
+            <kui-search [route]="'/search'"></kui-search>
 
-        <div class="fill-remaining-space"></div>
+            <div class="fill-remaining-space"></div>
 
-        <!-- on the right: nothing? -->
+            <!-- on the right: nothing? -->
 
-    </mat-toolbar>
-</header>
+        </mat-toolbar>
+    </header>
 
-<div class="main-content scroll-y-only">
-    <router-outlet></router-outlet>
+    <!-- main router outlet for the content of each component,
+            defined in app.routing
+    -->
+    <div class="main-router">
+        <router-outlet></router-outlet>
+    </div>
+
+    <!-- main footer
+        - not yet implemented; but we can activate it,
+        if it's necessary and desired (but then it needs some styling changes in _layout.scss!)
+    -->
+    <footer>
+
+    </footer>
 </div>
-
-<footer>
-
-</footer>
