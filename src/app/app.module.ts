@@ -11,14 +11,25 @@ import { KuiSearchModule } from '@knora/search';
 // modules from @angular/material
 import { MaterialModule } from './material-module';
 
+// router module and app routing with all the path definitions
+// import { RouterModule } from '@angular/router';
+import { AppRouting } from './app.routing';
+
 // app components
 import { AppComponent } from './app.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
+import { SearchResultsComponent } from './search-results/search-results.component';
+import { ErrorComponent } from './error/error.component';
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        LandingPageComponent,
+        SearchResultsComponent,
+        ErrorComponent
     ],
     imports: [
+        AppRouting,
         BrowserModule,
         KuiCoreModule.forRoot({
             name: environment.name,

@@ -203,21 +203,27 @@
   dependencies:
     tslib "^1.9.0"
 
-"@knora/action@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/@knora/action/-/action-0.0.5.tgz#0b73594f9d1880d3da603738c50cdfecc6de78cb"
+"@knora/action@^0.0.9":
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/@knora/action/-/action-0.0.9.tgz#9bdb84311ca04f9996a88ae6d073c4987547f956"
   dependencies:
     tslib "^1.9.0"
 
-"@knora/core@^1.0.0-beta":
-  version "1.0.0-beta"
-  resolved "https://registry.yarnpkg.com/@knora/core/-/core-1.0.0-beta.tgz#49ba6619dc29b03674cb869fa6eddfe76ce8671f"
+"@knora/core@^1.0.0-beta.3":
+  version "1.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/@knora/core/-/core-1.0.0-beta.3.tgz#524ec33f6a34663ee9015886279a8a9fb85a3ae4"
   dependencies:
     tslib "^1.9.0"
 
-"@knora/search@^1.0.3-alpha":
-  version "1.0.3-alpha"
-  resolved "https://registry.yarnpkg.com/@knora/search/-/search-1.0.3-alpha.tgz#5fd5f71ea02db9150b168c1e1217c1e11f9e24a1"
+"@knora/search@^1.0.0-beta.2":
+  version "1.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@knora/search/-/search-1.0.0-beta.2.tgz#77476713f862b781220c70eede63c07a46d37623"
+  dependencies:
+    tslib "^1.9.0"
+
+"@knora/viewer@^0.0.1-alpha":
+  version "0.0.1-alpha"
+  resolved "https://registry.yarnpkg.com/@knora/viewer/-/viewer-0.0.1-alpha.tgz#3305bb6bd12dc6ca6bfaf8aa2aa9fa2502246670"
   dependencies:
     tslib "^1.9.0"
 
@@ -3304,6 +3310,16 @@ jasmine@2.8.0:
 jasminewd2@^2.1.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/jasminewd2/-/jasminewd2-2.2.0.tgz#e37cf0b17f199cce23bea71b2039395246b4ec4e"
+
+jdnconvertiblecalendar@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/jdnconvertiblecalendar/-/jdnconvertiblecalendar-0.0.2.tgz#4bfd8b220f9fd8bb105308e9f3181f7d927f3503"
+
+jdnconvertiblecalendardateadapter@^0.0.7:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/jdnconvertiblecalendardateadapter/-/jdnconvertiblecalendardateadapter-0.0.7.tgz#5e52b58c2fbf530701c2a5efcef0ca938a008381"
+  dependencies:
+    tslib "^1.9.0"
 
 js-base64@^2.1.8:
   version "2.4.8"

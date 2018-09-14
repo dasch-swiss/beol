@@ -1,0 +1,49 @@
+/*
+ *  Main header with app logo and search panel
+ */
+
+.main-header {
+  height: $header-height;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+
+  // toolbar inside of header
+  .mat-toolbar {
+    background: #fff;
+    height: $header-height;
+    padding: 0;
+
+    // the logo is also the home button
+    .app-logo {
+      height: 60px;
+      margin: 6px;
+
+      img {
+        height: 60px;
+      }
+    }
+
+    // optimize search-bar from @knora/search module
+    .search-bar-elements {
+
+      border-bottom: 1px solid $primary;
+      position: relative;
+      top: 15px;
+
+      .search-panel:hover {
+        box-shadow: none !important;
+      }
+    }
+
+  }
+}
+
+
+/*
+ * Main content with the first router outlet
+ */
+.main-content {
+  height: calc(100vh - #{$header-height});
+  margin-top: $header-height;
+}
