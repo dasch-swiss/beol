@@ -1,24 +1,58 @@
-<div *ngIf="!rerender">
+<div *ngIf="!rerender" class="content">
 
     <!-- show the number of results found in Knora -->
     <div *ngIf="numberOfAllResults != 0; else noResult">
         <h4>Number of results: {{numberOfAllResults}}</h4>
     </div>
 
-    <!-- show the result as a default list -->
-    <div *ngFor="let res of result">
-        <h3 mat-line>{{res.label}} ({{ontologyInfo?.getLabelForResourceClass(res.type)}})</h3>
-        <div mat-line *ngFor="let prop of res.properties | key">
-            <span>{{ontologyInfo?.getLabelForProperty(prop.key)}}</span>
-            <ul>
-                <li *ngFor="let val of prop.value | key">
-          <span [ngSwitch]="val.value.getClassName()">
-            <span *ngSwitchDefault="">{{val.value.getContent()}}</span>
-          </span>
-                </li>
-            </ul>
-        </div>
-    </div>
+    <!-- the following list will be moved to @knora/viewer views -->
+    <mat-accordion class="example-headers-align">
+        <mat-expansion-panel *ngFor="let res of result; let i = index;"
+                             [expanded]="step === i"
+                             (opened)="setStep(i)"
+                             hideToggle>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{res.label}}
+                </mat-panel-title>
+                <mat-panel-description>
+
+
+                    <!--<mat-icon>{{ontologyInfo?.getLabelForResourceClass(res.type) | lowercase}}</mat-icon>-->
+
+                    <mat-icon></mat-icon>
+                    {{ontologyInfo?.getLabelForResourceClass(res.type)}}
+
+                    <!--<mat-icon *ngIf="step !== i">account_circle</mat-icon>-->
+                    <!--<mat-icon *ngIf="step === i">close</mat-icon>-->
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <!-- content of the resource -->
+            <!-- this should be implemented from @knora/viewer object -->
+            <div mat-line *ngFor="let prop of res.properties | key">
+                <!--<span>{{ontologyInfo?.getLabelForProperty(prop.key)}}</span>-->
+                <ul>
+                    <li *ngFor="let val of prop.value | key">
+                        <div [ngSwitch]="val.value.getClassName()">
+
+                            <span *ngSwitchCase="KnoraConstants.ReadTextValueAsHtml"
+                                  [valueObject]="val.value" [mathJax]="val.value?.getContent()"
+                                  [ontologyInfo]="ontologyInfo" [bindEvents]="false"></span>
+
+                            <span *ngSwitchDefault="">{{val.value.getContent()}}</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <mat-action-row>
+                <button mat-button color="warn" *ngIf="!first" (click)="prevStep()">Previous</button>
+                <button mat-button color="primary" *ngIf="!last" (click)="nextStep()">Next</button>
+            </mat-action-row>
+        </mat-expansion-panel>
+
+    </mat-accordion>
 
     <!-- In case of 0 result -->
     <ng-template #noResult>

@@ -8,8 +8,9 @@ import { KuiCoreModule } from '@knora/core';
 import { KuiActionModule } from '@knora/action';
 import { KuiSearchModule } from '@knora/search';
 
-// modules from @angular/material
+// modules from @angular/material and @angular/flex-layout
 import { MaterialModule } from './material-module';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 // router module and app routing with all the path definitions
 // import { RouterModule } from '@angular/router';
@@ -31,6 +32,7 @@ import { ErrorComponent } from './error/error.component';
     imports: [
         AppRouting,
         BrowserModule,
+        FlexLayoutModule,
         KuiCoreModule.forRoot({
             name: environment.name,
             api: environment.api,

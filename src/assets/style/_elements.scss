@@ -28,10 +28,10 @@
 
 // the logo is also the home button
 .app-logo {
-  height: 60px;
+  height: 84px;
 
   img {
-    height: 60px;
+    height: 100%;
   }
 }
 
@@ -40,7 +40,7 @@
 
   border-bottom: 1px solid $primary;
   position: relative;
-  top: 10px;
+  top: 24px;
 
   .search-panel {
 

@@ -34,6 +34,8 @@ const jsonld = require('jsonld');
 })
 export class SearchResultsComponent implements OnInit {
 
+    KnoraConstants = KnoraConstants;
+
     result: ReadResource[] = []; // the results of a search query
     ontologyInfo: OntologyInformation; // ontology information about resource classes and properties present in `result`
     numberOfAllResults: number; // total number of results (count query)
@@ -44,6 +46,9 @@ export class SearchResultsComponent implements OnInit {
     errorMessage: any = undefined;
 
     offset = 0;
+
+    step: number = undefined;
+    panelOpenState = false;
 
     list: ListData = <ListData> {
         title: 'Results: ',
@@ -214,4 +219,21 @@ export class SearchResultsComponent implements OnInit {
 
     }
 
+    /* the following methods will be moved to @knora/viewer views */
+
+    setStep(index: number) {
+        this.step = index;
+    }
+
+    resetStep() {
+        this.step = undefined;
+    }
+
+    nextStep() {
+        this.step++;
+    }
+
+    prevStep() {
+        this.step--;
+    }
 }
