@@ -3,8 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+    name: 'dev',
     production: false,
-    name: 'BEOL | Bernoulli-Euler OnLine',
+    // name: 'BEOL | Bernoulli-Euler OnLine',
     api: 'http://0.0.0.0:3333',
     app: 'http://localhost:4200',
     media: 'http://localhost:1024'
