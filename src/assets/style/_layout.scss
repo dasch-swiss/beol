@@ -15,7 +15,9 @@ body {
     position: fixed;
     top: 0;
     width: calc(100vw - 15px);
-    // border-bottom: 2px solid $primary;
+    background: #fff;
+    padding-bottom: 48px;
+//    border-bottom: 2px solid $primary;
 
     .mat-toolbar {
       background: #fff;
@@ -27,7 +29,7 @@ body {
 
   // Main router for almost all content
   .main-router {
-    margin-top: $header-height;
+    margin-top: calc(#{$header-height} + 48px);
   }
 }
 
