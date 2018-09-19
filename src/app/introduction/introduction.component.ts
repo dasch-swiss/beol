@@ -17,24 +17,22 @@ export class IntroductionComponent implements OnInit {
     project: string;
 
     constructor(private _route: ActivatedRoute,
-                private _searchService: SearchService,
-                private _beol: BeolService) {
+        private _searchService: SearchService,
+        private _beol: BeolService) {
     }
 
     ngOnInit() {
         this._route.params.subscribe((params: Params) => {
             this.project = params['project'];
-            console.log(this.project);
+            // console.log('project', this.project);
             this.id = params['id'];
-            console.log(this.id);
+            // console.log('id ', this.id);
         });
     }
 
+    searchForBook(isbn: string, id: string) {
 
-    // TODO: replace sectionTitle with id
-    searchForBook(isbn: string, sectionTitle: string) {
-
-        const gravsearch: string = this._beol.searchForBook(isbn, sectionTitle);
+        const gravsearch: string = this._beol.searchForBook(isbn, id);
 
         this._searchService.doExtendedSearch(gravsearch).subscribe(
             (result: ApiServiceResult) => {
@@ -48,6 +46,8 @@ export class IntroductionComponent implements OnInit {
                     const resourceSeq: ReadResourcesSequence = ConvertJSONLD.createReadResourcesSequenceFromJsonLD(compacted);
 
                     if (resourceSeq.resources.length === 1) {
+
+                        console.log('we got a resource');
 
                         // const config: MatDialogConfig = ObjectDialogComponent.createConfiguration(resourceSeq.resources[0].id);
 

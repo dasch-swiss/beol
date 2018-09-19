@@ -17,52 +17,52 @@ export class BeolService {
      * @param {string} sectionTitle the title to display describing the book.
      * @returns {string} Gravsearch query.
      */
-    searchForBook(isbn: string, sectionTitle: string): string {
+    searchForBook(isbn: string, id: string): string {
 
         const bookTemplate = `
     PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
     PREFIX biblio: <${AppConfig.settings.externalApiURL}/ontology/0802/biblio/simple/v2#>
     PREFIX beol: <${AppConfig.settings.externalApiURL}/ontology/0801/beol/simple/v2#>
-      
+
     CONSTRUCT {
-        
+
         ?introSection knora-api:isMainResource true .
-            
-    } WHERE { 
-    
+
+    } WHERE {
+
         ?book a knora-api:Resource .
-        
+
         ?book a biblio:Book .
-       
+
         ?book biblio:bookHasISBN ?propVal0 .
         biblio:bookHasISBN knora-api:objectType <http://www.w3.org/2001/XMLSchema#string> .
         ?propVal0 a <http://www.w3.org/2001/XMLSchema#string> .
-                
+
         FILTER(?propVal0 = "${isbn}"^^<http://www.w3.org/2001/XMLSchema#string>)
-        
+
         ?book biblio:bookHasContent ?content .
-        
+
         biblio:bookHasContent knora-api:objectType knora-api:Resource .
         ?content a knora-aource .
-        
+
         ?content biblio:hasIntroduction ?intro .
-        
+
         biblio:hasIntroduction knora-api:objectType knora-api:Resource .
         ?intro a knora-api:Resource .
-        
+
         ?intro beol:hasSection ?introSection .
         beol:hasSection knora-api:objectType knora-api:Resource .
         ?introSection a knora-api:Resource .
-        
-        ?introSection beol:sectionHasTitle ?sectionTitle .
-        
-        beol:sectionHasTitle knora-api:objectType xsd:string .
-        ?sectionTitle a xsd:string .
-        
-        FILTER(?sectionTitle = "${sectionTitle}")
-             
+
+        ?introBeolId beol:beolIDs ?sectionId .
+
+        beol:beolIDs knora-api:objectType xsd:string .
+        ?sectionId a xsd:string .
+
+        FILTER(?sectionId = "${id}")
+
     }
-    
+
     OFFSET 0
         `;
 
@@ -89,23 +89,23 @@ export class BeolService {
 
             language = `
     ?letter beol:letterHasTranslation ?translation .
-    
+
     beol:letterHasTranslation knora-api:objectType knora-api:Resource .
     ?translation a knora-api:Resource .
-    
+
             `;
         } else {
             // translation: must not have the property: beol:letterHasTranslation
 
             language = `
-    
+
     FILTER NOT EXISTS {
         ?letter beol:letterHasTranslation ?translation .
     }
-    
+
     beol:letterHasTranslation knora-api:objectType knora-api:Resource .
     ?translation a knora-api:Resource .
-    
+
             `;
 
         }
@@ -113,12 +113,12 @@ export class BeolService {
         const correspondenceTemplate = `
     PREFIX beol: <${AppConfig.settings.externalApiURL}/ontology/0801/beol/simple/v2#>
     PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
-    
+
     CONSTRUCT {
         ?letter knora-api:isMainResource true .
-        
+
         ?letter beol:creationDate ?date .
-    
+
         ?letter ?linkingProp1  ?person1 .
 
         ?letter ?linkingProp2  ?person2 .
@@ -126,42 +126,42 @@ export class BeolService {
     } WHERE {
         ?letter a knora-api:Resource .
         ?letter a beol:letter .
-        
+
         ${language}
-        
+
         ?letter beol:creationDate ?date .
-        
+
         beol:creationDate knora-api:objectType knora-api:Date .
         ?date a knora-api:Date .
-    
+
         ?letter ?linkingProp1  ?person1 .
-        
+
         ?linkingProp1 knora-api:objectType knora-api:Resource .
         FILTER(?linkingProp1 = beol:hasAuthor || ?linkingProp1 = beol:hasRecipient )
-        
+
         ?person1 a beol:person .
         ?person1 a knora-api:Resource .
-        
+
         ?person1 beol:hasIAFIdentifier ?gnd1 .
         FILTER(?gnd1 = "${gnd1}")
-    
+
         ?gnd1 a xsd:string .
 
         ?letter ?linkingProp2 ?person2 .
         ?linkingProp2 knora-api:objectType knora-api:Resource .
-    
+
         FILTER(?linkingProp2 = beol:hasAuthor || ?linkingProp2 = beol:hasRecipient )
-    
+
         ?person2 a beol:person .
         ?person2 a knora-api:Resource .
-        
+
         ?person2 beol:hasIAFIdentifier ?gnd2 .
         FILTER(?gnd2 = "${gnd2}")
-        
+
         ?gnd2 a xsd:string .
-    
+
         beol:hasIAFIdentifier knora-api:objectType xsd:string .
-        
+
     } ORDER BY ?date
 `;
 
@@ -171,7 +171,7 @@ export class BeolService {
         `;
 
         // function that generates the same Gravsearch query with the given offset
-        let generateGravsearchWithCustomOffset = (localOffset: number): string => {
+        const generateGravsearchWithCustomOffset = (localOffset: number): string => {
             const offsetCustomTemplate = `
             OFFSET ${localOffset}
             `;
@@ -198,28 +198,28 @@ export class BeolService {
      */
     searchForLetterFromLEOO(repertoriumNumber: string): string {
 
-        const letterByNumberTemplate: string = `
+        const letterByNumberTemplate = `
         PREFIX beol: <${AppConfig.settings.externalApiURL}/ontology/0801/beol/simple/v2#>
         PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>  
         CONSTRUCT {
-        
+
             ?letter knora-api:isMainResource true .
-            
-        
-        } WHERE { 
-        
+
+
+        } WHERE {
+
             ?letter a knora-api:Resource .
-            
+
             ?letter a beol:letter .
-            
+
             ?letter beol:letterHasRepertoriumNumber ?letterNumber .
             beol:letterHasRepertoriumNumber knora-api:objectType <http://www.w3.org/2001/XMLSchema#string> .
             ?letterNumber a <http://www.w3.org/2001/XMLSchema#string> .
-                    
+
             FILTER(?letterNumber = "${repertoriumNumber}"^^<http://www.w3.org/2001/XMLSchema#string>)
-               
+
         }
-        
+
         OFFSET 0
         `;
 
