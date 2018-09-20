@@ -72,6 +72,7 @@ export class BeolService {
 
     }
 
+
     /**
      * Given the ISBN, returns the Gravsearch to search for the book.
      *
@@ -134,13 +135,14 @@ export class BeolService {
 
     }
 
+
     /**
      * Creates the Gravsearch needed for the search for the correspodence between two persons, ordered by date.
      *
-     * @param {string} gnd1 the GND/IAF identifier for the first correspondent.
-     * @param {string} gnd2 the GND/IAF identifier for the second correspondent.
+     * @param gnd1 the GND/IAF identifier for the first correspondent.
+     * @param gnd2 the GND/IAF identifier for the second correspondent.
      * @param noTranslations indicates if the letter is in original language (not a translation).
-     * @param {number} offset the offset to be used.
+     * @param offset the offset to be used.
      */
     searchForCorrespondence(gnd1: string, gnd2: string, noTranslations: boolean = false, offset: number = 0): string {
 
@@ -251,12 +253,13 @@ export class BeolService {
         return correspondenceTemplate + offsetTemplate;
     }
 
+
     /**
      * Given the repertorium number of a letter from LEOO, searches for that letter.
      *
-     * @param {string} repertoriumNumber the repertorium number to search for.
-     * @param {boolean} originalLanguage indicates if the original language or the translation should be searched for.
-     * @returns {string} the Gravsearch query.
+     * @param repertoriumNumber the repertorium number to search for.
+     * @param originalLanguage indicates if the original language or the translation should be searched for.
+     * @returns the Gravsearch query.
      */
     searchForLetterFromLEOO(repertoriumNumber: string): string {
 
