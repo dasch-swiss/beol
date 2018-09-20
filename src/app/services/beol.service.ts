@@ -66,25 +66,21 @@ export class BeolService {
     OFFSET 0
         `;
 
-        // console.log(bookTemplate);
-
         return bookTemplate;
 
     }
 
 
     /**
-     * Given the ISBN, returns the Gravsearch to search for the book.
+     * Given the ID, returns the Gravsearch to search for the book's introduction.
      *
-     * @param isbn the book's ISBN.
-     * @param id the id to display describing the book.
+     * @param id the id to display describing the introduction.
      * @returns Gravsearch query.
      */
-    searchForBookById(isbn: string, id: string): string {
+    searchForBookById(id: string): string {
 
         const bookTemplate = `
     PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
-    PREFIX biblio: <${AppConfig.settings.externalApiURL}/ontology/0802/biblio/simple/v2#>
     PREFIX beol: <${AppConfig.settings.externalApiURL}/ontology/0801/beol/simple/v2#>
 
     CONSTRUCT {
@@ -93,30 +89,8 @@ export class BeolService {
 
     } WHERE {
 
-        ?book a knora-api:Resource .
-
-        ?book a biblio:Book .
-
-        ?book biblio:bookHasISBN ?propVal0 .
-        biblio:bookHasISBN knora-api:objectType <http://www.w3.org/2001/XMLSchema#string> .
-        ?propVal0 a <http://www.w3.org/2001/XMLSchema#string> .
-
-        FILTER(?propVal0 = "${isbn}"^^<http://www.w3.org/2001/XMLSchema#string>)
-
-        ?book biblio:bookHasContent ?content .
-
-        biblio:bookHasContent knora-api:objectType knora-api:Resource .
-        ?content a knora-api:Resource .
-
-        ?content biblio:hasIntroduction ?intro .
-
-        biblio:hasIntroduction knora-api:objectType knora-api:Resource .
-        ?intro a knora-api:Resource .
-
-        ?intro beol:hasSection ?introSection .
-        beol:hasSection knora-api:objectType knora-api:Resource .
-        ?introSection a knora-api:Resource .
-
+        ?introSection a beol:section .
+      	?introSection a knora-api:Resource .
         ?introSection beol:beolIDs ?sectionId .
 
         beol:beolIDs knora-api:objectType xsd:string .
@@ -128,8 +102,6 @@ export class BeolService {
 
     OFFSET 0
         `;
-
-        // console.log(bookTemplate);
 
         return bookTemplate;
 
