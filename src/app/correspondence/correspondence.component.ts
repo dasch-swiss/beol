@@ -2,6 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import { BeolService } from '../services/beol.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
+/**
+ * Represents a correspondent.
+ */
+class Correspondent {
+
+  /**
+   * Represents a person that took part in a correspondence.
+   *
+   * @param {string} name the name of the person.
+   * @param {string} gnd the GND/IAF identifier of the person.
+   */
+  constructor(readonly name: string, readonly gnd: string) {
+  }
+}
+
 @Component({
   selector: 'app-correspondence',
   templateUrl: './correspondence.component.html',
@@ -9,8 +24,11 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 })
 export class CorrespondenceComponent implements OnInit {
 
-  gnd1: string;
-  gnd2: string;
+  author: string;
+  recipient: string;
+  Christian_Goldbach = new Correspondent('Christian Goldbach', '(DE-588)118696149');
+  Leonhard_Euler = new Correspondent('Leonhard Euler', '(DE-588)118531379');
+  Johann_Albrecht_Euler = new Correspondent('Johann Albrecht Euler', '(DE-588)116610832');
 
   constructor(
     private _router: Router,
@@ -19,19 +37,19 @@ export class CorrespondenceComponent implements OnInit {
 
   ngOnInit() {
     this._route.params.subscribe((params: Params) => {
-      this.gnd1 = params['gnd1'];
-      console.log(this.gnd1);
-      this.gnd2 = params['gnd2'];
-      console.log(this.gnd2);
+      this.author = params['author'];
+      console.log('author', this.author);
+      this.recipient = params['recipient'];
+      console.log('recipient', this.recipient);
     });
   }
 
   /**
     * Generate Gravsearch query to search for the correspondence between two persons.
     *
-    * @param {string} gnd1 GND of the first correspondent.
-    * @param {string} gnd2 GND of the second correspondent.
-    * @param {boolean} noTranslations indicates if translations should be excluded.
+    * @param gnd1 GND of the first correspondent.
+    * @param gnd2 GND of the second correspondent.
+    * @param noTranslations indicates if translations should be excluded.
     */
   searchForCorrespondence(gnd1: string, gnd2: string, noTranslations: boolean = false) {
 
@@ -43,7 +61,7 @@ export class CorrespondenceComponent implements OnInit {
   /**
    * Show a correspondence between two persons.
    *
-   * @param {string} gravsearch the Gravsearch query to be executed.
+   * @param gravsearch the Gravsearch query to be executed.
    */
   private submitQuery(gravsearch: string) {
 
