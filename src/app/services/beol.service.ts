@@ -13,11 +13,11 @@ export class BeolService {
     /**
      * Given the ISBN, returns the Gravsearch to search for the book.
      *
-     * @param {string} isbn the book's ISBN.
-     * @param {string} sectionTitle the title to display describing the book.
-     * @returns {string} Gravsearch query.
+     * @param isbn the book's ISBN.
+     * @param sectionTitle the title to display describing the book.
+     * @returns Gravsearch query.
      */
-    searchForBook(isbn: string, id: string): string {
+    searchForBookByTitle(isbn: string, sectionTitle: string): string {
 
         const bookTemplate = `
     PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
@@ -43,7 +43,7 @@ export class BeolService {
         ?book biblio:bookHasContent ?content .
 
         biblio:bookHasContent knora-api:objectType knora-api:Resource .
-        ?content a knora-aource .
+        ?content a knora-api:Resource .
 
         ?content biblio:hasIntroduction ?intro .
 
@@ -54,7 +54,69 @@ export class BeolService {
         beol:hasSection knora-api:objectType knora-api:Resource .
         ?introSection a knora-api:Resource .
 
-        ?introBeolId beol:beolIDs ?sectionId .
+        ?introSection beol:sectionHasTitle ?sectionTitle .
+
+        beol:sectionHasTitle knora-api:objectType xsd:string .
+        ?sectionTitle a xsd:string .
+
+        FILTER(?sectionTitle = "${sectionTitle}")
+
+    }
+
+    OFFSET 0
+        `;
+
+        // console.log(bookTemplate);
+
+        return bookTemplate;
+
+    }
+
+    /**
+     * Given the ISBN, returns the Gravsearch to search for the book.
+     *
+     * @param isbn the book's ISBN.
+     * @param id the id to display describing the book.
+     * @returns Gravsearch query.
+     */
+    searchForBookById(isbn: string, id: string): string {
+
+        const bookTemplate = `
+    PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
+    PREFIX biblio: <${AppConfig.settings.externalApiURL}/ontology/0802/biblio/simple/v2#>
+    PREFIX beol: <${AppConfig.settings.externalApiURL}/ontology/0801/beol/simple/v2#>
+
+    CONSTRUCT {
+
+        ?introSection knora-api:isMainResource true .
+
+    } WHERE {
+
+        ?book a knora-api:Resource .
+
+        ?book a biblio:Book .
+
+        ?book biblio:bookHasISBN ?propVal0 .
+        biblio:bookHasISBN knora-api:objectType <http://www.w3.org/2001/XMLSchema#string> .
+        ?propVal0 a <http://www.w3.org/2001/XMLSchema#string> .
+
+        FILTER(?propVal0 = "${isbn}"^^<http://www.w3.org/2001/XMLSchema#string>)
+
+        ?book biblio:bookHasContent ?content .
+
+        biblio:bookHasContent knora-api:objectType knora-api:Resource .
+        ?content a knora-api:Resource .
+
+        ?content biblio:hasIntroduction ?intro .
+
+        biblio:hasIntroduction knora-api:objectType knora-api:Resource .
+        ?intro a knora-api:Resource .
+
+        ?intro beol:hasSection ?introSection .
+        beol:hasSection knora-api:objectType knora-api:Resource .
+        ?introSection a knora-api:Resource .
+
+        ?introSection beol:beolIDs ?sectionId .
 
         beol:beolIDs knora-api:objectType xsd:string .
         ?sectionId a xsd:string .
