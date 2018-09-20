@@ -20,41 +20,45 @@
             <h3 mat-card-subtitle>LEOO</h3>
             <h2 mat-card-title>Leonhardi Euleri Opera Omnia</h2>
 
-            <b>Introductions</b>
-            <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
-                <div fxFlex="22%" routerLink="introduction/leoo/goldbach_introduction_1">
-                    <mat-card class="intro-card">
-                        Historical and biographical setting
-                    </mat-card>
-                </div>
-                <div fxFlex="22%" routerLink="introduction/leoo/goldbach_introduction_2">
-                    <mat-card class="intro-card">
-                        Main subjects of the correspondence
-                    </mat-card>
-                </div>
-                <div fxFlex="22%" routerLink="introduction/leoo/goldbach_introduction_3">
-                    <mat-card class="intro-card">
-                        Editing the Euler-Goldbach correspondence
-                    </mat-card>
-                </div>
-                <div fxFlex="22%" routerLink="introduction/leoo/goldbach_abbreviations">
-                    <mat-card class="intro-card">
-                        List of Abbreviations
-                    </mat-card>
+            <div class="leoo-section">
+                <b>Introductions</b>
+                <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%">
+                    <div fxFlex="25%" routerLink="introduction/leoo/goldbach_introduction_1">
+                        <mat-card class="intro-card">
+                            Historical and biographical setting
+                        </mat-card>
+                    </div>
+                    <div fxFlex="25%" routerLink="introduction/leoo/goldbach_introduction_2">
+                        <mat-card class="intro-card">
+                            Main subjects of the correspondence
+                        </mat-card>
+                    </div>
+                    <div fxFlex="25%" routerLink="introduction/leoo/goldbach_introduction_3">
+                        <mat-card class="intro-card">
+                            Editing the Euler-Goldbach correspondence
+                        </mat-card>
+                    </div>
+                    <div fxFlex="25%" routerLink="introduction/leoo/goldbach_abbreviations">
+                        <mat-card class="intro-card">
+                            List of Abbreviations
+                        </mat-card>
+                    </div>
                 </div>
             </div>
 
-            <b>Correspondences</b>
-            <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
-                <div fxFlex="22%">
-                    <mat-card class="intro-card">
-                        Leonhard Euler - Christian Goldbach
-                    </mat-card>
-                </div>
-                <div fxFlex="22%">
-                    <mat-card class="intro-card">
-                        Johann Albrecht Euler - Christian Goldbach
-                    </mat-card>
+            <div class="leoo-section">
+                <b>Correspondences</b>
+                <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%">
+                    <div fxFlex="25%">
+                        <mat-card class="intro-card" routerLink="correspondence/leoo/Leonhard_Euler/Christian_Goldbach">
+                            Leonhard Euler - Christian Goldbach
+                        </mat-card>
+                    </div>
+                    <div fxFlex="25%">
+                        <mat-card class="intro-card" routerLink="correspondence/leoo/Johann_Albrecht_Euler/Christian_Goldbach">
+                            Johann Albrecht Euler - Christian Goldbach
+                        </mat-card>
+                    </div>
                 </div>
             </div>
         </section>
