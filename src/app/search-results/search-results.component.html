@@ -7,10 +7,7 @@
 
     <!-- the following list will be moved to @knora/viewer views -->
     <mat-accordion class="example-headers-align">
-        <mat-expansion-panel *ngFor="let res of result; let i = index;"
-                             [expanded]="step === i"
-                             (opened)="setStep(i)"
-                             hideToggle>
+        <mat-expansion-panel *ngFor="let res of result; let i = index;" [expanded]="step === i" (opened)="setStep(i)" hideToggle>
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     {{res.label}}
@@ -36,11 +33,9 @@
                     <li *ngFor="let val of prop.value | key">
                         <div [ngSwitch]="val.value.getClassName()">
 
-                            <span *ngSwitchCase="KnoraConstants.ReadTextValueAsHtml"
-                                  [valueObject]="val.value" [mathJax]="val.value?.getContent()"
-                                  [ontologyInfo]="ontologyInfo" [bindEvents]="false"></span>
+                            <span *ngSwitchCase="KnoraConstants.ReadTextValueAsHtml" [valueObject]="val.value" [mathJax]="val.value?.getContent()" [ontologyInfo]="ontologyInfo" [bindEvents]="false"></span>
 
-                            <span *ngSwitchDefault="">{{val.value.getContent()}}</span>
+                            <span *ngSwitchDefault="" (click)="goToViewer(val.value.id)">{{val.value.getContent()}}</span>
                         </div>
                     </li>
                 </ul>

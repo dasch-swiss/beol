@@ -8,6 +8,7 @@ import { LetterComponent } from './resource/letter/letter.component';
 import { PersonComponent } from './resource/person/person.component';
 import { ResourceComponent } from './resource/resource.component';
 import { CorrespondenceComponent } from './correspondence/correspondence.component';
+import { SearchViewerComponent } from './search-results/search-viewer/search-viewer.component';
 
 
 const appRoutes: Routes = [
@@ -31,6 +32,10 @@ const appRoutes: Routes = [
                 component: SearchResultsComponent
             }
         ]
+    },
+    {
+        path: 'viewer/:id',
+        component: SearchViewerComponent
     },
     {
         path: 'resource',

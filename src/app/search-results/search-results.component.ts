@@ -1,6 +1,6 @@
 import { Component, OnInit, } from '@angular/core';
 
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
     ApiServiceError,
     ApiServiceResult,
@@ -50,17 +50,20 @@ export class SearchResultsComponent implements OnInit {
     step: number = undefined;
     panelOpenState = false;
 
-    list: ListData = <ListData> {
+    list: ListData = <ListData>{
         title: 'Results: ',
         content: 'resource',
         restrictedBy: ''
     };
 
+
+
     constructor(
         private _route: ActivatedRoute,
         private _searchService: SearchService,
         private _cacheService: OntologyCacheService,
-        private _searchParamsService: SearchParamsService) {
+        private _searchParamsService: SearchParamsService,
+        private _router: Router) {
     }
 
     ngOnInit() {
@@ -90,7 +93,7 @@ export class SearchResultsComponent implements OnInit {
                     .subscribe(
                         this.showNumberOfAllResults,
                         (error: ApiServiceError) => {
-                            this.errorMessage = <any> error;
+                            this.errorMessage = <any>error;
                             // console.log('numberOfAllResults', this.numberOfAllResults);
                         }
                     );
@@ -101,9 +104,9 @@ export class SearchResultsComponent implements OnInit {
                 .subscribe(
                     this.processSearchResults, // function pointer
                     (error: ApiServiceError) => {
-                        this.errorMessage = <any> error;
+                        this.errorMessage = <any>error;
                     },
-                );
+            );
 
             // EXTENDED SEARCH
         } else if (this.list.searchMode === 'extended') {
@@ -113,7 +116,7 @@ export class SearchResultsComponent implements OnInit {
                     .subscribe(
                         this.showNumberOfAllResults,
                         (error: ApiServiceError) => {
-                            this.errorMessage = <any> error;
+                            this.errorMessage = <any>error;
                         }
                     );
             }
@@ -125,7 +128,7 @@ export class SearchResultsComponent implements OnInit {
                             .subscribe(
                                 this.processSearchResults, // function pointer
                                 (error: ApiServiceError) => {
-                                    this.errorMessage = <any> error;
+                                    this.errorMessage = <any>error;
                                 });
                     } else {
                         // generate new GravSearch
@@ -134,7 +137,7 @@ export class SearchResultsComponent implements OnInit {
                             .subscribe(
                                 this.processSearchResults, // function pointer
                                 (error: ApiServiceError) => {
-                                    this.errorMessage = <any> error;
+                                    this.errorMessage = <any>error;
                                 }
                             );
                     }
@@ -204,7 +207,6 @@ export class SearchResultsComponent implements OnInit {
                     }
                     // append results to search results
                     this.result = this.result.concat(resources.resources);
-
                 },
                 (err) => {
 
@@ -235,5 +237,14 @@ export class SearchResultsComponent implements OnInit {
 
     prevStep() {
         this.step--;
+    }
+
+    /**
+     * Navigate to the viewer that displays the resource's content
+     * @param iri
+     */
+    goToViewer(iri: string) {
+        this._router.navigateByUrl('/viewer/' + encodeURIComponent(iri));
+        console.log('encoded iri: ', encodeURIComponent(iri) + 'iri: ', iri);
     }
 }
