@@ -1,3 +1,15 @@
-<p>
-  correspondence works!
-</p>
+<div class="full-size scroll-y-only">
+  <div class="content">
+
+    <div *ngFor="let book of leoo">
+      <div *ngFor="let corrGroup of book.correspondences">
+        <h2>Correspondences {{corrGroup.description}} </h2>
+        <div *ngFor="let corr of corrGroup.correspondences" (click)="searchForCorrespondence(corr.correspondent1.gnd, corr.correspondent2.gnd, corr.noTranslation)">
+          > {{corr.description}}
+        </div>
+        <br>
+      </div>
+    </div>
+
+  </div>
+</div>

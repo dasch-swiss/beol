@@ -20,7 +20,7 @@ const appRoutes: Routes = [
         component: IntroductionComponent,
     },
     {
-        path: 'correspondence/:project/:author/:recipient',
+        path: 'correspondence/:project',
         component: CorrespondenceComponent,
     },
     {
