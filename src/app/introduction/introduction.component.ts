@@ -14,7 +14,7 @@ import {
     StillImageRepresentation
 } from '@knora/core';
 import { BeolService } from '../services/beol.service';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 declare let require: any; // http://stackoverflow.com/questions/34730010/angular2-5-minute-install-bug-require-is-not-defined
 let jsonld = require('jsonld');
@@ -36,6 +36,7 @@ export class IntroductionComponent implements OnInit {
     KnoraConstants = KnoraConstants;
 
     constructor(private _route: ActivatedRoute,
+        private _router: Router,
         private _searchService: SearchService,
         private _beol: BeolService,
         private _resourceService: ResourceService,
@@ -44,23 +45,18 @@ export class IntroductionComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.isbn = '978-3-0348-0880-4';
-        /* this.iri = 'http://rdfh.ch/0801/9rPI9QnWSsGsDeGa_5v5Iw'; */
         this._route.params.subscribe((params: Params) => {
             this.project = params['project'];
             // console.log('project', this.project);
             this.id = params['id'];
             // console.log('id ', this.id);
         });
-
-        this.searchForBook(this.isbn, this.id);
-
-        /* this.requestResource(this.iri); */
+        this.searchForBook(this.id);
     }
 
-    searchForBook(isbn: string, id: string): void {
+    searchForBook(id: string): void {
 
-        const gravsearch: string = this._beol.searchForBookById(isbn, id);
+        const gravsearch: string = this._beol.searchForBookById(id);
 
         this._searchService.doExtendedSearch(gravsearch).subscribe(
             (result: ApiServiceResult) => {
@@ -72,10 +68,12 @@ export class IntroductionComponent implements OnInit {
                 promise.then((compacted) => {
 
                     const resourceSeq: ReadResourcesSequence = ConvertJSONLD.createReadResourcesSequenceFromJsonLD(compacted);
-
+                    // console.log('resourceSeq', resourceSeq);
                     if (resourceSeq.resources.length === 1) {
-                        console.log('we got a resource sequence ', resourceSeq.resources);
+                        // console.log('we got a resource sequence ', resourceSeq.resources);
                         this.requestResource(resourceSeq.resources[0].id);
+                    } else {
+                        console.log('We got 0 or more than 1 resource.');
                     }
 
                 }, function (err) {
@@ -97,6 +95,7 @@ export class IntroductionComponent implements OnInit {
         this._resourceService.getResource(iri)
             .subscribe(
                 (result: ApiServiceResult) => {
+                    console.log('IRI : ', iri);
                     const promises = jsonld.promises;
                     // compact JSON-LD using an empty context: expands all Iris
                     const promise = promises.compact(result.body, {});
@@ -124,9 +123,9 @@ export class IntroductionComponent implements OnInit {
                                     // ResourceObjectComponent.collectImagesAndRegionsForResource(resourceSeq.resources[0]);
 
                                     this.resource = resourceSeq.resources[0];
-                                    console.log('resource properties: ', this.resource.properties);
+                                    // console.log('resource properties: ', resourceSeq.resources[0].properties);
 
-                                    // this.requestIncomingResources();
+                                    this.getIncomingLinks(0);
                                 },
                                 (err) => {
 
@@ -153,5 +152,55 @@ export class IntroductionComponent implements OnInit {
                 }
             );
     }
+
+    /**
+     * Get resources pointing to [[this.resource]] with properties other than knora-api:isPartOf and knora-api:isRegionOf.
+     *
+     * @param offset the offset to be used (needed for paging). First request uses an offset of 0.
+     * @param callback function to be called when new images have been loaded from the server. 
+     * It takes the number of images returned as an argument.
+     */
+    private getIncomingLinks(offset: number, callback?: (numberOfResources: number) => void): void {
+
+        this._incomingService.getIncomingLinksForResource(this.resource.id, offset).subscribe(
+            (result: ApiServiceResult) => {
+                const promise = jsonld.promises.compact(result.body, {});
+                promise.then((compacted) => {
+                    const incomingResources: ReadResourcesSequence = ConvertJSONLD.createReadResourcesSequenceFromJsonLD(compacted);
+
+                    // get resource class Iris from response
+                    const resourceClassIris: string[] = ConvertJSONLD.getResourceClassesFromJsonLD(compacted);
+
+                    // request ontology information about resource class Iris (properties are implied)
+                    this._cacheService.getResourceClassDefinitions(resourceClassIris).subscribe(
+                        (resourceClassInfos: OntologyInformation) => {
+                            // update ontology information
+                            this.ontologyInfo.updateOntologyInformation(resourceClassInfos);
+
+                            // Append elements incomingResources to this.resource.incomingLinks
+                            Array.prototype.push.apply(this.resource.incomingLinks, incomingResources.resources);
+
+                            // if callback is given, execute function with the amount of incoming resources as the parameter
+                            if (callback !== undefined) { callback(incomingResources.resources.length); }
+
+                        },
+                        (err) => {
+
+                            console.log('cache request failed: ' + err);
+                        });
+                },
+                    function (err) {
+                        console.log('JSONLD of regions request could not be expanded:' + err);
+                    });
+            },
+            (error: ApiServiceError) => {
+                console.error(error);
+                /* this.errorMessage = <any>error;
+                this.isLoading = false; */
+            }
+        );
+    }
+
+
 
 }
