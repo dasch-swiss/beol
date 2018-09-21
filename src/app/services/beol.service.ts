@@ -21,7 +21,7 @@ export class BeolService {
 
         const bookTemplate = `
     PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
-    PREFIX biblio: <${AppConfig.settings.externalApiURL}/ontology/0802/biblio/simple/v2#>
+    PREFIX biblio: <${AppConfig.settings.externalApiURL}/ontology/0801/biblio/simple/v2#>
     PREFIX beol: <${AppConfig.settings.externalApiURL}/ontology/0801/beol/simple/v2#>
 
     CONSTRUCT {
