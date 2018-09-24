@@ -19,6 +19,7 @@ const appRoutes: Routes = [
     {
         path: 'introduction/:project/:id',
         component: IntroductionComponent,
+        runGuardsAndResolvers: 'paramsChange'
     },
     {
         path: 'correspondence/:project',
@@ -58,7 +59,7 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(appRoutes)],
+    imports: [RouterModule.forRoot(appRoutes, { onSameUrlNavigation: 'reload' })],
     exports: [RouterModule]
 })
 

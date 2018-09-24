@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
     ApiServiceResult,
     ConvertJSONLD,
@@ -14,7 +14,7 @@ import {
     StillImageRepresentation
 } from '@knora/core';
 import { BeolService } from '../services/beol.service';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router, NavigationEnd } from '@angular/router';
 
 declare let require: any; // http://stackoverflow.com/questions/34730010/angular2-5-minute-install-bug-require-is-not-defined
 let jsonld = require('jsonld');
@@ -24,7 +24,7 @@ let jsonld = require('jsonld');
     templateUrl: './introduction.component.html',
     styleUrls: ['./introduction.component.scss']
 })
-export class IntroductionComponent implements OnInit {
+export class IntroductionComponent implements OnInit, OnDestroy {
 
     id: string;
     iri: string;
@@ -35,6 +35,8 @@ export class IntroductionComponent implements OnInit {
 
     KnoraConstants = KnoraConstants;
 
+    navigationSubscription;
+
     constructor(private _route: ActivatedRoute,
         private _router: Router,
         private _searchService: SearchService,
@@ -42,6 +44,15 @@ export class IntroductionComponent implements OnInit {
         private _resourceService: ResourceService,
         private _cacheService: OntologyCacheService,
         private _incomingService: IncomingService) {
+
+        // subscribe to the router events
+        this.navigationSubscription = this._router.events.subscribe((e: any) => {
+            // if it is a NavigationEnd event re-initalise the component
+            if (e instanceof NavigationEnd) {
+                this.searchForBook(this.id);
+            }
+        });
+
     }
 
     ngOnInit() {
@@ -52,6 +63,12 @@ export class IntroductionComponent implements OnInit {
             // console.log('id ', this.id);
         });
         this.searchForBook(this.id);
+    }
+
+    ngOnDestroy() {
+        if (this.navigationSubscription) {
+            this.navigationSubscription.unsubscribe();
+        }
     }
 
     searchForBook(id: string): void {
@@ -72,8 +89,6 @@ export class IntroductionComponent implements OnInit {
                     if (resourceSeq.resources.length === 1) {
                         // console.log('we got a resource sequence ', resourceSeq.resources);
                         this.requestResource(resourceSeq.resources[0].id);
-                    } else {
-                        console.log('We got 0 or more than 1 resource.');
                     }
 
                 }, function (err) {
@@ -95,7 +110,6 @@ export class IntroductionComponent implements OnInit {
         this._resourceService.getResource(iri)
             .subscribe(
                 (result: ApiServiceResult) => {
-                    console.log('IRI : ', iri);
                     const promises = jsonld.promises;
                     // compact JSON-LD using an empty context: expands all Iris
                     const promise = promises.compact(result.body, {});
@@ -123,7 +137,7 @@ export class IntroductionComponent implements OnInit {
                                     // ResourceObjectComponent.collectImagesAndRegionsForResource(resourceSeq.resources[0]);
 
                                     this.resource = resourceSeq.resources[0];
-                                    console.log('resource properties: ', resourceSeq.resources[0].properties);
+                                    // console.log('resource properties: ', resourceSeq.resources[0].properties);
 
                                     this.getIncomingLinks(0);
                                 },
@@ -203,12 +217,13 @@ export class IntroductionComponent implements OnInit {
 
     goToIntro(label: any) {
 
+        // recreate the beolId based on the referred resource label
         let beolId = label.toLowerCase();
         beolId = beolId.replace(' ', '_');
         beolId = 'goldbach_' + beolId;
 
         this._router.navigateByUrl('introduction/leoo/' + beolId);
-        // location.reload();
+
     }
 
 
