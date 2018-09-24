@@ -1,4 +1,4 @@
-import { Component, OnInit, } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
@@ -56,14 +56,13 @@ export class SearchResultsComponent implements OnInit {
         restrictedBy: ''
     };
 
-
-
     constructor(
         private _route: ActivatedRoute,
         private _searchService: SearchService,
         private _cacheService: OntologyCacheService,
         private _searchParamsService: SearchParamsService,
         private _router: Router) {
+
     }
 
     ngOnInit() {
@@ -245,6 +244,5 @@ export class SearchResultsComponent implements OnInit {
      */
     goToViewer(iri: string) {
         this._router.navigateByUrl('/viewer/' + encodeURIComponent(iri));
-        console.log('encoded iri: ', encodeURIComponent(iri) + 'iri: ', iri);
     }
 }
