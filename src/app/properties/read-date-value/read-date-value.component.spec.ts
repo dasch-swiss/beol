@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppModule } from '../../app.module';
+import { APP_BASE_HREF } from '@angular/common';
 import { MaterialModule } from '../../material-module';
 import { ReadDateValueComponent } from './read-date-value.component';
 
@@ -23,7 +24,8 @@ describe('ReadDateValueComponent', () => {
             imports: [
                 AppModule,
                 MaterialModule
-            ]
+            ],
+            providers: [{ provide: APP_BASE_HREF, useValue: '/' }]
         })
             .compileComponents();
     }));
