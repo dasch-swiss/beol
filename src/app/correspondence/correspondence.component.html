@@ -1,16 +1,8 @@
-<div class="full-size scroll-y-only">
-  <div class="content">
-
-    <div *ngFor="let book of leoo">
-      <div *ngFor="let corrGroup of book.correspondences">
-        <h2>Correspondences {{corrGroup.description}} </h2>
-        <span *ngFor="let corr of corrGroup.correspondences" (click)="searchForCorrespondence(corr.correspondent1.gnd, corr.correspondent2.gnd, corr.noTranslation)">
-          > {{corr.description}}
-          <br>
-        </span>
-        <br>
-      </div>
-    </div>
-
+<div *ngFor="let book of leoo">
+  <div *ngFor="let corrGroup of book.correspondences">
+    <b>Correspondences {{corrGroup.description}}</b>
+    <mat-card class="corr-card" *ngFor="let corr of corrGroup.correspondences" (click)="searchForCorrespondence(corr.correspondent1.gnd, corr.correspondent2.gnd, corr.noTranslation)">
+      {{corr.description}}
+    </mat-card>
   </div>
 </div>
