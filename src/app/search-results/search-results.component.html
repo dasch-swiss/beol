@@ -35,11 +35,13 @@
 
                             <span *ngSwitchCase="KnoraConstants.ReadTextValueAsHtml" [valueObject]="val.value" [mathJax]="val.value?.getContent()" [ontologyInfo]="ontologyInfo" [bindEvents]="false"></span>
 
-                            <span *ngSwitchDefault="" (click)="goToViewer(val.value.id)">{{val.value.getContent()}}</span>
+                            <span *ngSwitchDefault="">{{val.value.getContent()}}</span>
                         </div>
                     </li>
                 </ul>
             </div>
+
+            <button mat-button color="primary" (click)="goToViewer(res.id)">Read more</button>
 
             <mat-action-row>
                 <button mat-button color="warn" *ngIf="!first" (click)="prevStep()">Previous</button>

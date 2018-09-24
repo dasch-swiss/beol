@@ -1,6 +1,5 @@
 <div class="full-size scroll-y-only">
   <div class="content">
-    {{iri}}
     <div mat-line *ngFor="let prop of resource?.properties | key">
       <span>{{ontologyInfo?.getLabelForProperty(prop.key)}}</span>
       <div *ngFor="let val of prop.value | key">
