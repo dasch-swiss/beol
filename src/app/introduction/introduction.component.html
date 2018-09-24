@@ -5,7 +5,7 @@
         <div *ngFor="let prop of resource?.properties | key">
             <div *ngFor="let val of prop.value | key">
                 <span *ngIf="val.value.referredResourceIri">
-                    <read-link-value [valueObject]="val.value" [ontologyInfo]="ontologyInfo"></read-link-value>
+                    <read-link-value [valueObject]="val.value" [ontologyInfo]="ontologyInfo" (click)="goToIntro(val.value.referredResource.label)"></read-link-value>
                 </span>
             </div>
         </div>

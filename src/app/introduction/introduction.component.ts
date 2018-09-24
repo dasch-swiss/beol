@@ -123,7 +123,7 @@ export class IntroductionComponent implements OnInit {
                                     // ResourceObjectComponent.collectImagesAndRegionsForResource(resourceSeq.resources[0]);
 
                                     this.resource = resourceSeq.resources[0];
-                                    // console.log('resource properties: ', resourceSeq.resources[0].properties);
+                                    console.log('resource properties: ', resourceSeq.resources[0].properties);
 
                                     this.getIncomingLinks(0);
                                 },
@@ -201,6 +201,15 @@ export class IntroductionComponent implements OnInit {
         );
     }
 
+    goToIntro(label: any) {
+
+        let beolId = label.toLowerCase();
+        beolId = beolId.replace(' ', '_');
+        beolId = 'goldbach_' + beolId;
+
+        this._router.navigateByUrl('introduction/leoo/' + beolId);
+        // location.reload();
+    }
 
 
 }
