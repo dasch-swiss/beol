@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppModule } from '../../../app.module';
-import { AppMaterialModule } from '../../../app-material-module';
+import { AppModule } from '../../app.module';
+import { MaterialModule } from '../../material-module';
 import { ReadDateValueComponent } from './read-date-value.component';
 
 describe('ReadDateValueComponent', () => {
@@ -22,7 +22,7 @@ describe('ReadDateValueComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 AppModule,
-                AppMaterialModule
+                MaterialModule
             ]
         })
             .compileComponents();

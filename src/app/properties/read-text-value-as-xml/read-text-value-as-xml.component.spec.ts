@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppModule } from '../../../app.module';
-import { AppMaterialModule } from '../../../app-material-module';
+import { AppModule } from '../../app.module';
+import { MaterialModule } from '../../material-module';
 import { ReadTextValueAsXmlComponent } from './read-text-value-as-xml.component';
 
 describe('ReadTextValueAsXmlComponent', () => {
@@ -23,7 +23,7 @@ describe('ReadTextValueAsXmlComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 AppModule,
-                AppMaterialModule
+                MaterialModule
             ]
         })
             .compileComponents();

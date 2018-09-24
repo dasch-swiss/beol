@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppModule } from '../../../app.module';
-import { AppMaterialModule } from '../../../app-material-module';
+import { AppModule } from '../../app.module';
+import { MaterialModule } from '../../material-module';
 import { ReadLinkValueComponent } from './read-link-value.component';
 
 describe('ReadLinkValueComponent', () => {
@@ -11,7 +11,7 @@ describe('ReadLinkValueComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         AppModule,
-        AppMaterialModule
+        MaterialModule
       ]
     })
       .compileComponents();

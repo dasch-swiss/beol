@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ReadListValueComponent } from './read-list-value.component';
-import { AppModule } from '../../../app.module';
-import { AppRoutingModule } from '../../../app-routing.module';
+import { AppModule } from '../../app.module';
+import { AppRouting } from '../../app.routing';
 
 describe('ReadListValueComponent', () => {
   let component: ReadListValueComponent;
@@ -12,7 +12,7 @@ describe('ReadListValueComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         AppModule,
-        AppRoutingModule
+        AppRouting
       ]
     })
       .compileComponents();
