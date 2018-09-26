@@ -16,7 +16,7 @@ import {
 import { BeolService } from '../services/beol.service';
 import { ActivatedRoute, Params, Router, NavigationEnd } from '@angular/router';
 
-declare let require: any; // http://stackoverflow.com/questions/34730010/angular2-5-minute-install-bug-require-is-not-defined
+declare let require: any;
 let jsonld = require('jsonld');
 
 @Component({

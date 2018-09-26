@@ -13,9 +13,8 @@
  * */
 
 import { Component, Input, OnInit } from '@angular/core';
-import { MatDialog, MatDialogConfig } from '@angular/material';
 import { OntologyInformation, ReadLinkValue, KnoraConstants } from '@knora/core';
-/* import { ObjectDialogComponent } from '../../modules/dialog/object-dialog/object-dialog.component'; */
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'read-link-value',
@@ -29,19 +28,32 @@ export class ReadLinkValueComponent implements OnInit {
 
     KnoraConstants = KnoraConstants;
 
-    constructor(private dialog: MatDialog) {
+    constructor(private _router: Router) {
     }
 
     ngOnInit() {
     }
 
-    /* showReferredResourceInDialog() {
+    showReferredResource(referredIri, referredType) {
 
-        const config: MatDialogConfig = ObjectDialogComponent.createConfiguration(this.valueObject.referredResourceIri);
+        console.log('valueObject', this.valueObject);
 
-        this.dialog.open(ObjectDialogComponent, config);
+        console.log('ontologyInfo', this.ontologyInfo);
 
-    } */
+        console.log('referredType', referredType);
+
+        if (referredType === 'http://0.0.0.0:3333/ontology/0801/beol/v2#person') {
+            this._router.navigateByUrl('person/' + encodeURIComponent(referredIri));
+            console.log('special route if person type');
+        } else if (referredType === 'http://0.0.0.0:3333/ontology/0801/beol/v2#letter') {
+            // this._router.navigateByUrl('letter/' + encodeURIComponent(referredIri));
+            console.log('special route if letter type');
+        } else {
+            // this._router.navigateByUrl('viewer/' + referredIri);
+            console.log('generic route if type other than person or letter');
+        }
+
+    }
 
 
 }

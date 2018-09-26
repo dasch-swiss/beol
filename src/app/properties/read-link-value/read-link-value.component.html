@@ -1,5 +1,9 @@
 <mat-list>
-    <mat-list-item class="{{KnoraConstants.SalsahLink}}" matTooltip="{{valueObject?.getReferredResourceInfo(ontologyInfo)}}">
+    <mat-list-item class="{{KnoraConstants.SalsahLink}}" (click)="showReferredResource(valueObject.referredResourceIri, valueObject.referredResource.type)">
         {{valueObject?.getContent()}}
     </mat-list-item>
 </mat-list>
+
+<!-- [routerLink]="['person', valueObject.referredResourceIri]" -->
+
+<!-- matTooltip="{{valueObject?.getReferredResourceInfo(ontologyInfo)}}" -->
