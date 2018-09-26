@@ -9,7 +9,7 @@
 
       <ul>
         <li *ngFor="let val of prop.value | key">
-          <span [ngSwitch]="val.value.getClassName()" *ngIf="!val.value.referredResourceIri">
+          <span [ngSwitch]="val.value.getClassName()">
             <read-text-value-as-html *ngSwitchCase="KnoraConstants.ReadTextValueAsHtml" [valueObject]="val.value" [ontologyInfo]="ontologyInfo" [bindEvents]="true"></read-text-value-as-html>
             <read-text-value-as-string *ngSwitchCase="KnoraConstants.ReadTextValueAsString" [valueObject]="val.value"></read-text-value-as-string>
             <read-text-value-as-xml *ngSwitchCase="KnoraConstants.ReadTextValueAsXml" [valueObject]="val.value"></read-text-value-as-xml>
