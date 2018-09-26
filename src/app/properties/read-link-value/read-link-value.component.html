@@ -11,7 +11,7 @@
 <ng-template #typeOther>
     <mat-list>
         <mat-list-item class="{{KnoraConstants.SalsahLink}}" (click)="showReferredResource(valueObject.referredResourceIri, valueObject.referredResource.type)">
-            {{valueObject?.getContent()}}
+            <button mat-button color="primary">{{valueObject?.getContent()}}</button>
         </mat-list-item>
     </mat-list>
 </ng-template>
