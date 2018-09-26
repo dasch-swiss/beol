@@ -243,6 +243,6 @@ export class SearchResultsComponent implements OnInit {
      * @param iri
      */
     goToViewer(iri: string) {
-        this._router.navigateByUrl('/viewer/' + encodeURIComponent(iri));
+        this._router.navigateByUrl('/resource/' + encodeURIComponent(iri));
     }
 }

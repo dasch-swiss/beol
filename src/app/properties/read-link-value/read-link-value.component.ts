@@ -49,7 +49,7 @@ export class ReadLinkValueComponent implements OnInit {
             // this._router.navigateByUrl('letter/' + encodeURIComponent(referredIri));
             console.log('special route if letter type');
         } else {
-            // this._router.navigateByUrl('viewer/' + referredIri);
+            // this._router.navigateByUrl('resource/' + referredIri);
             console.log('generic route if type other than person or letter');
         }
 

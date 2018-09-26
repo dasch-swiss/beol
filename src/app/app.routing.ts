@@ -25,6 +25,18 @@ const appRoutes: Routes = [
         component: CorrespondenceComponent,
     },
     {
+        path: 'resource/:id',
+        component: ResourceComponent,
+    },
+    {
+        path: 'person/:id',
+        component: PersonComponent
+    },
+    {
+        path: 'letter/:id',
+        component: LetterComponent
+    },
+    {
         path: 'search',
         children: [
             {
@@ -32,24 +44,6 @@ const appRoutes: Routes = [
                 component: SearchResultsComponent
             }
         ]
-    },
-    {
-        path: 'viewer/:id',
-        component: ResourceComponent,
-        children: [
-            /* {
-                path: 'person/:id',
-                component: PersonComponent
-            }, */
-            {
-                path: 'letter/:id',
-                component: LetterComponent
-            }
-        ]
-    },
-    {
-        path: 'person/:id',
-        component: PersonComponent
     },
     {
         path: '**',
