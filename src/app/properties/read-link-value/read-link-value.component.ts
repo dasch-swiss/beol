@@ -34,26 +34,25 @@ export class ReadLinkValueComponent implements OnInit {
     ngOnInit() {
     }
 
+    /**
+     * Navigate by URL route according to the resource type
+     *
+     * @param referredIri
+     * @param referredType
+     */
     showReferredResource(referredIri, referredType) {
-
-        console.log('valueObject', this.valueObject);
-
-        console.log('ontologyInfo', this.ontologyInfo);
-
-        console.log('referredType', referredType);
 
         if (referredType === 'http://0.0.0.0:3333/ontology/0801/beol/v2#person') {
             this._router.navigateByUrl('person/' + encodeURIComponent(referredIri));
-            console.log('special route if person type');
         } else if (referredType === 'http://0.0.0.0:3333/ontology/0801/beol/v2#letter') {
-            // this._router.navigateByUrl('letter/' + encodeURIComponent(referredIri));
-            console.log('special route if letter type');
+            this._router.navigateByUrl('letter/' + encodeURIComponent(referredIri));
         } else {
-            // this._router.navigateByUrl('resource/' + referredIri);
-            console.log('generic route if type other than person or letter');
+            this._router.navigateByUrl('resource/' + encodeURIComponent(referredIri));
         }
 
     }
 
 
 }
+
+
