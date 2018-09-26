@@ -39,7 +39,6 @@ import { ReadUriValueComponent } from './properties/read-uri-value/read-uri-valu
 // Loads the application configuration file during application startup
 import { AppConfig } from './app.config';
 import { CorrespondenceComponent } from './correspondence/correspondence.component';
-import { SearchViewerComponent } from './search-results/search-viewer/search-viewer.component';
 
 export function initializeApp(appConfig: AppConfig) {
     return () => appConfig.loadAppConfig();
@@ -69,8 +68,7 @@ export function initializeApp(appConfig: AppConfig) {
         ReadTextValueAsXmlComponent,
         ReadTextfileValueComponent,
         ReadUriValueComponent,
-        CorrespondenceComponent,
-        SearchViewerComponent
+        CorrespondenceComponent
     ],
     imports: [
         AppRouting,
