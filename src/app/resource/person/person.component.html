@@ -17,7 +17,7 @@
             <read-text-value-as-xml *ngSwitchCase="KnoraConstants.ReadTextValueAsXml" [valueObject]="val.value"></read-text-value-as-xml>
             <read-textfile-value *ngSwitchCase="KnoraConstants.TextFileValue" [valueObject]="val.value"></read-textfile-value>
             <read-date-value *ngSwitchCase="KnoraConstants.ReadDateValue" [valueObject]="val.value"></read-date-value>
-            <!-- <read-link-value *ngSwitchCase="KnoraConstants.ReadLinkValue" [valueObject]="val.value" [ontologyInfo]="ontologyInfo"></read-link-value>
+            <read-link-value *ngSwitchCase="KnoraConstants.ReadLinkValue" [valueObject]="val.value" [ontologyInfo]="ontologyInfo"></read-link-value>
             <read-integer-value *ngSwitchCase="KnoraConstants.ReadIntegerValue" [valueObject]="val.value"></read-integer-value>
             <read-decimal-value *ngSwitchCase="KnoraConstants.ReadDecimalValue" [valueObject]="val.value"></read-decimal-value>
             <read-geom-value *ngSwitchCase="KnoraConstants.ReadGeomValue" [valueObject]="val.value"></read-geom-value>
@@ -25,7 +25,7 @@
             <read-uri-value *ngSwitchCase="KnoraConstants.ReadUriValue" [valueObject]="val.value"></read-uri-value>
             <read-boolean-value *ngSwitchCase="KnoraConstants.ReadBooleanValue" [valueObject]="val.value"></read-boolean-value>
             <read-interval-value *ngSwitchCase="KnoraConstants.ReadIntervalValue" [valueObject]="val.value"></read-interval-value>
-            <read-list-value *ngSwitchCase="KnoraConstants.ReadListValue" [valueObject]="val.value"></read-list-value> -->
+            <read-list-value *ngSwitchCase="KnoraConstants.ReadListValue" [valueObject]="val.value"></read-list-value>
             <span *ngSwitchDefault="">Not supported {{val.value.getClassName()}}</span>
           </span>
         </li>
