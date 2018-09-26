@@ -35,7 +35,21 @@ const appRoutes: Routes = [
     },
     {
         path: 'viewer/:id',
-        component: ResourceComponent
+        component: ResourceComponent,
+        children: [
+            /* {
+                path: 'person/:id',
+                component: PersonComponent
+            }, */
+            {
+                path: 'letter/:id',
+                component: LetterComponent
+            }
+        ]
+    },
+    {
+        path: 'person/:id',
+        component: PersonComponent
     },
     {
         path: '**',
