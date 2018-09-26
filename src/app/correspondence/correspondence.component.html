@@ -15,23 +15,37 @@
   <!-- display the correspondences of the BEBB project -->
   <div *ngSwitchCase="'bebb'">
     <div *ngFor="let corrGroup of wiki">
-      <span>
+      <section>
         Correspondence from
         <b>{{corrGroup.mainCorrespondent.name}}</b> to
 
-        <mat-form-field>
-          <mat-select>
-            <div *ngFor="let section of corrGroup.sections">
-              <div *ngFor="let corr of section.correspondences">
-                <mat-option [value]="corr.correspondent2.name" (click)="searchForCorrespondence(corr.correspondent1.gnd, corr.correspondent2.gnd)">
-                  {{corr.correspondent2.name}}
-                </mat-option>
-              </div>
+        <!-- case 1: only one recipient exists - the name is displayed directly -->
+        <div class="display-one-correspondent" *ngIf="corrGroup.sections.length == 1; else selectCorr">
+          <div *ngFor="let section of corrGroup.sections">
+            <div *ngIf="section.correspondences.length == 1; else selectCorr">
+              <span *ngFor="let corr of section.correspondences">
+                <button mat-button color="primary" (click)="searchForCorrespondence(corr.correspondent1.gnd, corr.correspondent2.gnd)">{{corr.correspondent2.name}}</button>
+              </span>
             </div>
-          </mat-select>
-        </mat-form-field>
-      </span>
+          </div>
+        </div>
 
+        <!-- case 2: it exists several recipients - names are selectable in a drop-down list -->
+        <ng-template #selectCorr>
+          <mat-form-field>
+            <mat-select placeholder="Select Recipient">
+              <div *ngFor="let section of corrGroup.sections">
+                <div *ngFor="let corr of section.correspondences">
+                  <mat-option [value]="corr.correspondent2.name" (click)="searchForCorrespondence(corr.correspondent1.gnd, corr.correspondent2.gnd)">
+                    {{corr.correspondent2.name}}
+                  </mat-option>
+                </div>
+              </div>
+            </mat-select>
+          </mat-form-field>
+        </ng-template>
+
+      </section>
     </div>
   </div>
 

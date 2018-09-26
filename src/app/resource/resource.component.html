@@ -1,8 +1,10 @@
 <div class="full-size scroll-y-only">
   <div class="content">
 
-    <p>{{ontologyInfo?.getLabelForResourceClass(resource?.type)}}</p>
-    <p>{{resource?.label}}</p>
+    <b>
+      <h3 mat-card-subtitle>{{ontologyInfo?.getLabelForResourceClass(resource?.type)}}</h3>
+      <h2>{{resource?.label}}</h2>
+    </b>
 
     <div mat-line *ngFor="let prop of resource?.properties | key">
       <span>{{ontologyInfo?.getLabelForProperty(prop.key)}}</span>
