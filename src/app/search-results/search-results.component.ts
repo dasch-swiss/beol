@@ -242,7 +242,12 @@ export class SearchResultsComponent implements OnInit {
      * Navigate to the viewer that displays the resource's content
      * @param iri
      */
-    goToViewer(iri: string) {
-        this._router.navigateByUrl('/resource/' + encodeURIComponent(iri));
+    goToViewer(iri: string, type: string) {
+
+        if (type === 'http://0.0.0.0:3333/ontology/0801/beol/v2#letter') {
+            this._router.navigateByUrl('letter/' + encodeURIComponent(iri));
+        } else {
+            this._router.navigateByUrl('resource/' + encodeURIComponent(iri));
+        }
     }
 }
