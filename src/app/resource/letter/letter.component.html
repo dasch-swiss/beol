@@ -1,3 +1,37 @@
-<p>
-  letter works!
-</p>
+<div class="full-size scroll-y-only">
+  <div class="content">
+
+    <b>
+      <h3 mat-card-subtitle>{{ontologyInfo?.getLabelForResourceClass(resource?.type)}}</h3>
+      <h2>{{resource?.label}}</h2>
+    </b>
+
+    <div mat-line *ngFor="let prop of resource?.properties | key">
+      <span>{{ontologyInfo?.getLabelForProperty(prop.key)}}</span>
+
+      <ul>
+        <li *ngFor="let val of prop.value | key">
+          <span [ngSwitch]="val.value.getClassName()">
+            <read-text-value-as-html *ngSwitchCase="KnoraConstants.ReadTextValueAsHtml" [valueObject]="val.value" [ontologyInfo]="ontologyInfo" [bindEvents]="true"></read-text-value-as-html>
+            <read-text-value-as-string *ngSwitchCase="KnoraConstants.ReadTextValueAsString" [valueObject]="val.value"></read-text-value-as-string>
+            <read-text-value-as-xml *ngSwitchCase="KnoraConstants.ReadTextValueAsXml" [valueObject]="val.value"></read-text-value-as-xml>
+            <read-textfile-value *ngSwitchCase="KnoraConstants.TextFileValue" [valueObject]="val.value"></read-textfile-value>
+            <read-date-value *ngSwitchCase="KnoraConstants.ReadDateValue" [valueObject]="val.value"></read-date-value>
+            <read-link-value *ngSwitchCase="KnoraConstants.ReadLinkValue" [valueObject]="val.value" [ontologyInfo]="ontologyInfo"></read-link-value>
+            <read-integer-value *ngSwitchCase="KnoraConstants.ReadIntegerValue" [valueObject]="val.value"></read-integer-value>
+            <read-decimal-value *ngSwitchCase="KnoraConstants.ReadDecimalValue" [valueObject]="val.value"></read-decimal-value>
+            <read-geom-value *ngSwitchCase="KnoraConstants.ReadGeomValue" [valueObject]="val.value"></read-geom-value>
+            <read-color-value *ngSwitchCase="KnoraConstants.ReadColorValue" [valueObject]="val.value"></read-color-value>
+            <read-uri-value *ngSwitchCase="KnoraConstants.ReadUriValue" [valueObject]="val.value"></read-uri-value>
+            <read-boolean-value *ngSwitchCase="KnoraConstants.ReadBooleanValue" [valueObject]="val.value"></read-boolean-value>
+            <read-interval-value *ngSwitchCase="KnoraConstants.ReadIntervalValue" [valueObject]="val.value"></read-interval-value>
+            <read-list-value *ngSwitchCase="KnoraConstants.ReadListValue" [valueObject]="val.value"></read-list-value>
+            <span *ngSwitchDefault="">Not supported {{val.value.getClassName()}}</span>
+          </span>
+        </li>
+      </ul>
+
+    </div>
+
+  </div>
+</div>
