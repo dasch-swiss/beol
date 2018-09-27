@@ -4,22 +4,22 @@
         <section class="title">
             <h4 class="mat-subheading-1">{{ontologyInfo?.getLabelForResourceClass(resource?.type)}}</h4>
             <h2 class="mat-display-1 margins">{{resource?.label}}</h2>
-            <p class="mat-subheading-2" *ngIf="neededProps?.alternative">
-                <span *ngFor="let alt of neededProps.alternative; let last = last">{{alt.str}}<span *ngIf="!last">, </span></span>
+            <p class="mat-subheading-2" *ngIf="props?.alternative">
+                <span *ngFor="let alt of props.alternative; let last = last">{{alt.str}}<span *ngIf="!last">, </span></span>
             </p>
             <p mat-line>
-                <span *ngIf="neededProps.birthDate">* {{neededProps.birthDate}}</span>
-                <span *ngIf="neededProps.birthPlace"> in {{neededProps.birthPlace}}</span>
-                <span *ngIf="neededProps.birthDate && neededProps.deathDate"> &ndash; </span>
-                <span *ngIf="neededProps.deathDate">† {{neededProps.deathDate}}</span>
-                <span *ngIf="neededProps.deathPlace"> in {{neededProps.deathPlace}}</span>
+                <span *ngIf="props.birthDate">* {{props.birthDate}}</span>
+                <span *ngIf="props.birthPlace"> in {{props.birthPlace}}</span>
+                <span *ngIf="props.birthDate && props.deathDate"> &ndash; </span>
+                <span *ngIf="props.deathDate">† {{props.deathDate}}</span>
+                <span *ngIf="props.deathPlace"> in {{props.deathPlace}}</span>
             </p>
         </section>
 
         <mat-divider></mat-divider>
 
         <section class="text">
-            <p *ngFor="let c of neededProps.comment">
+            <p *ngFor="let c of props.comment">
                 {{c.str}}
             </p>
         </section>
@@ -27,15 +27,15 @@
         <mat-divider></mat-divider>
 
         <section class="links">
-            <div *ngIf="neededProps.IAF">
+            <div *ngIf="props.IAF">
                 <h4 class="subheading-2">GND: </h4>
-                <p class="mat-list-item-content" [gnd]="neededProps.IAF"></p>
+                <p class="mat-list-item-content" [gnd]="props.IAF"></p>
             </div>
 
 
-            <div *ngIf="neededProps.mentioned">
-                <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(neededProps.mentioned[0].propIri)}}: </h4>
-                <p *ngFor="let m of neededProps.mentioned; let last = last">
+            <div *ngIf="props.mentioned">
+                <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props.mentioned[0].propIri)}}: </h4>
+                <p *ngFor="let m of props.mentioned; let last = last">
                     {{m.str}}
                 </p>
             </div>

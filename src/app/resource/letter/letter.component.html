@@ -1,6 +1,22 @@
-<div class="full-size scroll-y-only">
+<kui-progress-indicator *ngIf="loading"></kui-progress-indicator>
+<div class="full-size scroll-y-only" *ngIf="!loading">
   <div class="main-content">
+      <section class="title center">
+          <p>{{props.number}}</p>
+          <p>{{props.author | uppercase}} TO {{props.recipient | uppercase}}</p>
+          <p>{{props.location}}, {{props.date}}</p>
+      </section>
 
+      <section class="text">
+          <read-text-value-as-html [valueObject]="props.text[0]" [ontologyInfo]="ontologyInfo" [bindEvents]="true"></read-text-value-as-html>
+      </section>
+
+      <section class="links">
+
+      </section>
+
+
+<!--
     <b>
       <h3 mat-card-subtitle>{{ontologyInfo?.getLabelForResourceClass(resource?.type)}}</h3>
       <h2>{{resource?.label}}</h2>
@@ -32,6 +48,8 @@
       </ul>
 
     </div>
+-->
+
 
   </div>
 </div>

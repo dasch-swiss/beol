@@ -40,7 +40,8 @@ export class PersonComponent implements OnChanges, OnInit {
 
     KnoraConstants = KnoraConstants;
 
-    personProps: any = {
+    // TODO: replace http://0.0.0.0:3333 by a constant or by config.api
+    propIris: any = {
         'id': 'http://0.0.0.0:3333/ontology/0801/beol/v2#beolIDs',
         'comment': 'http://0.0.0.0:3333/ontology/0801/beol/v2#comment',
         'alternative': 'http://0.0.0.0:3333/ontology/0801/beol/v2#hasAlternativeName',
@@ -55,7 +56,8 @@ export class PersonComponent implements OnChanges, OnInit {
         'mentioned': 'http://0.0.0.0:3333/ontology/0801/beol/v2#mentionedIn'
     };
 
-    neededProps: any = {
+    // create a person props interface
+    props: any = {
         'comment': [],
         'alternative': [],
         'birthDate': '',
@@ -211,36 +213,36 @@ export class PersonComponent implements OnChanges, OnInit {
                                         if (this.resource.properties.hasOwnProperty(key)) {
                                             for (const val of this.resource.properties[key]) {
                                                 switch (val.propIri) {
-                                                    case this.personProps.comment:
-                                                        this.neededProps.comment.push(val);
+                                                    case this.propIris.comment:
+                                                        this.props.comment.push(val);
                                                         break;
 
-                                                    case this.personProps.birthDate:
-                                                        this.neededProps.birthDate = val.getContent();
+                                                    case this.propIris.birthDate:
+                                                        this.props.birthDate = val.getContent();
                                                         break;
 
-                                                    case this.personProps.birthPlace:
-                                                        this.neededProps.birthPlace = val.getContent();
+                                                    case this.propIris.birthPlace:
+                                                        this.props.birthPlace = val.getContent();
                                                         break;
 
-                                                    case this.personProps.deathDate:
-                                                        this.neededProps.deathDate = val.getContent();
+                                                    case this.propIris.deathDate:
+                                                        this.props.deathDate = val.getContent();
                                                         break;
 
-                                                    case this.personProps.deathPlace:
-                                                        this.neededProps.deathPlace = val.getContent();
+                                                    case this.propIris.deathPlace:
+                                                        this.props.deathPlace = val.getContent();
                                                         break;
 
-                                                    case this.personProps.alternative:
-                                                        this.neededProps.alternative.push(val);
+                                                    case this.propIris.alternative:
+                                                        this.props.alternative.push(val);
                                                         break;
 
-                                                    case this.personProps.IAF:
-                                                        this.neededProps.IAF = val.getContent();
+                                                    case this.propIris.IAF:
+                                                        this.props.IAF = val.getContent();
                                                         break;
 
-                                                    case this.personProps.mentioned:
-                                                        this.neededProps.mentioned.push(val);
+                                                    case this.propIris.mentioned:
+                                                        this.props.mentioned.push(val);
                                                         break;
 
                                                     default:
