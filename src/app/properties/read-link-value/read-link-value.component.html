@@ -1,17 +1,6 @@
-<!-- case 1: for introductions - show referred resource according to the type "section" (the beolIds is used in the route instead of the IRI) -->
-<div *ngIf="valueObject.referredResource.type == 'http://0.0.0.0:3333/ontology/0801/beol/v2#section';else typeOther">
-    <mat-list>
-        <mat-list-item class="{{KnoraConstants.SalsahLink}}">
-            {{valueObject?.getContent()}}
-        </mat-list-item>
-    </mat-list>
-</div>
-
-<!-- case 2: show referred resource according to the resource type other than "section" -->
-<ng-template #typeOther>
-    <mat-list>
-        <mat-list-item class="{{KnoraConstants.SalsahLink}}" (click)="showReferredResource(valueObject.referredResourceIri, valueObject.referredResource.type)">
-            <button mat-button color="primary">{{valueObject?.getContent()}}</button>
-        </mat-list-item>
-    </mat-list>
-</ng-template>
+<!-- show referred resource according to the resource type other than "section" -->
+<mat-list>
+    <mat-list-item class="{{KnoraConstants.SalsahLink}}" (click)="showReferredResource(valueObject.referredResourceIri, valueObject.referredResource.type)">
+        <button mat-button color="primary">{{valueObject?.getContent()}}</button>
+    </mat-list-item>
+</mat-list>

@@ -5,7 +5,11 @@
         <div *ngFor="let prop of resource?.properties | key">
             <div *ngFor="let val of prop.value | key">
                 <span *ngIf="val.value.referredResourceIri">
-                    <read-link-value [valueObject]="val.value" [ontologyInfo]="ontologyInfo" (click)="goToIntro(val.value.referredResource.label)"></read-link-value>
+                    <mat-list>
+                        <mat-list-item class="{{KnoraConstants.SalsahLink}}" (click)="goToIntro(val.value.referredResource.label)">
+                            {{val.value?.getContent()}}
+                        </mat-list-item>
+                    </mat-list>
                 </span>
             </div>
         </div>
