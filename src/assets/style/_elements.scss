@@ -18,19 +18,26 @@
   overflow-y: auto;
 }
 
-.content {
+.main-content {
   margin: 0 auto;
   max-width: 900px;
-  padding: 48px;
-  width: 80%;
+  padding: 0 48px;
+  width: calc(100vw - 96px);
+}
+
+.content-with-sidebar {
+  margin: 0 auto 0 304px;
+  max-width: 900px;
+  padding: 0 48px;
+  width: calc(100vw - 300px - 96px);
 }
 
 .intro-sidebar {
   position: fixed;
-  width: 16%;
-  max-width: 400px;
-  height: 95%;
-  padding: 25px;
+  width: 256px;
+  height: calc(100vh - #{$header-height} - 48px);
+  padding: 0 24px;
+  overflow-y: auto;
 }
 
 .leoo-section {
