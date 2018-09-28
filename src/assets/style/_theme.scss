@@ -18,7 +18,8 @@ $header-height: 112px;
   font-family: 'Roboto', sans-serif;
 }
 
-a {
+a, .link {
   color: $accent;
   font-weight: bolder;
+  cursor: pointer;
 }
