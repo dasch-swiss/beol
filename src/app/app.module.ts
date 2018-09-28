@@ -39,6 +39,13 @@ import { ReadUriValueComponent } from './properties/read-uri-value/read-uri-valu
 // Loads the application configuration file during application startup
 import { AppConfig } from './app.config';
 import { CorrespondenceComponent } from './correspondence/correspondence.component';
+import { ContactComponent } from './contact/contact.component';
+import { ContactFormComponent } from './contact/contact-form/contact-form.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { APP_BASE_HREF } from '@angular/common';
+import { RECAPTCHA_SETTINGS, RecaptchaSettings } from 'ng-recaptcha';
+import { AngularFirestore } from '../../node_modules/angularfire2/firestore';
+import { AngularFireModule } from '../../node_modules/@angular/fire';
 
 export function initializeApp(appConfig: AppConfig) {
     return () => appConfig.loadAppConfig();
@@ -68,9 +75,12 @@ export function initializeApp(appConfig: AppConfig) {
         ReadTextValueAsXmlComponent,
         ReadTextfileValueComponent,
         ReadUriValueComponent,
-        CorrespondenceComponent
+        CorrespondenceComponent,
+        ContactComponent,
+        ContactFormComponent
     ],
     imports: [
+        AngularFireModule.initializeApp(environment.firebase),
         AppRouting,
         BrowserModule,
         FlexLayoutModule,
@@ -83,7 +93,8 @@ export function initializeApp(appConfig: AppConfig) {
         KuiActionModule,
         KuiSearchModule,
         KuiViewerModule,
-        MaterialModule
+        MaterialModule,
+        ReactiveFormsModule
     ],
     providers: [
         AppConfig,
@@ -92,6 +103,11 @@ export function initializeApp(appConfig: AppConfig) {
             useFactory: initializeApp,
             deps: [AppConfig],
             multi: true
+        },
+        AngularFirestore,
+        {
+            provide: APP_BASE_HREF,
+            useValue: '/'
         }
     ],
     bootstrap: [AppComponent]
