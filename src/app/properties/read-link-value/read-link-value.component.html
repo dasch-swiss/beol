@@ -1,6 +1,2 @@
 <!-- show referred resource according to the resource type other than "section" -->
-<mat-list>
-    <mat-list-item class="{{KnoraConstants.SalsahLink}}" (click)="showReferredResource(valueObject.referredResourceIri, valueObject.referredResource.type)">
-        <button mat-button color="primary">{{valueObject?.getContent()}}</button>
-    </mat-list-item>
-</mat-list>
+<span class="link" (click)="showReferredResource(valueObject.referredResourceIri, valueObject.referredResource.type)">{{valueObject?.getContent()}}</span>
