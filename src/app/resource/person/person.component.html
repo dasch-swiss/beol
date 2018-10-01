@@ -2,10 +2,12 @@
 <div class="full-size scroll-y-only" *ngIf="!loading">
     <div class="main-content">
         <section class="title">
-            <h4 class="mat-subheading-1">{{ontologyInfo?.getLabelForResourceClass(resource?.type)}}</h4>
+            <h4 mat-card-subtitle>{{ontologyInfo?.getLabelForResourceClass(resource?.type)}}</h4>
             <h2 class="mat-display-1 margins">{{resource?.label}}</h2>
             <p class="mat-subheading-2" *ngIf="props?.alternative">
-                <span *ngFor="let alt of props.alternative; let last = last">{{alt.str}}<span *ngIf="!last">, </span></span>
+                <span *ngFor="let alt of props.alternative; let last = last">{{alt.str}}
+                    <span *ngIf="!last">, </span>
+                </span>
             </p>
             <p mat-line>
                 <span *ngIf="props.birthDate">* {{props.birthDate}}</span>
@@ -41,7 +43,7 @@
             </div>
         </section>
 
-        <mat-divider></mat-divider>
+        <!-- <mat-divider></mat-divider> -->
 
         <section class="links">
             <!-- Incoming links? -->
