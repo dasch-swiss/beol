@@ -1,37 +1,53 @@
-<div class="full-size scroll-y-only">
-  <div class="content">
+<kui-progress-indicator *ngIf="loading"></kui-progress-indicator>
+<div class="full-size scroll-y-only" *ngIf="!loading">
+    <div class="main-content">
+        <section class="title">
+            <h4 class="mat-subheading-1">{{ontologyInfo?.getLabelForResourceClass(resource?.type)}}</h4>
+            <h2 class="mat-display-1 margins">{{resource?.label}}</h2>
+            <p class="mat-subheading-2" *ngIf="props?.alternative">
+                <span *ngFor="let alt of props.alternative; let last = last">{{alt.str}}<span *ngIf="!last">, </span></span>
+            </p>
+            <p mat-line>
+                <span *ngIf="props.birthDate">* {{props.birthDate}}</span>
+                <span *ngIf="props.birthPlace"> in {{props.birthPlace}}</span>
+                <span *ngIf="props.birthDate && props.deathDate"> &ndash; </span>
+                <span *ngIf="props.deathDate">† {{props.deathDate}}</span>
+                <span *ngIf="props.deathPlace"> in {{props.deathPlace}}</span>
+            </p>
+        </section>
 
-    <b>
-      <h3 mat-card-subtitle>{{ontologyInfo?.getLabelForResourceClass(resource?.type)}}</h3>
-      <h2>{{resource?.label}}</h2>
-    </b>
+        <mat-divider></mat-divider>
 
-    <div mat-line *ngFor="let prop of resource?.properties | key">
-      <span>{{ontologyInfo?.getLabelForProperty(prop.key)}}</span>
+        <section class="text">
+            <p *ngFor="let c of props.comment">
+                {{c.str}}
+            </p>
+        </section>
 
-      <ul>
-        <li *ngFor="let val of prop.value | key">
-          <span [ngSwitch]="val.value.getClassName()">
-            <read-text-value-as-html *ngSwitchCase="KnoraConstants.ReadTextValueAsHtml" [valueObject]="val.value" [ontologyInfo]="ontologyInfo" [bindEvents]="true"></read-text-value-as-html>
-            <read-text-value-as-string *ngSwitchCase="KnoraConstants.ReadTextValueAsString" [valueObject]="val.value"></read-text-value-as-string>
-            <read-text-value-as-xml *ngSwitchCase="KnoraConstants.ReadTextValueAsXml" [valueObject]="val.value"></read-text-value-as-xml>
-            <read-textfile-value *ngSwitchCase="KnoraConstants.TextFileValue" [valueObject]="val.value"></read-textfile-value>
-            <read-date-value *ngSwitchCase="KnoraConstants.ReadDateValue" [valueObject]="val.value"></read-date-value>
-            <read-link-value *ngSwitchCase="KnoraConstants.ReadLinkValue" [valueObject]="val.value" [ontologyInfo]="ontologyInfo"></read-link-value>
-            <read-integer-value *ngSwitchCase="KnoraConstants.ReadIntegerValue" [valueObject]="val.value"></read-integer-value>
-            <read-decimal-value *ngSwitchCase="KnoraConstants.ReadDecimalValue" [valueObject]="val.value"></read-decimal-value>
-            <read-geom-value *ngSwitchCase="KnoraConstants.ReadGeomValue" [valueObject]="val.value"></read-geom-value>
-            <read-color-value *ngSwitchCase="KnoraConstants.ReadColorValue" [valueObject]="val.value"></read-color-value>
-            <read-uri-value *ngSwitchCase="KnoraConstants.ReadUriValue" [valueObject]="val.value"></read-uri-value>
-            <read-boolean-value *ngSwitchCase="KnoraConstants.ReadBooleanValue" [valueObject]="val.value"></read-boolean-value>
-            <read-interval-value *ngSwitchCase="KnoraConstants.ReadIntervalValue" [valueObject]="val.value"></read-interval-value>
-            <read-list-value *ngSwitchCase="KnoraConstants.ReadListValue" [valueObject]="val.value"></read-list-value>
-            <span *ngSwitchDefault="">Not supported {{val.value.getClassName()}}</span>
-          </span>
-        </li>
-      </ul>
+        <mat-divider></mat-divider>
+
+        <section class="links">
+            <div *ngIf="props.IAF">
+                <h4 class="subheading-2">GND: </h4>
+                <p class="mat-list-item-content" [gnd]="props.IAF"></p>
+            </div>
+
+
+            <div *ngIf="props.mentioned">
+                <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props.mentioned[0].propIri)}}: </h4>
+                <p *ngFor="let m of props.mentioned; let last = last">
+                    {{m.str}}
+                </p>
+            </div>
+        </section>
+
+        <mat-divider></mat-divider>
+
+        <section class="links">
+            <!-- Incoming links? -->
+            <!--<div *ngFor=""></div>-->
+        </section>
+
 
     </div>
-
-  </div>
 </div>

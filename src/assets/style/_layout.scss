@@ -17,6 +17,7 @@ body {
     width: calc(100vw - 15px);
     background: #fff;
     padding-bottom: 48px;
+    z-index: 100;
 //    border-bottom: 2px solid $primary;
 
     .mat-toolbar {
@@ -33,3 +34,6 @@ body {
   }
 }
 
+.center {
+  text-align: center;
+}

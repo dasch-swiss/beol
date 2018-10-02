@@ -1,0 +1,22 @@
+@import "../../../assets/style/theme";
+
+form, .privacy {
+  margin: 0 auto;
+  width: 320px;
+
+  .mat-form-field {
+    width: 100%;
+  }
+}
+
+.privacy {
+  margin-top: 48px;
+}
+
+.contact-actions {
+  display: flex;
+}
+
+.submit-button {
+  background-color: $accent !important;
+}
