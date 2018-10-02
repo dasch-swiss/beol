@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, OnChanges, SimpleChange } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { Component, OnInit, Input, OnChanges, SimpleChange, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Params, Router, NavigationEnd } from '@angular/router';
 import {
   ApiServiceError,
   ApiServiceResult,
@@ -29,7 +29,7 @@ let jsonld = require('jsonld');
   templateUrl: './resource.component.html',
   styleUrls: ['./resource.component.scss']
 })
-export class ResourceComponent implements OnChanges, OnInit {
+export class ResourceComponent implements OnChanges, OnDestroy, OnInit {
 
   iri: string;
   resource: ReadResource;
@@ -38,6 +38,7 @@ export class ResourceComponent implements OnChanges, OnInit {
   isLoading = true;
   errorMessage: any;
   KnoraConstants = KnoraConstants;
+  navigationSubscription;
 
   /**
      * Creates a collection of [[StillImageRepresentation]] belonging to the given resource and assigns it to it.
@@ -117,26 +118,44 @@ export class ResourceComponent implements OnChanges, OnInit {
   }
 
   constructor(private _route: ActivatedRoute,
+    private _router: Router,
     private _searchService: SearchService,
     private _resourceService: ResourceService,
     private _cacheService: OntologyCacheService,
-    private _incomingService: IncomingService) { }
+    private _incomingService: IncomingService) {
 
-  ngOnChanges(changes: { [key: string]: SimpleChange }) {
-    // prevent duplicate requests. if isFirstChange resource will be requested on ngOnInit
-    if (!changes['iri'].isFirstChange()) {
-      this.requestResource(this.iri);
-    }
-  }
-
-  ngOnInit() {
     this._route.params.subscribe((params: Params) => {
       this.iri = params['id'];
     });
 
+    // subscribe to the router events
+    this.navigationSubscription = this._router.events.subscribe((e: any) => {
+      // if it is a NavigationEnd event re-initalise the component
+      if (e instanceof NavigationEnd) {
+        this.requestResource(this.iri);
+      }
+    });
+  }
+
+  ngOnChanges(changes: { [key: string]: SimpleChange }) {
+    /* // prevent duplicate requests. if isFirstChange resource will be requested on ngOnInit
+    if (!changes['iri'].isFirstChange()) {
+      this.requestResource(this.iri);
+    } */
+  }
+
+  ngOnInit() {
+
     this.requestResource(this.iri);
 
   }
+
+  ngOnDestroy() {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
+  }
+
 
   /**
      * Requests a resource from Knora.

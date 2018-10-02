@@ -28,6 +28,7 @@ const appRoutes: Routes = [
     {
         path: 'resource/:id',
         component: ResourceComponent,
+        runGuardsAndResolvers: 'paramsChange'
     },
     {
         path: 'person/:id',
@@ -35,7 +36,8 @@ const appRoutes: Routes = [
     },
     {
         path: 'letter/:id',
-        component: LetterComponent
+        component: LetterComponent,
+        runGuardsAndResolvers: 'paramsChange'
     },
     {
         path: 'search',

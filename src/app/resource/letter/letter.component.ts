@@ -1,5 +1,5 @@
-import {Component, OnChanges, OnInit, SimpleChange} from '@angular/core';
-import {ActivatedRoute, Params} from '@angular/router';
+import { Component, OnChanges, OnInit, SimpleChange, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Params, Router, NavigationEnd } from '@angular/router';
 import {
     ApiServiceError,
     ApiServiceResult,
@@ -19,15 +19,16 @@ import {
     StillImageRepresentation,
     Utils
 } from '@knora/core';
-import {RequestStillImageRepresentations} from '@knora/viewer';
+import { RequestStillImageRepresentations } from '@knora/viewer';
 
 declare let require: any;
 let jsonld = require('jsonld');
 
 
 export interface NeededProps {
-    'author': string;
-    'recipient': string;
+    'author': ReadPropertyItem[];
+    'recipient': ReadPropertyItem[];
+    'figure': ReadPropertyItem[];
     'date': string;
     'subject': ReadPropertyItem[];
     'text': ReadPropertyItem[];
@@ -47,7 +48,7 @@ export interface NeededProps {
     templateUrl: './letter.component.html',
     styleUrls: ['./letter.component.scss']
 })
-export class LetterComponent implements OnChanges, OnInit {
+export class LetterComponent implements OnDestroy, OnInit {
 
     iri: string;
     resource: ReadResource;
@@ -58,12 +59,15 @@ export class LetterComponent implements OnChanges, OnInit {
 
     KnoraConstants = KnoraConstants;
 
+    navigationSubscription;
+
     // TODO: replace http://0.0.0.0:3333 and api.knora.org by a constant or by config.api
     propIris: any = {
         'id': 'http://0.0.0.0:3333/ontology/0801/beol/v2#beolIDs',
         'date': 'http://0.0.0.0:3333/ontology/0801/beol/v2#creationDate',
         'author': 'http://0.0.0.0:3333/ontology/0801/beol/v2#hasAuthorValue',
         'recipient': 'http://0.0.0.0:3333/ontology/0801/beol/v2#hasRecipientValue',
+        'figure': 'http://0.0.0.0:3333/ontology/0801/beol/v2#hasFigureValue',
         'subject': 'http://0.0.0.0:3333/ontology/0801/beol/v2#hasSubject',
         'text': 'http://0.0.0.0:3333/ontology/0801/beol/v2#hasText',
         'language': 'http://0.0.0.0:3333/ontology/0801/beol/v2#letterHasLanguage',
@@ -78,22 +82,7 @@ export class LetterComponent implements OnChanges, OnInit {
         'standoff': 'http://api.knora.org/ontology/knora-api/v2#hasStandoffLinkToValue'
     };
 
-    props: NeededProps = {
-        author: '',
-        recipient: '',
-        date: '',
-        subject: [],
-        text: [],
-        language: [],
-        number: '',
-        original: [],
-        repertorium: '',
-        translation: [],
-        published: [],
-        replyTo: [],
-        location: '',
-        title: []
-    };
+    props: NeededProps;
 
 
     /**
@@ -141,7 +130,8 @@ export class LetterComponent implements OnChanges, OnInit {
             const readStillImageFileValues: ReadStillImageFileValue[] = resource.incomingStillImageRepresentations.map(
                 (stillImageRes: ReadResource) => {
                     const fileValues = stillImageRes.properties[KnoraConstants.hasStillImageFileValue] as ReadStillImageFileValue[];
-                    // TODO: check if resources is a StillImageRepresentation using the ontology responder (support for subclass relations required)
+                    // TODO: check if resources is a StillImageRepresentation using the ontology responder
+                    // (support for subclass relations required)
                     const imagesToDisplay = fileValues.filter((image) => {
                         return !image.isPreview;
                     });
@@ -174,25 +164,44 @@ export class LetterComponent implements OnChanges, OnInit {
     }
 
     constructor(private _route: ActivatedRoute,
-                private _searchService: SearchService,
-                private _resourceService: ResourceService,
-                private _cacheService: OntologyCacheService,
-                private _incomingService: IncomingService) {
-    }
+        private _router: Router,
+        private _searchService: SearchService,
+        private _resourceService: ResourceService,
+        private _cacheService: OntologyCacheService,
+        private _incomingService: IncomingService) {
 
-    ngOnChanges(changes: { [key: string]: SimpleChange }) {
-        // prevent duplicate requests. if isFirstChange resource will be requested on ngOnInit
-        if (!changes['iri'].isFirstChange()) {
-            this.requestResource(this.iri);
-        }
-    }
-
-    ngOnInit() {
         this._route.params.subscribe((params: Params) => {
             this.iri = params['id'];
         });
 
+        // subscribe to the router events
+        this.navigationSubscription = this._router.events.subscribe((e: any) => {
+            // if it is a NavigationEnd event re-initalise the component
+            if (e instanceof NavigationEnd) {
+                this.requestResource(this.iri);
+            }
+        });
+
+    }
+
+    /*
+    ngOnChanges(changes: { [key: string]: SimpleChange }) {
+        // prevent duplicate requests. if isFirstChange resource will be requested on ngOnInit
+        if (!changes['id'].isFirstChange()) {
+            this.requestResource(this.iri);
+        }
+    }
+    */
+
+    ngOnInit() {
         this.requestResource(this.iri);
+
+    }
+
+    ngOnDestroy() {
+        if (this.navigationSubscription) {
+            this.navigationSubscription.unsubscribe();
+        }
     }
 
     /**
@@ -201,6 +210,11 @@ export class LetterComponent implements OnChanges, OnInit {
      * @param {string} resourceIRI the Iri of the resource to be requested.
      */
     private requestResource(resourceIRI: string): void {
+
+
+        this.props = undefined;
+
+
         this._resourceService.getResource(resourceIRI)
             .subscribe(
                 (result: ApiServiceResult) => {
@@ -234,7 +248,25 @@ export class LetterComponent implements OnChanges, OnInit {
                                     LetterComponent.collectImagesAndRegionsForResource(resourceSeq.resources[0]);
 
                                     this.resource = resourceSeq.resources[0];
-                                    console.log('resource ', resourceSeq.resources[0]);
+                                    // console.log('resource ', this.resource);
+
+                                    this.props = {
+                                        author: [],
+                                        recipient: [],
+                                        figure: [],
+                                        date: '',
+                                        subject: [],
+                                        text: [],
+                                        language: [],
+                                        number: '',
+                                        original: [],
+                                        repertorium: '',
+                                        translation: [],
+                                        published: [],
+                                        replyTo: [],
+                                        location: '',
+                                        title: []
+                                    };
 
                                     // TODO: build the new props list
                                     for (const key in this.resource.properties) {
@@ -242,11 +274,15 @@ export class LetterComponent implements OnChanges, OnInit {
                                             for (const val of this.resource.properties[key]) {
                                                 switch (val.propIri) {
                                                     case this.propIris.author:
-                                                        this.props.author = val.getContent();
+                                                        this.props.author.push(val);
                                                         break;
 
                                                     case this.propIris.recipient:
-                                                        this.props.recipient = val.getContent();
+                                                        this.props.recipient.push(val);
+                                                        break;
+
+                                                    case this.propIris.figure:
+                                                        this.props.figure.push(val);
                                                         break;
 
                                                     case this.propIris.date:
@@ -381,38 +417,38 @@ export class LetterComponent implements OnChanges, OnInit {
             (result: ApiServiceResult) => {
                 const promise = jsonld.promises.compact(result.body, {});
                 promise.then((compacted) => {
-                        const regions: ReadResourcesSequence = ConvertJSONLD.createReadResourcesSequenceFromJsonLD(compacted);
+                    const regions: ReadResourcesSequence = ConvertJSONLD.createReadResourcesSequenceFromJsonLD(compacted);
 
-                        // get resource class Iris from response
-                        const resourceClassIris: string[] = ConvertJSONLD.getResourceClassesFromJsonLD(compacted);
+                    // get resource class Iris from response
+                    const resourceClassIris: string[] = ConvertJSONLD.getResourceClassesFromJsonLD(compacted);
 
-                        // request ontology information about resource class Iris (properties are implied)
-                        this._cacheService.getResourceClassDefinitions(resourceClassIris).subscribe(
-                            (resourceClassInfos: OntologyInformation) => {
-                                // update ontology information
-                                this.ontologyInfo.updateOntologyInformation(resourceClassInfos);
+                    // request ontology information about resource class Iris (properties are implied)
+                    this._cacheService.getResourceClassDefinitions(resourceClassIris).subscribe(
+                        (resourceClassInfos: OntologyInformation) => {
+                            // update ontology information
+                            this.ontologyInfo.updateOntologyInformation(resourceClassInfos);
 
-                                // Append elements of regions.resources to resource.incoming
-                                Array.prototype.push.apply(this.resource.incomingRegions, regions.resources);
+                            // Append elements of regions.resources to resource.incoming
+                            Array.prototype.push.apply(this.resource.incomingRegions, regions.resources);
 
-                                // prepare regions to be displayed
-                                LetterComponent.collectImagesAndRegionsForResource(this.resource);
+                            // prepare regions to be displayed
+                            LetterComponent.collectImagesAndRegionsForResource(this.resource);
 
-                                // TODO: implement osdViewer
-                                /* if (this.osdViewer) {
-                                  this.osdViewer.updateRegions();
-                                } */
+                            // TODO: implement osdViewer
+                            /* if (this.osdViewer) {
+                              this.osdViewer.updateRegions();
+                            } */
 
-                                // if callback is given, execute function with the amount of new images as the parameter
-                                if (callback !== undefined) {
-                                    callback(regions.resources.length);
-                                }
-                            },
-                            (err) => {
+                            // if callback is given, execute function with the amount of new images as the parameter
+                            if (callback !== undefined) {
+                                callback(regions.resources.length);
+                            }
+                        },
+                        (err) => {
 
-                                console.log('cache request failed: ' + err);
-                            });
-                    },
+                            console.log('cache request failed: ' + err);
+                        });
+                },
                     function (err) {
                         console.log('JSONLD of regions request could not be expanded:' + err);
                     });
@@ -449,45 +485,45 @@ export class LetterComponent implements OnChanges, OnInit {
 
                 const promise = jsonld.promises.compact(result.body, {});
                 promise.then((compacted) => {
-                        // console.log(compacted);
+                    // console.log(compacted);
 
-                        const incomingImageRepresentations: ReadResourcesSequence = ConvertJSONLD.createReadResourcesSequenceFromJsonLD(compacted);
+                    const incomingImageRepresentations: ReadResourcesSequence = ConvertJSONLD.createReadResourcesSequenceFromJsonLD(compacted);
 
-                        // get resource class Iris from response
-                        const resourceClassIris: string[] = ConvertJSONLD.getResourceClassesFromJsonLD(compacted);
+                    // get resource class Iris from response
+                    const resourceClassIris: string[] = ConvertJSONLD.getResourceClassesFromJsonLD(compacted);
 
-                        // request ontology information about resource class Iris (properties are implied)
-                        this._cacheService.getResourceClassDefinitions(resourceClassIris).subscribe(
-                            (resourceClassInfos: OntologyInformation) => {
+                    // request ontology information about resource class Iris (properties are implied)
+                    this._cacheService.getResourceClassDefinitions(resourceClassIris).subscribe(
+                        (resourceClassInfos: OntologyInformation) => {
 
-                                if (incomingImageRepresentations.resources.length > 0) {
-                                    // update ontology information
-                                    this.ontologyInfo.updateOntologyInformation(resourceClassInfos);
+                            if (incomingImageRepresentations.resources.length > 0) {
+                                // update ontology information
+                                this.ontologyInfo.updateOntologyInformation(resourceClassInfos);
 
-                                    // set current offset
-                                    this.incomingStillImageRepresentationCurrentOffset = offset;
+                                // set current offset
+                                this.incomingStillImageRepresentationCurrentOffset = offset;
 
-                                    // TODO: implement prepending of StillImageRepresentations when moving to the left (getting previous pages)
-                                    // TODO: append existing images to response and then assign response to `this.resource.incomingStillImageRepresentations`
-                                    // TODO: maybe we have to support non consecutive arrays (sparse arrays)
+                                // TODO: implement prepending of StillImageRepresentations when moving to the left (getting previous pages)
+                                // TODO: append existing images to response and then assign response to `this.resource.incomingStillImageRepresentations`
+                                // TODO: maybe we have to support non consecutive arrays (sparse arrays)
 
-                                    // append incomingImageRepresentations.resources to this.resource.incomingStillImageRepresentations
-                                    Array.prototype.push.apply(this.resource.incomingStillImageRepresentations, incomingImageRepresentations.resources);
+                                // append incomingImageRepresentations.resources to this.resource.incomingStillImageRepresentations
+                                Array.prototype.push.apply(this.resource.incomingStillImageRepresentations, incomingImageRepresentations.resources);
 
-                                    // prepare attached image files to be displayed
-                                    LetterComponent.collectImagesAndRegionsForResource(this.resource);
-                                }
+                                // prepare attached image files to be displayed
+                                LetterComponent.collectImagesAndRegionsForResource(this.resource);
+                            }
 
-                                // if callback is given, execute function with the amount of new images as the parameter
-                                if (callback !== undefined) {
-                                    callback(incomingImageRepresentations.resources.length);
-                                }
-                            },
-                            (err) => {
+                            // if callback is given, execute function with the amount of new images as the parameter
+                            if (callback !== undefined) {
+                                callback(incomingImageRepresentations.resources.length);
+                            }
+                        },
+                        (err) => {
 
-                                console.log('cache request failed: ' + err);
-                            });
-                    },
+                            console.log('cache request failed: ' + err);
+                        });
+                },
                     function (err) {
                         console.log('JSONLD of regions request could not be expanded:' + err);
                     });
@@ -515,31 +551,31 @@ export class LetterComponent implements OnChanges, OnInit {
             (result: ApiServiceResult) => {
                 const promise = jsonld.promises.compact(result.body, {});
                 promise.then((compacted) => {
-                        const incomingResources: ReadResourcesSequence = ConvertJSONLD.createReadResourcesSequenceFromJsonLD(compacted);
+                    const incomingResources: ReadResourcesSequence = ConvertJSONLD.createReadResourcesSequenceFromJsonLD(compacted);
 
-                        // get resource class Iris from response
-                        const resourceClassIris: string[] = ConvertJSONLD.getResourceClassesFromJsonLD(compacted);
+                    // get resource class Iris from response
+                    const resourceClassIris: string[] = ConvertJSONLD.getResourceClassesFromJsonLD(compacted);
 
-                        // request ontology information about resource class Iris (properties are implied)
-                        this._cacheService.getResourceClassDefinitions(resourceClassIris).subscribe(
-                            (resourceClassInfos: OntologyInformation) => {
-                                // update ontology information
-                                this.ontologyInfo.updateOntologyInformation(resourceClassInfos);
+                    // request ontology information about resource class Iris (properties are implied)
+                    this._cacheService.getResourceClassDefinitions(resourceClassIris).subscribe(
+                        (resourceClassInfos: OntologyInformation) => {
+                            // update ontology information
+                            this.ontologyInfo.updateOntologyInformation(resourceClassInfos);
 
-                                // Append elements incomingResources to this.resource.incomingLinks
-                                Array.prototype.push.apply(this.resource.incomingLinks, incomingResources.resources);
+                            // Append elements incomingResources to this.resource.incomingLinks
+                            Array.prototype.push.apply(this.resource.incomingLinks, incomingResources.resources);
 
-                                // if callback is given, execute function with the amount of incoming resources as the parameter
-                                if (callback !== undefined) {
-                                    callback(incomingResources.resources.length);
-                                }
+                            // if callback is given, execute function with the amount of incoming resources as the parameter
+                            if (callback !== undefined) {
+                                callback(incomingResources.resources.length);
+                            }
 
-                            },
-                            (err) => {
+                        },
+                        (err) => {
 
-                                console.log('cache request failed: ' + err);
-                            });
-                    },
+                            console.log('cache request failed: ' + err);
+                        });
+                },
                     function (err) {
                         console.log('JSONLD of regions request could not be expanded:' + err);
                     });
