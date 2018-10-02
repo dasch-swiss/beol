@@ -37,6 +37,7 @@
     "jdnconvertiblecalendardateadapter": "^0.0.7",
     "json2typescript": "^1.0.6",
     "jsonld": "^1.0.4",
+    "ngx-infinite-scroll": "^6.0.1",
     "rxjs": "^6.2.2",
     "ts-md5": "^1.2.4",
     "zone.js": "^0.8.26"

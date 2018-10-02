@@ -46,6 +46,7 @@ import { APP_BASE_HREF } from '@angular/common';
 // import { RECAPTCHA_SETTINGS, RecaptchaSettings } from 'ng-recaptcha';
 import { AngularFirestore } from '../../node_modules/angularfire2/firestore';
 import { AngularFireModule } from '../../node_modules/@angular/fire';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 export function initializeApp(appConfig: AppConfig) {
     return () => appConfig.loadAppConfig();
@@ -84,6 +85,7 @@ export function initializeApp(appConfig: AppConfig) {
         AppRouting,
         BrowserModule,
         FlexLayoutModule,
+        InfiniteScrollModule,
         KuiCoreModule.forRoot({
             name: environment.name,
             api: environment.api,

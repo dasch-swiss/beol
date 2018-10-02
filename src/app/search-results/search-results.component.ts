@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
@@ -70,6 +70,9 @@ export class SearchResultsComponent implements OnInit {
         this._route.params.subscribe((params: Params) => {
             this.list.searchMode = params['mode'];
             this.list.restrictedBy = params['q'];
+
+            // init offset to 0
+            this.offset = 0;
 
             this.rerender = true;
             this.getResult();
@@ -179,7 +182,9 @@ export class SearchResultsComponent implements OnInit {
      */
     private processSearchResults = (searchResult: ApiServiceResult) => {
 
-        this.result = [];
+        if (this.offset === 0) {
+            this.result = [];
+        }
 
         const resPromises = jsonld.promises;
         // compact JSON-LD using an empty context: expands all Iris
@@ -205,7 +210,9 @@ export class SearchResultsComponent implements OnInit {
                         this.ontologyInfo.updateOntologyInformation(resourceClassInfos);
                     }
                     // append results to search results
+                    // console.log('results 1', this.result);
                     this.result = this.result.concat(resources.resources);
+                    // console.log('results 2', this.result);
                 },
                 (err) => {
 
@@ -249,5 +256,18 @@ export class SearchResultsComponent implements OnInit {
         } else {
             this._router.navigateByUrl('resource/' + encodeURIComponent(iri));
         }
+    }
+
+    /**
+     * Infinite scroll event
+     *
+     * @param offsetToUse
+     */
+    onScroll(offsetToUse: number = 0) {
+        console.log('scrolled!! ' + offsetToUse);
+        // update the page offset when the end of scroll is reached to get the next page of search results
+        this.offset = (offsetToUse === this.offset ? this.offset += 1 : offsetToUse);
+
+        this.getResult();
     }
 }
