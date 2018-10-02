@@ -43,7 +43,7 @@ import { ContactComponent } from './contact/contact.component';
 import { ContactFormComponent } from './contact/contact-form/contact-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { APP_BASE_HREF } from '@angular/common';
-import { RECAPTCHA_SETTINGS, RecaptchaSettings } from 'ng-recaptcha';
+// import { RECAPTCHA_SETTINGS, RecaptchaSettings } from 'ng-recaptcha';
 import { AngularFirestore } from '../../node_modules/angularfire2/firestore';
 import { AngularFireModule } from '../../node_modules/@angular/fire';
 
