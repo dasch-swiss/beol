@@ -1,9 +1,4 @@
-<div *ngIf="!rerender"
-     class="main-content"
-     infiniteScroll
-     [infiniteScrollDistance]="2"
-     [infiniteScrollThrottle]="150"
-     (scrolled)="onScroll(offset)">
+<div *ngIf="!rerender" class="main-content" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="150" (scrolled)="onScroll(offset)">
 
     <!-- show the number of results found in Knora -->
     <div *ngIf="numberOfAllResults != 0; else noResult">
@@ -38,6 +33,8 @@
                         <div [ngSwitch]="val.value.getClassName()">
 
                             <span *ngSwitchCase="KnoraConstants.ReadTextValueAsHtml" [valueObject]="val.value" [mathJax]="val.value?.getContent()" [ontologyInfo]="ontologyInfo" [bindEvents]="false"></span>
+
+                            <read-date-value *ngSwitchCase="KnoraConstants.ReadDateValue" [valueObject]="val.value" [calendar]="true" [era]="true"></read-date-value>
 
                             <span *ngSwitchDefault="">{{val.value.getContent()}}</span>
                         </div>

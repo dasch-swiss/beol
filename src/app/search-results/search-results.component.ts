@@ -264,7 +264,6 @@ export class SearchResultsComponent implements OnInit {
      * @param offsetToUse
      */
     onScroll(offsetToUse: number = 0) {
-        console.log('scrolled!! ' + offsetToUse);
         // update the page offset when the end of scroll is reached to get the next page of search results
         this.offset = (offsetToUse === this.offset ? this.offset += 1 : offsetToUse);
 

@@ -17,7 +17,8 @@ import {
     ResourceService,
     SearchService,
     StillImageRepresentation,
-    Utils
+    Utils,
+    DateSalsah
 } from '@knora/core';
 import { RequestStillImageRepresentations } from '@knora/viewer';
 
@@ -60,9 +61,9 @@ export class PersonComponent implements OnChanges, OnInit {
     props: any = {
         'comment': [],
         'alternative': [],
-        'birthDate': '',
+        'birthDate': new DateSalsah(),
         'birthPlace': '',
-        'deathDate': '',
+        'deathDate': new DateSalsah(),
         'deathPlace': '',
         'dictionary': [],
         'IAF': '',
@@ -218,7 +219,7 @@ export class PersonComponent implements OnChanges, OnInit {
                                                         break;
 
                                                     case this.propIris.birthDate:
-                                                        this.props.birthDate = val.getContent();
+                                                        this.props.birthDate = val.getDate();
                                                         break;
 
                                                     case this.propIris.birthPlace:
@@ -226,7 +227,7 @@ export class PersonComponent implements OnChanges, OnInit {
                                                         break;
 
                                                     case this.propIris.deathDate:
-                                                        this.props.deathDate = val.getContent();
+                                                        this.props.deathDate = val.getDate();
                                                         break;
 
                                                     case this.propIris.deathPlace:

@@ -10,10 +10,20 @@
                 </span>
             </p>
             <p mat-line>
-                <span *ngIf="props.birthDate">* {{props.birthDate}}</span>
+                <span *ngIf="props.birthDate.start">
+                    * {{props.birthDate.start.date | date: props.birthDate.start?.format}}
+                    <span *ngIf="props.birthDate.start.era">{{props.birthDate.start?.era}}</span>
+                </span>
+
                 <span *ngIf="props.birthPlace"> in {{props.birthPlace}}</span>
+
                 <span *ngIf="props.birthDate && props.deathDate"> &ndash; </span>
-                <span *ngIf="props.deathDate">† {{props.deathDate}}</span>
+
+                <span *ngIf="props.deathDate.start">
+                    † {{props.deathDate.start.date | date: props.deathDate.start?.format}}
+                    <span *ngIf="props.deathDate.start.era">{{props.deathDate.start?.era}}</span>
+                </span>
+
                 <span *ngIf="props.deathPlace"> in {{props.deathPlace}}</span>
             </p>
         </section>

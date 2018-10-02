@@ -17,7 +17,9 @@ import {
     ResourceService,
     SearchService,
     StillImageRepresentation,
-    Utils
+    Utils,
+    ReadDateValue,
+    DateSalsah
 } from '@knora/core';
 import { RequestStillImageRepresentations } from '@knora/viewer';
 
@@ -29,7 +31,7 @@ export interface NeededProps {
     'author': ReadPropertyItem[];
     'recipient': ReadPropertyItem[];
     'figure': ReadPropertyItem[];
-    'date': string;
+    'date': DateSalsah;
     'subject': ReadPropertyItem[];
     'text': ReadPropertyItem[];
     'language': ReadPropertyItem[];
@@ -254,7 +256,7 @@ export class LetterComponent implements OnDestroy, OnInit {
                                         author: [],
                                         recipient: [],
                                         figure: [],
-                                        date: '',
+                                        date: new DateSalsah(),
                                         subject: [],
                                         text: [],
                                         language: [],
@@ -286,7 +288,7 @@ export class LetterComponent implements OnDestroy, OnInit {
                                                         break;
 
                                                     case this.propIris.date:
-                                                        this.props.date = val.getContent();
+                                                        this.props.date = val.getDate();
                                                         break;
 
                                                     case this.propIris.subject:
