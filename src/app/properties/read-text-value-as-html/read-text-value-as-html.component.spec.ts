@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AppModule } from '../../app.module';
 import { MaterialModule } from '../../material-module';
 import { ReadTextValueAsHtmlComponent } from './read-text-value-as-html.component';
+import { MathJaxDirective } from '@knora/action';
 
 describe('ReadTextValueAsHtmlComponent', () => {
     let component: ReadTextValueAsHtmlComponent;
@@ -11,8 +11,11 @@ describe('ReadTextValueAsHtmlComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                AppModule,
                 MaterialModule
+            ],
+            declarations: [
+                ReadTextValueAsHtmlComponent,
+                MathJaxDirective
             ]
         })
             .compileComponents();

@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MaterialModule } from '../../material-module';
 
+import { MathJaxDirective } from '@knora/action';
 import { ReadListValueComponent } from './read-list-value.component';
-import { AppModule } from '../../app.module';
-import { AppRouting } from '../../app.routing';
 
 describe('ReadListValueComponent', () => {
   let component: ReadListValueComponent;
@@ -11,8 +11,11 @@ describe('ReadListValueComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        AppModule,
-        AppRouting
+        MaterialModule
+      ],
+      declarations: [
+        ReadListValueComponent,
+        MathJaxDirective
       ]
     })
       .compileComponents();
