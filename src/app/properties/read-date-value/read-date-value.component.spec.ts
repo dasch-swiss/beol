@@ -3,6 +3,7 @@ import { AppModule } from '../../app.module';
 import { APP_BASE_HREF } from '@angular/common';
 import { MaterialModule } from '../../material-module';
 import { ReadDateValueComponent } from './read-date-value.component';
+import { ReadDateValue, DateSalsah } from '@knora/core';
 
 describe('ReadDateValueComponent', () => {
     let component: ReadDateValueComponent;
@@ -36,7 +37,7 @@ describe('ReadDateValueComponent', () => {
         fixture.detectChanges();
     });
 
-    it('should create', () => {
+    fit('should create', () => {
         expect(component).toBeTruthy();
     });
 });

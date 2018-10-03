@@ -1,4 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+
 import { AppModule } from '../../app.module';
 import { MaterialModule } from '../../material-module';
 import { ReadDecimalValueComponent } from './read-decimal-value.component';
@@ -23,7 +26,9 @@ describe('ReadDecimalValueComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 AppModule,
-                MaterialModule
+                MaterialModule,
+                HttpClientModule,
+                HttpClientTestingModule
             ]
         })
             .compileComponents();

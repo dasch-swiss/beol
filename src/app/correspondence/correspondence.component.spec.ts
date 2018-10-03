@@ -1,6 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+
+import { MaterialModule } from '../material-module';
 import { CorrespondenceComponent } from './correspondence.component';
+import { KuiCoreConfig } from '@knora/core';
 
 describe('CorrespondenceComponent', () => {
   let component: CorrespondenceComponent;
@@ -8,8 +13,14 @@ describe('CorrespondenceComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
-      declarations: [CorrespondenceComponent]
+      imports: [
+        RouterTestingModule,
+        MaterialModule,
+        HttpClientModule,
+        HttpClientTestingModule
+      ],
+      declarations: [CorrespondenceComponent],
+      providers: [{ provide: 'config', useValue: KuiCoreConfig }]
     })
       .compileComponents();
   }));
