@@ -1,8 +1,7 @@
 <kui-progress-indicator *ngIf="loading"></kui-progress-indicator>
 <div class="full-size scroll-y-only" *ngIf="!loading">
     <div class="main-content">
-        <section>
-            <h4 mat-card-subtitle>{{ontologyInfo?.getLabelForResourceClass(resource?.type)}}</h4>
+        <section class="center">
             <h2 class="mat-display-1 margins">{{resource?.label}}</h2>
             <p class="mat-subheading-2" *ngIf="props?.alternative">
                 <span *ngFor="let alt of props.alternative; let last = last">{{alt.str}}

@@ -1,7 +1,6 @@
 <div class="full-size scroll-y-only">
 
-    <div class="intro-sidebar">
-        <h2>links</h2>
+    <div class="sidebar">
         <div *ngFor="let prop of resource?.properties | key">
             <div *ngFor="let val of prop.value | key">
                 <span *ngIf="val.value.referredResourceIri && val.value.referredResource.type == 'http://0.0.0.0:3333/ontology/0801/beol/v2#section'">
@@ -16,7 +15,7 @@
         <br>
     </div>
 
-    <div class="content-with-sidebar">
+    <div class="main-content">
 
         <h2>{{resource?.label}}</h2>
 
