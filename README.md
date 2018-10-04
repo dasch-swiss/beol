@@ -25,6 +25,31 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
+## Structure
+
+* app module 
+    * app component
+
+* contact: contact page
+
+* correspondence: customised page for correspondences
+
+* error: customised error page
+
+* introduction: customised page for LEOO introductions
+
+* landing-page: home page with a presentation of BEOL, LEOO introductions and correspondences, BEBB correspondences, technical background
+
+* properties: Knora constants properties
+
+* resource: customised page for all resources other than letter and person types
+    * letter: customised page for letter type
+    * person: customised page for person type
+
+* search-results: result list of the simple or advanced searches (the search bar comes from @knora/search)
+
+* services: specific services of BEOL (the other services come from @knora/core)
+
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
