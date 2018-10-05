@@ -1,5 +1,6 @@
 import { Component, OnChanges, OnInit, SimpleChange } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { Location } from '@angular/common';
 import {
     ApiServiceError,
     ApiServiceResult,
@@ -151,7 +152,8 @@ export class PersonComponent implements OnChanges, OnInit {
         private _searchService: SearchService,
         private _resourceService: ResourceService,
         private _cacheService: OntologyCacheService,
-        private _incomingService: IncomingService) {
+        private _incomingService: IncomingService,
+        private _location: Location) {
     }
 
     ngOnChanges(changes: { [key: string]: SimpleChange }) {
@@ -565,6 +567,13 @@ export class PersonComponent implements OnChanges, OnInit {
         // generate a string separating labels by a comma
         return `(${propLabels.join(', ')})`;
 
+    }
+
+    /**
+     * Navigates back in the platform's history.
+     */
+    goBack(): void {
+        this._location.back();
     }
 
 }

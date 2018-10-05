@@ -1,5 +1,7 @@
-import { Component, OnChanges, OnInit, SimpleChange, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Params, Router, NavigationEnd } from '@angular/router';
+import { Component, OnChanges, OnInit, SimpleChange, OnDestroy, Input } from '@angular/core';
+import { ActivatedRoute, Params, Router, NavigationEnd, RoutesRecognized } from '@angular/router';
+import { filter, pairwise } from 'rxjs/operators';
+import { Location } from '@angular/common';
 import {
     ApiServiceError,
     ApiServiceResult,
@@ -22,6 +24,7 @@ import {
     DateSalsah
 } from '@knora/core';
 import { RequestStillImageRepresentations } from '@knora/viewer';
+import { PreviousRouteService } from '../../services/previousroute.service';
 
 declare let require: any;
 let jsonld = require('jsonld');
@@ -165,35 +168,27 @@ export class LetterComponent implements OnDestroy, OnInit {
 
     }
 
+
     constructor(private _route: ActivatedRoute,
         private _router: Router,
         private _searchService: SearchService,
         private _resourceService: ResourceService,
         private _cacheService: OntologyCacheService,
-        private _incomingService: IncomingService) {
+        private _incomingService: IncomingService,
+        private _location: Location) {
 
         this._route.params.subscribe((params: Params) => {
             this.iri = params['id'];
         });
 
-        // subscribe to the router events
+        // subscribe to the router events to reload the content
         this.navigationSubscription = this._router.events.subscribe((e: any) => {
             // if it is a NavigationEnd event re-initalise the component
             if (e instanceof NavigationEnd) {
                 this.requestResource(this.iri);
             }
         });
-
     }
-
-    /*
-    ngOnChanges(changes: { [key: string]: SimpleChange }) {
-        // prevent duplicate requests. if isFirstChange resource will be requested on ngOnInit
-        if (!changes['id'].isFirstChange()) {
-            this.requestResource(this.iri);
-        }
-    }
-    */
 
     ngOnInit() {
         this.requestResource(this.iri);
@@ -655,6 +650,13 @@ export class LetterComponent implements OnDestroy, OnInit {
         // generate a string separating labels by a comma
         return `(${propLabels.join(', ')})`;
 
+    }
+
+    /**
+     * Navigates back in the platform's history.
+     */
+    goBack(): void {
+        this._location.back();
     }
 
 }

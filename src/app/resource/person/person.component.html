@@ -1,5 +1,13 @@
 <kui-progress-indicator *ngIf="loading"></kui-progress-indicator>
 <div class="full-size scroll-y-only" *ngIf="!loading">
+
+    <div class="sidebar">
+
+        <button mat-stroked-button class="previousBtn" (click)="goBack()">
+            <mat-icon>arrow_back</mat-icon>Previous</button>
+
+    </div>
+
     <div class="main-content">
         <section class="center">
             <h2 class="mat-display-1 margins">{{resource?.label}}</h2>
@@ -55,7 +63,6 @@
             <!-- Incoming links? -->
             <!--<div *ngFor=""></div>-->
         </section>
-
 
     </div>
 </div>
