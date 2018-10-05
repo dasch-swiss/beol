@@ -1,5 +1,5 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
-
+import { Location } from '@angular/common';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
     ApiServiceError,
@@ -61,7 +61,8 @@ export class SearchResultsComponent implements OnInit {
         private _searchService: SearchService,
         private _cacheService: OntologyCacheService,
         private _searchParamsService: SearchParamsService,
-        private _router: Router) {
+        private _router: Router,
+        public location: Location) {
 
     }
 

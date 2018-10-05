@@ -175,7 +175,7 @@ export class LetterComponent implements OnDestroy, OnInit {
         private _resourceService: ResourceService,
         private _cacheService: OntologyCacheService,
         private _incomingService: IncomingService,
-        private _location: Location) {
+        public location: Location) {
 
         this._route.params.subscribe((params: Params) => {
             this.iri = params['id'];
@@ -650,13 +650,6 @@ export class LetterComponent implements OnDestroy, OnInit {
         // generate a string separating labels by a comma
         return `(${propLabels.join(', ')})`;
 
-    }
-
-    /**
-     * Navigates back in the platform's history.
-     */
-    goBack(): void {
-        this._location.back();
     }
 
 }

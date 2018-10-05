@@ -1,4 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Location } from '@angular/common';
+import { ActivatedRoute, Params, Router, NavigationEnd } from '@angular/router';
 import {
     ApiServiceResult,
     ConvertJSONLD,
@@ -14,7 +16,6 @@ import {
     StillImageRepresentation
 } from '@knora/core';
 import { BeolService } from '../services/beol.service';
-import { ActivatedRoute, Params, Router, NavigationEnd } from '@angular/router';
 
 declare let require: any;
 let jsonld = require('jsonld');
@@ -43,7 +44,8 @@ export class IntroductionComponent implements OnInit, OnDestroy {
         private _beol: BeolService,
         private _resourceService: ResourceService,
         private _cacheService: OntologyCacheService,
-        private _incomingService: IncomingService) {
+        private _incomingService: IncomingService,
+        public location: Location) {
 
         // subscribe to the router events
         this.navigationSubscription = this._router.events.subscribe((e: any) => {

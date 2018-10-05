@@ -1,4 +1,13 @@
 <div class="full-size scroll-y-only">
+
+    <div class="sidebar">
+
+        <button mat-stroked-button class="previousBtn" (click)="location.back()">
+            <mat-icon>arrow_back</mat-icon>Previous
+        </button>
+
+    </div>
+
     <div class="main-content">
 
         <section class="title">
@@ -25,7 +34,7 @@
 
         <mat-divider></mat-divider>
 
-<!--
+        <!--
         <section class="text">
             <h3 class="mat-title">Contact Form</h3>
             <app-contact-form></app-contact-form>

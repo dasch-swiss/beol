@@ -1,3 +1,11 @@
+<div class="sidebar">
+
+    <button mat-stroked-button class="previousBtn" (click)="location.back()">
+        <mat-icon>arrow_back</mat-icon>Previous
+    </button>
+
+</div>
+
 <div *ngIf="!rerender" class="main-content" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="150" (scrolled)="onScroll(offset)">
 
     <!-- show the number of results found in Knora -->

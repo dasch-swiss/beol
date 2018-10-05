@@ -1,6 +1,11 @@
 <div class="full-size scroll-y-only">
 
     <div class="sidebar">
+
+        <button mat-stroked-button class="previousBtn" (click)="location.back()">
+            <mat-icon>arrow_back</mat-icon>Previous
+        </button>
+
         <div *ngFor="let prop of resource?.properties | key">
             <div *ngFor="let val of prop.value | key">
                 <span *ngIf="val.value.referredResourceIri && val.value.referredResource.type == 'http://0.0.0.0:3333/ontology/0801/beol/v2#section'">

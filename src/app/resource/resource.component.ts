@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, OnChanges, SimpleChange, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Router, NavigationEnd } from '@angular/router';
+import { Location } from '@angular/common';
 import {
   ApiServiceError,
   ApiServiceResult,
@@ -122,7 +123,8 @@ export class ResourceComponent implements OnChanges, OnDestroy, OnInit {
     private _searchService: SearchService,
     private _resourceService: ResourceService,
     private _cacheService: OntologyCacheService,
-    private _incomingService: IncomingService) {
+    private _incomingService: IncomingService,
+    public location: Location) {
 
     this._route.params.subscribe((params: Params) => {
       this.iri = params['id'];
