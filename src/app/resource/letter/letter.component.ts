@@ -24,7 +24,6 @@ import {
     DateSalsah
 } from '@knora/core';
 import { RequestStillImageRepresentations } from '@knora/viewer';
-import { PreviousRouteService } from '../../services/previousroute.service';
 
 declare let require: any;
 let jsonld = require('jsonld');
