@@ -11,7 +11,7 @@
                 <span *ngIf="val.value.referredResourceIri && val.value.referredResource.type == 'http://0.0.0.0:3333/ontology/0801/beol/v2#section'">
                     <mat-list>
                         <mat-list-item class="{{KnoraConstants.SalsahLink}}" (click)="goToIntro(val.value.referredResource.label)">
-                            {{val.value?.getContent()}}
+                            <a>{{val.value?.getContent()}}</a>
                         </mat-list-item>
                     </mat-list>
                 </span>
