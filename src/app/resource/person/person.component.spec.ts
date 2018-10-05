@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Location } from '@angular/common';
 import { MaterialModule } from '../../material-module';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
@@ -19,6 +20,7 @@ describe('PersonComponent', () => {
       imports: [MaterialModule, HttpClientModule, HttpClientTestingModule],
       declarations: [PersonComponent, ProgressIndicatorComponent, GndDirective],
       providers: [
+        { provide: Location },
         {
           provide: ActivatedRoute,
           useValue: { params: of({ id }) }

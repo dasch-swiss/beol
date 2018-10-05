@@ -4,6 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { of } from 'rxjs';
+import { MaterialModule } from '../material-module';
 
 import { ResourceComponent } from './resource.component';
 import { KeyPipe, MathJaxDirective, GndDirective } from '@knora/action';
@@ -32,7 +33,12 @@ describe('ResourceComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule, HttpClientModule, HttpClientTestingModule],
+      imports: [
+        MaterialModule,
+        RouterTestingModule,
+        HttpClientModule,
+        HttpClientTestingModule
+      ],
       declarations: [
         ResourceComponent,
         KeyPipe,

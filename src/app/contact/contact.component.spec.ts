@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MaterialModule } from '../material-module';
 import { ContactComponent } from './contact.component';
+import { Location } from '@angular/common';
 
 describe('ContactComponent', () => {
   let component: ContactComponent;
@@ -9,7 +10,8 @@ describe('ContactComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [MaterialModule],
-      declarations: [ContactComponent]
+      declarations: [ContactComponent],
+      providers: [{ provide: Location }]
     })
       .compileComponents();
   }));
