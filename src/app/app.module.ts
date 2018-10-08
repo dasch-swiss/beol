@@ -36,6 +36,8 @@ import { ReadTextValueAsStringComponent } from './properties/read-text-value-as-
 import { ReadTextValueAsXmlComponent } from './properties/read-text-value-as-xml/read-text-value-as-xml.component';
 import { ReadTextfileValueComponent } from './properties/read-textfile-value/read-textfile-value.component';
 import { ReadUriValueComponent } from './properties/read-uri-value/read-uri-value.component';
+// directives
+import { MathJaxDirective } from './directives/mathjax.directive';
 // Loads the application configuration file during application startup
 import { AppConfig } from './app.config';
 import { CorrespondenceComponent } from './correspondence/correspondence.component';
@@ -78,7 +80,8 @@ export function initializeApp(appConfig: AppConfig) {
         ReadUriValueComponent,
         CorrespondenceComponent,
         ContactComponent,
-        ContactFormComponent
+        ContactFormComponent,
+        MathJaxDirective
     ],
     imports: [
         AngularFireModule.initializeApp(environment.firebase),
