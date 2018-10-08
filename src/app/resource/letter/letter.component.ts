@@ -24,6 +24,7 @@ import {
     DateSalsah
 } from '@knora/core';
 import { RequestStillImageRepresentations } from '@knora/viewer';
+import { AppConfig } from '../../app.config';
 
 declare let require: any;
 let jsonld = require('jsonld');
@@ -62,28 +63,28 @@ export class LetterComponent implements OnDestroy, OnInit {
     errorMessage: any;
 
     KnoraConstants = KnoraConstants;
+    apiUrl = AppConfig.settings.apiURL;
 
     navigationSubscription;
 
-    // TODO: replace http://0.0.0.0:3333 and api.knora.org by a constant or by config.api
     propIris: any = {
-        'id': 'http://0.0.0.0:3333/ontology/0801/beol/v2#beolIDs',
-        'date': 'http://0.0.0.0:3333/ontology/0801/beol/v2#creationDate',
-        'author': 'http://0.0.0.0:3333/ontology/0801/beol/v2#hasAuthorValue',
-        'recipient': 'http://0.0.0.0:3333/ontology/0801/beol/v2#hasRecipientValue',
-        'figure': 'http://0.0.0.0:3333/ontology/0801/beol/v2#hasFigureValue',
-        'subject': 'http://0.0.0.0:3333/ontology/0801/beol/v2#hasSubject',
-        'text': 'http://0.0.0.0:3333/ontology/0801/beol/v2#hasText',
-        'language': 'http://0.0.0.0:3333/ontology/0801/beol/v2#letterHasLanguage',
-        'number': 'http://0.0.0.0:3333/ontology/0801/beol/v2#letterHasNumber',
-        'original': 'http://0.0.0.0:3333/ontology/0801/beol/v2#letterHasOriginalValue',
-        'repertorium': 'http://0.0.0.0:3333/ontology/0801/beol/v2#letterHasRepertoriumNumber',
-        'translation': 'http://0.0.0.0:3333/ontology/0801/beol/v2#letterHasTranslationValue',
-        'published': 'http://0.0.0.0:3333/ontology/0801/beol/v2#letterIsPublishedValue',
-        'replyTo': 'http://0.0.0.0:3333/ontology/0801/beol/v2#letterIsReplyToValue',
-        'location': 'http://0.0.0.0:3333/ontology/0801/beol/v2#location',
-        'title': 'http://0.0.0.0:3333/ontology/0801/beol/v2#title',
-        'standoff': 'http://api.knora.org/ontology/knora-api/v2#hasStandoffLinkToValue'
+        'id': this.apiUrl + '/ontology/0801/beol/v2#beolIDs',
+        'date': this.apiUrl + '/ontology/0801/beol/v2#creationDate',
+        'author': this.apiUrl + '/ontology/0801/beol/v2#hasAuthorValue',
+        'recipient': this.apiUrl + '/ontology/0801/beol/v2#hasRecipientValue',
+        'figure': this.apiUrl + '/ontology/0801/beol/v2#hasFigureValue',
+        'subject': this.apiUrl + '/ontology/0801/beol/v2#hasSubject',
+        'text': this.apiUrl + '/ontology/0801/beol/v2#hasText',
+        'language': this.apiUrl + '/ontology/0801/beol/v2#letterHasLanguage',
+        'number': this.apiUrl + '/ontology/0801/beol/v2#letterHasNumber',
+        'original': this.apiUrl + '/ontology/0801/beol/v2#letterHasOriginalValue',
+        'repertorium': this.apiUrl + '/ontology/0801/beol/v2#letterHasRepertoriumNumber',
+        'translation': this.apiUrl + '/ontology/0801/beol/v2#letterHasTranslationValue',
+        'published': this.apiUrl + '/ontology/0801/beol/v2#letterIsPublishedValue',
+        'replyTo': this.apiUrl + '/ontology/0801/beol/v2#letterIsReplyToValue',
+        'location': this.apiUrl + '/ontology/0801/beol/v2#location',
+        'title': this.apiUrl + '/ontology/0801/beol/v2#title',
+        'standoff': this.apiUrl + '/ontology/knora-api/v2#hasStandoffLinkToValue'
     };
 
     props: NeededProps;

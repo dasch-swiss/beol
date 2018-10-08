@@ -22,6 +22,7 @@ import {
     DateSalsah
 } from '@knora/core';
 import { RequestStillImageRepresentations } from '@knora/viewer';
+import { AppConfig } from '../../app.config';
 
 declare let require: any;
 let jsonld = require('jsonld');
@@ -41,21 +42,21 @@ export class PersonComponent implements OnChanges, OnInit {
     errorMessage: any;
 
     KnoraConstants = KnoraConstants;
+    apiUrl = AppConfig.settings.apiURL;
 
-    // TODO: replace http://0.0.0.0:3333 by a constant or by config.api
     propIris: any = {
-        'id': 'http://0.0.0.0:3333/ontology/0801/beol/v2#beolIDs',
-        'comment': 'http://0.0.0.0:3333/ontology/0801/beol/v2#comment',
-        'alternative': 'http://0.0.0.0:3333/ontology/0801/beol/v2#hasAlternativeName',
-        'birthDate': 'http://0.0.0.0:3333/ontology/0801/beol/v2#hasBirthDate',
-        'birthPlace': 'http://0.0.0.0:3333/ontology/0801/beol/v2#hasBirthPlace',
-        'deathDate': 'http://0.0.0.0:3333/ontology/0801/beol/v2#hasDeathDate',
-        'deathPlace': 'http://0.0.0.0:3333/ontology/0801/beol/v2#hasDeathPlace',
-        'dictionary': 'http://0.0.0.0:3333/ontology/0801/beol/v2#hasDictionaryEntries',
-        'familyName': 'http://0.0.0.0:3333/ontology/0801/beol/v2#hasFamilyName',
-        'givenName': 'http://0.0.0.0:3333/ontology/0801/beol/v2#hasGivenName',
-        'IAF': 'http://0.0.0.0:3333/ontology/0801/beol/v2#hasIAFIdentifier',
-        'mentioned': 'http://0.0.0.0:3333/ontology/0801/beol/v2#mentionedIn'
+        'id': this.apiUrl + '/ontology/0801/beol/v2#beolIDs',
+        'comment': this.apiUrl + '/ontology/0801/beol/v2#comment',
+        'alternative': this.apiUrl + '/ontology/0801/beol/v2#hasAlternativeName',
+        'birthDate': this.apiUrl + '/ontology/0801/beol/v2#hasBirthDate',
+        'birthPlace': this.apiUrl + '/ontology/0801/beol/v2#hasBirthPlace',
+        'deathDate': this.apiUrl + '/ontology/0801/beol/v2#hasDeathDate',
+        'deathPlace': this.apiUrl + '/ontology/0801/beol/v2#hasDeathPlace',
+        'dictionary': this.apiUrl + '/ontology/0801/beol/v2#hasDictionaryEntries',
+        'familyName': this.apiUrl + '/ontology/0801/beol/v2#hasFamilyName',
+        'givenName': this.apiUrl + '/ontology/0801/beol/v2#hasGivenName',
+        'IAF': this.apiUrl + '/ontology/0801/beol/v2#hasIAFIdentifier',
+        'mentioned': this.apiUrl + '/ontology/0801/beol/v2#mentionedIn'
     };
 
     // create a person props interface

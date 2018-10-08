@@ -15,6 +15,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { OntologyInformation, ReadLinkValue, KnoraConstants } from '@knora/core';
 import { Router } from '@angular/router';
+import { AppConfig } from '../../app.config';
 
 @Component({
     selector: 'read-link-value',
@@ -27,6 +28,8 @@ export class ReadLinkValueComponent implements OnInit {
     @Input() ontologyInfo: OntologyInformation;
 
     KnoraConstants = KnoraConstants;
+
+    apiUrl = AppConfig.settings.apiURL;
 
     constructor(private _router: Router) {
     }
@@ -42,9 +45,9 @@ export class ReadLinkValueComponent implements OnInit {
      */
     showReferredResource(referredIri, referredType) {
 
-        if (referredType === 'http://0.0.0.0:3333/ontology/0801/beol/v2#person') {
+        if (referredType === this.apiUrl + '/ontology/0801/beol/v2#person') {
             this._router.navigateByUrl('person/' + encodeURIComponent(referredIri));
-        } else if (referredType === 'http://0.0.0.0:3333/ontology/0801/beol/v2#letter') {
+        } else if (referredType === this.apiUrl + '/ontology/0801/beol/v2#letter') {
             this._router.navigateByUrl('letter/' + encodeURIComponent(referredIri));
         } else {
             this._router.navigateByUrl('resource/' + encodeURIComponent(referredIri));
