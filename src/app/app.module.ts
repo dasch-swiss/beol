@@ -36,6 +36,7 @@ import { ReadTextValueAsStringComponent } from './properties/read-text-value-as-
 import { ReadTextValueAsXmlComponent } from './properties/read-text-value-as-xml/read-text-value-as-xml.component';
 import { ReadTextfileValueComponent } from './properties/read-textfile-value/read-textfile-value.component';
 import { ReadUriValueComponent } from './properties/read-uri-value/read-uri-value.component';
+import { LeooRouteComponent } from './leoo-route/leoo-route.component';
 // directives
 import { MathJaxDirective } from './directives/mathjax.directive';
 // Loads the application configuration file during application startup
@@ -81,7 +82,8 @@ export function initializeApp(appConfig: AppConfig) {
         CorrespondenceComponent,
         ContactComponent,
         ContactFormComponent,
-        MathJaxDirective
+        MathJaxDirective,
+        LeooRouteComponent
     ],
     imports: [
         AngularFireModule.initializeApp(environment.firebase),

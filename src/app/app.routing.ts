@@ -8,7 +8,7 @@ import { LetterComponent } from './resource/letter/letter.component';
 import { PersonComponent } from './resource/person/person.component';
 import { ResourceComponent } from './resource/resource.component';
 import { CorrespondenceComponent } from './correspondence/correspondence.component';
-import {ContactComponent} from './contact/contact.component';
+import { ContactComponent } from './contact/contact.component';
 
 
 const appRoutes: Routes = [
@@ -48,6 +48,10 @@ const appRoutes: Routes = [
             }
         ]
     },
+    /*  { // path to specific component for the BEOL project
+         path: 'leoo/:rn',
+         component: LeooComponent
+     }, */
     {
         path: 'contact',
         component: ContactComponent
