@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { BeolService } from '../services/beol.service';
 import { ApiServiceResult, ConvertJSONLD, SearchService, ReadResourcesSequence } from '@knora/core';
+import {AppConfig} from '../app.config';
 
 declare let require: any;
 let jsonld = require('jsonld');
@@ -14,6 +15,8 @@ let jsonld = require('jsonld');
 export class LeooRouteComponent implements OnInit {
 
   repertoriumNumber: string;
+
+  apiUrl = AppConfig.settings.apiURL;
 
   constructor(
     private _route: ActivatedRoute,
@@ -47,7 +50,7 @@ export class LeooRouteComponent implements OnInit {
                 const letterIri: string = resourceSeq.resources[0].id;
 
                 // given the Iri of the letter, display the whole resource
-                this._router.navigate(['/object', letterIri]);
+                this._beolService.routeByResourceType(this.apiUrl + '/ontology/0801/beol/v2#letter', letterIri);
               } else {
                 // letter not found
                 console.log(`letter with repertorium number ${this.repertoriumNumber} not found`);

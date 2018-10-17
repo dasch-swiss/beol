@@ -182,12 +182,12 @@ export class LetterComponent implements OnDestroy, OnInit {
         });
 
         // subscribe to the router events to reload the content
-        this.navigationSubscription = this._router.events.subscribe((e: any) => {
+        /*this.navigationSubscription = this._router.events.subscribe((e: any) => {
             // if it is a NavigationEnd event re-initalise the component
             if (e instanceof NavigationEnd) {
                 this.requestResource(this.iri);
             }
-        });
+        });*/
     }
 
     ngOnInit() {
@@ -207,7 +207,6 @@ export class LetterComponent implements OnDestroy, OnInit {
      * @param {string} resourceIRI the Iri of the resource to be requested.
      */
     private requestResource(resourceIRI: string): void {
-
 
         this.props = undefined;
 

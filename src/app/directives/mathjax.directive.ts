@@ -1,5 +1,6 @@
-import { Directive, ElementRef, HostListener, Input, OnChanges, OnInit } from '@angular/core';
-import { KnoraConstants, OntologyInformation, ReadTextValueAsHtml } from '@knora/core';
+import {Directive, ElementRef, HostListener, Input, OnChanges, OnInit} from '@angular/core';
+import {KnoraConstants, OntologyInformation, ReadTextValueAsHtml} from '@knora/core';
+import {BeolService} from '../services/beol.service';
 
 declare var MathJax: {
     Hub: {
@@ -15,6 +16,8 @@ declare var MathJax: {
 @Directive({ selector: '[mathJax]' })
 export class MathJaxDirective implements OnChanges, OnInit {
 
+    private _html: string; // the HTML to be inserted
+
     @Input()
     // setter method for resource classes when being updated by parent component
     set mathJax(value: string) {
@@ -23,7 +26,6 @@ export class MathJaxDirective implements OnChanges, OnInit {
     get mathJax() {
         return this._html;
     }
-    private _html: string; // the HTML to be inserted
 
     @Input()
     // setter method for resource classes when being updated by parent component
@@ -39,13 +41,12 @@ export class MathJaxDirective implements OnChanges, OnInit {
     @Input('ontologyInfo') private ontologyInfo: OntologyInformation;
     @Input('bindEvents') private bindEvents: Boolean; // indicates if click and mouseover events have to be bound
 
-    constructor(private el: ElementRef) {
+    constructor(private el: ElementRef, private _beol: BeolService) {
     }
 
     /**
      * Binds a click event to standoff links that shows the referred resource in a dialog box.
-     *
-     * @param event the event fired on an element inserted by this directive.
+     * @param targetElement the element that received the event.
      * @returns a Boolean indicating if event propagation should be stopped.
      */
     @HostListener('click', ['$event.target'])
@@ -56,8 +57,14 @@ export class MathJaxDirective implements OnChanges, OnInit {
             this.bindEvents && targetElement.nodeName.toLowerCase() === 'a'
             && targetElement.className.toLowerCase().indexOf(KnoraConstants.SalsahLink) >= 0) {
 
-            // const config: MatDialogConfig = ResourceDialogComponent.createConfiguration(targetElement.href);
-            // this.dialog.open(ResourceDialogComponent, config);
+            // salsah-link to a BEOL resource
+
+            const referredResourceIri = targetElement.href;
+
+            // TODO: the value object should handle this and check for the existence of the given referred resource
+            const referredResourceType = this._valueObject.referredResources[referredResourceIri].type;
+
+            this._beol.routeByResourceType(referredResourceType, referredResourceIri);
 
             // preventDefault (propagation)
             return false;
@@ -65,11 +72,13 @@ export class MathJaxDirective implements OnChanges, OnInit {
             targetElement.parentElement.nodeName.toLowerCase() === 'a'
             && targetElement.parentElement.className.toLowerCase().indexOf(KnoraConstants.SalsahLink) >= 0) {
 
-            // const config: MatDialogConfig = ResourceDialogComponent.createConfiguration(targetElement.parentElement.href);
+            // salsah-link to a BEOL resource, activated from a parent element, e.g., a footnote (salsah-link containing a <sup>)
 
-            // config.panelClass = 'resizable';
+            const referredResourceIri = targetElement.parentElement.href;
 
-            // this.dialog.open(ResourceDialogComponent, config);
+            const referredResourceType = this._valueObject.referredResources[referredResourceIri].type;
+
+            this._beol.routeByResourceType(referredResourceType, referredResourceIri);
 
             // preventDefault (propagation)
             return false;
@@ -77,6 +86,8 @@ export class MathJaxDirective implements OnChanges, OnInit {
         } else if (
             this.bindEvents && targetElement.parentElement.nodeName.toLowerCase() === 'a'
             && targetElement.parentElement.className.toLowerCase().indexOf(KnoraConstants.RefMarker) >= 0) {
+
+            // internal reference in a BEBB letter: scroll to note on page
 
             const indexOfHashtag = targetElement.parentElement.href.indexOf('#', '');
 
@@ -108,7 +119,7 @@ export class MathJaxDirective implements OnChanges, OnInit {
     /**
      * Binds a mouseover event to the inserted elements.
      *
-     * @param event the event fired on an element inserted by this directive.
+     * @param targetElement the element that received the event.
      * @returns a Boolean indicating if event propagation should be stopped.
      */
     @HostListener('mouseover', ['$event.target'])
@@ -121,12 +132,20 @@ export class MathJaxDirective implements OnChanges, OnInit {
 
             const referredResourceIri = targetElement.href;
 
-            const resInfo = this.valueObject.getReferredResourceInfo(referredResourceIri, this.ontologyInfo);
+            // TODO: the value object should handle this and check for the existence of the given referred resource
+            const referredResourceType = this._valueObject.referredResources[referredResourceIri].type;
 
-            /* const config = new MatSnackBarConfig();
-            config.duration = 2500; */
+            // preventDefault (propagation)
+            return false;
+        } else if ( targetElement.parentElement.nodeName.toLowerCase() === 'a'
+            && targetElement.parentElement.className.toLowerCase().indexOf(KnoraConstants.SalsahLink) >= 0) {
 
-            // this.snackBar.open(resInfo, undefined, config);
+            // salsah-link to a BEOL resource, activated from a parent element, e.g., a footnote (<sup> containing a salsah-link)
+
+            const referredResourceIri = targetElement.parentElement.href;
+
+            // TODO: the value object should handle this and check for the existence of the given referred resource
+            const referredResourceType = this._valueObject.referredResources[referredResourceIri].type;
 
             // preventDefault (propagation)
             return false;
@@ -138,12 +157,10 @@ export class MathJaxDirective implements OnChanges, OnInit {
     }
 
     ngOnInit() {
-        // console.log(this.bindEvents);
+
     }
 
     ngOnChanges() {
-
-        // console.log(this.bindEvents);
 
         this.el.nativeElement.innerHTML = this._html;
 

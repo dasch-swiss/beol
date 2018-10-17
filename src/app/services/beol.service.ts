@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 import { ExtendedSearchParams, SearchParamsService } from '@knora/core';
 import { AppConfig } from '../app.config';
+import {Router} from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
 })
 export class BeolService {
 
-    constructor(private _searchParamsService: SearchParamsService) {
+    apiUrl = AppConfig.settings.apiURL;
+
+    constructor(private _searchParamsService: SearchParamsService, private _router: Router) {
     }
 
     /**
@@ -261,6 +264,27 @@ export class BeolService {
         `;
 
         return letterByNumberTemplate;
+
+    }
+
+    /**
+     * Chooses the apt route to display a resource, depending on its type.
+     *
+     * @param referredResourceType the type of the referred resource.
+     * @param referredResourceIri the Iri of the referred resource.
+     */
+    routeByResourceType(referredResourceType: string, referredResourceIri: string): void {
+
+        if (referredResourceType === this.apiUrl + '/ontology/0801/beol/v2#person') {
+            // route to person template
+            this._router.navigateByUrl('person/' + encodeURIComponent(referredResourceIri));
+        } else if (referredResourceType === this.apiUrl + '/ontology/0801/beol/v2#letter') {
+            // route to letter template
+            this._router.navigateByUrl('letter/' + encodeURIComponent(referredResourceIri));
+        } else {
+            // route to generic template
+            this._router.navigateByUrl('resource/' + encodeURIComponent(referredResourceIri));
+        }
 
     }
 }
