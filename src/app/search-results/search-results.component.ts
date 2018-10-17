@@ -15,6 +15,7 @@ import {
     SearchService
 } from '@knora/core';
 import { AppConfig } from '../app.config';
+import {BeolService} from '../services/beol.service';
 
 export interface ListData {
     title: string;
@@ -64,7 +65,8 @@ export class SearchResultsComponent implements OnInit {
         private _cacheService: OntologyCacheService,
         private _searchParamsService: SearchParamsService,
         private _router: Router,
-        public location: Location) {
+        public location: Location,
+        private _beol: BeolService) {
 
     }
 
@@ -250,15 +252,12 @@ export class SearchResultsComponent implements OnInit {
 
     /**
      * Navigate to the viewer that displays the resource's content
-     * @param iri
+     * @param resourceIri the Iri of the resource.
+     * @param resourceType the type (class) of the resource.
      */
-    goToViewer(iri: string, type: string) {
+    goToViewer(resourceIri: string, resourceType: string) {
 
-        if (type === this.apiUrl + '/ontology/0801/beol/v2#letter') {
-            this._router.navigateByUrl('letter/' + encodeURIComponent(iri));
-        } else {
-            this._router.navigateByUrl('resource/' + encodeURIComponent(iri));
-        }
+        this._beol.routeByResourceType(resourceType, resourceIri);
     }
 
     /**
