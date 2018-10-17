@@ -141,7 +141,7 @@ export class IntroductionComponent implements OnInit, OnDestroy {
                                     // ResourceObjectComponent.collectImagesAndRegionsForResource(resourceSeq.resources[0]);
 
                                     this.resource = resourceSeq.resources[0];
-                                    // console.log('resource properties: ', resourceSeq.resources[0].properties);
+                                    console.log('resource: ', this.resource);
 
                                     this.getIncomingLinks(0);
                                 },

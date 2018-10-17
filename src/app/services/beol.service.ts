@@ -86,6 +86,7 @@ export class BeolService {
     CONSTRUCT {
 
         ?introSection knora-api:isMainResource true .
+        ?superSection beol:hasSection ?introSection .
 
     } WHERE {
 
@@ -97,6 +98,10 @@ export class BeolService {
         ?sectionId a xsd:string .
 
         FILTER(?sectionId = "${id}")
+
+        OPTIONAL {
+            ?superSection beol:hasSection ?introSection .
+        }
 
     }
 
