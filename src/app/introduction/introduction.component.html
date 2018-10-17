@@ -9,7 +9,7 @@
         <div *ngFor="let prop of resource?.properties | key">
             <div *ngFor="let val of prop.value | key">
                 <!-- TODO: replace http://0.0.0.0:3333 by a constant or config.api -->
-                <span *ngIf="val.value.referredResourceIri && val.value.referredResource.type == 'http://0.0.0.0:3333/ontology/0801/beol/v2#section'">
+                <span *ngIf="val.value.referredResourceIri && val.value.referredResource.type == sectionUrl">
                     <mat-list>
                         <mat-list-item class="{{KnoraConstants.SalsahLink}}" (click)="goToIntro(val.value.referredResource.label)">
                             <a>{{val.value?.getContent()}}</a>

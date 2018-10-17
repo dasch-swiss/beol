@@ -16,9 +16,10 @@ import {
     StillImageRepresentation
 } from '@knora/core';
 import { BeolService } from '../services/beol.service';
+import { AppConfig } from '../app.config';
 
 declare let require: any;
-let jsonld = require('jsonld');
+const jsonld = require('jsonld');
 
 @Component({
     selector: 'app-introduction',
@@ -35,6 +36,7 @@ export class IntroductionComponent implements OnInit, OnDestroy {
     ontologyInfo: OntologyInformation;
 
     KnoraConstants = KnoraConstants;
+    sectionUrl = AppConfig.settings.apiURL + '/ontology/0801/beol/v2#section';
 
     navigationSubscription;
 
