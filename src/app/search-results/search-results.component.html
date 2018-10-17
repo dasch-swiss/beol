@@ -40,11 +40,14 @@
                     <li *ngFor="let val of prop.value | key">
                         <div [ngSwitch]="val.value.getClassName()">
 
-                            <span *ngSwitchCase="KnoraConstants.ReadTextValueAsHtml" [valueObject]="val.value" [mathJax]="val.value?.getContent()" [ontologyInfo]="ontologyInfo" [bindEvents]="false"></span>
+                            <!-- only render math if panel is open: step === i-->
+                            <span *ngSwitchCase="KnoraConstants.ReadTextValueAsHtml" [mathJax]="val.value?.getContent()" [renderMath]="step === i" [valueObject]="val.value" [ontologyInfo]="ontologyInfo" [bindEvents]="false"></span>
 
                             <read-date-value *ngSwitchCase="KnoraConstants.ReadDateValue" [valueObject]="val.value" [calendar]="true" [era]="true"></read-date-value>
 
                             <span *ngSwitchDefault="">{{val.value.getContent()}}</span>
+
+                            <span>&nbsp;({{ontologyInfo?.getLabelForProperty(prop.key)}})</span>
                         </div>
                     </li>
                 </ul>

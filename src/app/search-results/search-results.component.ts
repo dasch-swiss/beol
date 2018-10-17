@@ -228,7 +228,7 @@ export class SearchResultsComponent implements OnInit {
             console.log('JSONLD could not be expanded:' + err);
         });
 
-    }
+    };
 
     /* the following methods will be moved to @knora/viewer views */
 

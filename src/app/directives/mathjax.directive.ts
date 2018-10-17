@@ -18,6 +18,18 @@ export class MathJaxDirective implements OnChanges, OnInit {
 
     private _html: string; // the HTML to be inserted
 
+    private _renderMath = false; // indicates if the math should be rendered by MathJax
+
+    @Input()
+    set renderMath(value) {
+        // triggers ngOnChanges (state can be changed from outside, e.g., from a list of search results)
+        this._renderMath = value;
+    }
+
+    get renderMath() {
+        return this._renderMath;
+    }
+
     @Input()
     // setter method for resource classes when being updated by parent component
     set mathJax(value: string) {
@@ -164,10 +176,14 @@ export class MathJaxDirective implements OnChanges, OnInit {
 
         this.el.nativeElement.innerHTML = this._html;
 
-        // http://docs.mathjax.org/en/latest/advanced/typeset.html#typeset-math
-        MathJax.Hub.Queue(() => {
-            MathJax.Hub.Typeset(this.el.nativeElement);
-        });
+        // only render the math if the flag is set to true (onChanges is triggered when status of _renderMath changes)
+        if (this._renderMath) {
+
+            // http://docs.mathjax.org/en/latest/advanced/typeset.html#typeset-math
+            MathJax.Hub.Queue(() => {
+                MathJax.Hub.Typeset(this.el.nativeElement);
+            });
+        }
 
     }
 
