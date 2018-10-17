@@ -17,6 +17,11 @@ import {
 } from '@knora/core';
 import { BeolService } from '../services/beol.service';
 import { AppConfig } from '../app.config';
+import { FlatTreeControl } from '@angular/cdk/tree';
+import { Injectable } from '@angular/core';
+import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
+import { BehaviorSubject, Observable, of as observableOf } from 'rxjs';
+import { FileDatabase, FileFlatNode, FileNode } from '../services/filedatabase.service';
 
 declare let require: any;
 const jsonld = require('jsonld');
@@ -40,6 +45,23 @@ export class IntroductionComponent implements OnInit, OnDestroy {
 
     navigationSubscription;
 
+    // Material Tree
+    treeControl: FlatTreeControl<FileFlatNode>;
+    treeFlattener: MatTreeFlattener<FileNode, FileFlatNode>;
+    dataSource: MatTreeFlatDataSource<FileNode, FileFlatNode>;
+
+    transformer = (node: FileNode, level: number) => {
+        return new FileFlatNode(!!node.children, node.filename, level, node.type);
+    }
+
+    private _getLevel = (node: FileFlatNode) => node.level;
+
+    private _isExpandable = (node: FileFlatNode) => node.expandable;
+
+    private _getChildren = (node: FileNode): Observable<FileNode[]> => observableOf(node.children);
+
+    hasChild = (_: number, _nodeData: FileFlatNode) => _nodeData.expandable;
+
     constructor(private _route: ActivatedRoute,
         private _router: Router,
         private _searchService: SearchService,
@@ -47,7 +69,8 @@ export class IntroductionComponent implements OnInit, OnDestroy {
         private _resourceService: ResourceService,
         private _cacheService: OntologyCacheService,
         private _incomingService: IncomingService,
-        public location: Location) {
+        public location: Location,
+        public database: FileDatabase) {
 
         // subscribe to the router events
         this.navigationSubscription = this._router.events.subscribe((e: any) => {
@@ -56,6 +79,14 @@ export class IntroductionComponent implements OnInit, OnDestroy {
                 this.searchForBook(this.id);
             }
         });
+
+        // Material Tree
+        this.treeFlattener = new MatTreeFlattener(this.transformer, this._getLevel,
+            this._isExpandable, this._getChildren);
+        this.treeControl = new FlatTreeControl<FileFlatNode>(this._getLevel, this._isExpandable);
+        this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+
+        database.dataChange.subscribe(data => this.dataSource.data = data);
 
     }
 
@@ -230,5 +261,7 @@ export class IntroductionComponent implements OnInit, OnDestroy {
 
     }
 
-
 }
+
+
+
