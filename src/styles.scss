@@ -1,1 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
+
+/*** Angular Material Datepicker CSS ***/
+
+kui-calendar-header {
+    .mat-select {
+      background: rgba(216, 137, 88, 1);;
+      color: white;
+      padding: 20px;
+      margin-bottom: -20px;
+      box-sizing: border-box;
+    }
+  
+    .mat-select-value,
+    .mat-select-arrow {
+      color: #fff;
+    }
+  }
+    
+  .mat-datepicker-content {
+    height: 400px;
+  }
