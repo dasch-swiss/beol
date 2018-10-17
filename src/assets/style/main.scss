@@ -2,3 +2,40 @@
 @import 'mixins';
 @import 'elements';
 @import 'layout';
+
+a.facsimile {
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  background: url('/assets/icons/beol/facsimile.png');
+  background-size: cover;
+  -webkit-filter: invert(40%) grayscale(100%) brightness(60%) sepia(100%) hue-rotate(345deg) saturate(400%) contrast(2);
+      filter: grayscale(100%) brightness(65%) sepia(100%) hue-rotate(345deg) saturate(600%) contrast(0.8);
+}
+a.figure {
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  background: url('/assets/icons/beol/figure.png');
+  background-size: cover;
+  -webkit-filter: invert(40%) grayscale(100%) brightness(60%) sepia(100%) hue-rotate(345deg) saturate(400%) contrast(2);
+      filter: grayscale(100%) brightness(65%) sepia(100%) hue-rotate(345deg) saturate(600%) contrast(0.8);
+}
+a.person {
+  width: 16px;
+  height: 16px;
+  display: inline-flex;
+  background: url('/assets/icons/beol/person_gr.png');
+  background-size: cover;
+  -webkit-filter: invert(40%) grayscale(100%) brightness(25%) sepia(100%) hue-rotate(-10deg) saturate(400%) contrast(2);
+      filter: grayscale(100%) brightness(25%) sepia(100%) hue-rotate(-10deg) saturate(600%) contrast(0.8);
+}
+a.item {
+  width: 16px;
+  height: 16px;
+  display: inline-flex;
+  background: url('/assets/icons/beol/biblio_item_gr.png');
+  background-size: cover;
+  -webkit-filter: invert(40%) grayscale(100%) brightness(25%) sepia(100%) hue-rotate(-10deg) saturate(400%) contrast(2);
+      filter: grayscale(100%) brightness(25%) sepia(100%) hue-rotate(-10deg) saturate(600%) contrast(0.8);
+}
