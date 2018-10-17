@@ -1,6 +1,7 @@
 import {Directive, ElementRef, HostListener, Input, OnChanges, OnInit} from '@angular/core';
 import {KnoraConstants, OntologyInformation, ReadTextValueAsHtml} from '@knora/core';
 import {BeolService} from '../services/beol.service';
+import {MatSnackBar, MatSnackBarConfig} from '@angular/material';
 
 declare var MathJax: {
     Hub: {
@@ -53,7 +54,7 @@ export class MathJaxDirective implements OnChanges, OnInit {
     @Input('ontologyInfo') private ontologyInfo: OntologyInformation;
     @Input('bindEvents') private bindEvents: Boolean; // indicates if click and mouseover events have to be bound
 
-    constructor(private el: ElementRef, private _beol: BeolService) {
+    constructor(private el: ElementRef, private _beol: BeolService, private _snackBar: MatSnackBar) {
     }
 
     /**
@@ -146,6 +147,12 @@ export class MathJaxDirective implements OnChanges, OnInit {
 
             // TODO: the value object should handle this and check for the existence of the given referred resource
             const referredResourceType = this._valueObject.referredResources[referredResourceIri].type;
+            const resInfo = this.valueObject.getReferredResourceInfo(referredResourceIri, this.ontologyInfo);
+
+            const config = new MatSnackBarConfig();
+            config.duration = 2500;
+
+            this._snackBar.open(resInfo, undefined, config);
 
             // preventDefault (propagation)
             return false;
@@ -158,6 +165,13 @@ export class MathJaxDirective implements OnChanges, OnInit {
 
             // TODO: the value object should handle this and check for the existence of the given referred resource
             const referredResourceType = this._valueObject.referredResources[referredResourceIri].type;
+
+            const resInfo = this.valueObject.getReferredResourceInfo(referredResourceIri, this.ontologyInfo);
+
+            const config = new MatSnackBarConfig();
+            config.duration = 2500;
+
+            this._snackBar.open(resInfo, undefined, config);
 
             // preventDefault (propagation)
             return false;
