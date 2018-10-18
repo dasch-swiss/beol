@@ -12,9 +12,7 @@
             <div *ngFor="let item of list">
 
                 <mat-list-item [class.parent]="item.children">
-                    <button mat-button
-                            [routerLink]="'/introduction/leeo/goldbach_' + item.name"
-                            routerLinkActive="active-link" class="nav-item">
+                    <button mat-button [routerLink]="'/introduction/leoo/goldbach_' + item.name" routerLinkActive="active-link" class="nav-item">
                         {{item.label}}
                         <mat-icon *ngIf="!item.children">keyboard_arrow_right</mat-icon>
                         <mat-icon *ngIf="item.children">keyboard_arrow_down</mat-icon>
@@ -24,9 +22,7 @@
                 <div *ngIf="item.children" class="nav-children">
                     <div *ngFor="let child of item.children">
                         <mat-list-item>
-                            <button mat-button
-                                    [routerLink]="'/introduction/leeo/goldbach_' + child.name"
-                                    routerLinkActive="active-link" class="nav-item">
+                            <button mat-button [routerLink]="'/introduction/leoo/goldbach_' + child.name" routerLinkActive="active-link" class="nav-item">
                                 {{child.label}}
                                 <mat-icon *ngIf="!child.children">keyboard_arrow_right</mat-icon>
                                 <mat-icon *ngIf="child.children">keyboard_arrow_down</mat-icon>
@@ -36,9 +32,7 @@
                         <div *ngIf="child.children" class="nav-grand-children">
                             <mat-list-item *ngFor="let gc of child.children">
                                 <!-- [routerLink]="item.name -->
-                                <button mat-button
-                                        [routerLink]="'/introduction/leeo/goldbach_' + gc.name"
-                                        routerLinkActive="active-link" class="nav-item">
+                                <button mat-button [routerLink]="'/introduction/leoo/goldbach_' + gc.name" routerLinkActive="active-link" class="nav-item">
                                     {{gc.label}}
                                     <mat-icon>keyboard_arrow_right</mat-icon>
                                 </button>
@@ -325,7 +319,7 @@
     <!-- Main content of the page -->
     <div class="main-content" *ngIf="!loading && props">
 
-       <section class="title center">
+        <section class="title center">
             <h3 mat-card-subtitle>{{resource?.label}}</h3>
             <h1 mat-card-title *ngFor="let title of props.title">{{title.getContent()}}</h1>
         </section>
