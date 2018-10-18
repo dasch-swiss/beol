@@ -66,6 +66,10 @@ export class IntroductionComponent implements OnInit, OnDestroy {
 
     props: IntroProps;
 
+    // current index of introduction
+    curIndex: number;
+    curChildIndex: number;
+
     propIris: any = {
         'title': AppConfig.settings.apiURL + '/ontology/0801/beol/v2#sectionHasTitle',
         'text': AppConfig.settings.apiURL + '/ontology/0801/beol/v2#hasText',
@@ -317,6 +321,15 @@ export class IntroductionComponent implements OnInit, OnDestroy {
      */
     goToListAbbreviation() {
         this._router.navigateByUrl('introduction/leoo/goldbach_abbreviations');
+    }
+
+    toggleChildren(index: number) {
+        this.curIndex = (index === this.curIndex ? undefined : index);
+        // reset grand children
+        this.curChildIndex = undefined;
+    }
+    toggleGrandChildren(index: number) {
+        this.curChildIndex = (index === this.curChildIndex ? undefined : index);
     }
 
 }

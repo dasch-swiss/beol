@@ -3,36 +3,44 @@
     <div class="sidebar">
 
         <button mat-stroked-button class="previousBtn" (click)="location.back()">
-            <mat-icon>arrow_back</mat-icon>Previous
+            <mat-icon>arrow_back</mat-icon>
+            Previous
         </button>
 
 
         <!-- another list, with data from json file called introductions.json -->
         <mat-list class="nav">
-            <div *ngFor="let item of list">
+            <div *ngFor="let item of list; let i = index;">
 
                 <mat-list-item [class.parent]="item.children">
-                    <button mat-button [routerLink]="'/introduction/leoo/goldbach_' + item.name" routerLinkActive="active-link" class="nav-item">
+                    <button mat-button
+                            [routerLink]="'/introduction/leoo/goldbach_' + item.name"
+                            routerLinkActive="active-link" class="nav-item"
+                            (click)="toggleChildren(i)">
                         {{item.label}}
                         <mat-icon *ngIf="!item.children">keyboard_arrow_right</mat-icon>
                         <mat-icon *ngIf="item.children">keyboard_arrow_down</mat-icon>
                     </button>
                 </mat-list-item>
 
-                <div *ngIf="item.children" class="nav-children">
-                    <div *ngFor="let child of item.children">
+                <div *ngIf="item.children" class="nav-children" [class.open]="curIndex === i">
+                    <div *ngFor="let child of item.children; let c = index;">
                         <mat-list-item>
-                            <button mat-button [routerLink]="'/introduction/leoo/goldbach_' + child.name" routerLinkActive="active-link" class="nav-item">
+                            <button mat-button
+                                    [routerLink]="'/introduction/leoo/goldbach_' + child.name"
+                                    routerLinkActive="active-link" class="nav-item"
+                                    (click)="toggleGrandChildren(c)">
                                 {{child.label}}
                                 <mat-icon *ngIf="!child.children">keyboard_arrow_right</mat-icon>
                                 <mat-icon *ngIf="child.children">keyboard_arrow_down</mat-icon>
                             </button>
                         </mat-list-item>
 
-                        <div *ngIf="child.children" class="nav-grand-children">
+                        <div *ngIf="child.children" class="nav-grand-children" [class.open]="curChildIndex === c">
                             <mat-list-item *ngFor="let gc of child.children">
                                 <!-- [routerLink]="item.name -->
-                                <button mat-button [routerLink]="'/introduction/leoo/goldbach_' + gc.name" routerLinkActive="active-link" class="nav-item">
+                                <button mat-button [routerLink]="'/introduction/leoo/goldbach_' + gc.name"
+                                        routerLinkActive="active-link" class="nav-item">
                                     {{gc.label}}
                                     <mat-icon>keyboard_arrow_right</mat-icon>
                                 </button>
@@ -50,7 +58,8 @@
 
         <mat-list>
             <!-- Introduction 1 - Historical and biographical setting -->
-            <mat-list-item (click)="goToIntro('introduction_1')" (click)="showButtons.i1 = !showButtons.i1" class="intro-level1">
+            <mat-list-item (click)="goToIntro('introduction_1')" (click)="showButtons.i1 = !showButtons.i1"
+                           class="intro-level1">
                 <a>Introduction 1</a>
                 <mat-icon *ngIf="showButtons.i1">keyboard_arrow_right</mat-icon>
                 <mat-icon *ngIf="!showButtons.i1">keyboard_arrow_down</mat-icon>
@@ -58,7 +67,8 @@
 
             <!-- Introduction 1.1 & following sub-intro -->
             <span *ngIf="showButtons.i1">
-                <mat-list-item (click)="goToIntro('introduction_1.1')" (click)="showButtons.i11 = !showButtons.i11" class="intro-level2">
+                <mat-list-item (click)="goToIntro('introduction_1.1')" (click)="showButtons.i11 = !showButtons.i11"
+                               class="intro-level2">
                     <a>Introduction 1.1</a>
                     <mat-icon *ngIf="showButtons.i11">keyboard_arrow_right</mat-icon>
                     <mat-icon *ngIf="!showButtons.i11">keyboard_arrow_down</mat-icon>
@@ -81,7 +91,8 @@
 
             <!-- Introduction 1.2 & following sub-intro -->
             <span *ngIf="showButtons.i1">
-                <mat-list-item (click)="goToIntro('introduction_1.2')" (click)="showButtons.i12 = !showButtons.i12" class="intro-level2">
+                <mat-list-item (click)="goToIntro('introduction_1.2')" (click)="showButtons.i12 = !showButtons.i12"
+                               class="intro-level2">
                     <a>Introduction 1.2</a>
                     <mat-icon *ngIf="showButtons.i12">keyboard_arrow_right</mat-icon>
                     <mat-icon *ngIf="!showButtons.i12">keyboard_arrow_down</mat-icon>
@@ -113,7 +124,8 @@
             </span>
 
             <!-- Introduction 2 - Main subjects of the correspondence -->
-            <mat-list-item (click)="goToIntro('introduction_2')" (click)="showButtons.i2 = !showButtons.i2" class="intro-level1">
+            <mat-list-item (click)="goToIntro('introduction_2')" (click)="showButtons.i2 = !showButtons.i2"
+                           class="intro-level1">
                 <a>Introduction 2</a>
                 <mat-icon *ngIf="showButtons.i2">keyboard_arrow_right</mat-icon>
                 <mat-icon *ngIf="!showButtons.i2">keyboard_arrow_down</mat-icon>
@@ -121,7 +133,8 @@
 
             <!-- Introduction 2.1 & following sub-intro -->
             <span *ngIf="showButtons.i2">
-                <mat-list-item (click)="goToIntro('introduction_2.1')" (click)="showButtons.i21 = !showButtons.i21" class="intro-level2">
+                <mat-list-item (click)="goToIntro('introduction_2.1')" (click)="showButtons.i21 = !showButtons.i21"
+                               class="intro-level2">
                     <a>Introduction 2.1</a>
                     <mat-icon *ngIf="showButtons.i21">keyboard_arrow_right</mat-icon>
                     <mat-icon *ngIf="!showButtons.i21">keyboard_arrow_down</mat-icon>
@@ -141,7 +154,8 @@
 
             <!-- Introduction 2.2 & following sub-intro -->
             <span *ngIf="showButtons.i2">
-                <mat-list-item (click)="goToIntro('introduction_2.2')" (click)="showButtons.i22 = !showButtons.i22" class="intro-level2">
+                <mat-list-item (click)="goToIntro('introduction_2.2')" (click)="showButtons.i22 = !showButtons.i22"
+                               class="intro-level2">
                     <a>Introduction 2.2</a>
                     <mat-icon *ngIf="showButtons.i22">keyboard_arrow_right</mat-icon>
                     <mat-icon *ngIf="!showButtons.i22">keyboard_arrow_down</mat-icon>
@@ -161,7 +175,8 @@
 
             <!-- Introduction 2.3 & following sub-intro -->
             <span *ngIf="showButtons.i2">
-                <mat-list-item (click)="goToIntro('introduction_2.3')" (click)="showButtons.i23 = !showButtons.i23" class="intro-level2">
+                <mat-list-item (click)="goToIntro('introduction_2.3')" (click)="showButtons.i23 = !showButtons.i23"
+                               class="intro-level2">
                     <a>Introduction 2.3</a>
                     <mat-icon *ngIf="showButtons.i23">keyboard_arrow_right</mat-icon>
                     <mat-icon *ngIf="!showButtons.i23">keyboard_arrow_down</mat-icon>
@@ -178,7 +193,8 @@
 
             <!-- Introduction 2.4 & following sub-intro -->
             <span *ngIf="showButtons.i2">
-                <mat-list-item (click)="goToIntro('introduction_2.4')" (click)="showButtons.i24 = !showButtons.i24" class="intro-level2">
+                <mat-list-item (click)="goToIntro('introduction_2.4')" (click)="showButtons.i24 = !showButtons.i24"
+                               class="intro-level2">
                     <a>Introduction 2.4</a>
                     <mat-icon *ngIf="showButtons.i24">keyboard_arrow_right</mat-icon>
                     <mat-icon *ngIf="!showButtons.i24">keyboard_arrow_down</mat-icon>
@@ -208,7 +224,8 @@
 
             <!-- Introduction 2.6 & following sub-intro -->
             <span *ngIf="showButtons.i2">
-                <mat-list-item (click)="goToIntro('introduction_2.6')" (click)="showButtons.i26 = !showButtons.i26" class="intro-level2">
+                <mat-list-item (click)="goToIntro('introduction_2.6')" (click)="showButtons.i26 = !showButtons.i26"
+                               class="intro-level2">
                     <a>Introduction 2.6</a>
                     <mat-icon *ngIf="showButtons.i26">keyboard_arrow_right</mat-icon>
                     <mat-icon *ngIf="!showButtons.i26">keyboard_arrow_down</mat-icon>
@@ -244,7 +261,8 @@
             </span>
 
             <!-- Introduction 3 - Editing the Euler-Goldbach correspondence -->
-            <mat-list-item (click)="goToIntro('introduction_3')" (click)="showButtons.i3 = !showButtons.i3" class="intro-level1">
+            <mat-list-item (click)="goToIntro('introduction_3')" (click)="showButtons.i3 = !showButtons.i3"
+                           class="intro-level1">
                 <a>Introduction 3</a>
                 <mat-icon *ngIf="showButtons.i3">keyboard_arrow_right</mat-icon>
                 <mat-icon *ngIf="!showButtons.i3">keyboard_arrow_down</mat-icon>
@@ -259,7 +277,8 @@
 
             <!-- Introduction 3.2 & following sub-intro -->
             <span *ngIf="showButtons.i3">
-                <mat-list-item (click)="goToIntro('introduction_3.2')" (click)="showButtons.i32 = !showButtons.i32" class="intro-level2">
+                <mat-list-item (click)="goToIntro('introduction_3.2')" (click)="showButtons.i32 = !showButtons.i32"
+                               class="intro-level2">
                     <a>Introduction 3.2</a>
                     <mat-icon *ngIf="showButtons.i32">keyboard_arrow_right</mat-icon>
                     <mat-icon *ngIf="!showButtons.i32">keyboard_arrow_down</mat-icon>
@@ -276,7 +295,8 @@
 
             <!-- Introduction 3.3 & following sub-intro -->
             <span *ngIf="showButtons.i3">
-                <mat-list-item (click)="goToIntro('introduction_3.3')" (click)="showButtons.i33 = !showButtons.i33" class="intro-level2">
+                <mat-list-item (click)="goToIntro('introduction_3.3')" (click)="showButtons.i33 = !showButtons.i33"
+                               class="intro-level2">
                     <a>Introduction 3.3</a>
                     <mat-icon *ngIf="showButtons.i33">keyboard_arrow_right</mat-icon>
                     <mat-icon *ngIf="!showButtons.i33">keyboard_arrow_down</mat-icon>
@@ -326,7 +346,8 @@
 
 
         <section class="text">
-            <read-text-value-as-html [valueObject]="props.text[0]" [ontologyInfo]="ontologyInfo" [bindEvents]="true"></read-text-value-as-html>
+            <read-text-value-as-html [valueObject]="props.text[0]" [ontologyInfo]="ontologyInfo"
+                                     [bindEvents]="true"></read-text-value-as-html>
         </section>
 
         <!--
