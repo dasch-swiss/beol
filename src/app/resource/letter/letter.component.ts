@@ -37,6 +37,7 @@ export interface NeededProps {
     'date': DateSalsah;
     'subject': ReadPropertyItem[];
     'text': ReadPropertyItem[];
+    'mentionedPerson': ReadPropertyItem[];
     'language': ReadPropertyItem[];
     'number': string;
     'original': ReadPropertyItem[];
@@ -75,6 +76,7 @@ export class LetterComponent implements OnDestroy, OnInit {
         'figure': this.apiUrl + '/ontology/0801/beol/v2#hasFigureValue',
         'subject': this.apiUrl + '/ontology/0801/beol/v2#hasSubject',
         'text': this.apiUrl + '/ontology/0801/beol/v2#hasText',
+        'mentionedPerson': this.apiUrl + '/ontology/0801/beol/v2#mentionsPersonValue',
         'language': this.apiUrl + '/ontology/0801/beol/v2#letterHasLanguage',
         'number': this.apiUrl + '/ontology/0801/beol/v2#letterHasNumber',
         'original': this.apiUrl + '/ontology/0801/beol/v2#letterHasOriginalValue',
@@ -245,7 +247,7 @@ export class LetterComponent implements OnDestroy, OnInit {
                                     LetterComponent.collectImagesAndRegionsForResource(resourceSeq.resources[0]);
 
                                     this.resource = resourceSeq.resources[0];
-                                    // console.log('resource ', this.resource);
+                                    console.log('resource ', this.resource);
 
                                     this.props = {
                                         author: [],
@@ -254,6 +256,7 @@ export class LetterComponent implements OnDestroy, OnInit {
                                         date: new DateSalsah(),
                                         subject: [],
                                         text: [],
+                                        mentionedPerson: [],
                                         language: [],
                                         number: '',
                                         original: [],
@@ -292,6 +295,10 @@ export class LetterComponent implements OnDestroy, OnInit {
 
                                                     case this.propIris.text:
                                                         this.props.text.push(val);
+                                                        break;
+
+                                                    case this.propIris.mentionedPerson:
+                                                        this.props.mentionedPerson.push(val);
                                                         break;
 
                                                     case this.propIris.language:
