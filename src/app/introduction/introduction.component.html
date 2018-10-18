@@ -28,7 +28,8 @@
                                     [routerLink]="'/introduction/leeo/goldbach_' + child.name"
                                     routerLinkActive="active-link" class="nav-item">
                                 {{child.label}}
-                                <mat-icon>keyboard_arrow_right</mat-icon>
+                                <mat-icon *ngIf="!child.children">keyboard_arrow_right</mat-icon>
+                                <mat-icon *ngIf="child.children">keyboard_arrow_down</mat-icon>
                             </button>
                         </mat-list-item>
 
