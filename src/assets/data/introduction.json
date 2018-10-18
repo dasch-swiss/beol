@@ -171,7 +171,7 @@
       ]
     },
     {
-      "name": "introduction_3",
+      "name": "introduction_3.1",
       "label": "Introduction 3",
       "children": [
         {
@@ -179,7 +179,7 @@
           "label": "Introduction 3.1"
         },
         {
-          "name": "introduction_3.2",
+          "name": "introduction_3.2.1",
           "label": "Introduction 3.2",
           "children": [
             {
@@ -193,7 +193,7 @@
           ]
         },
         {
-          "name": "introduction_3.3",
+          "name": "introduction_3.3.1",
           "label": "Introduction 3.3",
           "children": [
             {
