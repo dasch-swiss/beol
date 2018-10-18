@@ -4,3 +4,45 @@
 .intro-level3 {
     padding-left: 48px;
 }
+
+.nav {
+
+  .mat-list-item {
+    width: 220px;
+  }
+
+  .nav-children {
+    padding-left: 16px;
+
+    .mat-list-item {
+      width: 196px;
+    }
+
+    .nav-grand-children {
+      padding-left: 26px;
+    }
+
+  }
+}
+
+.nav-item {
+  width: 200px;
+  text-align: left;
+}
+
+.mat-icon {
+  position: absolute;
+  right: 0;
+  top: 6px;
+  display: none;
+}
+
+.active-link {
+  background: rgba(33,33,33,.1);
+  font-weight: bolder;
+
+  .mat-icon {
+    display: block;
+  }
+
+}

@@ -6,6 +6,51 @@
             <mat-icon>arrow_back</mat-icon>Previous
         </button>
 
+
+        <!-- another list, with data from json file called introductions.json -->
+        <mat-list class="nav">
+            <div *ngFor="let item of list">
+
+                <mat-list-item [class.parent]="item.children">
+                    <button mat-button
+                            [routerLink]="'/introduction/leeo/goldbach_' + item.name"
+                            routerLinkActive="active-link" class="nav-item">
+                        {{item.label}}
+                        <mat-icon *ngIf="!item.children">keyboard_arrow_right</mat-icon>
+                        <mat-icon *ngIf="item.children">keyboard_arrow_down</mat-icon>
+                    </button>
+                </mat-list-item>
+
+                <div *ngIf="item.children" class="nav-children">
+                    <div *ngFor="let child of item.children">
+                        <mat-list-item>
+                            <button mat-button
+                                    [routerLink]="'/introduction/leeo/goldbach_' + child.name"
+                                    routerLinkActive="active-link" class="nav-item">
+                                {{child.label}}
+                                <mat-icon>keyboard_arrow_right</mat-icon>
+                            </button>
+                        </mat-list-item>
+
+                        <div *ngIf="child.children" class="nav-grand-children">
+                            <mat-list-item *ngFor="let gc of child.children">
+                                <!-- [routerLink]="item.name -->
+                                <button mat-button
+                                        [routerLink]="'/introduction/leeo/goldbach_' + gc.name"
+                                        routerLinkActive="active-link" class="nav-item">
+                                    {{gc.label}}
+                                    <mat-icon>keyboard_arrow_right</mat-icon>
+                                </button>
+                            </mat-list-item>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </mat-list>
+
+        <mat-divider></mat-divider>
+
         <!-- Tree of introduction links to navigate through several levels on each intro page -->
 
         <mat-list>

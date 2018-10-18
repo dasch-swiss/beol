@@ -17,9 +17,28 @@ import {
 } from '@knora/core';
 import { BeolService } from '../services/beol.service';
 import { AppConfig } from '../app.config';
+import { JsonObject, JsonProperty } from 'json2typescript';
+import { HttpClient } from '@angular/common/http';
 
 declare let require: any;
 const jsonld = require('jsonld');
+
+
+/**
+ *
+ */
+@JsonObject('introduction')
+export class Introduction {
+
+    @JsonProperty('name', String)
+    public name: string = undefined;
+
+    @JsonProperty('label', String)
+    public label: string = undefined;
+
+    @JsonProperty('children', [Introduction], true)
+    public children?: Introduction[] = [];
+}
 
 @Component({
     selector: 'app-introduction',
@@ -38,6 +57,8 @@ export class IntroductionComponent implements OnInit, OnDestroy {
     KnoraConstants = KnoraConstants;
     sectionUrl = AppConfig.settings.apiURL + '/ontology/0801/beol/v2#section';
 
+    list: Introduction[];
+
     navigationSubscription;
 
     // to show or hide the intro link tree
@@ -48,6 +69,7 @@ export class IntroductionComponent implements OnInit, OnDestroy {
     };
 
     constructor(private _route: ActivatedRoute,
+        private _http: HttpClient,
         private _router: Router,
         private _searchService: SearchService,
         private _beol: BeolService,
@@ -67,6 +89,17 @@ export class IntroductionComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+
+        this._http.get('assets/data/introduction.json').subscribe(
+            (result: any) => {
+                this.list = result.introductions;
+                console.log(this.list);
+            },
+            (error: any) => {
+                console.error(error);
+            }
+        );
+
         this._route.params.subscribe((params: Params) => {
             this.project = params['project'];
             // console.log('project', this.project);
