@@ -19,17 +19,20 @@
 }
 
 .main-content {
-  margin: 0 auto 0 30%;
+  margin: 0 auto 0 $sidenav-width;
   max-width: 900px;
   padding: 0 48px;
-  width: calc(100vw - 356px - 96px);
+  width: calc(100vw - #{$sidenav-width} - 48px - 96px);
+
+  &.without-sidebar {
+    margin: 0 auto;
+  }
 }
 
 .sidebar {
   position: fixed;
-  width: 18%;
+  width: $sidenav-width;
   height: calc(100vh - #{$header-height} - 48px);
-  padding: 0 24px;
   overflow-y: auto;
 }
 
@@ -67,6 +70,14 @@
 
 .previousBtn {
   color: $accent !important;
-  margin: 24px 0 48px 0 !important;
+  margin: 0 auto 48px 24px !important;
   justify-content: center;
+}
+
+.title {
+  margin-bottom: 64px;
+}
+
+.text {
+  margin: 48px 24px;
 }

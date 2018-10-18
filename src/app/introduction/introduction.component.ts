@@ -13,7 +13,7 @@ import {
     OntologyCacheService,
     ApiServiceError,
     IncomingService,
-    StillImageRepresentation
+    StillImageRepresentation, ReadPropertyItem
 } from '@knora/core';
 import { BeolService } from '../services/beol.service';
 import { AppConfig } from '../app.config';
@@ -22,6 +22,11 @@ import { HttpClient } from '@angular/common/http';
 
 declare let require: any;
 const jsonld = require('jsonld');
+
+export interface IntroProps {
+    'title': ReadPropertyItem[];
+    'text': ReadPropertyItem[];
+}
 
 
 /**
@@ -59,6 +64,13 @@ export class IntroductionComponent implements OnInit, OnDestroy {
 
     list: Introduction[];
 
+    props: IntroProps;
+
+    propIris: any = {
+        'title': AppConfig.settings.apiURL + '/ontology/0801/beol/v2#sectionHasTitle',
+        'text': AppConfig.settings.apiURL + '/ontology/0801/beol/v2#hasText',
+    };
+
     navigationSubscription;
 
     // to show or hide the intro link tree
@@ -93,7 +105,6 @@ export class IntroductionComponent implements OnInit, OnDestroy {
         this._http.get('assets/data/introduction.json').subscribe(
             (result: any) => {
                 this.list = result.introductions;
-                console.log(this.list);
             },
             (error: any) => {
                 console.error(error);
@@ -151,6 +162,9 @@ export class IntroductionComponent implements OnInit, OnDestroy {
      * @param iri the Iri of the resource to be requested.
      */
     private requestResource(iri: string): void {
+
+        this.props = undefined;
+
         this._resourceService.getResource(iri)
             .subscribe(
                 (result: ApiServiceResult) => {
@@ -183,7 +197,31 @@ export class IntroductionComponent implements OnInit, OnDestroy {
                                     this.resource = resourceSeq.resources[0];
                                     // console.log('resource: ', this.resource);
 
-                                    this.getIncomingLinks(0);
+                                    this.props = {
+                                        title: [],
+                                        text: []
+                                    };
+
+                                    for (const key in this.resource.properties) {
+                                        if (this.resource.properties.hasOwnProperty(key)) {
+                                            for (const val of this.resource.properties[key]) {
+                                                switch (val.propIri) {
+                                                    case this.propIris.title:
+                                                        this.props.title.push(val);
+                                                        break;
+
+                                                    case this.propIris.text:
+                                                        this.props.text.push(val);
+                                                        break;
+
+                                                    default:
+                                                    // do nothing
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                        this.getIncomingLinks(0);
                                 },
                                 (err) => {
 

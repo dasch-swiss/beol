@@ -323,10 +323,19 @@
     <!-- end of the sidebar -->
 
     <!-- Main content of the page -->
-    <div class="main-content">
+    <div class="main-content" *ngIf="!loading && props">
 
-        <h2>{{resource?.label}}</h2>
+       <section class="title center">
+            <h3 mat-card-subtitle>{{resource?.label}}</h3>
+            <h1 mat-card-title *ngFor="let title of props.title">{{title.getContent()}}</h1>
+        </section>
 
+
+        <section class="text">
+            <read-text-value-as-html [valueObject]="props.text[0]" [ontologyInfo]="ontologyInfo" [bindEvents]="true"></read-text-value-as-html>
+        </section>
+
+        <!--
         <div mat-line *ngFor="let prop of resource?.properties | key">
             <h4 *ngIf="ontologyInfo?.getLabelForProperty(prop.key) != 'has section' && ontologyInfo?.getLabelForProperty(prop.key) != 'has Standoff Link to'">{{ontologyInfo?.getLabelForProperty(prop.key)}}</h4>
 
@@ -349,5 +358,6 @@
                 </span>
             </div>
         </div>
+        -->
     </div>
 </div>
