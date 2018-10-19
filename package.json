@@ -7,7 +7,9 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "test-ci": "ng test --watch=false --browsers=ChromeHeadless",
+    "build-prod": "ng build --prod --build-optimizer"
   },
   "private": true,
   "dependencies": {
@@ -28,7 +30,7 @@
     "@knora/action": "^0.0.12",
     "@knora/core": "^1.0.0-beta.5",
     "@knora/search": "^1.0.0-beta.2",
-    "@knora/viewer": "^0.0.2-alpha",
+    "@knora/viewer": "^0.0.2-alpha.2",
     "angularfire2": "^5.0.2",
     "core-js": "^2.5.4",
     "firebase": "^5.5.2",

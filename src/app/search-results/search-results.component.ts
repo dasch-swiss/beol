@@ -14,7 +14,7 @@ import {
     SearchParamsService,
     SearchService
 } from '@knora/core';
-import { AppConfig } from '../app.config';
+import { environment } from '../../environments/environment';
 
 export interface ListData {
     title: string;
@@ -36,7 +36,7 @@ const jsonld = require('jsonld');
 export class SearchResultsComponent implements OnInit {
 
     KnoraConstants = KnoraConstants;
-    apiUrl = AppConfig.settings.apiURL;
+    apiUrl = environment.api;
 
     result: ReadResource[] = []; // the results of a search query
     ontologyInfo: OntologyInformation; // ontology information about resource classes and properties present in `result`
@@ -267,6 +267,9 @@ export class SearchResultsComponent implements OnInit {
      * @param offsetToUse
      */
     onScroll(offsetToUse: number = 0) {
+
+        console.log('scroll: ', offsetToUse);
+
         // update the page offset when the end of scroll is reached to get the next page of search results
         this.offset = (offsetToUse === this.offset ? this.offset += 1 : offsetToUse);
 
