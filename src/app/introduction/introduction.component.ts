@@ -70,6 +70,8 @@ export class IntroductionComponent implements OnInit, OnDestroy {
     curIndex: number;
     curChildIndex: number;
 
+    loading: boolean = true;
+
     propIris: any = {
         'title': AppConfig.settings.apiURL + '/ontology/0801/beol/v2#sectionHasTitle',
         'text': AppConfig.settings.apiURL + '/ontology/0801/beol/v2#hasText',
@@ -102,6 +104,7 @@ export class IntroductionComponent implements OnInit, OnDestroy {
         this._http.get('assets/data/introduction.json').subscribe(
             (result: any) => {
                 this.list = result.introductions;
+                this.loading = false;
             },
             (error: any) => {
                 console.error(error);
