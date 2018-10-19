@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
@@ -14,8 +14,8 @@ import {
     SearchParamsService,
     SearchService
 } from '@knora/core';
-import { AppConfig } from '../app.config';
-import {BeolService} from '../services/beol.service';
+import { BeolService } from '../services/beol.service';
+import { environment } from '../../environments/environment';
 
 export interface ListData {
     title: string;
@@ -37,7 +37,7 @@ const jsonld = require('jsonld');
 export class SearchResultsComponent implements OnInit {
 
     KnoraConstants = KnoraConstants;
-    apiUrl = AppConfig.settings.apiURL;
+    apiUrl = environment.api;
 
     result: ReadResource[] = []; // the results of a search query
     ontologyInfo: OntologyInformation; // ontology information about resource classes and properties present in `result`
@@ -230,7 +230,7 @@ export class SearchResultsComponent implements OnInit {
             console.log('JSONLD could not be expanded:' + err);
         });
 
-    };
+    }
 
     /* the following methods will be moved to @knora/viewer views */
 
@@ -266,6 +266,9 @@ export class SearchResultsComponent implements OnInit {
      * @param offsetToUse
      */
     onScroll(offsetToUse: number = 0) {
+
+        // console.log('scroll: ', offsetToUse);
+
         // update the page offset when the end of scroll is reached to get the next page of search results
         this.offset = (offsetToUse === this.offset ? this.offset += 1 : offsetToUse);
 

@@ -13,10 +13,11 @@
  * */
 
 import { Component, Input, OnInit } from '@angular/core';
-import { OntologyInformation, ReadLinkValue, KnoraConstants } from '@knora/core';
+import { KnoraConstants, OntologyInformation, ReadLinkValue } from '@knora/core';
 import { Router } from '@angular/router';
-import { AppConfig } from '../../app.config';
-import {BeolService} from '../../services/beol.service';
+import { BeolService } from '../../services/beol.service';
+import { environment } from '../../../environments/environment';
+
 
 @Component({
     selector: 'read-link-value',
@@ -30,8 +31,11 @@ export class ReadLinkValueComponent implements OnInit {
 
     KnoraConstants = KnoraConstants;
 
+
     constructor(private _router: Router, private _beol: BeolService) {
     }
+
+    apiUrl = environment.api;
 
     ngOnInit() {
     }

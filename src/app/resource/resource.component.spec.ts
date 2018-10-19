@@ -1,13 +1,15 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
 import { MaterialModule } from '../material-module';
 
 import { ResourceComponent } from './resource.component';
-import { KeyPipe, GndDirective } from '@knora/action';
+
+import { KuiActionModule } from '@knora/action';
+
 import { KuiCoreConfig } from '@knora/core';
 
 import { ReadLinkValueComponent } from '../properties/read-link-value/read-link-value.component';
@@ -24,59 +26,59 @@ import { ReadListValueComponent } from '../properties/read-list-value/read-list-
 import { ReadGeomValueComponent } from '../properties/read-geom-value/read-geom-value.component';
 import { ReadColorValueComponent } from '../properties/read-color-value/read-color-value.component';
 import { ReadTextfileValueComponent } from '../properties/read-textfile-value/read-textfile-value.component';
-import {MathJaxDirective} from '../directives/mathjax.directive';
-
+import { MathJaxDirective } from '../directives/mathjax.directive';
+import { KuiViewerModule } from '@knora/viewer';
 
 describe('ResourceComponent', () => {
-  let component: ResourceComponent;
-  let fixture: ComponentFixture<ResourceComponent>;
-  const id = 'http://rdfh.ch/0801/qEy1S5u4Tsurt2wU58J6zw'; // letter nr. 001
+    let component: ResourceComponent;
+    let fixture: ComponentFixture<ResourceComponent>;
+    const id = 'http://rdfh.ch/0801/qEy1S5u4Tsurt2wU58J6zw'; // letter nr. 001
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        MaterialModule,
-        RouterTestingModule,
-        HttpClientModule,
-        HttpClientTestingModule
-      ],
-      declarations: [
-        ResourceComponent,
-        KeyPipe,
-        MathJaxDirective,
-        GndDirective,
-        ReadLinkValueComponent,
-        ReadTextValueAsHtmlComponent,
-        ReadTextValueAsStringComponent,
-        ReadTextValueAsXmlComponent,
-        ReadDateValueComponent,
-        ReadIntegerValueComponent,
-        ReadBooleanValueComponent,
-        ReadDecimalValueComponent,
-        ReadUriValueComponent,
-        ReadIntervalValueComponent,
-        ReadListValueComponent,
-        ReadGeomValueComponent,
-        ReadColorValueComponent,
-        ReadTextfileValueComponent],
-      providers: [
-        {
-          provide: ActivatedRoute,
-          useValue: { params: of({ id }) }
-        },
-        { provide: 'config', useValue: KuiCoreConfig }
-      ]
-    })
-      .compileComponents();
-  }));
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                KuiActionModule,
+                KuiViewerModule,
+                MaterialModule,
+                RouterTestingModule,
+                HttpClientModule,
+                HttpClientTestingModule
+            ],
+            declarations: [
+                ResourceComponent,
+                MathJaxDirective,
+                ReadLinkValueComponent,
+                ReadTextValueAsHtmlComponent,
+                ReadTextValueAsStringComponent,
+                ReadTextValueAsXmlComponent,
+                ReadDateValueComponent,
+                ReadIntegerValueComponent,
+                ReadBooleanValueComponent,
+                ReadDecimalValueComponent,
+                ReadUriValueComponent,
+                ReadIntervalValueComponent,
+                ReadListValueComponent,
+                ReadGeomValueComponent,
+                ReadColorValueComponent,
+                ReadTextfileValueComponent],
+            providers: [
+                {
+                    provide: ActivatedRoute,
+                    useValue: {params: of({id})}
+                },
+                {provide: 'config', useValue: KuiCoreConfig}
+            ]
+        })
+            .compileComponents();
+    }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ResourceComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(ResourceComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

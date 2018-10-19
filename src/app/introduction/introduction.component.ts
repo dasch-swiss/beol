@@ -13,12 +13,37 @@ import {
     OntologyCacheService,
     ApiServiceError,
     IncomingService,
-    StillImageRepresentation
+    StillImageRepresentation, ReadPropertyItem
 } from '@knora/core';
 import { BeolService } from '../services/beol.service';
+import { AppConfig } from '../app.config';
+import { JsonObject, JsonProperty } from 'json2typescript';
+import { HttpClient } from '@angular/common/http';
 
 declare let require: any;
-let jsonld = require('jsonld');
+const jsonld = require('jsonld');
+
+export interface IntroProps {
+    'title': ReadPropertyItem[];
+    'text': ReadPropertyItem[];
+}
+
+
+/**
+ *
+ */
+@JsonObject('introduction')
+export class Introduction {
+
+    @JsonProperty('name', String)
+    public name: string = undefined;
+
+    @JsonProperty('label', String)
+    public label: string = undefined;
+
+    @JsonProperty('children', [Introduction], true)
+    public children?: Introduction[] = [];
+}
 
 @Component({
     selector: 'app-introduction',
@@ -35,10 +60,27 @@ export class IntroductionComponent implements OnInit, OnDestroy {
     ontologyInfo: OntologyInformation;
 
     KnoraConstants = KnoraConstants;
+    sectionUrl = AppConfig.settings.apiURL + '/ontology/0801/beol/v2#section';
+
+    list: Introduction[];
+
+    props: IntroProps;
+
+    // current index of introduction
+    curIndex: number;
+    curChildIndex: number;
+
+    loading: boolean = true;
+
+    propIris: any = {
+        'title': AppConfig.settings.apiURL + '/ontology/0801/beol/v2#sectionHasTitle',
+        'text': AppConfig.settings.apiURL + '/ontology/0801/beol/v2#hasText',
+    };
 
     navigationSubscription;
 
     constructor(private _route: ActivatedRoute,
+        private _http: HttpClient,
         private _router: Router,
         private _searchService: SearchService,
         private _beol: BeolService,
@@ -58,6 +100,17 @@ export class IntroductionComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+
+        this._http.get('assets/data/introduction.json').subscribe(
+            (result: any) => {
+                this.list = result.introductions;
+                this.loading = false;
+            },
+            (error: any) => {
+                console.error(error);
+            }
+        );
+
         this._route.params.subscribe((params: Params) => {
             this.project = params['project'];
             // console.log('project', this.project);
@@ -109,6 +162,9 @@ export class IntroductionComponent implements OnInit, OnDestroy {
      * @param iri the Iri of the resource to be requested.
      */
     private requestResource(iri: string): void {
+
+        this.props = undefined;
+
         this._resourceService.getResource(iri)
             .subscribe(
                 (result: ApiServiceResult) => {
@@ -139,7 +195,31 @@ export class IntroductionComponent implements OnInit, OnDestroy {
                                     // ResourceObjectComponent.collectImagesAndRegionsForResource(resourceSeq.resources[0]);
 
                                     this.resource = resourceSeq.resources[0];
-                                    // console.log('resource properties: ', resourceSeq.resources[0].properties);
+                                    // console.log('resource: ', this.resource);
+
+                                    this.props = {
+                                        title: [],
+                                        text: []
+                                    };
+
+                                    for (const key in this.resource.properties) {
+                                        if (this.resource.properties.hasOwnProperty(key)) {
+                                            for (const val of this.resource.properties[key]) {
+                                                switch (val.propIri) {
+                                                    case this.propIris.title:
+                                                        this.props.title.push(val);
+                                                        break;
+
+                                                    case this.propIris.text:
+                                                        this.props.text.push(val);
+                                                        break;
+
+                                                    default:
+                                                    // do nothing
+                                                }
+                                            }
+                                        }
+                                    }
 
                                     this.getIncomingLinks(0);
                                 },
@@ -217,6 +297,10 @@ export class IntroductionComponent implements OnInit, OnDestroy {
         );
     }
 
+    /**
+     * Navigate to the introduction page using the beolId as parameter
+     * @param label beolID
+     */
     goToIntro(label: any) {
 
         // recreate the beolId based on the referred resource label
@@ -228,5 +312,23 @@ export class IntroductionComponent implements OnInit, OnDestroy {
 
     }
 
+    /**
+     * Navigate to the page of the list of abbreviations
+     */
+    goToListAbbreviation() {
+        this._router.navigateByUrl('introduction/leoo/goldbach_abbreviations');
+    }
+
+    toggleChildren(index: number) {
+        this.curIndex = (index === this.curIndex ? undefined : index);
+        // reset grand children
+        this.curChildIndex = undefined;
+    }
+    toggleGrandChildren(index: number) {
+        this.curChildIndex = (index === this.curChildIndex ? undefined : index);
+    }
 
 }
+
+
+
