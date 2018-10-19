@@ -131,6 +131,7 @@ export class ResourceComponent implements OnChanges, OnDestroy, OnInit {
     });
 
     // subscribe to the router events
+
     this.navigationSubscription = this._router.events.subscribe((e: any) => {
       // if it is a NavigationEnd event re-initalise the component
       if (e instanceof NavigationEnd) {
@@ -148,7 +149,7 @@ export class ResourceComponent implements OnChanges, OnDestroy, OnInit {
 
   ngOnInit() {
 
-    this.requestResource(this.iri);
+    // this.requestResource(this.iri);
 
   }
 
@@ -197,6 +198,8 @@ export class ResourceComponent implements OnChanges, OnDestroy, OnInit {
                   this.resource = resourceSeq.resources[0];
 
                   this.requestIncomingResources();
+
+                  console.log(this.resource);
                 },
                 (err) => {
 

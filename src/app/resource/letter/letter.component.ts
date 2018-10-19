@@ -191,7 +191,7 @@ export class LetterComponent implements OnDestroy, OnInit {
     }
 
     ngOnInit() {
-        this.requestResource(this.iri);
+//        this.requestResource(this.iri);
 
     }
 
