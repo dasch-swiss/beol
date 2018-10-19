@@ -1,11 +1,11 @@
-import { Component, OnChanges, OnInit, SimpleChange, OnDestroy, Input } from '@angular/core';
-import { ActivatedRoute, Params, Router, NavigationEnd, RoutesRecognized } from '@angular/router';
-import { filter, pairwise } from 'rxjs/operators';
+import { Component, OnDestroy } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import {
     ApiServiceError,
     ApiServiceResult,
     ConvertJSONLD,
+    DateSalsah,
     ImageRegion,
     IncomingService,
     KnoraConstants,
@@ -19,9 +19,7 @@ import {
     ResourceService,
     SearchService,
     StillImageRepresentation,
-    Utils,
-    ReadDateValue,
-    DateSalsah
+    Utils
 } from '@knora/core';
 import { RequestStillImageRepresentations } from '@knora/viewer';
 import { AppConfig } from '../../app.config';
@@ -53,7 +51,7 @@ export interface NeededProps {
     templateUrl: './letter.component.html',
     styleUrls: ['./letter.component.scss']
 })
-export class LetterComponent implements OnDestroy, OnInit {
+export class LetterComponent implements OnDestroy {
 
     iri: string;
     resource: ReadResource;
@@ -188,11 +186,6 @@ export class LetterComponent implements OnDestroy, OnInit {
                 this.requestResource(this.iri);
             }
         });
-    }
-
-    ngOnInit() {
-//        this.requestResource(this.iri);
-
     }
 
     ngOnDestroy() {

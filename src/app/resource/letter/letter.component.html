@@ -111,5 +111,17 @@
       <read-text-value-as-html [valueObject]="props.text[0]" [ontologyInfo]="ontologyInfo" [bindEvents]="true"></read-text-value-as-html>
     </section>
 
+      <section class="images">
+          <!-- Check for incoming images -->
+          <kui-still-image #OSDViewer
+                           class="osd-viewer"
+                           *ngIf="resource?.incomingStillImageRepresentations?.length > 0;"
+                           (getImages)="changeOffsetForStillImageRepresentations($event)"
+                           [images]="resource?.stillImageRepresentationsToDisplay"
+                           [imageRangeStart]="0"
+                           [imageRangeEnd]="4"
+                           [imageChangeInterval]="5">
+          </kui-still-image>
+      </section>
   </div>
 </div>
