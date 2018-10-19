@@ -5,9 +5,11 @@
     <div *ngFor="let book of leoo">
       <div *ngFor="let corrGroup of book.correspondences">
         <b>Correspondences {{corrGroup.description}}</b>
-        <mat-card class="corr-card" *ngFor="let corr of corrGroup.correspondences" (click)="searchForCorrespondence(corr.correspondent1.gnd, corr.correspondent2.gnd, corr.noTranslation)">
-          {{corr.description}}
-        </mat-card>
+          <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%">
+              <mat-card class="intro-card" fxFlex="50%" *ngFor="let corr of corrGroup.correspondences" (click)="searchForCorrespondence(corr.correspondent1.gnd, corr.correspondent2.gnd, corr.noTranslation)">
+                  {{corr.description}}
+              </mat-card>
+          </div>
       </div>
     </div>
   </div>
