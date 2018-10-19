@@ -3,28 +3,64 @@
     <div class="sidebar">
 
         <button mat-stroked-button class="previousBtn" (click)="location.back()">
-            <mat-icon>arrow_back</mat-icon>Previous
+            <mat-icon>arrow_back</mat-icon>
+            Previous
         </button>
 
-        <div *ngFor="let prop of resource?.properties | key">
-            <div *ngFor="let val of prop.value | key">
-                <!-- TODO: replace http://0.0.0.0:3333 by a constant or config.api -->
-                <span *ngIf="val.value.referredResourceIri && val.value.referredResource.type == 'http://0.0.0.0:3333/ontology/0801/beol/v2#section'">
-                    <mat-list>
-                        <mat-list-item class="{{KnoraConstants.SalsahLink}}" (click)="goToIntro(val.value.referredResource.label)">
-                            <a>{{val.value?.getContent()}}</a>
+        <!-- Tree of introduction links to navigate through several levels on each intro page with data from json file called introductions.json -->
+        <mat-list class="nav">
+            <div *ngFor="let item of list; let i = index;">
+
+                <mat-list-item [class.parent]="item.children">
+                    <button mat-button [routerLink]="'/introduction/leoo/goldbach_' + item.name" routerLinkActive="active-link" class="nav-item" (click)="toggleChildren(i)">
+                        {{item.label}}
+                        <mat-icon *ngIf="!item.children">keyboard_arrow_right</mat-icon>
+                        <mat-icon *ngIf="item.children">keyboard_arrow_down</mat-icon>
+                    </button>
+                </mat-list-item>
+
+                <div *ngIf="item.children" class="nav-children" [class.open]="curIndex === i">
+                    <div *ngFor="let child of item.children; let c = index;">
+                        <mat-list-item>
+                            <button mat-button [routerLink]="'/introduction/leoo/goldbach_' + child.name" routerLinkActive="active-link" class="nav-item" (click)="toggleGrandChildren(c)">
+                                {{child.label}}
+                                <mat-icon *ngIf="!child.children">keyboard_arrow_right</mat-icon>
+                                <mat-icon *ngIf="child.children">keyboard_arrow_down</mat-icon>
+                            </button>
                         </mat-list-item>
-                    </mat-list>
-                </span>
+
+                        <div *ngIf="child.children" class="nav-grand-children" [class.open]="curChildIndex === c">
+                            <mat-list-item *ngFor="let gc of child.children">
+                                <!-- [routerLink]="item.name -->
+                                <button mat-button [routerLink]="'/introduction/leoo/goldbach_' + gc.name" routerLinkActive="active-link" class="nav-item">
+                                    {{gc.label}}
+                                    <mat-icon>keyboard_arrow_right</mat-icon>
+                                </button>
+                            </mat-list-item>
+                        </div>
+
+                    </div>
+                </div>
             </div>
-        </div>
-        <br>
+        </mat-list>
+
     </div>
+    <!-- end of the sidebar -->
 
-    <div class="main-content">
+    <!-- Main content of the page -->
+    <div class="main-content" *ngIf="!loading && props">
 
-        <h2>{{resource?.label}}</h2>
+        <section class="title center">
+            <h3 mat-card-subtitle>{{resource?.label}}</h3>
+            <h1 mat-card-title *ngFor="let title of props.title">{{title.getContent()}}</h1>
+        </section>
 
+
+        <section class="text">
+            <read-text-value-as-html [valueObject]="props.text[0]" [ontologyInfo]="ontologyInfo" [bindEvents]="true"></read-text-value-as-html>
+        </section>
+
+        <!--
         <div mat-line *ngFor="let prop of resource?.properties | key">
             <h4 *ngIf="ontologyInfo?.getLabelForProperty(prop.key) != 'has section' && ontologyInfo?.getLabelForProperty(prop.key) != 'has Standoff Link to'">{{ontologyInfo?.getLabelForProperty(prop.key)}}</h4>
 
@@ -47,5 +83,6 @@
                 </span>
             </div>
         </div>
+        -->
     </div>
 </div>
