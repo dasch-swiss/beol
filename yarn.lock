@@ -385,10 +385,10 @@
   dependencies:
     tslib "^1.9.0"
 
-"@knora/viewer@^0.0.2-alpha":
-  version "0.0.2-alpha"
-  resolved "https://registry.yarnpkg.com/@knora/viewer/-/viewer-0.0.2-alpha.tgz#d4284f567fcb20e4cd1ff3f0ba3c5b6742d0de05"
-  integrity sha512-rEbJwZtjoyDQbAcnvzCKmm032CRHMuJP3LvRIt0mhxRJ1o5Yhp7e4FCQ7eW08RW81HeqWhtuLYe0kpUaTOyEew==
+"@knora/viewer@^0.0.2-alpha.2":
+  version "0.0.2-alpha.2"
+  resolved "https://registry.yarnpkg.com/@knora/viewer/-/viewer-0.0.2-alpha.2.tgz#445805df3e4e09c4b94a99283739410897246dee"
+  integrity sha512-tl9Z5BSwfMuIoPiBLkcOlkN+YWu669R5aOxjkLi1cBYO9nTpVJOgKOQyLB1wQi/D2Tqr/D5oZNnhbQu0VlQOUg==
   dependencies:
     tslib "^1.9.0"
 
