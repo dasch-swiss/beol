@@ -22,7 +22,7 @@ import {
     DateSalsah
 } from '@knora/core';
 import { RequestStillImageRepresentations } from '@knora/viewer';
-import { AppConfig } from '../../app.config';
+import { environment } from '../../../environments/environment';
 
 declare let require: any;
 let jsonld = require('jsonld');
@@ -42,7 +42,7 @@ export class PersonComponent implements OnChanges, OnInit {
     errorMessage: any;
 
     KnoraConstants = KnoraConstants;
-    apiUrl = AppConfig.settings.apiURL;
+    apiUrl = environment.api;
 
     propIris: any = {
         'id': this.apiUrl + '/ontology/0801/beol/v2#beolIDs',

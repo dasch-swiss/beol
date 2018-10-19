@@ -15,7 +15,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { OntologyInformation, ReadLinkValue, KnoraConstants } from '@knora/core';
 import { Router } from '@angular/router';
-import { AppConfig } from '../../app.config';
+import { environment } from '../../../environments/environment';
 
 @Component({
     selector: 'read-link-value',
@@ -29,7 +29,7 @@ export class ReadLinkValueComponent implements OnInit {
 
     KnoraConstants = KnoraConstants;
 
-    apiUrl = AppConfig.settings.apiURL;
+    apiUrl = environment.api;
 
     constructor(private _router: Router) {
     }
