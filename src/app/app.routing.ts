@@ -9,6 +9,7 @@ import { PersonComponent } from './resource/person/person.component';
 import { ResourceComponent } from './resource/resource.component';
 import { CorrespondenceComponent } from './correspondence/correspondence.component';
 import { ContactComponent } from './contact/contact.component';
+import { EndnoteComponent } from './resource/endnote/endnote.component';
 
 
 const appRoutes: Routes = [
@@ -38,6 +39,10 @@ const appRoutes: Routes = [
         path: 'letter/:id',
         component: LetterComponent,
         runGuardsAndResolvers: 'paramsChange'
+    },
+    {
+        path: 'endnote/:id',
+        component: EndnoteComponent
     },
     {
         path: 'search',

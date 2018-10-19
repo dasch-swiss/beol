@@ -49,6 +49,8 @@ export class ReadLinkValueComponent implements OnInit {
             this._router.navigateByUrl('person/' + encodeURIComponent(referredIri));
         } else if (referredType === this.apiUrl + '/ontology/0801/beol/v2#letter') {
             this._router.navigateByUrl('letter/' + encodeURIComponent(referredIri));
+        } else if (referredType === this.apiUrl + '/ontology/0801/beol/v2#endnote') {
+            this._router.navigateByUrl('endnote/' + encodeURIComponent(referredIri));
         } else {
             this._router.navigateByUrl('resource/' + encodeURIComponent(referredIri));
         }

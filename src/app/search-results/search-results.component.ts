@@ -256,6 +256,8 @@ export class SearchResultsComponent implements OnInit {
 
         if (type === this.apiUrl + '/ontology/0801/beol/v2#letter') {
             this._router.navigateByUrl('letter/' + encodeURIComponent(iri));
+        } else if (type === this.apiUrl + '/ontology/0801/beol/v2#endnote') {
+            this._router.navigateByUrl('endnote/' + encodeURIComponent(iri));
         } else {
             this._router.navigateByUrl('resource/' + encodeURIComponent(iri));
         }

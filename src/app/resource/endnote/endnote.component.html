@@ -1,0 +1,30 @@
+<kui-progress-indicator *ngIf="loading"></kui-progress-indicator>
+<div class="full-size scroll-y-only" *ngIf="!loading && props">
+
+    <div class="sidebar">
+
+        <button mat-stroked-button class="previousBtn" (click)="location.back()">
+            <mat-icon>arrow_back</mat-icon>Previous
+        </button>
+
+        <section *ngIf="props.figure[0]">
+            <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.figure[0].propIri)}}</h4>
+            <read-link-value *ngFor="let fig of props.figure" [valueObject]="fig" [ontologyInfo]="ontologyInfo"></read-link-value>
+        </section>
+
+    </div>
+
+    <div class="main-content">
+
+        <section class="title">
+            <h3 mat-card-subtitle>{{ontologyInfo?.getLabelForResourceClass(resource?.type)}}</h3>
+            <h2>[{{props.number}}] {{resource?.label}}</h2>
+        </section>
+
+
+        <section class="text">
+            <read-text-value-as-html [valueObject]="props.text[0]" [ontologyInfo]="ontologyInfo" [bindEvents]="true"></read-text-value-as-html>
+        </section>
+
+    </div>
+</div>
