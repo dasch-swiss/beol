@@ -14,6 +14,7 @@ import {
     ReadResource,
 } from '@knora/core';
 import { AppConfig } from '../../app.config';
+import { environment } from '../../../environments/environment';
 
 
 declare let require: any;
@@ -39,7 +40,7 @@ export class EndnoteComponent implements OnInit {
     errorMessage: any;
 
     KnoraConstants = KnoraConstants;
-    apiUrl = AppConfig.settings.apiURL;
+    apiUrl = environment.api;
 
     propIris: any = {
         'number': this.apiUrl + '/ontology/0801/beol/v2#endnoteHasNumber',
