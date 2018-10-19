@@ -4,7 +4,8 @@
     <div class="sidebar">
 
         <button mat-stroked-button class="previousBtn" (click)="location.back()">
-            <mat-icon>arrow_back</mat-icon>Previous
+            <mat-icon>arrow_back</mat-icon>
+            Previous
         </button>
 
         <section>
@@ -34,34 +35,41 @@
 
             <div *ngIf="props.original[0]">
                 <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.original[0].propIri)}}</h4>
-                <ul>
-                    <li *ngFor="let orig of props.original">
+
+                <mat-list>
+                    <mat-list-item *ngFor="let orig of props.original">
                         <read-link-value [valueObject]="orig" [ontologyInfo]="ontologyInfo"></read-link-value>
-                    </li>
-                </ul>
+                    </mat-list-item>
+                </mat-list>
+
             </div>
 
             <div *ngIf="props.translation[0]">
                 <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.translation[0].propIri)}}</h4>
                 <read-link-value *ngFor="let trans of props.translation" [valueObject]="trans" [ontologyInfo]="ontologyInfo"></read-link-value>
+
             </div>
 
             <div *ngIf="props.published[0]">
                 <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.published[0].propIri)}}</h4>
-                <ul>
-                    <li *ngFor="let pub of props.published">
+
+                <mat-list>
+                    <mat-list-item *ngFor="let pub of props.published">
                         <read-link-value [valueObject]="pub" [ontologyInfo]="ontologyInfo"></read-link-value>
-                    </li>
-                </ul>
+                    </mat-list-item>
+                </mat-list>
+
             </div>
 
             <div *ngIf="props.mentionedPerson[0]">
                 <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.mentionedPerson[0].propIri)}}</h4>
-                <ul>
-                    <li *ngFor="let mp of props.mentionedPerson">
+
+                <mat-list>
+                    <mat-list-item *ngFor="let mp of props.mentionedPerson">
                         <read-link-value [valueObject]="mp" [ontologyInfo]="ontologyInfo"></read-link-value>
-                    </li>
-                </ul>
+                    </mat-list-item>
+                </mat-list>
+
             </div>
 
             <div *ngIf="props.language[0]">
@@ -73,11 +81,13 @@
 
             <div *ngIf="props.subject[0]">
                 <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.subject[0].propIri)}}</h4>
-                <ul>
-                    <li *ngFor="let subj of props.subject">
+
+                <mat-list>
+                    <mat-list-item *ngFor="let subj of props.subject">
                         <read-list-value [valueObject]="subj"></read-list-value>
-                    </li>
-                </ul>
+                    </mat-list-item>
+                </mat-list>
+
             </div>
 
         </section>
@@ -90,35 +100,51 @@
         <section class="title center">
             <p>{{props.number}}</p>
             <p class="names">
-                <span *ngFor="let author of props.author; let last = last">
-                    <read-link-value [valueObject]="author" [ontologyInfo]="ontologyInfo"></read-link-value>
-                    <span *ngIf="!last"> &amp; </span>
-                </span>
+
+        <span *ngFor="let author of props.author; let last = last">
+          <read-link-value [valueObject]="author" [ontologyInfo]="ontologyInfo"></read-link-value>
+          <span *ngIf="!last"> &amp; </span>
+        </span>
                 to
                 <span *ngFor="let recipient of props.recipient; let last = last">
-                    <read-link-value [valueObject]="recipient" [ontologyInfo]="ontologyInfo"></read-link-value>
-                    <span *ngIf="!last"> &amp; </span>
-                </span>
+          <read-link-value [valueObject]="recipient" [ontologyInfo]="ontologyInfo"></read-link-value>
+          <span *ngIf="!last"> &amp; </span>
+        </span>
+
             </p>
             <p>
                 <span *ngIf="props.location">{{props.location}}, </span>
 
                 <span *ngIf="props.date.start">
-                    {{props.date.start.date | date: props.date.start?.format}}
-                    <span *ngIf="props.date.start.era">{{props.date.start?.era}}</span>
-                </span>
+          {{props.date.start.date | date: props.date.start?.format}}
+          <span *ngIf="props.date.start.era">{{props.date.start?.era}}</span>
+        </span>
                 <span *ngIf="props.date.end">
-                    - {{props.date.end.date | date: props.date.start?.format}}
-                    <span *ngIf="props.date.end.era">{{props.date.end?.era}}</span>
-                </span>
+          - {{props.date.end.date | date: props.date.start?.format}}
+          <span *ngIf="props.date.end.era">{{props.date.end?.era}}</span>
+        </span>
+
                 <span *ngIf="props.date.start.calendar"> ({{props.date.start?.calendar}})</span>
 
             </p>
         </section>
 
         <section class="text">
-            <read-text-value-as-html [valueObject]="props.text[0]" [ontologyInfo]="ontologyInfo" [bindEvents]="true"></read-text-value-as-html>
+            <read-text-value-as-html [valueObject]="props.text[0]" [ontologyInfo]="ontologyInfo"
+                                     [bindEvents]="true"></read-text-value-as-html>
         </section>
 
+        <section class="images">
+            <!-- Check for incoming images -->
+            <kui-still-image #OSDViewer
+                             class="osd-viewer"
+                             *ngIf="resource?.incomingStillImageRepresentations?.length > 0;"
+                             (getImages)="changeOffsetForStillImageRepresentations($event)"
+                             [images]="resource?.stillImageRepresentationsToDisplay"
+                             [imageRangeStart]="0"
+                             [imageRangeEnd]="4"
+                             [imageChangeInterval]="5">
+            </kui-still-image>
+        </section>
     </div>
 </div>

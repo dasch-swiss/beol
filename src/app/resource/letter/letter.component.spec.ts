@@ -2,14 +2,13 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MaterialModule } from '../../material-module';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
 
 import { LetterComponent } from './letter.component';
-import { ProgressIndicatorComponent } from '@knora/action';
-import { OntologyInformation, OntologyCacheService, KuiCoreConfig } from '@knora/core';
-import { MathJaxDirective, GndDirective } from '@knora/action';
+import { KuiActionModule } from '@knora/action';
+import { KuiCoreConfig, OntologyCacheService } from '@knora/core';
 
 import { ReadLinkValueComponent } from '../../properties/read-link-value/read-link-value.component';
 import { ReadTextValueAsHtmlComponent } from '../../properties/read-text-value-as-html/read-text-value-as-html.component';
@@ -25,59 +24,61 @@ import { ReadListValueComponent } from '../../properties/read-list-value/read-li
 import { ReadGeomValueComponent } from '../../properties/read-geom-value/read-geom-value.component';
 import { ReadColorValueComponent } from '../../properties/read-color-value/read-color-value.component';
 import { ReadTextfileValueComponent } from '../../properties/read-textfile-value/read-textfile-value.component';
+import { MathJaxDirective } from '../../directives/mathjax.directive';
+import { KuiViewerModule } from '@knora/viewer';
 
 
 describe('LetterComponent', () => {
-  let component: LetterComponent;
-  let fixture: ComponentFixture<LetterComponent>;
-  const id = 'http://rdfh.ch/0801/7ZvL2A5PQ9C4eAmr-n26gw';
+    let component: LetterComponent;
+    let fixture: ComponentFixture<LetterComponent>;
+    const id = 'http://rdfh.ch/0801/7ZvL2A5PQ9C4eAmr-n26gw';
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        MaterialModule,
-        RouterTestingModule,
-        HttpClientModule,
-        HttpClientTestingModule
-      ],
-      declarations: [
-        LetterComponent,
-        ProgressIndicatorComponent,
-        MathJaxDirective,
-        GndDirective,
-        ReadLinkValueComponent,
-        ReadTextValueAsHtmlComponent,
-        ReadTextValueAsStringComponent,
-        ReadTextValueAsXmlComponent,
-        ReadDateValueComponent,
-        ReadIntegerValueComponent,
-        ReadBooleanValueComponent,
-        ReadDecimalValueComponent,
-        ReadUriValueComponent,
-        ReadIntervalValueComponent,
-        ReadListValueComponent,
-        ReadGeomValueComponent,
-        ReadColorValueComponent,
-        ReadTextfileValueComponent],
-      providers: [
-        OntologyCacheService,
-        {
-          provide: ActivatedRoute,
-          useValue: { params: of({ id }) }
-        },
-        { provide: 'config', useValue: KuiCoreConfig }
-      ]
-    })
-      .compileComponents();
-  }));
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                KuiActionModule,
+                KuiViewerModule,
+                MaterialModule,
+                RouterTestingModule,
+                HttpClientModule,
+                HttpClientTestingModule
+            ],
+            declarations: [
+                LetterComponent,
+                MathJaxDirective,
+                ReadLinkValueComponent,
+                ReadTextValueAsHtmlComponent,
+                ReadTextValueAsStringComponent,
+                ReadTextValueAsXmlComponent,
+                ReadDateValueComponent,
+                ReadIntegerValueComponent,
+                ReadBooleanValueComponent,
+                ReadDecimalValueComponent,
+                ReadUriValueComponent,
+                ReadIntervalValueComponent,
+                ReadListValueComponent,
+                ReadGeomValueComponent,
+                ReadColorValueComponent,
+                ReadTextfileValueComponent],
+            providers: [
+                OntologyCacheService,
+                {
+                    provide: ActivatedRoute,
+                    useValue: {params: of({id})}
+                },
+                {provide: 'config', useValue: KuiCoreConfig}
+            ]
+        })
+            .compileComponents();
+    }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(LetterComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(LetterComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });
