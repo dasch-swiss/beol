@@ -77,13 +77,6 @@ export class IntroductionComponent implements OnInit, OnDestroy {
 
     navigationSubscription;
 
-    // to show or hide the intro link tree
-    showButtons: any = {
-        i1: false, i11: false, i12: false,
-        i2: false, i21: false, i22: false, i23: false, i24: false, i26: false,
-        i3: false, i32: false, i33: false
-    };
-
     constructor(private _route: ActivatedRoute,
         private _http: HttpClient,
         private _router: Router,
@@ -225,7 +218,7 @@ export class IntroductionComponent implements OnInit, OnDestroy {
                                         }
                                     }
 
-                                        this.getIncomingLinks(0);
+                                    this.getIncomingLinks(0);
                                 },
                                 (err) => {
 
