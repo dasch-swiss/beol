@@ -7,7 +7,7 @@ import { of } from 'rxjs';
 import { MaterialModule } from '../material-module';
 
 import { ResourceComponent } from './resource.component';
-import { KeyPipe, MathJaxDirective, GndDirective } from '@knora/action';
+import { KeyPipe, GndDirective } from '@knora/action';
 import { KuiCoreConfig } from '@knora/core';
 
 import { ReadLinkValueComponent } from '../properties/read-link-value/read-link-value.component';
@@ -24,6 +24,7 @@ import { ReadListValueComponent } from '../properties/read-list-value/read-list-
 import { ReadGeomValueComponent } from '../properties/read-geom-value/read-geom-value.component';
 import { ReadColorValueComponent } from '../properties/read-color-value/read-color-value.component';
 import { ReadTextfileValueComponent } from '../properties/read-textfile-value/read-textfile-value.component';
+import {MathJaxDirective} from '../directives/mathjax.directive';
 
 
 describe('ResourceComponent', () => {

@@ -7,9 +7,9 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { of } from 'rxjs';
 
 import { LetterComponent } from './letter.component';
-import { ProgressIndicatorComponent } from '@knora/action';
+import {GndDirective, ProgressIndicatorComponent} from '@knora/action';
 import { OntologyInformation, OntologyCacheService, KuiCoreConfig } from '@knora/core';
-import { MathJaxDirective, GndDirective } from '@knora/action';
+
 
 import { ReadLinkValueComponent } from '../../properties/read-link-value/read-link-value.component';
 import { ReadTextValueAsHtmlComponent } from '../../properties/read-text-value-as-html/read-text-value-as-html.component';
@@ -25,6 +25,7 @@ import { ReadListValueComponent } from '../../properties/read-list-value/read-li
 import { ReadGeomValueComponent } from '../../properties/read-geom-value/read-geom-value.component';
 import { ReadColorValueComponent } from '../../properties/read-color-value/read-color-value.component';
 import { ReadTextfileValueComponent } from '../../properties/read-textfile-value/read-textfile-value.component';
+import {MathJaxDirective} from '../../directives/mathjax.directive';
 
 
 describe('LetterComponent', () => {
