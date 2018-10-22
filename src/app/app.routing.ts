@@ -9,7 +9,8 @@ import { PersonComponent } from './resource/person/person.component';
 import { ResourceComponent } from './resource/resource.component';
 import { CorrespondenceComponent } from './correspondence/correspondence.component';
 import { ContactComponent } from './contact/contact.component';
-import {LeooRouteComponent} from './leoo-route/leoo-route.component';
+import { LeooRouteComponent } from './leoo-route/leoo-route.component';
+import { FigureComponent } from './resource/figure/figure.component';
 
 
 const appRoutes: Routes = [
@@ -36,6 +37,10 @@ const appRoutes: Routes = [
         component: PersonComponent
     },
     {
+        path: 'figure/:id',
+        component: FigureComponent
+    },
+    {
         path: 'letter/:id',
         component: LetterComponent,
         runGuardsAndResolvers: 'paramsChange'
@@ -50,9 +55,9 @@ const appRoutes: Routes = [
         ]
     },
     {
-         path: 'leoo/:rn',
-         component: LeooRouteComponent
-     },
+        path: 'leoo/:rn',
+        component: LeooRouteComponent
+    },
     {
         path: 'contact',
         component: ContactComponent
