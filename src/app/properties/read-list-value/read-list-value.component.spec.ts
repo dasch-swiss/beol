@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MaterialModule } from '../../material-module';
-
 import { ReadListValueComponent } from './read-list-value.component';
+import { MathJaxDirective } from '../../directives/mathjax.directive';
 
 describe('ReadListValueComponent', () => {
   let component: ReadListValueComponent;
@@ -13,7 +13,8 @@ describe('ReadListValueComponent', () => {
         MaterialModule
       ],
       declarations: [
-        ReadListValueComponent
+        ReadListValueComponent,
+        MathJaxDirective
       ]
     })
       .compileComponents();

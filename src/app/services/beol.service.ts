@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
 import { ExtendedSearchParams, SearchParamsService } from '@knora/core';
-import { AppConfig } from '../app.config';
+import {Router} from '@angular/router';
+import { environment } from '../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
 })
 export class BeolService {
 
-    constructor(private _searchParamsService: SearchParamsService) {
+    apiUrl = environment.api;
+    externalApiURL = environment.externalApiURL;
+
+    constructor(private _searchParamsService: SearchParamsService, private _router: Router) {
     }
 
     /**
@@ -21,8 +25,8 @@ export class BeolService {
 
         const bookTemplate = `
     PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
-    PREFIX biblio: <${AppConfig.settings.externalApiURL}/ontology/0801/biblio/simple/v2#>
-    PREFIX beol: <${AppConfig.settings.externalApiURL}/ontology/0801/beol/simple/v2#>
+    PREFIX biblio: <${this.externalApiURL}/ontology/0801/biblio/simple/v2#>
+    PREFIX beol: <${this.externalApiURL}/ontology/0801/beol/simple/v2#>
 
     CONSTRUCT {
 
@@ -81,7 +85,7 @@ export class BeolService {
 
         const bookTemplate = `
     PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
-    PREFIX beol: <${AppConfig.settings.externalApiURL}/ontology/0801/beol/simple/v2#>
+    PREFIX beol: <${this.externalApiURL}/ontology/0801/beol/simple/v2#>
 
     CONSTRUCT {
 
@@ -152,7 +156,7 @@ export class BeolService {
         }
 
         const correspondenceTemplate = `
-    PREFIX beol: <${AppConfig.settings.externalApiURL}/ontology/0801/beol/simple/v2#>
+    PREFIX beol: <${this.externalApiURL}/ontology/0801/beol/simple/v2#>
     PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
 
     CONSTRUCT {
@@ -241,7 +245,7 @@ export class BeolService {
     searchForLetterFromLEOO(repertoriumNumber: string): string {
 
         const letterByNumberTemplate = `
-        PREFIX beol: <${AppConfig.settings.externalApiURL}/ontology/0801/beol/simple/v2#>
+        PREFIX beol: <${this.externalApiURL}/ontology/0801/beol/simple/v2#>
         PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>  
         CONSTRUCT {
 
@@ -266,6 +270,27 @@ export class BeolService {
         `;
 
         return letterByNumberTemplate;
+
+    }
+
+    /**
+     * Chooses the apt route to display a resource, depending on its type.
+     *
+     * @param referredResourceType the type of the referred resource.
+     * @param referredResourceIri the Iri of the referred resource.
+     */
+    routeByResourceType(referredResourceType: string, referredResourceIri: string): void {
+
+        if (referredResourceType === this.apiUrl + '/ontology/0801/beol/v2#person') {
+            // route to person template
+            this._router.navigateByUrl('person/' + encodeURIComponent(referredResourceIri));
+        } else if (referredResourceType === this.apiUrl + '/ontology/0801/beol/v2#letter') {
+            // route to letter template
+            this._router.navigateByUrl('letter/' + encodeURIComponent(referredResourceIri));
+        } else {
+            // route to generic template
+            this._router.navigateByUrl('resource/' + encodeURIComponent(referredResourceIri));
+        }
 
     }
 }

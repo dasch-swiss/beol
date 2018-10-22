@@ -10,6 +10,7 @@ import { ResourceComponent } from './resource/resource.component';
 import { CorrespondenceComponent } from './correspondence/correspondence.component';
 import { ContactComponent } from './contact/contact.component';
 import { EndnoteComponent } from './resource/endnote/endnote.component';
+import { LeooRouteComponent } from './leoo-route/leoo-route.component';
 
 
 const appRoutes: Routes = [
@@ -53,10 +54,10 @@ const appRoutes: Routes = [
             }
         ]
     },
-    /*  { // path to specific component for the BEOL project
-         path: 'leoo/:rn',
-         component: LeooComponent
-     }, */
+    {
+        path: 'leoo/:rn',
+        component: LeooRouteComponent
+    },
     {
         path: 'contact',
         component: ContactComponent
