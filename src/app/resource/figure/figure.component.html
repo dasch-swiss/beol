@@ -26,6 +26,10 @@
             </div>
         </div>
 
+        <!-- Check for incoming images -->
+        <kui-still-image #OSDViewer class="osd-viewer" *ngIf="resource?.incomingStillImageRepresentations?.length > 0;" (getImages)="changeOffsetForStillImageRepresentations($event)" [images]="resource?.stillImageRepresentationsToDisplay" [imageRangeStart]="0" [imageRangeEnd]="4" [imageChangeInterval]="5">
+        </kui-still-image>
+
     </div>
 
 </div>

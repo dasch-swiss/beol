@@ -197,7 +197,7 @@ export class FigureComponent implements OnInit {
                                     FigureComponent.collectImagesAndRegionsForResource(resourceSeq.resources[0]);
 
                                     this.resource = resourceSeq.resources[0];
-                                    console.log('resource ', this.resource);
+                                    // console.log('resource ', this.resource);
 
                                     this.props = {
                                         caption: []
