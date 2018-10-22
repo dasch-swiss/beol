@@ -203,7 +203,6 @@ export class LetterComponent implements OnDestroy {
      */
     private requestResource(resourceIRI: string): void {
 
-
         this.props = undefined;
 
 

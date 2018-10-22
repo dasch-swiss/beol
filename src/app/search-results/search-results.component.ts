@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
@@ -14,6 +14,7 @@ import {
     SearchParamsService,
     SearchService
 } from '@knora/core';
+import { BeolService } from '../services/beol.service';
 import { environment } from '../../environments/environment';
 
 export interface ListData {
@@ -64,7 +65,8 @@ export class SearchResultsComponent implements OnInit {
         private _cacheService: OntologyCacheService,
         private _searchParamsService: SearchParamsService,
         private _router: Router,
-        public location: Location) {
+        public location: Location,
+        private _beol: BeolService) {
 
     }
 
@@ -250,15 +252,12 @@ export class SearchResultsComponent implements OnInit {
 
     /**
      * Navigate to the viewer that displays the resource's content
-     * @param iri
+     * @param resourceIri the Iri of the resource.
+     * @param resourceType the type (class) of the resource.
      */
-    goToViewer(iri: string, type: string) {
+    goToViewer(resourceIri: string, resourceType: string) {
 
-        if (type === this.apiUrl + '/ontology/0801/beol/v2#letter') {
-            this._router.navigateByUrl('letter/' + encodeURIComponent(iri));
-        } else {
-            this._router.navigateByUrl('resource/' + encodeURIComponent(iri));
-        }
+        this._beol.routeByResourceType(resourceType, resourceIri);
     }
 
     /**
@@ -268,7 +267,7 @@ export class SearchResultsComponent implements OnInit {
      */
     onScroll(offsetToUse: number = 0) {
 
-        console.log('scroll: ', offsetToUse);
+        // console.log('scroll: ', offsetToUse);
 
         // update the page offset when the end of scroll is reached to get the next page of search results
         this.offset = (offsetToUse === this.offset ? this.offset += 1 : offsetToUse);

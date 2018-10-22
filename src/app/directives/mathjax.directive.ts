@@ -1,5 +1,7 @@
-import { Directive, ElementRef, HostListener, Input, OnChanges, OnInit } from '@angular/core';
-import { KnoraConstants, OntologyInformation, ReadTextValueAsHtml } from '@knora/core';
+import {Directive, ElementRef, HostListener, Input, OnChanges, OnInit} from '@angular/core';
+import {KnoraConstants, OntologyInformation, ReadTextValueAsHtml} from '@knora/core';
+import {BeolService} from '../services/beol.service';
+import {MatSnackBar, MatSnackBarConfig} from '@angular/material';
 
 declare var MathJax: {
     Hub: {
@@ -9,74 +11,116 @@ declare var MathJax: {
 };
 
 /**
- * This directive makes MathJax re-render the inserted HTML in case it is a TextValue (mathematical notation may have been inserted).
+ * This directive makes MathJax render the mathematical notation contained in the inserted HTML.
  */
 // tslint:disable-next-line:directive-selector
-@Directive({ selector: '[mathJax]' })
+@Directive({selector: '[mathJax]'})
 export class MathJaxDirective implements OnChanges, OnInit {
 
+    private _renderMath = false; // indicates if mathematical notation should be rendered by MathJax
+
     @Input()
-    // setter method for resource classes when being updated by parent component
+    set renderMath(value) {
+        this._renderMath = value;
+    }
+
+    get renderMath() {
+        return this._renderMath;
+    }
+
+    private _html: string; // the HTML to be inserted (received from Knora)
+
+    @Input()
     set mathJax(value: string) {
         this._html = value;
     }
+
     get mathJax() {
         return this._html;
     }
-    private _html: string; // the HTML to be inserted
+
+    private _valueObject: ReadTextValueAsHtml; // the value object with standoff information (standoff links in HTML)
 
     @Input()
-    // setter method for resource classes when being updated by parent component
     set valueObject(value: ReadTextValueAsHtml) {
         this._valueObject = value;
     }
-    // getter method for resource classes (used in template)
+
     get valueObject() {
         return this._valueObject;
     }
-    private _valueObject: ReadTextValueAsHtml;
 
-    @Input('ontologyInfo') private ontologyInfo: OntologyInformation;
-    @Input('bindEvents') private bindEvents: Boolean; // indicates if click and mouseover events have to be bound
+    private _ontologyInfo: OntologyInformation; // ontology information for the text value (HTML) and its standoff links
 
-    constructor(private el: ElementRef) {
+    @Input()
+    set ontologyInfo(value) {
+        this._ontologyInfo = value;
+    }
+
+    get ontologyInfo() {
+        return this._ontologyInfo;
+    }
+
+    private _bindEvents: Boolean; // indicates if click and mouseover events have to be bound (HostListener)
+
+    @Input()
+    set bindEvents(value) {
+        this._bindEvents = value;
+    }
+
+    get bindEvents() {
+        return this._bindEvents;
+    }
+
+    constructor(private el: ElementRef,
+                private _beol: BeolService,
+                private _snackBar: MatSnackBar) {
     }
 
     /**
-     * Binds a click event to standoff links that shows the referred resource in a dialog box.
+     * Binds a click event to standoff links that showing the referred resource using the apt template (route).
      *
-     * @param event the event fired on an element inserted by this directive.
+     * Events only fire if bindEvents is set to true.
+     *
+     * @param targetElement the element that received the event.
      * @returns a Boolean indicating if event propagation should be stopped.
      */
     @HostListener('click', ['$event.target'])
     onClick(targetElement) {
 
-        // check if it a TextValue and is an internal link to a Knora resource (standoff link)
-        if (
-            this.bindEvents && targetElement.nodeName.toLowerCase() === 'a'
+        if (this._bindEvents && targetElement.nodeName.toLowerCase() === 'a'
             && targetElement.className.toLowerCase().indexOf(KnoraConstants.SalsahLink) >= 0) {
 
-            // const config: MatDialogConfig = ResourceDialogComponent.createConfiguration(targetElement.href);
-            // this.dialog.open(ResourceDialogComponent, config);
+            // salsah-link to a Knora resource
+
+            const referredResourceIri = targetElement.href;
+
+            // TODO: the value object should handle this and check for the existence of the given referred resource
+            const referredResourceType = this._valueObject.referredResources[referredResourceIri].type;
+
+            this._beol.routeByResourceType(referredResourceType, referredResourceIri);
 
             // preventDefault (propagation)
             return false;
-        } else if (
-            targetElement.parentElement.nodeName.toLowerCase() === 'a'
+        } else if (this._bindEvents && targetElement.parentElement.nodeName.toLowerCase() === 'a'
             && targetElement.parentElement.className.toLowerCase().indexOf(KnoraConstants.SalsahLink) >= 0) {
 
-            // const config: MatDialogConfig = ResourceDialogComponent.createConfiguration(targetElement.parentElement.href);
+            // salsah-link to a BEOL resource, activated from a parent element, e.g., a footnote (salsah-link containing a <sup>)
 
-            // config.panelClass = 'resizable';
+            const referredResourceIri = targetElement.parentElement.href;
 
-            // this.dialog.open(ResourceDialogComponent, config);
+            // TODO: the value object should handle this and check for the existence of the given referred resource
+            const referredResourceType = this._valueObject.referredResources[referredResourceIri].type;
+
+            this._beol.routeByResourceType(referredResourceType, referredResourceIri);
 
             // preventDefault (propagation)
             return false;
 
-        } else if (
-            this.bindEvents && targetElement.parentElement.nodeName.toLowerCase() === 'a'
+        } else if (this._bindEvents && targetElement.parentElement.nodeName.toLowerCase() === 'a'
             && targetElement.parentElement.className.toLowerCase().indexOf(KnoraConstants.RefMarker) >= 0) {
+
+            // internal reference in a BEBB letter: scroll to footnote on page
 
             const indexOfHashtag = targetElement.parentElement.href.indexOf('#', '');
 
@@ -92,41 +136,72 @@ export class MathJaxDirective implements OnChanges, OnInit {
 
             }
 
+            // preventDefault (propagation)
             return false;
 
-        } else if (this.bindEvents && targetElement.nodeName.toLowerCase() === 'a') {
+        } else if (this._bindEvents && targetElement.nodeName.toLowerCase() === 'a') {
+            // external link
+
             // open link in a new window
             window.open(targetElement.href, '_blank');
+
+            // preventDefault (propagation)
+            return false;
+        } else if (this._bindEvents && targetElement.parentElement.nodeName.toLowerCase() === 'a') {
+            // external link in parent element
+
+            // open link in a new window
+            window.open(targetElement.parentElement.href, '_blank');
+
+            // preventDefault (propagation)
             return false;
         } else {
-            // prevent propagation
+            // preventDefault (propagation)
             return false;
         }
 
     }
 
     /**
-     * Binds a mouseover event to the inserted elements.
+     * Binds a mouseover event to standoff links showing information about the referred resource.
      *
-     * @param event the event fired on an element inserted by this directive.
+     * Events only fire if bindEvents is set to true.
+     *
+     * @param targetElement the element that received the event.
      * @returns a Boolean indicating if event propagation should be stopped.
      */
     @HostListener('mouseover', ['$event.target'])
     onMouseEnter(targetElement) {
 
-        // check if it a TextValue and is an internal link to a Knora resource (standoff link)
-        if (this.bindEvents && targetElement.nodeName.toLowerCase() === 'a'
+        if (this._bindEvents && targetElement.nodeName.toLowerCase() === 'a'
             && targetElement.className.toLowerCase().indexOf(KnoraConstants.SalsahLink) >= 0) {
-            // console.log("mouseenter: internal link to: " + event.target.href);
+
+            // salsah-link to a Knora resource
 
             const referredResourceIri = targetElement.href;
 
             const resInfo = this.valueObject.getReferredResourceInfo(referredResourceIri, this.ontologyInfo);
 
-            /* const config = new MatSnackBarConfig();
-            config.duration = 2500; */
+            const config = new MatSnackBarConfig();
+            config.duration = 2500;
 
-            // this.snackBar.open(resInfo, undefined, config);
+            this._snackBar.open(resInfo, undefined, config);
+
+            // preventDefault (propagation)
+            return false;
+        } else if (this._bindEvents && targetElement.parentElement.nodeName.toLowerCase() === 'a'
+            && targetElement.parentElement.className.toLowerCase().indexOf(KnoraConstants.SalsahLink) >= 0) {
+
+            // salsah-link to a BEOL resource, activated from a parent element, e.g., a footnote (<sup> containing a salsah-link)
+
+            const referredResourceIri = targetElement.parentElement.href;
+
+            const resInfo = this.valueObject.getReferredResourceInfo(referredResourceIri, this.ontologyInfo);
+
+            const config = new MatSnackBarConfig();
+            config.duration = 2500;
+
+            this._snackBar.open(resInfo, undefined, config);
 
             // preventDefault (propagation)
             return false;
@@ -138,19 +213,21 @@ export class MathJaxDirective implements OnChanges, OnInit {
     }
 
     ngOnInit() {
-        // console.log(this.bindEvents);
     }
 
     ngOnChanges() {
-
-        // console.log(this.bindEvents);
+        // is triggered when input setter methods are called
 
         this.el.nativeElement.innerHTML = this._html;
 
-        // http://docs.mathjax.org/en/latest/advanced/typeset.html#typeset-math
-        MathJax.Hub.Queue(() => {
-            MathJax.Hub.Typeset(this.el.nativeElement);
-        });
+        // only render the math if the flag is set to true (onChanges is triggered when status of _renderMath changes)
+        if (this._renderMath) {
+
+            // http://docs.mathjax.org/en/latest/advanced/typeset.html#typeset-math
+            MathJax.Hub.Queue(() => {
+                MathJax.Hub.Typeset(this.el.nativeElement);
+            });
+        }
 
     }
 

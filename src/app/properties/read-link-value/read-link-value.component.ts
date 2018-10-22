@@ -13,9 +13,11 @@
  * */
 
 import { Component, Input, OnInit } from '@angular/core';
-import { OntologyInformation, ReadLinkValue, KnoraConstants } from '@knora/core';
+import { KnoraConstants, OntologyInformation, ReadLinkValue } from '@knora/core';
 import { Router } from '@angular/router';
+import { BeolService } from '../../services/beol.service';
 import { environment } from '../../../environments/environment';
+
 
 @Component({
     selector: 'read-link-value',
@@ -29,29 +31,24 @@ export class ReadLinkValueComponent implements OnInit {
 
     KnoraConstants = KnoraConstants;
 
-    apiUrl = environment.api;
 
-    constructor(private _router: Router) {
+    constructor(private _router: Router, private _beol: BeolService) {
     }
+
+    apiUrl = environment.api;
 
     ngOnInit() {
     }
 
     /**
-     * Navigate by URL route according to the resource type
+     * Navigate to the referred resource, choosing the apt template for the given resource type.
      *
-     * @param referredIri
-     * @param referredType
+     * @param referredResourceType the type of the referred resource.
+     * @param referredResourceIri the Iri of the referred resource.
      */
-    showReferredResource(referredIri, referredType) {
+    showReferredResource(referredResourceIri: string, referredResourceType: string) {
 
-        if (referredType === this.apiUrl + '/ontology/0801/beol/v2#person') {
-            this._router.navigateByUrl('person/' + encodeURIComponent(referredIri));
-        } else if (referredType === this.apiUrl + '/ontology/0801/beol/v2#letter') {
-            this._router.navigateByUrl('letter/' + encodeURIComponent(referredIri));
-        } else {
-            this._router.navigateByUrl('resource/' + encodeURIComponent(referredIri));
-        }
+        this._beol.routeByResourceType(referredResourceType, referredResourceIri);
 
     }
 

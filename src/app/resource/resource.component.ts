@@ -186,7 +186,7 @@ export class ResourceComponent implements OnDestroy {
 
                                     this.requestIncomingResources();
 
-                                    console.log(this.resource);
+                                    // console.log(this.resource);
                                 },
                                 (err) => {
 
