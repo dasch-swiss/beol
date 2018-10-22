@@ -19,7 +19,8 @@ import {
     ResourceService,
     SearchService,
     StillImageRepresentation,
-    Utils
+    Utils,
+    ReadTextValueAsHtml
 } from '@knora/core';
 import { RequestStillImageRepresentations } from '@knora/viewer';
 import { environment } from '../../../environments/environment';
@@ -56,6 +57,7 @@ export class LetterComponent implements OnDestroy {
 
     iri: string;
     resource: ReadResource;
+    endnote: ReadResource[] = [];
     ontologyInfo: OntologyInformation;
     incomingStillImageRepresentationCurrentOffset: number; // last offset requested for `this.resource.incomingStillImageRepresentations`
     loading = true;
@@ -240,7 +242,9 @@ export class LetterComponent implements OnDestroy {
                                     LetterComponent.collectImagesAndRegionsForResource(resourceSeq.resources[0]);
 
                                     this.resource = resourceSeq.resources[0];
-                                    // console.log('resource ', this.resource);
+                                    console.log('resource ', this.resource);
+
+                                    this.getEndnotes(this.resource);
 
                                     this.props = {
                                         author: [],
@@ -652,4 +656,29 @@ export class LetterComponent implements OnDestroy {
 
     }
 
+    getEndnotes(resource: ReadResource) {
+        const endnotes = [];
+
+        if (resource.properties !== undefined) {
+            const propIris = Object.keys(resource.properties);
+
+            for (const propIri of propIris) {
+                const propVals: Array<ReadPropertyItem> = resource.properties[propIri];
+                // console.log('propVals', propVals);
+
+                for (const propVal of propVals) {
+                    console.log('propVal', propVal.type);
+                    if (propVal.type === KnoraConstants.TextValue) {
+                        const linkVal = propVal as ReadTextValueAsHtml;
+                        console.log('linkVal', linkVal);
+                        /* if (linkVal.referredResourceIri === this.resource.id) {
+                            incomingProperties.push(propIri);
+                        }
+ */
+                    }
+
+                }
+            }
+        }
+    }
 }

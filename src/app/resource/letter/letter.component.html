@@ -101,28 +101,28 @@
             <p>{{props.number}}</p>
             <p class="names">
 
-        <span *ngFor="let author of props.author; let last = last">
-          <read-link-value [valueObject]="author" [ontologyInfo]="ontologyInfo"></read-link-value>
-          <span *ngIf="!last"> &amp; </span>
-        </span>
+                <span *ngFor="let author of props.author; let last = last">
+                    <read-link-value [valueObject]="author" [ontologyInfo]="ontologyInfo"></read-link-value>
+                    <span *ngIf="!last"> &amp; </span>
+                </span>
                 to
                 <span *ngFor="let recipient of props.recipient; let last = last">
-          <read-link-value [valueObject]="recipient" [ontologyInfo]="ontologyInfo"></read-link-value>
-          <span *ngIf="!last"> &amp; </span>
-        </span>
+                    <read-link-value [valueObject]="recipient" [ontologyInfo]="ontologyInfo"></read-link-value>
+                    <span *ngIf="!last"> &amp; </span>
+                </span>
 
             </p>
             <p>
                 <span *ngIf="props.location">{{props.location}}, </span>
 
                 <span *ngIf="props.date.start">
-          {{props.date.start.date | date: props.date.start?.format}}
-          <span *ngIf="props.date.start.era">{{props.date.start?.era}}</span>
-        </span>
+                    {{props.date.start.date | date: props.date.start?.format}}
+                    <span *ngIf="props.date.start.era">{{props.date.start?.era}}</span>
+                </span>
                 <span *ngIf="props.date.end">
-          - {{props.date.end.date | date: props.date.start?.format}}
-          <span *ngIf="props.date.end.era">{{props.date.end?.era}}</span>
-        </span>
+                    - {{props.date.end.date | date: props.date.start?.format}}
+                    <span *ngIf="props.date.end.era">{{props.date.end?.era}}</span>
+                </span>
 
                 <span *ngIf="props.date.start.calendar"> ({{props.date.start?.calendar}})</span>
 
@@ -130,21 +130,19 @@
         </section>
 
         <section class="text">
-            <read-text-value-as-html [valueObject]="props.text[0]" [ontologyInfo]="ontologyInfo"
-                                     [bindEvents]="true"></read-text-value-as-html>
+            <read-text-value-as-html [valueObject]="props.text[0]" [ontologyInfo]="ontologyInfo" [bindEvents]="true"></read-text-value-as-html>
         </section>
 
         <section class="images">
             <!-- Check for incoming images -->
-            <kui-still-image #OSDViewer
-                             class="osd-viewer"
-                             *ngIf="resource?.incomingStillImageRepresentations?.length > 0;"
-                             (getImages)="changeOffsetForStillImageRepresentations($event)"
-                             [images]="resource?.stillImageRepresentationsToDisplay"
-                             [imageRangeStart]="0"
-                             [imageRangeEnd]="4"
-                             [imageChangeInterval]="5">
+            <kui-still-image #OSDViewer class="osd-viewer" *ngIf="resource?.incomingStillImageRepresentations?.length > 0;" (getImages)="changeOffsetForStillImageRepresentations($event)" [images]="resource?.stillImageRepresentationsToDisplay" [imageRangeStart]="0" [imageRangeEnd]="4" [imageChangeInterval]="5">
             </kui-still-image>
+        </section>
+
+        <mat-divider></mat-divider>
+
+        <section class="endnote">
+            <!-- <app-endnote></app-endnote> -->
         </section>
     </div>
 </div>
