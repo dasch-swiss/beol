@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ExtendedSearchParams, SearchParamsService } from '@knora/core';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -287,6 +287,9 @@ export class BeolService {
         } else if (referredResourceType === this.apiUrl + '/ontology/0801/beol/v2#letter') {
             // route to letter template
             this._router.navigateByUrl('letter/' + encodeURIComponent(referredResourceIri));
+        } else if (referredResourceType === this.apiUrl + '/ontology/0801/beol/v2#figure') {
+            // route to letter template
+            this._router.navigateByUrl('figure/' + encodeURIComponent(referredResourceIri));
         } else {
             // route to generic template
             this._router.navigateByUrl('resource/' + encodeURIComponent(referredResourceIri));
