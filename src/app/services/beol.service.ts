@@ -291,12 +291,12 @@ export class BeolService {
             // route to letter template
             this._router.navigateByUrl('figure/' + encodeURIComponent(referredResourceIri));
         } else if (
-            referredResourceType === this.apiUrl + '/ontology/0801/biblio/v2#Book' ||
-            referredResourceType === this.apiUrl + '/ontology/0801/biblio/v2#EditedBook' ||
-            referredResourceType === this.apiUrl + '/ontology/0801/biblio/v2#CollectionArticle' ||
-            referredResourceType === this.apiUrl + '/ontology/0801/biblio/v2#Collection' ||
-            referredResourceType === this.apiUrl + '/ontology/0801/biblio/v2#Journal' ||
-            referredResourceType === this.apiUrl + '/ontology/0801/biblio/v2#JournalArticle') {
+            referredResourceType === this.externalApiURL + '/ontology/0801/biblio/v2#Book' ||
+            referredResourceType === this.externalApiURL + '/ontology/0801/biblio/v2#EditedBook' ||
+            referredResourceType === this.externalApiURL + '/ontology/0801/biblio/v2#CollectionArticle' ||
+            referredResourceType === this.externalApiURL + '/ontology/0801/biblio/v2#Collection' ||
+            referredResourceType === this.externalApiURL + '/ontology/0801/biblio/v2#Journal' ||
+            referredResourceType === this.externalApiURL + '/ontology/0801/biblio/v2#JournalArticle') {
             // route to biblio-items template
             this._router.navigateByUrl('biblio/' + encodeURIComponent(referredResourceIri));
         } else {
