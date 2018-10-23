@@ -14,7 +14,7 @@
 
         <!-- the following list will be moved to @knora/viewer views -->
         <mat-accordion class="example-headers-align">
-            <mat-expansion-panel *ngFor="let res of result; let i = index;" [expanded]="step === i" (opened)="setStep(i)" hideToggle>
+            <mat-expansion-panel *ngFor="let res of result; let i = index; let first = first; let last = last;" [expanded]="step === i" (opened)="setStep(i)" hideToggle>
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         {{ontologyInfo?.getLabelForResourceClass(res.type)}}
