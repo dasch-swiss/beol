@@ -8,7 +8,6 @@
             Previous
         </button>
 
-        <!-- end of sidebar -->
     </div>
 
     <div class="main-content">
@@ -18,10 +17,16 @@
             <!-- <h4>label: {{resource?.label}}</h4> -->
 
             <p *ngFor="let title of props.title">
-                <span *ngIf="props.title">
+                <!-- <span *ngIf="props.title">
                     <h2>
                         {{title.getContent()}}
                         <span *ngIf="props.abbreviation">({{props?.abbreviation}})</span>
+                    </h2>
+                </span> -->
+                <span *ngIf="props.title">
+                    <h2>
+                        <read-text-value-as-html [valueObject]="props.title[0]" [ontologyInfo]="ontologyInfo" [bindEvents]="true"></read-text-value-as-html>
+                        <span *ngIf="props.abbreviation"> ({{props?.abbreviation}})</span>
                     </h2>
                 </span>
             </p>
@@ -55,7 +60,7 @@
                     - {{props.date.end.date | date: props.date.start?.format}}
                     <span *ngIf="props.date.end.era">{{props.date.end?.era}}</span>
                 </span>
-                <!-- <span *ngIf="props.date.start.calendar"> ({{props.date.start?.calendar}})</span> -->
+                <!-- TO FIX: <span *ngIf="props.date.start.calendar"> ({{props.date.start?.calendar}})</span> -->
             </p>
 
         </section>
@@ -84,16 +89,24 @@
             </p>
         </div>
 
-        <p>
+        <div>
             <span *ngIf="props.journalVolume">
-                <h4 class="subheading-2">Issue</h4> {{props?.journalVolume}}</span>
+                <h4 class="subheading-2">Issue</h4>
+                <p class="margin-left">{{props?.journalVolume}}</p>
+            </span>
             <span *ngIf="props.journalIssue">
-                <h4 class="subheading-2">Issue Number</h4> {{props?.journalIssue}}</span>
+                <h4 class="subheading-2">Issue Number</h4>
+                <p class="margin-left">{{props?.journalVolume}}</p>
+            </span>
             <span *ngIf="props.numVolumes">
-                <h4 class="subheading-2">Number of volumes</h4> {{props?.numVolumes}}</span>
+                <h4 class="subheading-2">Number of volumes</h4>
+                <p class="margin-left">{{props?.numVolumes}}</p>
+            </span>
             <span *ngIf="props.numPages">
-                <h4 class="subheading-2">Number of pages</h4> {{props?.numPages}}</span>
-        </p>
+                <h4 class="subheading-2">Number of pages</h4>
+                <p class="margin-left">{{props?.numPages}}</p>
+            </span>
+        </div>
 
 
         <span *ngIf="props.isbn">
@@ -101,14 +114,17 @@
         </span>
 
         <span *ngIf="props.collectionNumber">
-            <h4 class="subheading-2">Collection Number: </h4>{{props?.collectionNumber}}
+            <h4 class="subheading-2">Collection Number: </h4>
+            <p class="margin-left">{{props?.collectionNumber}}</p>
         </span>
 
         <div *ngIf="props.editor[0]">
             <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.editor[0].propIri)}}</h4>
-            <p class="margin-left">
-                <read-link-value *ngFor="let trans of props.editor" [valueObject]="trans" [ontologyInfo]="ontologyInfo"></read-link-value>
-            </p>
+            <mat-list>
+                <mat-list-item *ngFor="let editor of props.editor">
+                    <read-link-value [valueObject]="editor" [ontologyInfo]="ontologyInfo"></read-link-value>
+                </mat-list-item>
+            </mat-list>
         </div>
 
         <div *ngIf="props.editorOrg[0]">
@@ -165,7 +181,6 @@
             <p *ngFor="let c of props.comment" class="margin-left">{{c.getContent()}}</p>
         </div>
 
-        <!-- TODO: Mentioned in ? -->
         <div *ngIf="props.mentionedIn[0]">
             <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.mentionedIn[0].propIri)}}</h4>
             <p *ngFor="let mi of props.mentionedIn" class="margin-left">{{mi.getContent()}}</p>
@@ -175,7 +190,6 @@
 
         </section>
 
-        <!-- end of main-content -->
     </div>
 
 
