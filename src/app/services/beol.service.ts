@@ -288,8 +288,17 @@ export class BeolService {
             // route to letter template
             this._router.navigateByUrl('letter/' + encodeURIComponent(referredResourceIri));
         } else if (referredResourceType === this.apiUrl + '/ontology/0801/beol/v2#figure') {
-            // route to letter template
+            // route to figure template
             this._router.navigateByUrl('figure/' + encodeURIComponent(referredResourceIri));
+        } else if (
+            referredResourceType === this.apiUrl + '/ontology/0801/biblio/v2#Book' ||
+            referredResourceType === this.apiUrl + '/ontology/0801/biblio/v2#EditedBook' ||
+            referredResourceType === this.apiUrl + '/ontology/0801/biblio/v2#CollectionArticle' ||
+            referredResourceType === this.apiUrl + '/ontology/0801/biblio/v2#Collection' ||
+            referredResourceType === this.apiUrl + '/ontology/0801/biblio/v2#Journal' ||
+            referredResourceType === this.apiUrl + '/ontology/0801/biblio/v2#JournalArticle') {
+            // route to biblio-items template
+            this._router.navigateByUrl('biblio/' + encodeURIComponent(referredResourceIri));
         } else {
             // route to generic template
             this._router.navigateByUrl('resource/' + encodeURIComponent(referredResourceIri));
