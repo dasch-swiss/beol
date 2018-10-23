@@ -10,7 +10,7 @@
 
         <section>
             <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.title[0].propIri)}}</h4>
-            <p *ngFor="let title of props.title">{{title.getContent()}}</p>
+            <p class="margin-left" *ngFor="let title of props.title">{{title.getContent()}}</p>
 
             <div *ngIf="props.repertorium">
                 <p>
@@ -23,14 +23,20 @@
 
             <div *ngIf="props.figure[0]">
                 <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.figure[0].propIri)}}</h4>
-                <read-link-value *ngFor="let fig of props.figure" [valueObject]="fig" [ontologyInfo]="ontologyInfo"></read-link-value>
+                <p class="margin-left">
+                    <read-link-value *ngFor="let fig of props.figure" [valueObject]="fig"
+                                     [ontologyInfo]="ontologyInfo"></read-link-value>
+                </p>
             </div>
 
             <div *ngIf="props.replyTo[0]">
                 <h4 class="subheading-2">
                     {{ontologyInfo?.getLabelForProperty(props?.replyTo[0].propIri)}}
                 </h4>
-                <read-link-value *ngFor="let rt of props.replyTo" [valueObject]="rt" [ontologyInfo]="ontologyInfo"></read-link-value>
+                <p class="margin-left">
+                    <read-link-value *ngFor="let rt of props.replyTo" [valueObject]="rt"
+                                     [ontologyInfo]="ontologyInfo"></read-link-value>
+                </p>
             </div>
 
             <div *ngIf="props.original[0]">
@@ -46,8 +52,10 @@
 
             <div *ngIf="props.translation[0]">
                 <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.translation[0].propIri)}}</h4>
-                <read-link-value *ngFor="let trans of props.translation" [valueObject]="trans" [ontologyInfo]="ontologyInfo"></read-link-value>
-
+                <p class="margin-left">
+                    <read-link-value *ngFor="let trans of props.translation" [valueObject]="trans"
+                                     [ontologyInfo]="ontologyInfo"></read-link-value>
+                </p>
             </div>
 
             <div *ngIf="props.published[0]">
@@ -74,7 +82,7 @@
 
             <div *ngIf="props.language[0]">
                 <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.language[0].propIri)}}</h4>
-                <p *ngFor="let lang of props.language; let last = last">{{lang.getContent()}}
+                <p *ngFor="let lang of props.language; let last = last" class="margin-left">{{lang.getContent()}}
                     <span *ngIf="!last">, </span>
                 </p>
             </div>

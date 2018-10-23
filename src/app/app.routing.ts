@@ -11,6 +11,7 @@ import { CorrespondenceComponent } from './correspondence/correspondence.compone
 import { ContactComponent } from './contact/contact.component';
 import { EndnoteComponent } from './resource/endnote/endnote.component';
 import { LeooRouteComponent } from './leoo-route/leoo-route.component';
+import { FigureComponent } from './resource/figure/figure.component';
 
 
 const appRoutes: Routes = [
@@ -35,6 +36,10 @@ const appRoutes: Routes = [
     {
         path: 'person/:id',
         component: PersonComponent
+    },
+    {
+        path: 'figure/:id',
+        component: FigureComponent
     },
     {
         path: 'letter/:id',

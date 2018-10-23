@@ -290,6 +290,9 @@ export class BeolService {
         } else if (referredResourceType === this.apiUrl + '/ontology/0801/beol/v2#endnote') {
             // route to letter template
             this._router.navigateByUrl('endnote/' + encodeURIComponent(referredResourceIri));
+        } else if (referredResourceType === this.apiUrl + '/ontology/0801/beol/v2#figure') {
+            // route to letter template
+            this._router.navigateByUrl('figure/' + encodeURIComponent(referredResourceIri));
         } else {
             // route to generic template
             this._router.navigateByUrl('resource/' + encodeURIComponent(referredResourceIri));
