@@ -86,7 +86,7 @@ export function initializeApp(appConfig: AppConfig) {
         ContactFormComponent,
         MathJaxDirective,
         LeooRouteComponent,
-        EndnoteComponent
+        EndnoteComponent,
         FigureComponent
     ],
     imports: [
