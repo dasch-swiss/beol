@@ -48,7 +48,7 @@ export class FigureComponent implements OnInit {
     errorMessage: any;
 
     KnoraConstants = KnoraConstants;
-    apiUrl = environment.api;
+    apiUrl = environment.externalApiURL;
 
     propIris: any = {
         'id': this.apiUrl + '/ontology/0801/beol/v2#beolIDs',

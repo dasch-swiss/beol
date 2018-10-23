@@ -62,7 +62,7 @@ export class LetterComponent implements OnDestroy {
     errorMessage: any;
 
     KnoraConstants = KnoraConstants;
-    apiUrl = environment.api;
+    apiUrl = environment.externalApiURL;
 
     navigationSubscription;
 

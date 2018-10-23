@@ -35,8 +35,6 @@ export class ReadLinkValueComponent implements OnInit {
     constructor(private _router: Router, private _beol: BeolService) {
     }
 
-    apiUrl = environment.api;
-
     ngOnInit() {
     }
 

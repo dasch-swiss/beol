@@ -17,7 +17,7 @@ export class LeooRouteComponent implements OnInit {
 
     repertoriumNumber: string;
 
-    apiUrl = environment.api;
+    apiUrl = environment.externalApiURL;
 
     constructor(
         private _route: ActivatedRoute,

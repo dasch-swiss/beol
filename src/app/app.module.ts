@@ -96,7 +96,7 @@ export function initializeApp(appConfig: AppConfig) {
         FlexLayoutModule,
         InfiniteScrollModule,
         KuiCoreModule.forRoot({
-            name: environment.name,
+            name: environment.appName,
             api: environment.api,
             media: environment.media,
             app: environment.app,
