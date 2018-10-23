@@ -25,7 +25,6 @@
 
                         <!--<mat-icon>{{ontologyInfo?.getLabelForResourceClass(res.type) | lowercase}}</mat-icon>-->
 
-
                         <!--<mat-icon *ngIf="step !== i">account_circle</mat-icon>-->
                         <!--<mat-icon *ngIf="step === i">close</mat-icon>-->
                     </mat-panel-description>
@@ -58,16 +57,16 @@
                 </div>
 
                 <!-- go to the viewer to access the resource informations -->
-                <button mat-button color="primary" (click)="goToViewer(res.id, res.type)">Read more</button>
+                <button mat-button color="primary" (click)="goToViewer(res.id, res.type)">Read more &rarr;</button>
 
                 <mat-action-row>
-                    <button mat-button color="warn" *ngIf="!first" (click)="prevStep()">Previous</button>
+                    <button mat-button color="accent" *ngIf="!first" (click)="prevStep()">Previous</button>
                     <button mat-button color="primary" *ngIf="!last" (click)="nextStep()">Next</button>
                 </mat-action-row>
             </mat-expansion-panel>
 
         </mat-accordion>
-        <div class="action-panel">
+        <div class="action-panel" *ngIf="result.length > 0">
             <button mat-button class="link center" (click)="loadMore(offset)" *ngIf="maxOffset !== offset">Load more<br><mat-icon>keyboard_arrow_down</mat-icon></button>
         </div>
     </div>

@@ -107,6 +107,7 @@
 
 .text {
   margin: 48px 24px;
+  text-align: justify;
 }
 
 .osdPosition {
@@ -118,5 +119,5 @@ li.without-bullets {
 }
 
 .bolder {
-  font-weight: bolder;
+  font-weight: bolder !important;
 }
