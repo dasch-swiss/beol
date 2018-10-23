@@ -6,63 +6,72 @@
 
 </div>
 
-<div *ngIf="!rerender" class="main-content" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="150" (scrolled)="onScroll(offset)">
+<div *ngIf="!rerender" class="main-content">
 
     <!-- show the number of results found in Knora -->
-    <div *ngIf="numberOfAllResults != 0; else noResult">
+    <div *ngIf="numberOfAllResults !== 0 && result; else noResult">
         <h4>Number of results: {{numberOfAllResults}}</h4>
+
+        <!-- the following list will be moved to @knora/viewer views -->
+        <mat-accordion class="example-headers-align">
+            <mat-expansion-panel *ngFor="let res of result; let i = index;" [expanded]="step === i" (opened)="setStep(i)" hideToggle>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        {{ontologyInfo?.getLabelForResourceClass(res.type)}}
+                    </mat-panel-title>
+
+                    <mat-panel-description>
+                        {{res.label}}
+
+                        <!--<mat-icon>{{ontologyInfo?.getLabelForResourceClass(res.type) | lowercase}}</mat-icon>-->
+
+
+                        <!--<mat-icon *ngIf="step !== i">account_circle</mat-icon>-->
+                        <!--<mat-icon *ngIf="step === i">close</mat-icon>-->
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+
+                <!-- content of the resource -->
+                <!-- this should be implemented from @knora/viewer object -->
+                <div mat-line *ngFor="let prop of res.properties | key">
+                    <!--<span>{{ontologyInfo?.getLabelForProperty(prop.key)}}</span>-->
+                    <ul>
+                        <li *ngFor="let val of prop.value | key" class="without-bullets">
+                            <div [ngSwitch]="val.value.getClassName()">
+
+                                <!-- only render math if panel is open: step === i-->
+                                <span *ngSwitchCase="KnoraConstants.ReadTextValueAsHtml" [mathJax]="val.value?.getContent()" [renderMath]="step === i" [valueObject]="val.value" [ontologyInfo]="ontologyInfo" [bindEvents]="false"></span>
+
+                                <span class="bolder">
+                                    <read-date-value *ngSwitchCase="KnoraConstants.ReadDateValue" [valueObject]="val.value" [calendar]="true" [era]="true"></read-date-value>
+
+                                    <span *ngSwitchDefault="">{{val.value.getContent()}}</span>
+                                </span>
+                                <br>
+                                <span class="mat-caption" *ngIf="ontologyInfo?.getLabelForProperty(prop.key) !== 'Text'">
+                                    {{ontologyInfo?.getLabelForProperty(prop.key)}}
+                                </span>
+
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- go to the viewer to access the resource informations -->
+                <button mat-button color="primary" (click)="goToViewer(res.id, res.type)">Read more</button>
+
+                <mat-action-row>
+                    <button mat-button color="warn" *ngIf="!first" (click)="prevStep()">Previous</button>
+                    <button mat-button color="primary" *ngIf="!last" (click)="nextStep()">Next</button>
+                </mat-action-row>
+            </mat-expansion-panel>
+
+        </mat-accordion>
+        <div class="action-panel">
+            <button mat-button class="link center" (click)="loadMore(offset)" *ngIf="maxOffset !== offset">Load more<br><mat-icon>keyboard_arrow_down</mat-icon></button>
+        </div>
     </div>
 
-    <!-- the following list will be moved to @knora/viewer views -->
-    <mat-accordion class="example-headers-align">
-        <mat-expansion-panel *ngFor="let res of result; let i = index;" [expanded]="step === i" (opened)="setStep(i)" hideToggle>
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    {{ontologyInfo?.getLabelForResourceClass(res.type)}}
-                </mat-panel-title>
-
-                <mat-panel-description>
-                    {{res.label}}
-
-                    <!--<mat-icon>{{ontologyInfo?.getLabelForResourceClass(res.type) | lowercase}}</mat-icon>-->
-
-
-                    <!--<mat-icon *ngIf="step !== i">account_circle</mat-icon>-->
-                    <!--<mat-icon *ngIf="step === i">close</mat-icon>-->
-                </mat-panel-description>
-            </mat-expansion-panel-header>
-
-            <!-- content of the resource -->
-            <!-- this should be implemented from @knora/viewer object -->
-            <div mat-line *ngFor="let prop of res.properties | key">
-                <!--<span>{{ontologyInfo?.getLabelForProperty(prop.key)}}</span>-->
-                <ul>
-                    <li *ngFor="let val of prop.value | key">
-                        <div [ngSwitch]="val.value.getClassName()">
-
-                            <!-- only render math if panel is open: step === i-->
-                            <span *ngSwitchCase="KnoraConstants.ReadTextValueAsHtml" [mathJax]="val.value?.getContent()" [renderMath]="step === i" [valueObject]="val.value" [ontologyInfo]="ontologyInfo" [bindEvents]="false"></span>
-
-                            <read-date-value *ngSwitchCase="KnoraConstants.ReadDateValue" [valueObject]="val.value" [calendar]="true" [era]="true"></read-date-value>
-
-                            <span *ngSwitchDefault="">{{val.value.getContent()}}</span>
-
-                            <span>&nbsp;({{ontologyInfo?.getLabelForProperty(prop.key)}})</span>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- go to the viewer to access the resource informations -->
-            <button mat-button color="primary" (click)="goToViewer(res.id, res.type)">Read more</button>
-
-            <mat-action-row>
-                <button mat-button color="warn" *ngIf="!first" (click)="prevStep()">Previous</button>
-                <button mat-button color="primary" *ngIf="!last" (click)="nextStep()">Next</button>
-            </mat-action-row>
-        </mat-expansion-panel>
-
-    </mat-accordion>
 
     <!-- In case of 0 result -->
     <ng-template #noResult>
