@@ -34,6 +34,7 @@ export class AppConfig {
 
     constructor(private http: HttpClient) { }
 
+    /*
     loadAppConfig() {
         const jsonFile = `config/config.${environment.name}.json`;
         return this.http.get(jsonFile)
@@ -43,4 +44,5 @@ export class AppConfig {
                 // console.log('AppConfig.settings = ', AppConfig.settings);
             });
     }
+    */
 }
