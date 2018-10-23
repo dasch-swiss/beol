@@ -53,9 +53,11 @@ import { AngularFirestore } from '../../node_modules/angularfire2/firestore';
 import { AngularFireModule } from '../../node_modules/@angular/fire';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
+/*
 export function initializeApp(appConfig: AppConfig) {
     return () => appConfig.loadAppConfig();
 }
+*/
 
 @NgModule({
     declarations: [
@@ -90,13 +92,13 @@ export function initializeApp(appConfig: AppConfig) {
         BiblioItemsComponent
     ],
     imports: [
-        AngularFireModule.initializeApp(environment.firebase),
+//        AngularFireModule.initializeApp(environment.firebase),
         AppRouting,
         BrowserModule,
         FlexLayoutModule,
         InfiniteScrollModule,
         KuiCoreModule.forRoot({
-            name: environment.name,
+            name: environment.appName,
             api: environment.api,
             media: environment.media,
             app: environment.app,
@@ -108,14 +110,14 @@ export function initializeApp(appConfig: AppConfig) {
         ReactiveFormsModule
     ],
     providers: [
-        AppConfig,
+/*        AppConfig,
         {
             provide: APP_INITIALIZER,
             useFactory: initializeApp,
             deps: [AppConfig],
             multi: true
-        },
-        AngularFirestore,
+        },*/
+//        AngularFirestore,
         {
             provide: APP_BASE_HREF,
             useValue: '/'

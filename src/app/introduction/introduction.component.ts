@@ -13,12 +13,14 @@ import {
     OntologyCacheService,
     ApiServiceError,
     IncomingService,
-    StillImageRepresentation, ReadPropertyItem
+    StillImageRepresentation,
+    ReadPropertyItem
 } from '@knora/core';
 import { BeolService } from '../services/beol.service';
 import { AppConfig } from '../app.config';
 import { JsonObject, JsonProperty } from 'json2typescript';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 declare let require: any;
 const jsonld = require('jsonld');
@@ -60,7 +62,7 @@ export class IntroductionComponent implements OnInit, OnDestroy {
     ontologyInfo: OntologyInformation;
 
     KnoraConstants = KnoraConstants;
-    sectionUrl = AppConfig.settings.apiURL + '/ontology/0801/beol/v2#section';
+    sectionUrl = environment.externalApiURL + '/ontology/0801/beol/v2#section';
 
     list: Introduction[];
 
@@ -73,8 +75,8 @@ export class IntroductionComponent implements OnInit, OnDestroy {
     loading: boolean = true;
 
     propIris: any = {
-        'title': AppConfig.settings.apiURL + '/ontology/0801/beol/v2#sectionHasTitle',
-        'text': AppConfig.settings.apiURL + '/ontology/0801/beol/v2#hasText',
+        'title': environment.externalApiURL + '/ontology/0801/beol/v2#sectionHasTitle',
+        'text': environment.externalApiURL + '/ontology/0801/beol/v2#hasText',
     };
 
     navigationSubscription;
