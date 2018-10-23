@@ -1,0 +1,182 @@
+<kui-progress-indicator *ngIf="loading"></kui-progress-indicator>
+<div class="full-size scroll-y-only" *ngIf="!loading && props">
+
+    <div class="sidebar">
+
+        <button mat-stroked-button class="previousBtn" (click)="location.back()">
+            <mat-icon>arrow_back</mat-icon>
+            Previous
+        </button>
+
+        <!-- end of sidebar -->
+    </div>
+
+    <div class="main-content">
+
+        <section class="title center">
+            <h3 mat-card-subtitle>{{ontologyInfo?.getLabelForResourceClass(resource?.type)}}</h3>
+            <!-- <h4>label: {{resource?.label}}</h4> -->
+
+            <p *ngFor="let title of props.title">
+                <span *ngIf="props.title">
+                    <h2>
+                        {{title.getContent()}}
+                        <span *ngIf="props.abbreviation">({{props?.abbreviation}})</span>
+                    </h2>
+                </span>
+            </p>
+
+            <p *ngFor="let name of props.name">
+                <span *ngIf="props.name">
+                    <h2>{{name.getContent()}}</h2>
+                </span>
+            </p>
+
+            <p *ngFor="let subtitle of props.subtitle">
+                <span *ngIf="props.subtitle">
+                    <h4>{{subtitle.getContent()}}</h4>
+                </span>
+            </p>
+
+            <p>
+                <span *ngFor="let author of props.author; let last = last">
+                    <read-link-value [valueObject]="author" [ontologyInfo]="ontologyInfo"></read-link-value>
+                    <span *ngIf="!last"> &amp; </span>
+                </span>
+            </p>
+
+            <p>
+                <span *ngIf="props.location">{{props?.location}}, </span>
+                <span *ngIf="props.date.start">
+                    {{props.date.start.date | date: props.date.start?.format}}
+                    <span *ngIf="props.date.start.era">{{props.date.start?.era}}</span>
+                </span>
+                <span *ngIf="props.date.end">
+                    - {{props.date.end.date | date: props.date.start?.format}}
+                    <span *ngIf="props.date.end.era">{{props.date.end?.era}}</span>
+                </span>
+                <!-- <span *ngIf="props.date.start.calendar"> ({{props.date.start?.calendar}})</span> -->
+            </p>
+
+        </section>
+
+        <span *ngIf="props.startPage">From page {{props?.startPage}} to page </span>
+        <span *ngIf="props.endPage">{{props?.endPage}}.</span>
+
+        <div *ngIf="props.isPartOfJournal[0]">
+            <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.isPartOfJournal[0].propIri)}}</h4>
+            <p class="margin-left">
+                <read-link-value *ngFor="let trans of props.isPartOfJournal" [valueObject]="trans" [ontologyInfo]="ontologyInfo"></read-link-value>
+            </p>
+        </div>
+
+        <div *ngIf="props.isPartOfCollection[0]">
+            <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.isPartOfCollection[0].propIri)}}</h4>
+            <p class="margin-left">
+                <read-link-value *ngFor="let trans of props.isPartOfCollection" [valueObject]="trans" [ontologyInfo]="ontologyInfo"></read-link-value>
+            </p>
+        </div>
+
+        <div *ngIf="props.isPartOfEditedBook[0]">
+            <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.isPartOfEditedBook[0].propIri)}}</h4>
+            <p class="margin-left">
+                <read-link-value *ngFor="let trans of props.isPartOfEditedBook" [valueObject]="trans" [ontologyInfo]="ontologyInfo"></read-link-value>
+            </p>
+        </div>
+
+        <p>
+            <span *ngIf="props.journalVolume">
+                <h4 class="subheading-2">Issue</h4> {{props?.journalVolume}}</span>
+            <span *ngIf="props.journalIssue">
+                <h4 class="subheading-2">Issue Number</h4> {{props?.journalIssue}}</span>
+            <span *ngIf="props.numVolumes">
+                <h4 class="subheading-2">Number of volumes</h4> {{props?.numVolumes}}</span>
+            <span *ngIf="props.numPages">
+                <h4 class="subheading-2">Number of pages</h4> {{props?.numPages}}</span>
+        </p>
+
+
+        <span *ngIf="props.isbn">
+            <h4 class="subheading-2">ISBN: </h4>{{props?.isbn}}
+        </span>
+
+        <span *ngIf="props.collectionNumber">
+            <h4 class="subheading-2">Collection Number: </h4>{{props?.collectionNumber}}
+        </span>
+
+        <div *ngIf="props.editor[0]">
+            <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.editor[0].propIri)}}</h4>
+            <p class="margin-left">
+                <read-link-value *ngFor="let trans of props.editor" [valueObject]="trans" [ontologyInfo]="ontologyInfo"></read-link-value>
+            </p>
+        </div>
+
+        <div *ngIf="props.editorOrg[0]">
+            <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.editorOrg[0].propIri)}}</h4>
+            <p class="margin-left">
+                <read-link-value *ngFor="let trans of props.editorOrg" [valueObject]="trans" [ontologyInfo]="ontologyInfo"></read-link-value>
+            </p>
+        </div>
+
+        <div *ngIf="props.publisher[0]">
+            <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.publisher[0].propIri)}}</h4>
+            <p class="margin-left">
+                <read-link-value *ngFor="let trans of props.publisher" [valueObject]="trans" [ontologyInfo]="ontologyInfo"></read-link-value>
+            </p>
+        </div>
+
+        <div *ngIf="props.isReprinted[0]">
+            <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.isReprinted[0].propIri)}}</h4>
+            <p class="margin-left">
+                <read-link-value *ngFor="let trans of props.isReprinted" [valueObject]="trans" [ontologyInfo]="ontologyInfo"></read-link-value>
+            </p>
+        </div>
+
+        <div *ngIf="props.translator[0]">
+            <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.translator[0].propIri)}}</h4>
+            <p class="margin-left">
+                <read-link-value *ngFor="let trans of props.translator" [valueObject]="trans" [ontologyInfo]="ontologyInfo"></read-link-value>
+            </p>
+        </div>
+
+        <div *ngIf="props.isTranslationOf[0]">
+            <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.isTranslationOf[0].propIri)}}</h4>
+            <p class="margin-left">
+                <read-link-value *ngFor="let trans of props.isTranslationOf" [valueObject]="trans" [ontologyInfo]="ontologyInfo"></read-link-value>
+            </p>
+        </div>
+
+        <div *ngIf="props.content[0]">
+            <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.content[0].propIri)}}</h4>
+            <p class="margin-left">
+                <read-link-value *ngFor="let trans of props.content" [valueObject]="trans" [ontologyInfo]="ontologyInfo"></read-link-value>
+            </p>
+        </div>
+
+        <div *ngIf="props.introduction[0]">
+            <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.introduction[0].propIri)}}</h4>
+            <p class="margin-left">
+                <read-link-value *ngFor="let trans of props.introduction" [valueObject]="trans" [ontologyInfo]="ontologyInfo"></read-link-value>
+            </p>
+        </div>
+
+        <div *ngIf="props.comment[0]">
+            <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.comment[0].propIri)}}</h4>
+            <p *ngFor="let c of props.comment" class="margin-left">{{c.getContent()}}</p>
+        </div>
+
+        <!-- TODO: Mentioned in ? -->
+        <div *ngIf="props.mentionedIn[0]">
+            <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.mentionedIn[0].propIri)}}</h4>
+            <p *ngFor="let mi of props.mentionedIn" class="margin-left">{{mi.getContent()}}</p>
+        </div>
+
+        <section>
+
+        </section>
+
+        <!-- end of main-content -->
+    </div>
+
+
+</div>

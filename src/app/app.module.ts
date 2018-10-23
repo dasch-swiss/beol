@@ -38,6 +38,7 @@ import { ReadTextfileValueComponent } from './properties/read-textfile-value/rea
 import { ReadUriValueComponent } from './properties/read-uri-value/read-uri-value.component';
 import { LeooRouteComponent } from './leoo-route/leoo-route.component';
 import { FigureComponent } from './resource/figure/figure.component';
+import { BiblioItemsComponent } from './resource/biblio-items/biblio-items.component';
 // directives
 import { MathJaxDirective } from './directives/mathjax.directive';
 // Loads the application configuration file during application startup
@@ -85,7 +86,8 @@ export function initializeApp(appConfig: AppConfig) {
         ContactFormComponent,
         MathJaxDirective,
         LeooRouteComponent,
-        FigureComponent
+        FigureComponent,
+        BiblioItemsComponent
     ],
     imports: [
         AngularFireModule.initializeApp(environment.firebase),
