@@ -9,6 +9,7 @@ import { PersonComponent } from './person.component';
 import { ProgressIndicatorComponent, GndDirective } from '@knora/action';
 import { of } from 'rxjs';
 import { KuiCoreConfig } from '@knora/core';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('PersonComponent', () => {
   let component: PersonComponent;
@@ -17,7 +18,7 @@ describe('PersonComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [MaterialModule, HttpClientModule, HttpClientTestingModule],
+      imports: [MaterialModule, HttpClientModule, HttpClientTestingModule, RouterTestingModule],
       declarations: [PersonComponent, ProgressIndicatorComponent, GndDirective],
       providers: [
         { provide: Location },
