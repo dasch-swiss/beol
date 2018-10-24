@@ -281,7 +281,8 @@ export class BeolService {
      */
     routeByResourceType(referredResourceType: string, referredResourceIri: string): void {
 
-        if (referredResourceType === this.externalApiURL + '/ontology/0801/beol/v2#person') {
+        if (referredResourceType === this.externalApiURL + '/ontology/0801/beol/v2#person' ||
+            referredResourceType === this.externalApiURL + '/ontology/0801/biblio/v2#Publisher') {
             // route to person template
             this._router.navigateByUrl('person/' + encodeURIComponent(referredResourceIri));
         } else if (referredResourceType === this.externalApiURL + '/ontology/0801/beol/v2#letter') {
