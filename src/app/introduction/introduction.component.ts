@@ -104,7 +104,7 @@ export class IntroductionComponent implements OnInit, OnDestroy {
         this._http.get('assets/data/introduction.json').subscribe(
             (result: any) => {
                 this.list = result.introductions;
-                this.loading = false;
+                this.isLoading = false;
             },
             (error: any) => {
                 console.error(error);
