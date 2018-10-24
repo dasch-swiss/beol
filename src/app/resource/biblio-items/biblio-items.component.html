@@ -47,14 +47,16 @@
             <p>
                 <span *ngIf="props.location">{{props?.location}}, </span>
                 <span *ngIf="props.date.start">
-                    {{props.date.start.date | date: props.date.start?.format}}
-                    <span *ngIf="props.date.start.era">{{props.date.start?.era}}</span>
+                    <span *ngIf="props.date.start">
+                        {{props.date.start?.date | date: props.date.start?.format}}
+                        <span *ngIf="props.date.start.era">{{props.date.start?.era}}</span>
+                    </span>
+                    <span *ngIf="props.date.end">
+                        - {{props.date.end?.date | date: props.date.start?.format}}
+                        <span *ngIf="props.date.end.era">{{props.date.end?.era}}</span>
+                    </span>
+                    <span *ngIf="props.date.start.calendar"> ({{props.date.start?.calendar}})</span>
                 </span>
-                <span *ngIf="props.date.end">
-                    - {{props.date.end.date | date: props.date.start?.format}}
-                    <span *ngIf="props.date.end.era">{{props.date.end?.era}}</span>
-                </span>
-                <!-- TO FIX: <span *ngIf="props.date.start.calendar"> ({{props.date.start?.calendar}})</span> -->
             </p>
 
         </section>
