@@ -90,7 +90,7 @@ export class LetterComponent extends BeolResource implements OnDestroy {
 
     props: NeededProps;
 
-    initProps = () => {
+    initProps() {
 
         this.props = {
             author: [],
@@ -206,7 +206,7 @@ export class LetterComponent extends BeolResource implements OnDestroy {
         this.navigationSubscription = this._router.events.subscribe((e: any) => {
             // if it is a NavigationEnd event re-initalise the component
             if (e instanceof NavigationEnd) {
-                this.getResource(this.iri, this.initProps);
+                this.getResource(this.iri);
             }
         });
     }

@@ -21,6 +21,7 @@ export abstract class BeolResource {
     abstract errorMessage: any;
     abstract KnoraConstants;
     abstract incomingStillImageRepresentationCurrentOffset: number;
+    abstract initProps(): void;
 
     constructor(protected _resourceService: ResourceService,
                 protected _cacheService: OntologyCacheService,
@@ -109,7 +110,7 @@ export abstract class BeolResource {
      * @param iri the Iri of the resource to be requested.
      * @param props method to initialize the properties (resource class specific).
      */
-    getResource(iri: string, props?: () => void): void {
+    getResource(iri: string): void {
         this._resourceService.getResource(iri)
             .subscribe(
                 (result: ApiServiceResult) => {
@@ -141,9 +142,7 @@ export abstract class BeolResource {
 
                                     this.resource = resourceSeq.resources[0];
 
-                                    if (props !== undefined) {
-                                        props();
-                                    }
+                                    this.initProps();
 
                                     this.requestIncomingResources();
 

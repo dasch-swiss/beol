@@ -64,6 +64,9 @@ export class ResourceComponent extends BeolResource implements OnDestroy  {
         });
     }
 
+    initProps() {
+    }
+
     ngOnDestroy() {
         if (this.navigationSubscription) {
             this.navigationSubscription.unsubscribe();
