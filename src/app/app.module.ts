@@ -39,6 +39,7 @@ import { ReadUriValueComponent } from './properties/read-uri-value/read-uri-valu
 import { LeooRouteComponent } from './leoo-route/leoo-route.component';
 import { EndnoteComponent } from './resource/endnote/endnote.component';
 import { FigureComponent } from './resource/figure/figure.component';
+import { BiblioItemsComponent } from './resource/biblio-items/biblio-items.component';
 // directives
 import { MathJaxDirective } from './directives/mathjax.directive';
 // Loads the application configuration file during application startup
@@ -88,11 +89,12 @@ export function initializeApp(appConfig: AppConfig) {
         ContactFormComponent,
         MathJaxDirective,
         LeooRouteComponent,
+        BiblioItemsComponent,
         EndnoteComponent,
         FigureComponent
     ],
     imports: [
-//        AngularFireModule.initializeApp(environment.firebase),
+        //        AngularFireModule.initializeApp(environment.firebase),
         AppRouting,
         BrowserModule,
         FlexLayoutModule,
@@ -110,14 +112,14 @@ export function initializeApp(appConfig: AppConfig) {
         ReactiveFormsModule
     ],
     providers: [
-/*        AppConfig,
-        {
-            provide: APP_INITIALIZER,
-            useFactory: initializeApp,
-            deps: [AppConfig],
-            multi: true
-        },*/
-//        AngularFirestore,
+        /*        AppConfig,
+                {
+                    provide: APP_INITIALIZER,
+                    useFactory: initializeApp,
+                    deps: [AppConfig],
+                    multi: true
+                },*/
+        //        AngularFirestore,
         {
             provide: APP_BASE_HREF,
             useValue: '/'

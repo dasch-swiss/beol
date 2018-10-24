@@ -12,6 +12,7 @@ import { ContactComponent } from './contact/contact.component';
 import { EndnoteComponent } from './resource/endnote/endnote.component';
 import { LeooRouteComponent } from './leoo-route/leoo-route.component';
 import { FigureComponent } from './resource/figure/figure.component';
+import { BiblioItemsComponent } from './resource/biblio-items/biblio-items.component';
 
 
 const appRoutes: Routes = [
@@ -40,6 +41,11 @@ const appRoutes: Routes = [
     {
         path: 'figure/:id',
         component: FigureComponent
+    },
+    {
+        path: 'biblio/:id',
+        component: BiblioItemsComponent,
+        runGuardsAndResolvers: 'paramsChange'
     },
     {
         path: 'letter/:id',

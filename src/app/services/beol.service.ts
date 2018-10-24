@@ -281,7 +281,8 @@ export class BeolService {
      */
     routeByResourceType(referredResourceType: string, referredResourceIri: string): void {
 
-        if (referredResourceType === this.externalApiURL + '/ontology/0801/beol/v2#person') {
+        if (referredResourceType === this.externalApiURL + '/ontology/0801/beol/v2#person' ||
+            referredResourceType === this.externalApiURL + '/ontology/0801/biblio/v2#Publisher') {
             // route to person template
             this._router.navigateByUrl('person/' + encodeURIComponent(referredResourceIri));
         } else if (referredResourceType === this.externalApiURL + '/ontology/0801/beol/v2#letter') {
@@ -293,6 +294,15 @@ export class BeolService {
         } else if (referredResourceType === this.externalApiURL + '/ontology/0801/beol/v2#figure') {
             // route to letter template
             this._router.navigateByUrl('figure/' + encodeURIComponent(referredResourceIri));
+        } else if (
+            referredResourceType === this.externalApiURL + '/ontology/0801/biblio/v2#Book' ||
+            referredResourceType === this.externalApiURL + '/ontology/0801/biblio/v2#EditedBook' ||
+            referredResourceType === this.externalApiURL + '/ontology/0801/biblio/v2#CollectionArticle' ||
+            referredResourceType === this.externalApiURL + '/ontology/0801/biblio/v2#Collection' ||
+            referredResourceType === this.externalApiURL + '/ontology/0801/biblio/v2#Journal' ||
+            referredResourceType === this.externalApiURL + '/ontology/0801/biblio/v2#JournalArticle') {
+            // route to biblio-items template
+            this._router.navigateByUrl('biblio/' + encodeURIComponent(referredResourceIri));
         } else {
             // route to generic template
             this._router.navigateByUrl('resource/' + encodeURIComponent(referredResourceIri));

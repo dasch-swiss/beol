@@ -56,7 +56,9 @@ export class PersonComponent implements OnChanges, OnInit {
         'familyName': this.apiUrl + '/ontology/0801/beol/v2#hasFamilyName',
         'givenName': this.apiUrl + '/ontology/0801/beol/v2#hasGivenName',
         'IAF': this.apiUrl + '/ontology/0801/beol/v2#hasIAFIdentifier',
-        'mentioned': this.apiUrl + '/ontology/0801/beol/v2#mentionedIn'
+        'mentioned': this.apiUrl + '/ontology/0801/beol/v2#mentionedIn',
+        'name': this.apiUrl + '/ontology/0801/biblio/v2#hasName',
+        'publisherLocation': this.apiUrl + '/ontology/0801/biblio/v2#publisherHasLocation'
     };
 
     // create a person props interface
@@ -69,7 +71,9 @@ export class PersonComponent implements OnChanges, OnInit {
         'deathPlace': '',
         'dictionary': [],
         'IAF': '',
-        'mentioned': []
+        'mentioned': [],
+        'name': '',
+        'publisherLocation': ''
     };
 
     /**
@@ -247,6 +251,14 @@ export class PersonComponent implements OnChanges, OnInit {
 
                                                     case this.propIris.mentioned:
                                                         this.props.mentioned.push(val);
+                                                        break;
+
+                                                    case this.propIris.name:
+                                                        this.props.name = val.getContent();
+                                                        break;
+
+                                                    case this.propIris.publisherLocation:
+                                                        this.props.publisherLocation = val.getContent();
                                                         break;
 
                                                     default:
