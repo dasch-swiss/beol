@@ -20,7 +20,7 @@ $sidenav-width: 320px;
 }
 
 a, .link {
-  color: $accent;
-  font-weight: bolder;
+  color: $accent !important;
+  font-weight: bolder !important;
   cursor: pointer;
 }
