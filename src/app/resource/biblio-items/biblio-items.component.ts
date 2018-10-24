@@ -48,7 +48,7 @@ export interface BiblioItemsProps {
     'abbreviation': string;
     'location': string;
     'isReprinted': ReadPropertyItem[];
-    'content': ReadPropertyItem[];
+    'bookContent': ReadPropertyItem[];
     'isbn': string;
     'collectionNumber': string;
     'introduction': ReadPropertyItem[];
@@ -72,7 +72,7 @@ export class BiblioItemsComponent implements OnDestroy {
     navigationSubscription;
 
     KnoraConstants = KnoraConstants;
-    apiUrl = environment.api;
+    apiUrl = environment.externalApiURL;
 
     propIris: any = {
         'id': this.apiUrl + '/ontology/0801/beol/v2#beolIDs',
@@ -98,12 +98,38 @@ export class BiblioItemsComponent implements OnDestroy {
         'abbreviation': this.apiUrl + '/ontology/0801/biblio/v2#publicationHasAbbreviation',
         'location': this.apiUrl + '/ontology/0801/biblio/v2#publicationHasLocation',
         'isReprinted': this.apiUrl + '/ontology/0801/biblio/v2#publicationIsReprintedValue',
-        'content': this.apiUrl + '/ontology/0801/biblio/v2#bookHasContentValue',
+        'bookContent': this.apiUrl + '/ontology/0801/biblio/v2#bookHasContentValue',
         'isbn': this.apiUrl + '/ontology/0801/biblio/v2#bookHasISBN',
         'introduction': this.apiUrl + '/ontology/0801/biblio/v2#hasIntroductionValue',
         'translator': this.apiUrl + '/ontology/0801/biblio/v2#publicationHasTranslatorValue',
         'isTranslationOf': this.apiUrl + '/ontology/0801/biblio/v2#publicationIsTranslationOfValue',
         'journalIssue': this.apiUrl + '/ontology/0801/biblio/v2#journalIssue'
+
+        /* // Unused properties (names come from Knora biblio ontology)
+        'volumeSubtitle': this.apiUrl + '/ontology/0801/biblio/v2#volumeSubtitle',
+        'edited': this.apiUrl + '/ontology/0801/biblio/v2#publicationIsEditedValue',
+        'editionOf': this.apiUrl + '/ontology/0801/biblio/v2#publicationIsEditionOfValue',
+        'reprintOf': this.apiUrl + '/ontology/0801/biblio/v2#publicationIsReprintOfValue',
+        'reviewed': this.apiUrl + '/ontology/0801/biblio/v2#publicationIsReviewedValue',
+        'reviewOf': this.apiUrl + '/ontology/0801/biblio/v2#publicationIsReviewOfValue',
+        'hasManuscript': this.apiUrl + '/ontology/0801/biblio/v2#publicationHasManuscriptValue',
+        'link': this.apiUrl + '/ontology/0801/biblio/v2#hasLinkValue',
+        'translatedTo': this.apiUrl + '/ontology/0801/biblio/v2#publicationIsTranslatedValue',
+        'doi': this.apiUrl + '/ontology/0801/biblio/v2#publicationHasDOI',
+        'publisherLocation': this.apiUrl + '/ontology/0801/biblio/v2#publisherHasLocation',
+        'editionEditor': this.apiUrl + '/ontology/0801/biblio/v2#editionHasEditorValue',
+        'editionOrg': this.apiUrl + '/ontology/0801/biblio/v2#editionHasOrganizationValue',
+        'editionNumber': this.apiUrl + '/ontology/0801/biblio/v2#editionHasNumber',
+        'editionName': this.apiUrl + '/ontology/0801/biblio/v2#editionHasName',
+        'uri': this.apiUrl + '/ontology/0801/biblio/v2#hasURI',
+        'content': this.apiUrl + '/ontology/0801/biblio/v2#hasContentValue',
+        'webpageHrefTag': this.apiUrl + '/ontology/0801/biblio/v2#webpageHasHrefTag',
+        'translationOf': this.apiUrl + '/ontology/0801/biblio/v2#translationOfValue',
+        'translationLanguage': this.apiUrl + '/ontology/0801/biblio/v2#translationHasLanguage',
+        'translationTitle': this.apiUrl + '/ontology/0801/biblio/v2#translationHasTitle',
+        'publicationTranslator': this.apiUrl + '/ontology/0801/biblio/v2#publicationHasTranslatorValue',
+        'translationDate': this.apiUrl + '/ontology/0801/biblio/v2#translationHasDate',
+        'IsPartOfWebsite': this.apiUrl + '/ontology/0801/biblio/v2#isPartOfWebsiteValue' */
     };
 
     props: BiblioItemsProps;
@@ -204,7 +230,7 @@ export class BiblioItemsComponent implements OnDestroy {
                                         abbreviation: '',
                                         location: '',
                                         isReprinted: [],
-                                        content: [],
+                                        bookContent: [],
                                         isbn: '',
                                         collectionNumber: '',
                                         introduction: [],
@@ -304,8 +330,8 @@ export class BiblioItemsComponent implements OnDestroy {
                                                         this.props.isReprinted.push(val);
                                                         break;
 
-                                                    case this.propIris.content:
-                                                        this.props.content.push(val);
+                                                    case this.propIris.bookContent:
+                                                        this.props.bookContent.push(val);
                                                         break;
 
                                                     case this.propIris.isbn:
