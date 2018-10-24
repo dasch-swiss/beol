@@ -108,7 +108,6 @@
         <section class="title center">
             <p>{{props.number}}</p>
             <p class="names">
-
                 <span *ngFor="let author of props.author; let last = last">
                     <read-link-value [valueObject]="author" [ontologyInfo]="ontologyInfo"></read-link-value>
                     <span *ngIf="!last"> &amp; </span>
@@ -118,7 +117,6 @@
                     <read-link-value [valueObject]="recipient" [ontologyInfo]="ontologyInfo"></read-link-value>
                     <span *ngIf="!last"> &amp; </span>
                 </span>
-
             </p>
             <p>
                 <span *ngIf="props.location">{{props.location}}, </span>
@@ -131,9 +129,7 @@
                     - {{props.date.end.date | date: props.date.start?.format}}
                     <span *ngIf="props.date.end.era">{{props.date.end?.era}}</span>
                 </span>
-
                 <span *ngIf="props.date.start.calendar"> ({{props.date.start?.calendar}})</span>
-
             </p>
         </section>
 

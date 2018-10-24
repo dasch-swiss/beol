@@ -1,10 +1,12 @@
 export const environment = {
     production: true,
-    name: 'BEOL | Bernoulli-Euler OnLine',
+    name: 'prod',
     api: 'http://0.0.0.0:3333',
     externalApiURL: 'http://0.0.0.0:3333',
     app: 'http://localhost:4200',
+    appName: 'BEOL | Bernoulli-Euler OnLine',
     media: 'http://localhost:1024',
+    pagingLimit: 25,
     firebase: {
         apiKey: 'AIzaSyAGr-TWw1NaycUrL3IaJQ63D2YguVafYTA',
         authDomain: 'test-5034c.firebaseapp.com',

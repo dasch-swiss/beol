@@ -36,7 +36,7 @@ describe('IntroductionComponent', () => {
       imports: [
         KuiActionModule,
         KuiCoreModule.forRoot({
-          name: environment.name,
+          name: environment.appName,
           api: environment.api,
           media: environment.media,
           app: environment.app,

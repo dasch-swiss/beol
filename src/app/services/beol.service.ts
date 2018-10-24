@@ -281,16 +281,16 @@ export class BeolService {
      */
     routeByResourceType(referredResourceType: string, referredResourceIri: string): void {
 
-        if (referredResourceType === this.apiUrl + '/ontology/0801/beol/v2#person') {
+        if (referredResourceType === this.externalApiURL + '/ontology/0801/beol/v2#person') {
             // route to person template
             this._router.navigateByUrl('person/' + encodeURIComponent(referredResourceIri));
-        } else if (referredResourceType === this.apiUrl + '/ontology/0801/beol/v2#letter') {
+        } else if (referredResourceType === this.externalApiURL + '/ontology/0801/beol/v2#letter') {
             // route to letter template
             this._router.navigateByUrl('letter/' + encodeURIComponent(referredResourceIri));
-        } else if (referredResourceType === this.apiUrl + '/ontology/0801/beol/v2#endnote') {
+        } else if (referredResourceType === this.externalApiURL + '/ontology/0801/beol/v2#endnote') {
             // route to letter template
             this._router.navigateByUrl('endnote/' + encodeURIComponent(referredResourceIri));
-        } else if (referredResourceType === this.apiUrl + '/ontology/0801/beol/v2#figure') {
+        } else if (referredResourceType === this.externalApiURL + '/ontology/0801/beol/v2#figure') {
             // route to letter template
             this._router.navigateByUrl('figure/' + encodeURIComponent(referredResourceIri));
         } else {
