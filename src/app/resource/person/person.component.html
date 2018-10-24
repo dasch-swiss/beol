@@ -12,7 +12,10 @@
 
     <div class="main-content">
         <section class="center">
-            <h2 class="mat-display-1 margins">{{resource?.label}}</h2>
+            <h2 *ngIf="resource.label; else name" class="mat-display-1 margins">{{resource?.label}}</h2>
+            <ng-template #name>
+                <h2 *ngIf="props.name">{{props.name}}</h2>
+            </ng-template>
             <p class="mat-subheading-2" *ngIf="props?.alternative">
                 <span *ngFor="let alt of props.alternative; let last = last">{{alt.getContent()}}
                     <span *ngIf="!last">, </span>
@@ -26,7 +29,7 @@
 
                 <span *ngIf="props.birthPlace"> in {{props.birthPlace}}</span>
 
-                <span *ngIf="props.birthDate && props.deathDate"> &ndash; </span>
+                <span *ngIf="props.birthDate.start && props.deathDate.start"> &ndash; </span>
 
                 <span *ngIf="props.deathDate.start">
                     † {{props.deathDate.start.date | date: props.deathDate.start?.format}}
@@ -51,6 +54,11 @@
             <div *ngIf="props.IAF">
                 <h4 class="subheading-2">GND: </h4>
                 <p class="mat-list-item-content" [gnd]="props.IAF"></p>
+            </div>
+
+            <div *ngIf="props.publisherLocation">
+                <h4 class="subheading-2">Publisher location: </h4>
+                <p>{{props.publisherLocation}}</p>
             </div>
 
             <div *ngIf="props.mentioned">

@@ -59,9 +59,6 @@ export class EndnoteComponent extends BeolResource implements OnDestroy {
             }
         });
 
-        this._route.params.subscribe((params: Params) => {
-            this.iri = params['id'];
-        });
     }
 
     initProps() {

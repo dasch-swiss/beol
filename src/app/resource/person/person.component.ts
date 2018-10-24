@@ -18,15 +18,17 @@ declare let require: any;
 let jsonld = require('jsonld');
 
 interface PersonProps {
-    comment: ReadPropertyItem[],
-    alternative: ReadPropertyItem[],
-    birthDate: DateSalsah,
-    birthPlace: string,
-    deathDate: DateSalsah,
-    deathPlace: string,
-    dictionary: ReadPropertyItem[],
-    IAF: string,
-    mentioned: ReadPropertyItem[]
+    comment: ReadPropertyItem[];
+    alternative: ReadPropertyItem[];
+    birthDate: DateSalsah;
+    birthPlace: string;
+    deathDate: DateSalsah;
+    deathPlace: string;
+    dictionary: ReadPropertyItem[];
+    IAF: string;
+    mentioned: ReadPropertyItem[];
+    name: string;
+    publisherLocation: string;
 }
 
 @Component({
@@ -56,7 +58,9 @@ export class PersonComponent extends BeolResource implements OnDestroy {
         'familyName': this.apiUrl + '/ontology/0801/beol/v2#hasFamilyName',
         'givenName': this.apiUrl + '/ontology/0801/beol/v2#hasGivenName',
         'IAF': this.apiUrl + '/ontology/0801/beol/v2#hasIAFIdentifier',
-        'mentioned': this.apiUrl + '/ontology/0801/beol/v2#mentionedIn'
+        'mentioned': this.apiUrl + '/ontology/0801/beol/v2#mentionedIn',
+        'name': this.apiUrl + '/ontology/0801/biblio/v2#hasName',
+        'publisherLocation': this.apiUrl + '/ontology/0801/biblio/v2#publisherHasLocation'
     };
 
     props: PersonProps;
@@ -95,7 +99,9 @@ export class PersonComponent extends BeolResource implements OnDestroy {
             'deathPlace': '',
             'dictionary': [],
             'IAF': '',
-            'mentioned': []
+            'mentioned': [],
+            'name': '',
+            'publisherLocation': ''
         };
 
         for (const key in this.resource.properties) {
@@ -132,6 +138,14 @@ export class PersonComponent extends BeolResource implements OnDestroy {
 
                         case this.propIris.mentioned:
                             this.props.mentioned.push(val);
+                            break;
+
+                        case this.propIris.name:
+                            this.props.name = val.getContent();
+                            break;
+
+                        case this.propIris.publisherLocation:
+                            this.props.publisherLocation = val.getContent();
                             break;
 
                         default:
