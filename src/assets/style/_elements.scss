@@ -107,6 +107,7 @@
 
 .text {
   margin: 48px 24px;
+  text-align: justify;
 }
 
 .osdPosition {
@@ -116,3 +117,12 @@
 p.margin-left {
   padding: 0 16px;
 }
+
+li.without-bullets {
+  list-style: none;
+}
+
+.bolder {
+  font-weight: bolder !important;
+}
+

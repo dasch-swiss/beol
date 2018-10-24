@@ -17,15 +17,6 @@ import {
 import { BeolService } from '../services/beol.service';
 import { environment } from '../../environments/environment';
 
-export interface ListData {
-    title: string;
-    description: string;
-    content: string;
-    showAs: string;
-    restrictedBy: string;
-    searchMode?: string;
-}
-
 declare let require: any;
 const jsonld = require('jsonld');
 
@@ -37,7 +28,6 @@ const jsonld = require('jsonld');
 export class SearchResultsComponent implements OnInit {
 
     KnoraConstants = KnoraConstants;
-    apiUrl = environment.api;
 
     result: ReadResource[] = []; // the results of a search query
     ontologyInfo: OntologyInformation; // ontology information about resource classes and properties present in `result`
@@ -49,15 +39,13 @@ export class SearchResultsComponent implements OnInit {
     errorMessage: any = undefined;
 
     offset = 0;
+    maxOffset = 0;
 
     step: number = undefined;
     panelOpenState = false;
 
-    list: ListData = <ListData>{
-        title: 'Results: ',
-        content: 'resource',
-        restrictedBy: ''
-    };
+    searchQuery: string;
+    searchMode: string;
 
     constructor(
         private _route: ActivatedRoute,
@@ -73,8 +61,8 @@ export class SearchResultsComponent implements OnInit {
     ngOnInit() {
 
         this._route.params.subscribe((params: Params) => {
-            this.list.searchMode = params['mode'];
-            this.list.restrictedBy = params['q'];
+            this.searchMode = params['mode'];
+            this.searchQuery = params['q'];
 
             // init offset to 0
             this.offset = 0;
@@ -92,14 +80,14 @@ export class SearchResultsComponent implements OnInit {
     getResult() {
 
         // FULLTEXT SEARCH
-        if (this.list.searchMode === 'fulltext') {
+        if (this.searchMode === 'fulltext') {
             // perform count query
             if (this.offset === 0) {
 
-                this._searchService.doFulltextSearchCountQuery(this.list.restrictedBy)
+                this._searchService.doFulltextSearchCountQuery(this.searchQuery)
                     .subscribe(
                         this.showNumberOfAllResults,
-                        (error: ApiServiceError) => {
+                        (error: any) => {
                             this.errorMessage = <any>error;
                             // console.log('numberOfAllResults', this.numberOfAllResults);
                         }
@@ -107,22 +95,22 @@ export class SearchResultsComponent implements OnInit {
             }
 
             // perform full text search
-            this._searchService.doFulltextSearch(this.list.restrictedBy, this.offset)
+            this._searchService.doFulltextSearch(this.searchQuery, this.offset)
                 .subscribe(
                     this.processSearchResults, // function pointer
-                    (error: ApiServiceError) => {
+                    (error: any) => {
                         this.errorMessage = <any>error;
                     },
             );
 
             // EXTENDED SEARCH
-        } else if (this.list.searchMode === 'extended') {
+        } else if (this.searchMode === 'extended') {
             // perform count query
             if (this.offset === 0) {
-                this._searchService.doExtendedSearchCountQuery(this.list.restrictedBy)
+                this._searchService.doExtendedSearchCountQuery(this.searchQuery)
                     .subscribe(
                         this.showNumberOfAllResults,
-                        (error: ApiServiceError) => {
+                        (error: any) => {
                             this.errorMessage = <any>error;
                         }
                     );
@@ -130,20 +118,28 @@ export class SearchResultsComponent implements OnInit {
             // perform the extended search
             this._searchParamsService.currentSearchParams
                 .subscribe((extendedSearchParams: ExtendedSearchParams) => {
+
                     if (this.offset === 0) {
-                        this._searchService.doExtendedSearch(this.list.restrictedBy)
+
+                        // console.log(this.searchQuery);
+
+                        this._searchService.doExtendedSearch(this.searchQuery)
                             .subscribe(
                                 this.processSearchResults, // function pointer
-                                (error: ApiServiceError) => {
+                                (error: any) => {
                                     this.errorMessage = <any>error;
                                 });
                     } else {
                         // generate new GravSearch
                         const gravSearch = extendedSearchParams.generateGravsearch(this.offset);
+
+                        // console.log(gravSearch);
+
                         this._searchService.doExtendedSearch(gravSearch)
                             .subscribe(
                                 this.processSearchResults, // function pointer
-                                (error: ApiServiceError) => {
+                                (error: any) => {
+                                    console.error('3', error);
                                     this.errorMessage = <any>error;
                                 }
                             );
@@ -151,7 +147,7 @@ export class SearchResultsComponent implements OnInit {
                 });
 
         } else {
-            this.errorMessage = `search mode invalid: ${this.list.searchMode}`;
+            this.errorMessage = `search mode invalid: ${this.searchMode}`;
         }
     }
 
@@ -169,6 +165,7 @@ export class SearchResultsComponent implements OnInit {
 
         resPromise.then((compacted) => {
             this.numberOfAllResults = compacted[KnoraConstants.schemaNumberOfItems];
+            this.maxOffset = Math.floor(this.numberOfAllResults / environment.pagingLimit);
         }, function (err) {
             console.log('JSONLD could not be expanded:' + err);
         });
@@ -273,5 +270,22 @@ export class SearchResultsComponent implements OnInit {
         this.offset = (offsetToUse === this.offset ? this.offset += 1 : offsetToUse);
 
         this.getResult();
+    }
+
+    /**
+     * Load more results:
+     * update the offset and append the results to the existing ones
+     * (similar to infiniteScroll event)
+     *
+     * @param offsetToUse
+     */
+    loadMore(offsetToUse: number) {
+        // stop the offset, when all data is loaded
+
+
+        // update the page offset when the end of scroll is reached to get the next page of search results
+        this.offset = (offsetToUse === this.offset ? this.offset += 1 : offsetToUse);
+        this.getResult();
+
     }
 }
