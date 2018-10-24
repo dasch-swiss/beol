@@ -241,7 +241,6 @@ export class LetterComponent implements OnDestroy {
                                     LetterComponent.collectImagesAndRegionsForResource(resourceSeq.resources[0]);
 
                                     this.resource = resourceSeq.resources[0];
-                                    console.log('resource ', this.resource);
 
                                     this.props = {
                                         author: [],
