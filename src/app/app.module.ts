@@ -89,12 +89,12 @@ export function initializeApp(appConfig: AppConfig) {
         ContactFormComponent,
         MathJaxDirective,
         LeooRouteComponent,
-        BiblioItemsComponent
+        BiblioItemsComponent,
         EndnoteComponent,
         FigureComponent
     ],
     imports: [
-//        AngularFireModule.initializeApp(environment.firebase),
+        //        AngularFireModule.initializeApp(environment.firebase),
         AppRouting,
         BrowserModule,
         FlexLayoutModule,
@@ -112,14 +112,14 @@ export function initializeApp(appConfig: AppConfig) {
         ReactiveFormsModule
     ],
     providers: [
-/*        AppConfig,
-        {
-            provide: APP_INITIALIZER,
-            useFactory: initializeApp,
-            deps: [AppConfig],
-            multi: true
-        },*/
-//        AngularFirestore,
+        /*        AppConfig,
+                {
+                    provide: APP_INITIALIZER,
+                    useFactory: initializeApp,
+                    deps: [AppConfig],
+                    multi: true
+                },*/
+        //        AngularFirestore,
         {
             provide: APP_BASE_HREF,
             useValue: '/'
