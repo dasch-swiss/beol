@@ -70,7 +70,7 @@ export class IntroductionComponent implements OnInit, OnDestroy {
     curIndex: number;
     curChildIndex: number;
 
-    loading = true;
+    isLoading = true;
 
     propIris: any = {
         'title': environment.externalApiURL + '/ontology/0801/beol/v2#sectionHasTitle',
