@@ -19,7 +19,9 @@ import {
     ResourceService,
     SearchService,
     StillImageRepresentation,
-    Utils
+    Utils,
+    ReadTextValueAsHtml,
+    ReferredResourcesByStandoffLink
 } from '@knora/core';
 import { RequestStillImageRepresentations } from '@knora/viewer';
 import { environment } from '../../../environments/environment';
@@ -239,7 +241,6 @@ export class LetterComponent implements OnDestroy {
                                     LetterComponent.collectImagesAndRegionsForResource(resourceSeq.resources[0]);
 
                                     this.resource = resourceSeq.resources[0];
-                                    // console.log('resource ', this.resource);
 
                                     this.props = {
                                         author: [],
@@ -335,7 +336,6 @@ export class LetterComponent implements OnDestroy {
                                             }
                                         }
                                     }
-
 
                                     this.requestIncomingResources();
 

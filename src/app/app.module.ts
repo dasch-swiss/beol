@@ -37,6 +37,7 @@ import { ReadTextValueAsXmlComponent } from './properties/read-text-value-as-xml
 import { ReadTextfileValueComponent } from './properties/read-textfile-value/read-textfile-value.component';
 import { ReadUriValueComponent } from './properties/read-uri-value/read-uri-value.component';
 import { LeooRouteComponent } from './leoo-route/leoo-route.component';
+import { EndnoteComponent } from './resource/endnote/endnote.component';
 import { FigureComponent } from './resource/figure/figure.component';
 import { BiblioItemsComponent } from './resource/biblio-items/biblio-items.component';
 // directives
@@ -88,8 +89,9 @@ export function initializeApp(appConfig: AppConfig) {
         ContactFormComponent,
         MathJaxDirective,
         LeooRouteComponent,
-        FigureComponent,
         BiblioItemsComponent
+        EndnoteComponent,
+        FigureComponent
     ],
     imports: [
 //        AngularFireModule.initializeApp(environment.firebase),
