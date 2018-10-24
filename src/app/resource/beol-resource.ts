@@ -1,13 +1,24 @@
 import {
     ApiServiceError,
     ApiServiceResult,
-    ConvertJSONLD, ImageRegion, IncomingService, KnoraConstants, OntologyCacheService,
-    OntologyInformation, ReadLinkValue, ReadPropertyItem,
+    ConvertJSONLD,
+    ImageRegion,
+    IncomingService,
+    KnoraConstants,
+    OntologyCacheService,
+    OntologyInformation,
+    ReadLinkValue,
+    ReadPropertyItem,
     ReadResource,
-    ReadResourcesSequence, ReadStillImageFileValue,
-    ResourceService, StillImageRepresentation, Utils
+    ReadResourcesSequence,
+    ReadStillImageFileValue,
+    ResourceService,
+    StillImageRepresentation,
+    Utils
 } from '@knora/core';
 import { RequestStillImageRepresentations } from '@knora/viewer';
+import { Subscription } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 declare let require: any; // http://stackoverflow.com/questions/34730010/angular2-5-minute-install-bug-require-is-not-defined
 let jsonld = require('jsonld');
@@ -17,11 +28,13 @@ export abstract class BeolResource {
     abstract iri: string;
     abstract resource: ReadResource;
     abstract ontologyInfo: OntologyInformation;
-    abstract isLoading;
+    abstract isLoading: boolean;
     abstract errorMessage: any;
-    abstract KnoraConstants;
     abstract incomingStillImageRepresentationCurrentOffset: number;
-    abstract initProps(): void;
+    abstract navigationSubscription: Subscription;
+
+    KnoraConstants: KnoraConstants = KnoraConstants;
+    apiUrl: string = environment.externalApiURL;
 
     constructor(protected _resourceService: ResourceService,
                 protected _cacheService: OntologyCacheService,
@@ -105,10 +118,15 @@ export abstract class BeolResource {
     }
 
     /**
+     * Initializes properties for a specific resource class.
+     * To be implemented in template component.
+     */
+    abstract initProps(): void;
+
+    /**
      * Requests a resource.
      *
      * @param iri the Iri of the resource to be requested.
-     * @param props method to initialize the properties (resource class specific).
      */
     getResource(iri: string): void {
         this._resourceService.getResource(iri)
@@ -271,7 +289,6 @@ export abstract class BeolResource {
      * It takes the number of images returned as an argument.
      */
     protected getIncomingStillImageRepresentations(offset: number, callback?: (numberOfResources: number) => void): void {
-
         // make sure that this.resource has been initialized correctly
         if (this.resource === undefined) {
             return;
@@ -389,7 +406,6 @@ export abstract class BeolResource {
         );
     }
 
-
     /**
      * Gets the next or previous set of StillImageRepresentations from the server.
      *
@@ -469,6 +485,4 @@ export abstract class BeolResource {
         return `(${propLabels.join(', ')})`;
 
     }
-
-
 }

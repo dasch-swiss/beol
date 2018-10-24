@@ -13,6 +13,7 @@ import {
 } from '@knora/core';
 import { environment } from '../../../environments/environment';
 import { BeolResource } from '../beol-resource';
+import { Subscription } from 'rxjs';
 
 declare let require: any;
 let jsonld = require('jsonld');
@@ -49,11 +50,7 @@ export class LetterComponent extends BeolResource implements OnDestroy {
     incomingStillImageRepresentationCurrentOffset: number; // last offset requested for `this.resource.incomingStillImageRepresentations`
     isLoading = true;
     errorMessage: any;
-
-    KnoraConstants = KnoraConstants;
-    apiUrl = environment.externalApiURL;
-
-    navigationSubscription;
+    navigationSubscription: Subscription;
 
     propIris: any = {
         'id': this.apiUrl + '/ontology/0801/beol/v2#beolIDs',
@@ -78,6 +75,28 @@ export class LetterComponent extends BeolResource implements OnDestroy {
 
     props: NeededProps;
 
+    constructor(private _route: ActivatedRoute,
+        private _router: Router,
+        protected _resourceService: ResourceService,
+        protected _cacheService: OntologyCacheService,
+        protected _incomingService: IncomingService,
+        public location: Location) {
+
+        super(_resourceService, _cacheService, _incomingService);
+
+        this._route.params.subscribe((params: Params) => {
+            this.iri = params['id'];
+        });
+
+        // subscribe to the router events to reload the content
+        this.navigationSubscription = this._router.events.subscribe((e: any) => {
+            // if it is a NavigationEnd event re-initalise the component
+            if (e instanceof NavigationEnd) {
+                this.getResource(this.iri);
+            }
+        });
+    }
+
     initProps() {
 
         this.props = {
@@ -99,7 +118,7 @@ export class LetterComponent extends BeolResource implements OnDestroy {
             title: []
         };
 
-        // TODO: build the new props list
+        // props list
         for (const key in this.resource.properties) {
             if (this.resource.properties.hasOwnProperty(key)) {
                 for (const val of this.resource.properties[key]) {
@@ -176,28 +195,6 @@ export class LetterComponent extends BeolResource implements OnDestroy {
         }
 
     };
-
-    constructor(private _route: ActivatedRoute,
-        private _router: Router,
-        protected _resourceService: ResourceService,
-        protected _cacheService: OntologyCacheService,
-        protected _incomingService: IncomingService,
-        public location: Location) {
-
-        super(_resourceService, _cacheService, _incomingService);
-
-        this._route.params.subscribe((params: Params) => {
-            this.iri = params['id'];
-        });
-
-        // subscribe to the router events to reload the content
-        this.navigationSubscription = this._router.events.subscribe((e: any) => {
-            // if it is a NavigationEnd event re-initalise the component
-            if (e instanceof NavigationEnd) {
-                this.getResource(this.iri);
-            }
-        });
-    }
 
     ngOnDestroy() {
         if (this.navigationSubscription) {

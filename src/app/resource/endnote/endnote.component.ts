@@ -1,20 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
-import { ActivatedRoute, Params } from '@angular/router';
-import {
-    ApiServiceError,
-    ApiServiceResult,
-    ConvertJSONLD,
-    KnoraConstants,
-    OntologyCacheService,
-    OntologyInformation,
-    ResourceService,
-    ReadResourcesSequence,
-    ReadPropertyItem,
-    ReadResource,
-} from '@knora/core';
-import { AppConfig } from '../../app.config';
-import { environment } from '../../../environments/environment';
+import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
+import { IncomingService, OntologyCacheService, OntologyInformation, ReadPropertyItem, ReadResource, ResourceService, } from '@knora/core';
+import { BeolResource } from '../beol-resource';
+import { Subscription } from 'rxjs';
 
 
 declare let require: any;
@@ -31,141 +20,86 @@ export interface EndnoteProps {
     templateUrl: './endnote.component.html',
     styleUrls: ['./endnote.component.scss']
 })
-export class EndnoteComponent implements OnInit {
+export class EndnoteComponent extends BeolResource implements OnDestroy {
 
     iri: string;
     resource: ReadResource;
     ontologyInfo: OntologyInformation;
-    loading = true;
+    incomingStillImageRepresentationCurrentOffset: number; // last offset requested for `this.resource.incomingStillImageRepresentations`
+    isLoading = true;
     errorMessage: any;
-
-    KnoraConstants = KnoraConstants;
-    apiUrl = environment.api;
+    navigationSubscription: Subscription;
 
     propIris: any = {
         'number': this.apiUrl + '/ontology/0801/beol/v2#endnoteHasNumber',
         'text': this.apiUrl + '/ontology/0801/beol/v2#hasText',
         'figure': this.apiUrl + '/ontology/0801/beol/v2#hasFigureValue'
     };
+
     props: EndnoteProps;
 
-    constructor(
-        private _route: ActivatedRoute,
-        private _resourceService: ResourceService,
-        private _cacheService: OntologyCacheService,
-        public location: Location
-    ) {
+    constructor(private _router: Router,
+                private _route: ActivatedRoute,
+                protected _resourceService: ResourceService,
+                protected _incomingService: IncomingService,
+                protected _cacheService: OntologyCacheService,
+                public location: Location) {
+
+        super(_resourceService, _cacheService, _incomingService);
+
+        this._route.params.subscribe((params: Params) => {
+            this.iri = params['id'];
+        });
+
+        // subscribe to the router events to reload the content
+        this.navigationSubscription = this._router.events.subscribe((e: any) => {
+            // if it is a NavigationEnd event re-initalise the component
+            if (e instanceof NavigationEnd) {
+                this.getResource(this.iri);
+            }
+        });
+
         this._route.params.subscribe((params: Params) => {
             this.iri = params['id'];
         });
     }
 
-    ngOnInit() {
-        this.requestResource(this.iri);
-    }
+    initProps() {
 
-    /**
-       * Requests a resource from Knora.
-       *
-       * @param {string} resourceIRI the Iri of the resource to be requested.
-       */
-    private requestResource(resourceIRI: string): void {
+        this.props = {
+            number: '',
+            text: [],
+            figure: []
+        };
 
-        this.props = undefined;
+        // props list
+        for (const key in this.resource.properties) {
+            if (this.resource.properties.hasOwnProperty(key)) {
+                for (const val of this.resource.properties[key]) {
+                    switch (val.propIri) {
+                        case this.propIris.number:
+                            this.props.number = val.getContent();
+                            break;
 
-        this._resourceService.getResource(resourceIRI)
-            .subscribe(
-                (result: ApiServiceResult) => {
+                        case this.propIris.text:
+                            this.props.text.push(val);
+                            break;
 
-                    this.loading = true;
+                        case this.propIris.figure:
+                            this.props.figure.push(val);
+                            break;
 
-                    const promises = jsonld.promises;
-                    // compact JSON-LD using an empty context: expands all Iris
-                    const promise = promises.compact(result.body, {});
-
-                    promise.then((compacted) => {
-
-                        const resourceSeq: ReadResourcesSequence = ConvertJSONLD.createReadResourcesSequenceFromJsonLD(compacted);
-
-                        // make sure that exactly one resource is returned
-                        if (resourceSeq.resources.length === 1) {
-
-                            // get resource class Iris from response
-                            const resourceClassIris: string[] = ConvertJSONLD.getResourceClassesFromJsonLD(compacted);
-
-                            // console.log(resourceClassIris)
-
-                            // request ontology information about resource class Iris (properties are implied)
-                            this._cacheService.getResourceClassDefinitions(resourceClassIris).subscribe(
-                                (resourceClassInfos: OntologyInformation) => {
-
-                                    // initialize ontology information
-                                    this.ontologyInfo = resourceClassInfos;
-
-                                    // prepare a possibly attached image file to be displayed
-                                    // EndnoteComponent.collectImagesAndRegionsForResource(resourceSeq.resources[0]);
-
-                                    this.resource = resourceSeq.resources[0];
-                                    // console.log('resource ', this.resource);
-
-                                    this.props = {
-                                        number: '',
-                                        text: [],
-                                        figure: []
-                                    };
-
-                                    // props list
-                                    for (const key in this.resource.properties) {
-                                        if (this.resource.properties.hasOwnProperty(key)) {
-                                            for (const val of this.resource.properties[key]) {
-                                                switch (val.propIri) {
-                                                    case this.propIris.number:
-                                                        this.props.number = val.getContent();
-                                                        break;
-
-                                                    case this.propIris.text:
-                                                        this.props.text.push(val);
-                                                        break;
-
-                                                    case this.propIris.figure:
-                                                        this.props.figure.push(val);
-                                                        break;
-
-                                                    default:
-                                                    // do nothing
-                                                }
-                                            }
-                                        }
-                                    }
-
-
-                                    // this.requestIncomingResources();
-
-                                    this.loading = false;
-
-                                },
-                                (err) => {
-
-                                    console.log('cache request failed: ' + err);
-                                });
-                        } else {
-                            // exactly one resource was expected, but resourceSeq.resources.length != 1
-                            this.errorMessage = `Exactly one resource was expected, but ${resourceSeq.resources.length} resource(s) given.`;
-
-                        }
-
-                    }, function (err) {
-
-                        console.log('JSONLD of full resource request could not be expanded:' + err);
-                    });
-
-
-                },
-                (error: ApiServiceError) => {
-                    this.errorMessage = <any>error;
-                    this.loading = false;
+                        default:
+                        // do nothing
+                    }
                 }
-            );
+            }
+        }
     }
 
+    ngOnDestroy() {
+        if (this.navigationSubscription) {
+            this.navigationSubscription.unsubscribe();
+        }
+    }
 }
