@@ -4,21 +4,19 @@ import { Location } from '@angular/common';
 import {
     DateSalsah,
     IncomingService,
-    KnoraConstants,
     OntologyCacheService,
     OntologyInformation,
     ReadPropertyItem,
     ReadResource,
     ResourceService
 } from '@knora/core';
-import { environment } from '../../../environments/environment';
 import { BeolResource } from '../beol-resource';
 import { Subscription } from 'rxjs';
 
 declare let require: any;
 let jsonld = require('jsonld');
 
-export interface NeededProps {
+interface LetterProps {
     'author': ReadPropertyItem[];
     'recipient': ReadPropertyItem[];
     'figure': ReadPropertyItem[];
@@ -73,7 +71,7 @@ export class LetterComponent extends BeolResource implements OnDestroy {
         'standoff': this.apiUrl + '/ontology/knora-api/v2#hasStandoffLinkToValue'
     };
 
-    props: NeededProps;
+    props: LetterProps;
 
     constructor(private _route: ActivatedRoute,
         private _router: Router,

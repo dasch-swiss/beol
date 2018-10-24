@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
 declare let require: any;
 let jsonld = require('jsonld');
 
-export interface EndnoteProps {
+interface EndnoteProps {
     'number': string;
     'text': ReadPropertyItem[];
     'figure': ReadPropertyItem[];
