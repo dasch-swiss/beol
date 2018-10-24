@@ -1,13 +1,17 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
-import { IncomingService, OntologyCacheService, OntologyInformation, ReadPropertyItem, ReadResource, ResourceService, } from '@knora/core';
+import {
+    IncomingService,
+    KnoraConstants,
+    OntologyCacheService,
+    OntologyInformation,
+    ReadPropertyItem,
+    ReadResource,
+    ResourceService,
+} from '@knora/core';
 import { BeolResource } from '../beol-resource';
 import { Subscription } from 'rxjs';
-
-
-declare let require: any;
-let jsonld = require('jsonld');
 
 interface EndnoteProps {
     'number': string;
@@ -29,6 +33,7 @@ export class EndnoteComponent extends BeolResource implements OnDestroy {
     isLoading = true;
     errorMessage: any;
     navigationSubscription: Subscription;
+    KnoraConstants = KnoraConstants;
 
     propIris: any = {
         'number': this.apiUrl + '/ontology/0801/beol/v2#endnoteHasNumber',

@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 import {
     DateSalsah,
     IncomingService,
+    KnoraConstants,
     OntologyCacheService,
     OntologyInformation,
     ReadPropertyItem,
@@ -12,9 +13,6 @@ import {
 } from '@knora/core';
 import { BeolResource } from '../beol-resource';
 import { Subscription } from 'rxjs';
-
-declare let require: any;
-let jsonld = require('jsonld');
 
 interface LetterProps {
     'author': ReadPropertyItem[];
@@ -49,6 +47,7 @@ export class LetterComponent extends BeolResource implements OnDestroy {
     isLoading = true;
     errorMessage: any;
     navigationSubscription: Subscription;
+    KnoraConstants = KnoraConstants;
 
     propIris: any = {
         'id': this.apiUrl + '/ontology/0801/beol/v2#beolIDs',

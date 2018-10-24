@@ -2,11 +2,11 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Location } from '@angular/common';
 import { MaterialModule } from '../../material-module';
 import { ActivatedRoute } from '@angular/router';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { PersonComponent } from './person.component';
-import { ProgressIndicatorComponent, GndDirective } from '@knora/action';
+import { GndDirective, ProgressIndicatorComponent } from '@knora/action';
 import { of } from 'rxjs';
 import { KuiCoreConfig } from '@knora/core';
 import { RouterTestingModule } from '@angular/router/testing';

@@ -33,7 +33,7 @@ export abstract class BeolResource {
     abstract incomingStillImageRepresentationCurrentOffset: number;
     abstract navigationSubscription: Subscription;
 
-    KnoraConstants: KnoraConstants = KnoraConstants;
+    abstract KnoraConstants: KnoraConstants;
     apiUrl: string = environment.externalApiURL;
 
     constructor(protected _resourceService: ResourceService,
