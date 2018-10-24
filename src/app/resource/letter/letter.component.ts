@@ -2,32 +2,20 @@ import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import {
-    ApiServiceError,
-    ApiServiceResult,
-    ConvertJSONLD,
     DateSalsah,
-    ImageRegion,
     IncomingService,
     KnoraConstants,
     OntologyCacheService,
     OntologyInformation,
-    ReadLinkValue,
     ReadPropertyItem,
     ReadResource,
-    ReadResourcesSequence,
-    ReadStillImageFileValue,
-    ResourceService,
-    SearchService,
-    StillImageRepresentation,
-    Utils
+    ResourceService
 } from '@knora/core';
-import { RequestStillImageRepresentations } from '@knora/viewer';
 import { environment } from '../../../environments/environment';
 import { BeolResource } from '../beol-resource';
 
 declare let require: any;
 let jsonld = require('jsonld');
-
 
 export interface NeededProps {
     'author': ReadPropertyItem[];
@@ -216,5 +204,4 @@ export class LetterComponent extends BeolResource implements OnDestroy {
             this.navigationSubscription.unsubscribe();
         }
     }
-
 }

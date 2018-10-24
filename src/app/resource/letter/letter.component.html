@@ -41,11 +41,13 @@
 
             <div *ngIf="props.original[0]">
                 <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.original[0].propIri)}}</h4>
+
                 <mat-list>
                     <mat-list-item *ngFor="let orig of props.original">
                         <read-link-value [valueObject]="orig" [ontologyInfo]="ontologyInfo"></read-link-value>
                     </mat-list-item>
                 </mat-list>
+
             </div>
 
             <div *ngIf="props.translation[0]">
@@ -58,20 +60,24 @@
 
             <div *ngIf="props.published[0]">
                 <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.published[0].propIri)}}</h4>
+
                 <mat-list>
                     <mat-list-item *ngFor="let pub of props.published">
                         <read-link-value [valueObject]="pub" [ontologyInfo]="ontologyInfo"></read-link-value>
                     </mat-list-item>
                 </mat-list>
+
             </div>
 
             <div *ngIf="props.mentionedPerson[0]">
                 <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.mentionedPerson[0].propIri)}}</h4>
+
                 <mat-list>
                     <mat-list-item *ngFor="let mp of props.mentionedPerson">
                         <read-link-value [valueObject]="mp" [ontologyInfo]="ontologyInfo"></read-link-value>
                     </mat-list-item>
                 </mat-list>
+
             </div>
 
             <div *ngIf="props.language[0]">
@@ -83,11 +89,13 @@
 
             <div *ngIf="props.subject[0]">
                 <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.subject[0].propIri)}}</h4>
+
                 <mat-list>
                     <mat-list-item *ngFor="let subj of props.subject">
                         <read-list-value [valueObject]="subj"></read-list-value>
                     </mat-list-item>
                 </mat-list>
+
             </div>
 
         </section>
@@ -126,21 +134,14 @@
         </section>
 
         <section class="text">
-            <read-text-value-as-html [valueObject]="props.text[0]" [ontologyInfo]="ontologyInfo"
-                                     [bindEvents]="true"></read-text-value-as-html>
+            <read-text-value-as-html [valueObject]="props.text[0]" [ontologyInfo]="ontologyInfo" [bindEvents]="true"></read-text-value-as-html>
         </section>
 
         <section class="images">
             <!-- Check for incoming images -->
-            <kui-still-image #OSDViewer
-                             class="osd-viewer"
-                             *ngIf="resource?.incomingStillImageRepresentations?.length > 0;"
-                             (getImages)="changeOffsetForStillImageRepresentations($event)"
-                             [images]="resource?.stillImageRepresentationsToDisplay"
-                             [imageRangeStart]="0"
-                             [imageRangeEnd]="4"
-                             [imageChangeInterval]="5">
+            <kui-still-image #OSDViewer class="osd-viewer" *ngIf="resource?.incomingStillImageRepresentations?.length > 0;" (getImages)="changeOffsetForStillImageRepresentations($event)" [images]="resource?.stillImageRepresentationsToDisplay" [imageRangeStart]="0" [imageRangeEnd]="4" [imageChangeInterval]="5">
             </kui-still-image>
         </section>
+
     </div>
 </div>
