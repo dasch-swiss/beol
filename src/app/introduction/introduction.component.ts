@@ -1,23 +1,21 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { ActivatedRoute, Params, Router, NavigationEnd } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
 import {
+    ApiServiceError,
     ApiServiceResult,
     ConvertJSONLD,
+    IncomingService,
     KnoraConstants,
+    OntologyCacheService,
     OntologyInformation,
+    ReadPropertyItem,
     ReadResource,
     ReadResourcesSequence,
-    SearchService,
     ResourceService,
-    OntologyCacheService,
-    ApiServiceError,
-    IncomingService,
-    StillImageRepresentation,
-    ReadPropertyItem
+    SearchService
 } from '@knora/core';
 import { BeolService } from '../services/beol.service';
-import { AppConfig } from '../app.config';
 import { JsonObject, JsonProperty } from 'json2typescript';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
@@ -72,7 +70,7 @@ export class IntroductionComponent implements OnInit, OnDestroy {
     curIndex: number;
     curChildIndex: number;
 
-    loading: boolean = true;
+    loading = true;
 
     propIris: any = {
         'title': environment.externalApiURL + '/ontology/0801/beol/v2#sectionHasTitle',
@@ -82,14 +80,14 @@ export class IntroductionComponent implements OnInit, OnDestroy {
     navigationSubscription;
 
     constructor(private _route: ActivatedRoute,
-        private _http: HttpClient,
-        private _router: Router,
-        private _searchService: SearchService,
-        private _beol: BeolService,
-        private _resourceService: ResourceService,
-        private _cacheService: OntologyCacheService,
-        private _incomingService: IncomingService,
-        public location: Location) {
+                private _http: HttpClient,
+                private _router: Router,
+                private _searchService: SearchService,
+                private _beol: BeolService,
+                private _resourceService: ResourceService,
+                private _cacheService: OntologyCacheService,
+                private _incomingService: IncomingService,
+                public location: Location) {
 
         // subscribe to the router events
         this.navigationSubscription = this._router.events.subscribe((e: any) => {
@@ -222,8 +220,6 @@ export class IntroductionComponent implements OnInit, OnDestroy {
                                             }
                                         }
                                     }
-
-                                    this.getIncomingLinks(0);
                                 },
                                 (err) => {
 
@@ -249,54 +245,6 @@ export class IntroductionComponent implements OnInit, OnDestroy {
                     this.isLoading = false; */
                 }
             );
-    }
-
-    /**
-     * Get resources pointing to [[this.resource]] with properties other than knora-api:isPartOf and knora-api:isRegionOf.
-     *
-     * @param offset the offset to be used (needed for paging). First request uses an offset of 0.
-     * @param callback function to be called when new images have been loaded from the server. 
-     * It takes the number of images returned as an argument.
-     */
-    private getIncomingLinks(offset: number, callback?: (numberOfResources: number) => void): void {
-
-        this._incomingService.getIncomingLinksForResource(this.resource.id, offset).subscribe(
-            (result: ApiServiceResult) => {
-                const promise = jsonld.promises.compact(result.body, {});
-                promise.then((compacted) => {
-                    const incomingResources: ReadResourcesSequence = ConvertJSONLD.createReadResourcesSequenceFromJsonLD(compacted);
-
-                    // get resource class Iris from response
-                    const resourceClassIris: string[] = ConvertJSONLD.getResourceClassesFromJsonLD(compacted);
-
-                    // request ontology information about resource class Iris (properties are implied)
-                    this._cacheService.getResourceClassDefinitions(resourceClassIris).subscribe(
-                        (resourceClassInfos: OntologyInformation) => {
-                            // update ontology information
-                            this.ontologyInfo.updateOntologyInformation(resourceClassInfos);
-
-                            // Append elements incomingResources to this.resource.incomingLinks
-                            Array.prototype.push.apply(this.resource.incomingLinks, incomingResources.resources);
-
-                            // if callback is given, execute function with the amount of incoming resources as the parameter
-                            if (callback !== undefined) { callback(incomingResources.resources.length); }
-
-                        },
-                        (err) => {
-
-                            console.log('cache request failed: ' + err);
-                        });
-                },
-                    function (err) {
-                        console.log('JSONLD of regions request could not be expanded:' + err);
-                    });
-            },
-            (error: ApiServiceError) => {
-                console.error(error);
-                /* this.errorMessage = <any>error;
-                this.isLoading = false; */
-            }
-        );
     }
 
     /**
@@ -326,11 +274,9 @@ export class IntroductionComponent implements OnInit, OnDestroy {
         // reset grand children
         this.curChildIndex = undefined;
     }
+
     toggleGrandChildren(index: number) {
         this.curChildIndex = (index === this.curChildIndex ? undefined : index);
     }
 
 }
-
-
-
