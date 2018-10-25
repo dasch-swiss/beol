@@ -191,7 +191,7 @@ export class LetterComponent extends BeolResource implements OnDestroy {
             }
         }
 
-    };
+    }
 
     ngOnDestroy() {
         if (this.navigationSubscription) {
