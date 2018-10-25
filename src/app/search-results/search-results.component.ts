@@ -27,6 +27,8 @@ const jsonld = require('jsonld');
 })
 export class SearchResultsComponent implements OnInit {
 
+    isLoading = true;
+
     KnoraConstants = KnoraConstants;
 
     result: ReadResource[] = []; // the results of a search query
@@ -184,6 +186,8 @@ export class SearchResultsComponent implements OnInit {
      */
     private processSearchResults = (searchResult: ApiServiceResult) => {
 
+        this.isLoading = true;
+
         if (this.offset === 0) {
             this.result = [];
         }
@@ -214,6 +218,8 @@ export class SearchResultsComponent implements OnInit {
                     // append results to search results
                     // console.log('results 1', this.result);
                     this.result = this.result.concat(resources.resources);
+
+                    this.isLoading = false;
                     // console.log('results 2', this.result);
                 },
                 (err) => {

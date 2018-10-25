@@ -452,17 +452,17 @@
   resolved "https://registry.yarnpkg.com/@firebase/webchannel-wrapper/-/webchannel-wrapper-0.2.11.tgz#32a853fad9974cbbc9fc766ec5699a18b22ccee6"
   integrity sha512-WyMXDxk/WZ+f2lOCeEvDWUce2f5Kk2sNfvArK8f+PlUnzFdy/MBzLXrmbMgyZXP7GP4ooUxYV8Sdmoh1hGk1Uw==
 
-"@knora/action@^0.0.12":
-  version "0.0.12"
-  resolved "https://registry.yarnpkg.com/@knora/action/-/action-0.0.12.tgz#b1ea96ba8e067dde83025d512bff5b7916b1b70f"
-  integrity sha512-gUX0YwPtWWGALxpBovJRrsgrc/SO/amkheGGXVK0MfHOT0+2eD98lgcEu3BWUFjn3xQml4PieUgtbKCTovNZKA==
+"@knora/action@^0.0.13":
+  version "0.0.13"
+  resolved "https://registry.yarnpkg.com/@knora/action/-/action-0.0.13.tgz#a3933f89b0c32dc63699fe7c28dc72c0aa828aa1"
+  integrity sha512-upUEH3ykz2FGROqQiHZHAUqWMgDiRFoezNLtBu64G0j6+8kRsA9vbOrQ7C3nvjgyYAh/mancytYV6jEGQMXE+A==
   dependencies:
     tslib "^1.9.0"
 
-"@knora/core@^1.0.0-beta.5":
-  version "1.0.0-beta.6"
-  resolved "https://registry.yarnpkg.com/@knora/core/-/core-1.0.0-beta.6.tgz#b8b80d3dd9fe6c11935f981fad5597d3dc3d2b2b"
-  integrity sha512-YM967xeFmwYnXHrOS8Wch5IP66D90h5rh1R7piAyhQw6ZOT7/tqVjmVbDDdIAQikXlUxA7DVhJ2O9GAtXx21rQ==
+"@knora/core@^1.0.0-beta.7":
+  version "1.0.0-beta.7"
+  resolved "https://registry.yarnpkg.com/@knora/core/-/core-1.0.0-beta.7.tgz#6c8d2865da6b4553c099a6cbdcbdbd3b36c2ed92"
+  integrity sha512-WdwCEYV8D1i4gM7qFJKy+DwBbOVLj1Zil2D9lb9dGkLUzBxcQbz2K7GtFaqYWGk6x6YaOKuyajaVnZHBYNCysg==
   dependencies:
     tslib "^1.9.0"
 
