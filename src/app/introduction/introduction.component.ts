@@ -58,6 +58,7 @@ export class IntroductionComponent implements OnInit, OnDestroy {
     isbn: string;
     resource: ReadResource;
     ontologyInfo: OntologyInformation;
+    errorMessage;
 
     KnoraConstants = KnoraConstants;
     sectionUrl = environment.externalApiURL + '/ontology/0801/beol/v2#section';
@@ -80,14 +81,14 @@ export class IntroductionComponent implements OnInit, OnDestroy {
     navigationSubscription;
 
     constructor(private _route: ActivatedRoute,
-                private _http: HttpClient,
-                private _router: Router,
-                private _searchService: SearchService,
-                private _beol: BeolService,
-                private _resourceService: ResourceService,
-                private _cacheService: OntologyCacheService,
-                private _incomingService: IncomingService,
-                public location: Location) {
+        private _http: HttpClient,
+        private _router: Router,
+        private _searchService: SearchService,
+        private _beol: BeolService,
+        private _resourceService: ResourceService,
+        private _cacheService: OntologyCacheService,
+        private _incomingService: IncomingService,
+        public location: Location) {
 
         // subscribe to the router events
         this.navigationSubscription = this._router.events.subscribe((e: any) => {
@@ -191,9 +192,6 @@ export class IntroductionComponent implements OnInit, OnDestroy {
                                     // initialize ontology information
                                     this.ontologyInfo = resourceClassInfos;
 
-                                    // prepare a possibly attached image file to be displayed
-                                    // ResourceObjectComponent.collectImagesAndRegionsForResource(resourceSeq.resources[0]);
-
                                     this.resource = resourceSeq.resources[0];
                                     // console.log('resource: ', this.resource);
 
@@ -227,8 +225,7 @@ export class IntroductionComponent implements OnInit, OnDestroy {
                                 });
                         } else {
                             // exactly one resource was expected, but resourceSeq.resources.length != 1
-                            // this.errorMessage =
-                            // `Exactly one resource was expected, but ${resourceSeq.resources.length} resource(s) given.`
+                            this.errorMessage = `Exactly one resource was expected, but ${resourceSeq.resources.length} resource(s) given.`
 
                         }
 
@@ -237,12 +234,11 @@ export class IntroductionComponent implements OnInit, OnDestroy {
                         console.log('JSONLD of full resource request could not be expanded:' + err);
                     });
 
-                    // this.isLoading = false;
+                    this.isLoading = false;
                 },
                 (error: ApiServiceError) => {
-                    console.error(error);
-                    /* this.errorMessage = <any>error;
-                    this.isLoading = false; */
+                    this.errorMessage = <any>error;
+                    this.isLoading = false;
                 }
             );
     }

@@ -1,4 +1,5 @@
-<div class="full-size scroll-y-only">
+<kui-progress-indicator *ngIf="isLoading"></kui-progress-indicator>
+<div class="full-size scroll-y-only" *ngIf="!isLoading && props">
 
     <div class="sidebar">
 
