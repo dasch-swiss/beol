@@ -13,6 +13,7 @@ import { EndnoteComponent } from './endnote.component';
 import { ReadTextValueAsHtmlComponent } from '../../properties/read-text-value-as-html/read-text-value-as-html.component';
 import { ReadLinkValueComponent } from '../../properties/read-link-value/read-link-value.component';
 import { MathJaxDirective } from '../../directives/mathjax.directive';
+import { RouterTestingModule } from '@angular/router/testing';
 
 
 describe('EndnoteComponent', () => {
@@ -31,7 +32,8 @@ describe('EndnoteComponent', () => {
         KuiActionModule,
         MaterialModule,
         HttpClientModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        RouterTestingModule
       ],
       declarations: [
         EndnoteComponent,

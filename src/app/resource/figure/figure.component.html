@@ -1,5 +1,5 @@
-<kui-progress-indicator *ngIf="loading"></kui-progress-indicator>
-<div class="full-size scroll-y-only" *ngIf="!loading && props">
+<kui-progress-indicator *ngIf="isLoading"></kui-progress-indicator>
+<div class="full-size scroll-y-only" *ngIf="!isLoading && props">
 
     <div class="sidebar">
         <button mat-stroked-button class="previousBtn" (click)="location.back()">
@@ -15,13 +15,13 @@
             <h2>{{resource?.label}}</h2>
         </section>
 
-        <section>
+        <section *ngIf="props.caption[0]">
             <read-text-value-as-html [valueObject]="props.caption[0]" [ontologyInfo]="ontologyInfo" [bindEvents]="true"></read-text-value-as-html>
         </section>
 
         <div mat-line *ngFor="let prop of resource?.properties | key" class="center osdPosition">
             <div *ngIf="prop.key === KnoraConstants.hasStillImageFileValue">
-                <kui-still-image #OSDViewer *ngIf="!loading && resource.stillImageRepresentationsToDisplay.length > 0" class="osd-viewer" [images]="resource?.stillImageRepresentationsToDisplay" [imageRangeStart]="0" [imageRangeEnd]="0" [imageChangeInterval]="1">
+                <kui-still-image #OSDViewer *ngIf="!isLoading && resource.stillImageRepresentationsToDisplay.length > 0" class="osd-viewer" [images]="resource?.stillImageRepresentationsToDisplay" [imageRangeStart]="0" [imageRangeEnd]="0" [imageChangeInterval]="1">
                 </kui-still-image>
             </div>
         </div>

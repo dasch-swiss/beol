@@ -1,5 +1,5 @@
-<kui-progress-indicator *ngIf="loading"></kui-progress-indicator>
-<div class="full-size scroll-y-only" *ngIf="!loading">
+<kui-progress-indicator *ngIf="isLoading"></kui-progress-indicator>
+<div class="full-size scroll-y-only" *ngIf="!isLoading && props">
 
     <div class="sidebar">
 
@@ -17,7 +17,7 @@
                 <h2 *ngIf="props.name">{{props.name}}</h2>
             </ng-template>
             <p class="mat-subheading-2" *ngIf="props?.alternative">
-                <span *ngFor="let alt of props.alternative; let last = last">{{alt.str}}
+                <span *ngFor="let alt of props.alternative; let last = last">{{alt.getContent()}}
                     <span *ngIf="!last">, </span>
                 </span>
             </p>
@@ -44,7 +44,7 @@
 
         <section class="text" *ngIf="props.comment">
             <p *ngFor="let c of props.comment">
-                {{c.str}}
+                {{c.getContent()}}
                 <mat-divider class="divider"></mat-divider>
             </p>
 
@@ -64,7 +64,7 @@
             <div *ngIf="props.mentioned">
                 <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props.mentioned[0].propIri)}}: </h4>
                 <p *ngFor="let m of props.mentioned; let last = last">
-                    {{m.str}}
+                    {{m.getContent()}}
                 </p>
             </div>
         </section>

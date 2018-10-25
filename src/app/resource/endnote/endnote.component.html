@@ -1,5 +1,5 @@
-<kui-progress-indicator *ngIf="loading"></kui-progress-indicator>
-<div class="full-size scroll-y-only" *ngIf="!loading && props">
+<kui-progress-indicator *ngIf="isLoading"></kui-progress-indicator>
+<div class="full-size scroll-y-only" *ngIf="!isLoading && props">
 
     <div class="sidebar">
 
@@ -18,7 +18,7 @@
 
         <section class="title center">
             <h3 mat-card-subtitle>{{ontologyInfo?.getLabelForResourceClass(resource?.type)}}</h3>
-            <h2>[{{props.number}}] {{resource?.label}}</h2>
+            <h2><span *ngIf="props.number">[{{props.number}}]</span> {{resource?.label}}</h2>
         </section>
 
 

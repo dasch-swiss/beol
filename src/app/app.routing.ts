@@ -36,11 +36,13 @@ const appRoutes: Routes = [
     },
     {
         path: 'person/:id',
-        component: PersonComponent
+        component: PersonComponent,
+        runGuardsAndResolvers: 'paramsChange'
     },
     {
         path: 'figure/:id',
-        component: FigureComponent
+        component: FigureComponent,
+        runGuardsAndResolvers: 'paramsChange'
     },
     {
         path: 'biblio/:id',
@@ -54,7 +56,8 @@ const appRoutes: Routes = [
     },
     {
         path: 'endnote/:id',
-        component: EndnoteComponent
+        component: EndnoteComponent,
+        runGuardsAndResolvers: 'paramsChange'
     },
     {
         path: 'search',
