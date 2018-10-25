@@ -8,7 +8,7 @@ import { MaterialModule } from '../material-module';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import { SearchResultsComponent } from './search-results.component';
-import { KeyPipe } from '@knora/action';
+import { KuiActionModule } from '@knora/action';
 import { ReadDateValueComponent } from '../properties/read-date-value/read-date-value.component';
 import { KuiCoreConfig } from '@knora/core';
 
@@ -24,6 +24,7 @@ describe('SearchResultsComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
+                KuiActionModule,
                 RouterTestingModule,
                 MaterialModule,
                 InfiniteScrollModule,
@@ -31,16 +32,15 @@ describe('SearchResultsComponent', () => {
                 HttpClientTestingModule],
             declarations: [
                 SearchResultsComponent,
-                KeyPipe,
                 MathJaxDirective,
                 ReadDateValueComponent
             ],
             providers: [
                 {
                     provide: ActivatedRoute,
-                    useValue: {params: of({mode, q})}
+                    useValue: { params: of({ mode, q }) }
                 },
-                {provide: 'config', useValue: KuiCoreConfig}
+                { provide: 'config', useValue: KuiCoreConfig }
             ]
         })
             .compileComponents();
