@@ -16,9 +16,10 @@ import {
     StillImageRepresentation,
     Utils
 } from '@knora/core';
-import { RequestStillImageRepresentations } from '@knora/viewer';
+import { RequestStillImageRepresentations, StillImageComponent } from '@knora/viewer';
 import { Subscription } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { ViewChild } from '@angular/core';
 
 declare let require: any; // http://stackoverflow.com/questions/34730010/angular2-5-minute-install-bug-require-is-not-defined
 let jsonld = require('jsonld');
@@ -32,6 +33,8 @@ export abstract class BeolResource {
     abstract errorMessage: any;
     abstract incomingStillImageRepresentationCurrentOffset: number;
     abstract navigationSubscription: Subscription;
+
+    @ViewChild('OSDViewer') osdViewer: StillImageComponent;
 
     abstract KnoraConstants: KnoraConstants;
     apiUrl: string = environment.externalApiURL;
@@ -255,9 +258,9 @@ export abstract class BeolResource {
                                 BeolResource.collectImagesAndRegionsForResource(this.resource);
 
                                 // TODO: implement osdViewer
-                                /* if (this.osdViewer) {
-                                  this.osdViewer.updateRegions();
-                                } */
+                                if (this.osdViewer) {
+                                    this.osdViewer.updateRegions();
+                                }
 
                                 // if callback is given, execute function with the amount of new images as the parameter
                                 if (callback !== undefined) {

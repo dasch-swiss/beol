@@ -1,26 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
 import { Location } from '@angular/common';
-import {
-    ApiServiceError,
-    ApiServiceResult,
-    ConvertJSONLD,
-    ImageRegion,
-    IncomingService,
-    KnoraConstants,
-    OntologyCacheService,
-    OntologyInformation,
-    ReadLinkValue,
-    ReadPropertyItem,
-    ReadResource,
-    ReadResourcesSequence,
-    ReadStillImageFileValue,
-    ResourceService,
-    SearchService,
-    StillImageRepresentation,
-    Utils
-} from '@knora/core';
-import { RequestStillImageRepresentations } from '@knora/viewer';
+import { IncomingService, KnoraConstants, OntologyCacheService, OntologyInformation, ReadResource, ResourceService } from '@knora/core';
 import { BeolResource } from './beol-resource';
 import { Subscription } from 'rxjs';
 
