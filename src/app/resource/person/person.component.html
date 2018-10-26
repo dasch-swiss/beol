@@ -44,15 +44,10 @@
                 </p>
             </section>
 
-            <mat-divider class="divider"></mat-divider>
 
-            <section class="text" *ngIf="props.comment">
-                <p>
-                    <read-text-value-as-html class="margin-left" [valueObject]="props.comment[0]" [ontologyInfo]="ontologyInfo" [bindEvents]="true">
-                    </read-text-value-as-html>
-                    <mat-divider class="divider"></mat-divider>
-                </p>
-
+            <section class="text comment" *ngIf="props.comment">
+                <read-text-value-as-html class="margin-left" [valueObject]="props.comment[0]" [ontologyInfo]="ontologyInfo" [bindEvents]="true">
+                </read-text-value-as-html>
             </section>
 
             <section class="links">
