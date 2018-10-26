@@ -21,24 +21,24 @@
                     <h2 *ngIf="props.name">{{props.name}}</h2>
                 </ng-template>
                 <p class="mat-subheading-2" *ngIf="props?.alternative">
-                <span *ngFor="let alt of props.alternative; let last = last">{{alt.getContent()}}
-                    <span *ngIf="!last">, </span>
-                </span>
+                    <span *ngFor="let alt of props.alternative; let last = last">{{alt.getContent()}}
+                        <span *ngIf="!last">, </span>
+                    </span>
                 </p>
                 <p mat-line>
-                <span *ngIf="props.birthDate.start">
-                    * {{props.birthDate.start.date | date: props.birthDate.start?.format}}
-                    <span *ngIf="props.birthDate.start.era">{{props.birthDate.start?.era}}</span>
-                </span>
+                    <span *ngIf="props.birthDate.start">
+                        * {{props.birthDate.start.date | date: props.birthDate.start?.format}}
+                        <span *ngIf="props.birthDate.start.era">{{props.birthDate.start?.era}}</span>
+                    </span>
 
                     <span *ngIf="props.birthPlace"> in {{props.birthPlace}}</span>
 
                     <span *ngIf="props.birthDate.start && props.deathDate.start"> &ndash; </span>
 
                     <span *ngIf="props.deathDate.start">
-                    † {{props.deathDate.start.date | date: props.deathDate.start?.format}}
-                    <span *ngIf="props.deathDate.start.era">{{props.deathDate.start?.era}}</span>
-                </span>
+                        † {{props.deathDate.start.date | date: props.deathDate.start?.format}}
+                        <span *ngIf="props.deathDate.start.era">{{props.deathDate.start?.era}}</span>
+                    </span>
 
                     <span *ngIf="props.deathPlace"> in {{props.deathPlace}}</span>
                 </p>
@@ -47,8 +47,9 @@
             <mat-divider class="divider"></mat-divider>
 
             <section class="text" *ngIf="props.comment">
-                <p *ngFor="let c of props.comment">
-                    {{c.getContent()}}
+                <p>
+                    <read-text-value-as-html class="margin-left" [valueObject]="props.comment[0]" [ontologyInfo]="ontologyInfo" [bindEvents]="true">
+                    </read-text-value-as-html>
                     <mat-divider class="divider"></mat-divider>
                 </p>
 
