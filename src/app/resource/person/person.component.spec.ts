@@ -10,6 +10,8 @@ import { GndDirective, ProgressIndicatorComponent } from '@knora/action';
 import { of } from 'rxjs';
 import { KuiCoreConfig } from '@knora/core';
 import { RouterTestingModule } from '@angular/router/testing';
+import { ReadTextValueAsHtmlComponent } from '../../properties/read-text-value-as-html/read-text-value-as-html.component';
+import { MathJaxDirective } from '../../directives/mathjax.directive';
 
 describe('PersonComponent', () => {
   let component: PersonComponent;
@@ -18,8 +20,19 @@ describe('PersonComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [MaterialModule, HttpClientModule, HttpClientTestingModule, RouterTestingModule],
-      declarations: [PersonComponent, ProgressIndicatorComponent, GndDirective],
+      imports: [
+        MaterialModule,
+        HttpClientModule,
+        HttpClientTestingModule,
+        RouterTestingModule
+      ],
+      declarations: [
+        PersonComponent,
+        ProgressIndicatorComponent,
+        GndDirective,
+        ReadTextValueAsHtmlComponent,
+        MathJaxDirective
+      ],
       providers: [
         { provide: Location },
         {

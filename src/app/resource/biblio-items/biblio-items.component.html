@@ -22,8 +22,7 @@
                 <p *ngFor="let title of props.title">
                     <span *ngIf="props.title">
                         <h2>
-                            <read-text-value-as-html [valueObject]="props.title[0]" [ontologyInfo]="ontologyInfo"
-                                                     [bindEvents]="true"></read-text-value-as-html>
+                            <read-text-value-as-html [valueObject]="props.title[0]" [ontologyInfo]="ontologyInfo" [bindEvents]="true"></read-text-value-as-html>
                             <span *ngIf="props.abbreviation"> ({{props?.abbreviation}})</span>
                         </h2>
                     </span>
@@ -31,8 +30,9 @@
 
                 <p *ngFor="let name of props.name">
                     <span *ngIf="props.name">
-                        <h2><read-text-value-as-html [valueObject]="props.name[0]" [ontologyInfo]="ontologyInfo"
-                                                     [bindEvents]="true"></read-text-value-as-html></h2>
+                        <h2>
+                            <read-text-value-as-html [valueObject]="props.name[0]" [ontologyInfo]="ontologyInfo" [bindEvents]="true"></read-text-value-as-html>
+                        </h2>
                     </span>
                 </p>
 
@@ -72,8 +72,7 @@
             <div *ngIf="props.isPartOfJournal[0]">
                 <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.isPartOfJournal[0].propIri)}}</h4>
                 <p class="margin-left">
-                    <read-link-value *ngFor="let ipoj of props.isPartOfJournal" [valueObject]="ipoj"
-                                     [ontologyInfo]="ontologyInfo"></read-link-value>
+                    <read-link-value *ngFor="let ipoj of props.isPartOfJournal" [valueObject]="ipoj" [ontologyInfo]="ontologyInfo"></read-link-value>
                 </p>
             </div>
 
@@ -81,8 +80,7 @@
                 <h4 class="subheading-2">
                     {{ontologyInfo?.getLabelForProperty(props?.isPartOfCollection[0].propIri)}}</h4>
                 <p class="margin-left">
-                    <read-link-value *ngFor="let ipoc of props.isPartOfCollection" [valueObject]="ipoc"
-                                     [ontologyInfo]="ontologyInfo"></read-link-value>
+                    <read-link-value *ngFor="let ipoc of props.isPartOfCollection" [valueObject]="ipoc" [ontologyInfo]="ontologyInfo"></read-link-value>
                 </p>
             </div>
 
@@ -90,8 +88,7 @@
                 <h4 class="subheading-2">
                     {{ontologyInfo?.getLabelForProperty(props?.isPartOfEditedBook[0].propIri)}}</h4>
                 <p class="margin-left">
-                    <read-link-value *ngFor="let ipoeb of props.isPartOfEditedBook" [valueObject]="ipoeb"
-                                     [ontologyInfo]="ontologyInfo"></read-link-value>
+                    <read-link-value *ngFor="let ipoeb of props.isPartOfEditedBook" [valueObject]="ipoeb" [ontologyInfo]="ontologyInfo"></read-link-value>
                 </p>
             </div>
 
@@ -136,62 +133,56 @@
             <div *ngIf="props.editorOrg[0]">
                 <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.editorOrg[0].propIri)}}</h4>
                 <p class="margin-left">
-                    <read-link-value *ngFor="let eo of props.editorOrg" [valueObject]="eo"
-                                     [ontologyInfo]="ontologyInfo"></read-link-value>
+                    <read-link-value *ngFor="let eo of props.editorOrg" [valueObject]="eo" [ontologyInfo]="ontologyInfo"></read-link-value>
                 </p>
             </div>
 
             <div *ngIf="props.publisher[0]">
                 <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.publisher[0].propIri)}}</h4>
                 <p class="margin-left">
-                    <read-link-value *ngFor="let p of props.publisher" [valueObject]="p"
-                                     [ontologyInfo]="ontologyInfo"></read-link-value>
+                    <read-link-value *ngFor="let p of props.publisher" [valueObject]="p" [ontologyInfo]="ontologyInfo"></read-link-value>
                 </p>
             </div>
 
             <div *ngIf="props.isReprinted[0]">
                 <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.isReprinted[0].propIri)}}</h4>
                 <p class="margin-left">
-                    <read-link-value *ngFor="let reprinted of props.isReprinted" [valueObject]="reprinted"
-                                     [ontologyInfo]="ontologyInfo"></read-link-value>
+                    <read-link-value *ngFor="let reprinted of props.isReprinted" [valueObject]="reprinted" [ontologyInfo]="ontologyInfo"></read-link-value>
                 </p>
             </div>
 
             <div *ngIf="props.translator[0]">
                 <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.translator[0].propIri)}}</h4>
                 <p class="margin-left">
-                    <read-link-value *ngFor="let trans of props.translator" [valueObject]="trans"
-                                     [ontologyInfo]="ontologyInfo"></read-link-value>
+                    <read-link-value *ngFor="let trans of props.translator" [valueObject]="trans" [ontologyInfo]="ontologyInfo"></read-link-value>
                 </p>
             </div>
 
             <div *ngIf="props.isTranslationOf[0]">
                 <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.isTranslationOf[0].propIri)}}</h4>
                 <p class="margin-left">
-                    <read-link-value *ngFor="let transOf of props.isTranslationOf" [valueObject]="transOf"
-                                     [ontologyInfo]="ontologyInfo"></read-link-value>
+                    <read-link-value *ngFor="let transOf of props.isTranslationOf" [valueObject]="transOf" [ontologyInfo]="ontologyInfo"></read-link-value>
                 </p>
             </div>
 
             <div *ngIf="props.bookContent[0]">
                 <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.bookContent[0].propIri)}}</h4>
                 <p class="margin-left">
-                    <read-link-value *ngFor="let bc of props.bookContent" [valueObject]="bc"
-                                     [ontologyInfo]="ontologyInfo"></read-link-value>
+                    <read-link-value *ngFor="let bc of props.bookContent" [valueObject]="bc" [ontologyInfo]="ontologyInfo"></read-link-value>
                 </p>
             </div>
 
             <div *ngIf="props.introduction[0]">
                 <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.introduction[0].propIri)}}</h4>
                 <p class="margin-left">
-                    <read-link-value *ngFor="let intro of props.introduction" [valueObject]="intro"
-                                     [ontologyInfo]="ontologyInfo"></read-link-value>
+                    <read-link-value *ngFor="let intro of props.introduction" [valueObject]="intro" [ontologyInfo]="ontologyInfo"></read-link-value>
                 </p>
             </div>
 
             <div *ngIf="props.comment[0]">
                 <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.comment[0].propIri)}}</h4>
-                <p *ngFor="let c of props.comment" class="margin-left">{{c.getContent()}}</p>
+                <read-text-value-as-html class="margin-left" [valueObject]="props.comment[0]" [ontologyInfo]="ontologyInfo" [bindEvents]="true">
+                </read-text-value-as-html>
             </div>
 
             <div *ngIf="props.mentionedIn[0]">
