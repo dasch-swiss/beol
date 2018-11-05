@@ -53,6 +53,7 @@ import { APP_BASE_HREF } from '@angular/common';
 import { AngularFirestore } from '../../node_modules/angularfire2/firestore';
 import { AngularFireModule } from '../../node_modules/@angular/fire';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { MeditatioComponent } from './resource/meditatio/meditatio.component';
 
 /*
 export function initializeApp(appConfig: AppConfig) {
@@ -91,7 +92,8 @@ export function initializeApp(appConfig: AppConfig) {
         LeooRouteComponent,
         BiblioItemsComponent,
         EndnoteComponent,
-        FigureComponent
+        FigureComponent,
+        MeditatioComponent
     ],
     imports: [
         //        AngularFireModule.initializeApp(environment.firebase),

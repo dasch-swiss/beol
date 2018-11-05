@@ -13,6 +13,7 @@ import { EndnoteComponent } from './resource/endnote/endnote.component';
 import { LeooRouteComponent } from './leoo-route/leoo-route.component';
 import { FigureComponent } from './resource/figure/figure.component';
 import { BiblioItemsComponent } from './resource/biblio-items/biblio-items.component';
+import { MeditatioComponent } from './resource/meditatio/meditatio.component';
 
 
 const appRoutes: Routes = [
@@ -52,6 +53,11 @@ const appRoutes: Routes = [
     {
         path: 'letter/:id',
         component: LetterComponent,
+        runGuardsAndResolvers: 'paramsChange'
+    },
+    {
+        path: 'meditatio/:id',
+        component: MeditatioComponent,
         runGuardsAndResolvers: 'paramsChange'
     },
     {

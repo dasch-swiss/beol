@@ -1,0 +1,20 @@
+<div class="full-size scroll-y-only">
+
+    <div *ngIf="!isLoading && transcriptionIrisReady && resource?.stillImageRepresentationsToDisplay.length > 0">
+        <kui-still-image #OSDViewer
+                         class="osd-viewer" [images]="resource?.stillImageRepresentationsToDisplay"
+                         [imageRangeStart]="0" [imageRangeEnd]="0" [imageChangeInterval]="1"
+                         (regionHovered)="regionActive($event)">
+        </kui-still-image>
+    </div>
+
+    <div style="height: 200px;">
+    </div>
+
+    <div *ngIf="!isLoading && transcriptionIrisReady && transcription !== undefined">
+        <read-text-value-as-html
+            [valueObject]="transcription" [ontologyInfo]="ontologyInfo"
+            [bindEvents]="true"></read-text-value-as-html>
+    </div>
+
+</div>
