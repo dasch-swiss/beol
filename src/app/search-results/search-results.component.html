@@ -12,6 +12,8 @@
     <div *ngIf="numberOfAllResults !== 0 && result; else noResult">
         <h4>Number of results: {{numberOfAllResults}}</h4>
 
+        <kui-progress-indicator *ngIf="isLoading" [color]="'#D88958'"></kui-progress-indicator>
+
         <!-- the following list will be moved to @knora/viewer views -->
         <mat-accordion class="example-headers-align">
             <mat-expansion-panel *ngFor="let res of result; let i = index; let first = first; let last = last;" [expanded]="step === i" (opened)="setStep(i)" hideToggle>

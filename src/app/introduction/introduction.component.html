@@ -1,89 +1,99 @@
-<kui-progress-indicator *ngIf="isLoading"></kui-progress-indicator>
-<div class="full-size scroll-y-only" *ngIf="!isLoading && props">
+<div class="full-size scroll-y-only">
 
-    <div class="sidebar">
+    <kui-progress-indicator *ngIf="isLoading" [color]="'#D88958'"></kui-progress-indicator>
 
-        <button mat-stroked-button class="previousBtn" (click)="location.back()">
-            <mat-icon>arrow_back</mat-icon>
-            Previous
-        </button>
+    <div *ngIf="!isLoading && props">
 
-        <!-- Tree of introduction links to navigate through several levels on each intro page with data from json file called introductions.json -->
-        <mat-list class="nav">
-            <div *ngFor="let item of list; let i = index;">
+        <div class="sidebar">
 
-                <mat-list-item [class.parent]="item.children">
-                    <button mat-button [routerLink]="'/introduction/leoo/goldbach_' + item.name" routerLinkActive="active-link" class="nav-item" (click)="toggleChildren(i)">
-                        {{item.label}}
-                        <mat-icon *ngIf="!item.children">keyboard_arrow_right</mat-icon>
-                        <mat-icon *ngIf="item.children">keyboard_arrow_down</mat-icon>
-                    </button>
-                </mat-list-item>
+            <button mat-stroked-button class="previousBtn" (click)="location.back()">
+                <mat-icon>arrow_back</mat-icon>
+                Previous
+            </button>
 
-                <div *ngIf="item.children" class="nav-children" [class.open]="curIndex === i">
-                    <div *ngFor="let child of item.children; let c = index;">
-                        <mat-list-item>
-                            <button mat-button [routerLink]="'/introduction/leoo/goldbach_' + child.name" routerLinkActive="active-link" class="nav-item" (click)="toggleGrandChildren(c)">
-                                {{child.label}}
-                                <mat-icon *ngIf="!child.children">keyboard_arrow_right</mat-icon>
-                                <mat-icon *ngIf="child.children">keyboard_arrow_down</mat-icon>
-                            </button>
-                        </mat-list-item>
+            <!-- Tree of introduction links to navigate through several levels on each intro page with data from json file called introductions.json -->
+            <mat-list class="nav">
+                <div *ngFor="let item of list; let i = index;">
 
-                        <div *ngIf="child.children" class="nav-grand-children" [class.open]="curChildIndex === c">
-                            <mat-list-item *ngFor="let gc of child.children">
-                                <!-- [routerLink]="item.name -->
-                                <button mat-button [routerLink]="'/introduction/leoo/goldbach_' + gc.name" routerLinkActive="active-link" class="nav-item">
-                                    {{gc.label}}
-                                    <mat-icon>keyboard_arrow_right</mat-icon>
+                    <mat-list-item [class.parent]="item.children">
+                        <button mat-button [routerLink]="'/introduction/leoo/goldbach_' + item.name"
+                                routerLinkActive="active-link" class="nav-item" (click)="toggleChildren(i)">
+                            {{item.label}}
+                            <mat-icon *ngIf="!item.children">keyboard_arrow_right</mat-icon>
+                            <mat-icon *ngIf="item.children">keyboard_arrow_down</mat-icon>
+                        </button>
+                    </mat-list-item>
+
+                    <div *ngIf="item.children" class="nav-children" [class.open]="curIndex === i">
+                        <div *ngFor="let child of item.children; let c = index;">
+                            <mat-list-item>
+                                <button mat-button [routerLink]="'/introduction/leoo/goldbach_' + child.name"
+                                        routerLinkActive="active-link" class="nav-item"
+                                        (click)="toggleGrandChildren(c)">
+                                    {{child.label}}
+                                    <mat-icon *ngIf="!child.children">keyboard_arrow_right</mat-icon>
+                                    <mat-icon *ngIf="child.children">keyboard_arrow_down</mat-icon>
                                 </button>
                             </mat-list-item>
-                        </div>
 
+                            <div *ngIf="child.children" class="nav-grand-children" [class.open]="curChildIndex === c">
+                                <mat-list-item *ngFor="let gc of child.children">
+                                    <!-- [routerLink]="item.name -->
+                                    <button mat-button [routerLink]="'/introduction/leoo/goldbach_' + gc.name"
+                                            routerLinkActive="active-link" class="nav-item">
+                                        {{gc.label}}
+                                        <mat-icon>keyboard_arrow_right</mat-icon>
+                                    </button>
+                                </mat-list-item>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
-            </div>
-        </mat-list>
+            </mat-list>
 
-    </div>
-    <!-- end of the sidebar -->
-
-    <!-- Main content of the page -->
-    <div class="main-content" *ngIf="!isLoading && props">
-
-        <section class="title center">
-            <h3 mat-card-subtitle>{{resource?.label}}</h3>
-            <h1 mat-card-title *ngFor="let title of props.title">{{title.getContent()}}</h1>
-        </section>
-
-
-        <section class="text">
-            <read-text-value-as-html [valueObject]="props.text[0]" [ontologyInfo]="ontologyInfo" [bindEvents]="true"></read-text-value-as-html>
-        </section>
-
-        <!--
-        <div mat-line *ngFor="let prop of resource?.properties | key">
-            <h4 *ngIf="ontologyInfo?.getLabelForProperty(prop.key) != 'has section' && ontologyInfo?.getLabelForProperty(prop.key) != 'has Standoff Link to'">{{ontologyInfo?.getLabelForProperty(prop.key)}}</h4>
-
-            <div *ngFor="let val of prop.value | key">
-                <span [ngSwitch]="val.value.getClassName()" *ngIf="!val.value.referredResourceIri">
-                    <read-text-value-as-html *ngSwitchCase="KnoraConstants.ReadTextValueAsHtml" [valueObject]="val.value" [ontologyInfo]="ontologyInfo" [bindEvents]="true"></read-text-value-as-html>
-                    <read-text-value-as-string *ngSwitchCase="KnoraConstants.ReadTextValueAsString" [valueObject]="val.value"></read-text-value-as-string>
-                    <read-text-value-as-xml *ngSwitchCase="KnoraConstants.ReadTextValueAsXml" [valueObject]="val.value"></read-text-value-as-xml>
-                    <read-date-value *ngSwitchCase="KnoraConstants.ReadDateValue" [valueObject]="val.value"></read-date-value>
-                    <read-integer-value *ngSwitchCase="KnoraConstants.ReadIntegerValue" [valueObject]="val.value"></read-integer-value>
-                    <read-decimal-value *ngSwitchCase="KnoraConstants.ReadDecimalValue" [valueObject]="val.value"></read-decimal-value>
-                    <read-geom-value *ngSwitchCase="KnoraConstants.ReadGeomValue" [valueObject]="val.value"></read-geom-value>
-                    <read-color-value *ngSwitchCase="KnoraConstants.ReadColorValue" [valueObject]="val.value"></read-color-value>
-                    <read-uri-value *ngSwitchCase="KnoraConstants.ReadUriValue" [valueObject]="val.value"></read-uri-value>
-                    <read-boolean-value *ngSwitchCase="KnoraConstants.ReadBooleanValue" [valueObject]="val.value"></read-boolean-value>
-                    <read-interval-value *ngSwitchCase="KnoraConstants.ReadIntervalValue" [valueObject]="val.value"></read-interval-value>
-                    <read-list-value *ngSwitchCase="KnoraConstants.ReadListValue" [valueObject]="val.value"></read-list-value>
-                    <read-textfile-value *ngSwitchCase="KnoraConstants.TextFileValue" [valueObject]="val.value"></read-textfile-value>
-                    <span *ngSwitchDefault="">Not supported {{val.value.getClassName()}}</span>
-                </span>
-            </div>
         </div>
-        -->
+        <!-- end of the sidebar -->
+
+        <!-- Main content of the page -->
+        <div class="main-content" *ngIf="!isLoading && props">
+
+            <section class="title center">
+                <h3 mat-card-subtitle>{{resource?.label}}</h3>
+                <h1 mat-card-title *ngFor="let title of props.title">{{title.getContent()}}</h1>
+            </section>
+
+
+            <section class="text introduction">
+                <read-text-value-as-html [valueObject]="props.text[0]" [ontologyInfo]="ontologyInfo"
+                                         [bindEvents]="true"></read-text-value-as-html>
+            </section>
+
+            <!--
+            <div mat-line *ngFor="let prop of resource?.properties | key">
+                <h4 *ngIf="ontologyInfo?.getLabelForProperty(prop.key) != 'has section' && ontologyInfo?.getLabelForProperty(prop.key) != 'has Standoff Link to'">{{ontologyInfo?.getLabelForProperty(prop.key)}}</h4>
+
+                <div *ngFor="let val of prop.value | key">
+                    <span [ngSwitch]="val.value.getClassName()" *ngIf="!val.value.referredResourceIri">
+                        <read-text-value-as-html *ngSwitchCase="KnoraConstants.ReadTextValueAsHtml" [valueObject]="val.value" [ontologyInfo]="ontologyInfo" [bindEvents]="true"></read-text-value-as-html>
+                        <read-text-value-as-string *ngSwitchCase="KnoraConstants.ReadTextValueAsString" [valueObject]="val.value"></read-text-value-as-string>
+                        <read-text-value-as-xml *ngSwitchCase="KnoraConstants.ReadTextValueAsXml" [valueObject]="val.value"></read-text-value-as-xml>
+                        <read-date-value *ngSwitchCase="KnoraConstants.ReadDateValue" [valueObject]="val.value"></read-date-value>
+                        <read-integer-value *ngSwitchCase="KnoraConstants.ReadIntegerValue" [valueObject]="val.value"></read-integer-value>
+                        <read-decimal-value *ngSwitchCase="KnoraConstants.ReadDecimalValue" [valueObject]="val.value"></read-decimal-value>
+                        <read-geom-value *ngSwitchCase="KnoraConstants.ReadGeomValue" [valueObject]="val.value"></read-geom-value>
+                        <read-color-value *ngSwitchCase="KnoraConstants.ReadColorValue" [valueObject]="val.value"></read-color-value>
+                        <read-uri-value *ngSwitchCase="KnoraConstants.ReadUriValue" [valueObject]="val.value"></read-uri-value>
+                        <read-boolean-value *ngSwitchCase="KnoraConstants.ReadBooleanValue" [valueObject]="val.value"></read-boolean-value>
+                        <read-interval-value *ngSwitchCase="KnoraConstants.ReadIntervalValue" [valueObject]="val.value"></read-interval-value>
+                        <read-list-value *ngSwitchCase="KnoraConstants.ReadListValue" [valueObject]="val.value"></read-list-value>
+                        <read-textfile-value *ngSwitchCase="KnoraConstants.TextFileValue" [valueObject]="val.value"></read-textfile-value>
+                        <span *ngSwitchDefault="">Not supported {{val.value.getClassName()}}</span>
+                    </span>
+                </div>
+            </div>
+            -->
+        </div>
     </div>
+
 </div>
