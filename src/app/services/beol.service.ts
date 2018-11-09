@@ -328,6 +328,8 @@ export class BeolService {
             referredResourceType === this.externalApiURL + '/ontology/0801/biblio/v2#JournalArticle') {
             // route to biblio-items template
             this._router.navigateByUrl('biblio/' + encodeURIComponent(referredResourceIri));
+        } else if (referredResourceType === this.externalApiURL + '/ontology/0801/beol/v2#page') {
+            this._router.navigateByUrl('meditatio/' + encodeURIComponent(referredResourceIri));
         } else {
             // route to generic template
             this._router.navigateByUrl('resource/' + encodeURIComponent(referredResourceIri));
