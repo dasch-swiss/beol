@@ -52,6 +52,63 @@ table {
   width: 100%;
 }
 
+.borderright {
+  display: inline-block;
+  border-right: 1px solid black;
+}
+
+.borderbottom {
+  display: inline-block;
+  border-bottom: 1px solid black;
+}
+
+.borderleft {
+  display: inline-block;
+  border-left: 1px solid black;
+}
+
+.bordertop {
+  display: inline-block;
+  border-top: 1px solid black;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.center {
+  text-align: center;
+  display: block;
+}
+
+.strike {
+  text-decoration: line-through;
+}
+
+.above {
+  vertical-align: super;
+}
+
+.below {
+  vertical-align: sub;
+}
+
+td.left {
+  text-align: left;
+}
+
+td.right {
+  text-align: right;
+}
+
+td.center {
+  text-align: center;
+}
+
+.fraktur {
+  font-family: LeipzigFraktur;
+}
+
 /*** Beol specific webfonts ***/
 
 @font-face {
