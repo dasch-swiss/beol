@@ -18,7 +18,7 @@ export class ReadDateValueComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.date = this.valueObject.getDate();
+        //this.date = this.valueObject.getDate();
     }
 
 }

@@ -9,7 +9,9 @@ import {
     OntologyInformation,
     ReadPropertyItem,
     ReadResource,
-    ResourceService
+    ResourceService,
+    ReadDateValue,
+    DateRangeSalsah,
 } from '@knora/core';
 import { Subscription } from 'rxjs';
 import { BeolResource } from '../beol-resource';
@@ -28,7 +30,7 @@ interface BiblioItemsProps {
     'author': ReadPropertyItem[];
     'editor': ReadPropertyItem[];
     'editorOrg': ReadPropertyItem[];
-    'date': DateSalsah;
+    'date'?: DateSalsah | DateRangeSalsah;
     'title': ReadPropertyItem[];
     'subtitle': ReadPropertyItem[];
     'name': ReadPropertyItem[];
@@ -159,7 +161,7 @@ export class BiblioItemsComponent extends BeolResource implements OnDestroy {
             author: [],
             editor: [],
             editorOrg: [],
-            date: new DateSalsah(),
+            date: undefined,
             title: [],
             subtitle: [],
             name: [],
@@ -236,7 +238,7 @@ export class BiblioItemsComponent extends BeolResource implements OnDestroy {
                             break;
 
                         case this.propIris.date:
-                            this.props.date = val.getDate();
+                            this.props.date = (val as ReadDateValue).getDateSalsah();
                             break;
 
                         case this.propIris.title:

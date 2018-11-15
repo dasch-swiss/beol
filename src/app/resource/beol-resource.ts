@@ -23,6 +23,14 @@ import { environment } from '../../environments/environment';
 declare let require: any; // http://stackoverflow.com/questions/34730010/angular2-5-minute-install-bug-require-is-not-defined
 let jsonld = require('jsonld');
 
+export interface PropIriToNameMapping {
+    [index: string]: string;
+}
+
+export interface PropertyValues {
+    [index: string]: ReadPropertyItem[];
+}
+
 export abstract class BeolResource {
 
     abstract iri: string;
@@ -35,6 +43,8 @@ export abstract class BeolResource {
 
     abstract KnoraConstants: KnoraConstants;
     apiUrl: string = environment.externalApiURL;
+
+    abstract propIris: PropIriToNameMapping;
 
     constructor(protected _resourceService: ResourceService,
                 protected _cacheService: OntologyCacheService,
@@ -118,10 +128,49 @@ export abstract class BeolResource {
     }
 
     /**
+     * Given a `PropIriToNameMapping`, inverts its keys and values.
+     *
+     * @param propMapping mapping of names to property Iris.
+     * @returns mapping of property Iris to names.
+     */
+    private static swap(propMapping: PropIriToNameMapping): object {
+        const invertedMapping: PropIriToNameMapping = {};
+        for (const key in propMapping) {
+            if (propMapping.hasOwnProperty(key)) {
+                invertedMapping[propMapping[key]] = key;
+            }
+        }
+        return invertedMapping;
+    }
+
+    /**
      * Initializes properties for a specific resource class.
      * To be implemented in template component.
      */
     abstract initProps(): void;
+
+    /**
+     * Assigns the resource's properties to `propClass`.
+     *
+     * @param propClass instance to assign the property values to.
+     */
+    protected mapper(propClass: PropertyValues) {
+
+        const swapped = BeolResource.swap(this.propIris);
+
+        for (const key in this.resource.properties) {
+            if (this.resource.properties.hasOwnProperty(key)) {
+                for (const val of this.resource.properties[key]) {
+
+                    const name = swapped[val.propIri];
+
+                    if (name !== undefined && Array.isArray(propClass[name])) {
+                        propClass[name].push(val);
+                    }
+                }
+            }
+        }
+    }
 
     /**
      * Requests a resource.

@@ -8,7 +8,8 @@ import {
     OntologyInformation,
     ReadPropertyItem,
     ReadResource,
-    ResourceService
+    ResourceService,
+    DateRangeSalsah, ReadDateValue,
 } from '@knora/core';
 import { BeolResource } from '../beol-resource';
 import { Subscription } from 'rxjs';
@@ -16,9 +17,9 @@ import { Subscription } from 'rxjs';
 interface PersonProps {
     comment: ReadPropertyItem[];
     alternative: ReadPropertyItem[];
-    birthDate: DateSalsah;
+    birthDate?: DateSalsah | DateRangeSalsah;
     birthPlace: string;
-    deathDate: DateSalsah;
+    deathDate?: DateSalsah | DateRangeSalsah;
     deathPlace: string;
     dictionary: ReadPropertyItem[];
     IAF: string;
@@ -90,9 +91,9 @@ export class PersonComponent extends BeolResource implements OnDestroy {
         this.props = {
             'comment': [],
             'alternative': [],
-            'birthDate': new DateSalsah(),
+            'birthDate': undefined,
             'birthPlace': '',
-            'deathDate': new DateSalsah(),
+            'deathDate': undefined,
             'deathPlace': '',
             'dictionary': [],
             'IAF': '',
@@ -110,7 +111,7 @@ export class PersonComponent extends BeolResource implements OnDestroy {
                             break;
 
                         case this.propIris.birthDate:
-                            this.props.birthDate = val.getDate();
+                            this.props.birthDate = (val as ReadDateValue).getDateSalsah();
                             break;
 
                         case this.propIris.birthPlace:
@@ -118,7 +119,7 @@ export class PersonComponent extends BeolResource implements OnDestroy {
                             break;
 
                         case this.propIris.deathDate:
-                            this.props.deathDate = val.getDate();
+                            this.props.deathDate = (val as ReadDateValue).getDateSalsah();
                             break;
 
                         case this.propIris.deathPlace:

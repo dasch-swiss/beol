@@ -12,23 +12,23 @@
             </button>
 
             <section>
-                <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.title[0].propIri)}}</h4>
+                <h4 *ngIf="props.title[0]" class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.title[0].propIri)}}</h4>
                 <p class="margin-left" *ngFor="let title of props.title">{{title.getContent()}}</p>
 
-                <div *ngIf="props.repertorium">
+                <div *ngIf="props.repertorium[0]">
                     <p>
                         <strong>
-                            Repertorium number:
+                            {{ontologyInfo.getLabelForProperty(propIris['repertorium'])}}:
                         </strong>
-                        <span>{{props.repertorium}}</span>
+                        <kui-text-value-as-string [valueObject]="props.repertorium[0]"></kui-text-value-as-string>
                     </p>
                 </div>
 
                 <div *ngIf="props.figure[0]">
                     <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.figure[0].propIri)}}</h4>
                     <p class="margin-left">
-                        <read-link-value *ngFor="let fig of props.figure" [valueObject]="fig"
-                                         [ontologyInfo]="ontologyInfo"></read-link-value>
+                        <kui-link-value *ngFor="let fig of props.figure" [valueObject]="fig"
+                                         [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
                     </p>
                 </div>
 
@@ -37,8 +37,8 @@
                         {{ontologyInfo?.getLabelForProperty(props?.replyTo[0].propIri)}}
                     </h4>
                     <p class="margin-left">
-                        <read-link-value *ngFor="let rt of props.replyTo" [valueObject]="rt"
-                                         [ontologyInfo]="ontologyInfo"></read-link-value>
+                        <kui-link-value *ngFor="let rt of props.replyTo" [valueObject]="rt"
+                                         [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
                     </p>
                 </div>
 
@@ -47,7 +47,7 @@
 
                     <mat-list>
                         <mat-list-item *ngFor="let orig of props.original">
-                            <read-link-value [valueObject]="orig" [ontologyInfo]="ontologyInfo"></read-link-value>
+                            <kui-link-value [valueObject]="orig" [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
                         </mat-list-item>
                     </mat-list>
 
@@ -56,8 +56,8 @@
                 <div *ngIf="props.translation[0]">
                     <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.translation[0].propIri)}}</h4>
                     <p class="margin-left">
-                        <read-link-value *ngFor="let trans of props.translation" [valueObject]="trans"
-                                         [ontologyInfo]="ontologyInfo"></read-link-value>
+                        <kui-link-value *ngFor="let trans of props.translation" [valueObject]="trans"
+                                         [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
                     </p>
                 </div>
 
@@ -66,7 +66,7 @@
 
                     <mat-list>
                         <mat-list-item *ngFor="let pub of props.published">
-                            <read-link-value [valueObject]="pub" [ontologyInfo]="ontologyInfo"></read-link-value>
+                            <kui-link-value [valueObject]="pub" [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
                         </mat-list-item>
                     </mat-list>
 
@@ -78,7 +78,7 @@
 
                     <mat-list>
                         <mat-list-item *ngFor="let mp of props.mentionedPerson">
-                            <read-link-value [valueObject]="mp" [ontologyInfo]="ontologyInfo"></read-link-value>
+                            <kui-link-value [valueObject]="mp" [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
                         </mat-list-item>
                     </mat-list>
 
@@ -110,34 +110,24 @@
         <div class="main-content">
 
             <section class="title center">
-                <p>{{props.number}}</p>
+                <p *ngIf="props.number[0]"><kui-text-value-as-string [valueObject]="props.number[0]"></kui-text-value-as-string></p>
                 <p class="names">
                 <span *ngFor="let author of props.author; let last = last">
-                    <read-link-value [valueObject]="author" [ontologyInfo]="ontologyInfo"></read-link-value>
+                    <kui-link-value [valueObject]="author" [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
                     <span *ngIf="!last"> &amp; </span>
                 </span>
                     to
                     <span *ngFor="let recipient of props.recipient; let last = last">
-                    <read-link-value [valueObject]="recipient" [ontologyInfo]="ontologyInfo"></read-link-value>
+                    <kui-link-value [valueObject]="recipient" [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
                     <span *ngIf="!last"> &amp; </span>
                 </span>
                 </p>
+                    <span *ngIf="props.date[0]"><kui-date-value [valueObject]="props.date[0]" [calendar]="true" [era]="true"></kui-date-value></span>
                 <p>
-                    <span *ngIf="props.location">{{props.location}}, </span>
 
-                    <span *ngIf="props.date.start">
-                    {{props.date.start.date | date: props.date.start?.format}}
-                    <span *ngIf="props.date.start.era">{{props.date.start?.era}}</span>
-                </span>
-                    <span *ngIf="props.date.end">
-                    - {{props.date.end.date | date: props.date.start?.format}}
-                    <span *ngIf="props.date.end.era">{{props.date.end?.era}}</span>
-                </span>
-                    <span *ngIf="props.date.start.calendar"> ({{props.date.start?.calendar}})</span>
-                </p>
             </section>
 
-            <section class="text">
+            <section *ngIf="props.text[0]" class="text">
                 <read-text-value-as-html [valueObject]="props.text[0]" [ontologyInfo]="ontologyInfo"
                                          [bindEvents]="true"></read-text-value-as-html>
             </section>

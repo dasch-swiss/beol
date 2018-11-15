@@ -40,6 +40,8 @@ export class ResourceComponent extends BeolResource implements OnDestroy {
     KnoraConstants = KnoraConstants;
     navigationSubscription: Subscription;
 
+    propIris;
+
     constructor(private _route: ActivatedRoute,
         private _router: Router,
         protected _resourceService: ResourceService,
