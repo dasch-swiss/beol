@@ -18,7 +18,7 @@
                 <div *ngIf="props.repertorium[0]">
                     <p>
                         <strong>
-                            {{ontologyInfo.getLabelForProperty(propIris['repertorium'])}}:
+                            {{ontologyInfo.getLabelForProperty(props.repertorium[0].propIri)}}:
                         </strong>
                         <kui-text-value-as-string [valueObject]="props.repertorium[0]"></kui-text-value-as-string>
                     </p>

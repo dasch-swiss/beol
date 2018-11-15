@@ -12,7 +12,7 @@ import {
     ReadTextValue,
     ResourceService,
 } from '@knora/core';
-import { BeolResource, PropertyValues } from '../beol-resource';
+import { BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
 import { Subscription } from 'rxjs';
 
 class PersonProps implements PropertyValues {
@@ -47,7 +47,7 @@ export class PersonComponent extends BeolResource implements OnDestroy {
     navigationSubscription: Subscription;
     KnoraConstants = KnoraConstants;
 
-    propIris: any = {
+    propIris: PropIriToNameMapping = {
         'id': this.apiUrl + '/ontology/0801/beol/v2#beolIDs',
         'comment': this.apiUrl + '/ontology/0801/beol/v2#comment',
         'alternative': this.apiUrl + '/ontology/0801/beol/v2#hasAlternativeName',
