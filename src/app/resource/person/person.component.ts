@@ -2,30 +2,33 @@ import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import {
-    DateSalsah,
-    IncomingService, KnoraConstants,
+    IncomingService,
+    KnoraConstants,
     OntologyCacheService,
     OntologyInformation,
+    ReadDateValue,
     ReadPropertyItem,
     ReadResource,
+    ReadTextValue,
     ResourceService,
-    DateRangeSalsah, ReadDateValue,
 } from '@knora/core';
-import { BeolResource } from '../beol-resource';
+import { BeolResource, PropertyValues } from '../beol-resource';
 import { Subscription } from 'rxjs';
 
-interface PersonProps {
-    comment: ReadPropertyItem[];
-    alternative: ReadPropertyItem[];
-    birthDate?: DateSalsah | DateRangeSalsah;
-    birthPlace: string;
-    deathDate?: DateSalsah | DateRangeSalsah;
-    deathPlace: string;
-    dictionary: ReadPropertyItem[];
-    IAF: string;
-    mentioned: ReadPropertyItem[];
-    name: string;
-    publisherLocation: string;
+class PersonProps implements PropertyValues {
+    comment: ReadTextValue[] = [];
+    alternative: ReadTextValue[] = [];
+    birthDate: ReadDateValue[] = [];
+    birthPlace: ReadTextValue[] = [];
+    deathDate: ReadDateValue[] = [];
+    deathPlace: ReadTextValue[] = [];
+    dictionary: ReadTextValue[] = [];
+    IAF: ReadTextValue[] = [];
+    mentioned: ReadTextValue[] = [];
+    name: ReadTextValue[] = [];
+    publisherLocation: ReadTextValue[] = [];
+
+    [index: string]: ReadPropertyItem[];
 }
 
 @Component({
@@ -87,73 +90,11 @@ export class PersonComponent extends BeolResource implements OnDestroy {
 
     initProps() {
 
-        // create a person props interface
-        this.props = {
-            'comment': [],
-            'alternative': [],
-            'birthDate': undefined,
-            'birthPlace': '',
-            'deathDate': undefined,
-            'deathPlace': '',
-            'dictionary': [],
-            'IAF': '',
-            'mentioned': [],
-            'name': '',
-            'publisherLocation': ''
-        };
+        const props = new PersonProps();
 
-        for (const key in this.resource.properties) {
-            if (this.resource.properties.hasOwnProperty(key)) {
-                for (const val of this.resource.properties[key]) {
-                    switch (val.propIri) {
-                        case this.propIris.comment:
-                            this.props.comment.push(val);
-                            break;
+        this.mapper(props);
 
-                        case this.propIris.birthDate:
-                            this.props.birthDate = (val as ReadDateValue).getDateSalsah();
-                            break;
-
-                        case this.propIris.birthPlace:
-                            this.props.birthPlace = val.getContent();
-                            break;
-
-                        case this.propIris.deathDate:
-                            this.props.deathDate = (val as ReadDateValue).getDateSalsah();
-                            break;
-
-                        case this.propIris.deathPlace:
-                            this.props.deathPlace = val.getContent();
-                            break;
-
-                        case this.propIris.alternative:
-                            this.props.alternative.push(val);
-                            break;
-
-                        case this.propIris.IAF:
-                            this.props.IAF = val.getContent();
-                            break;
-
-                        case this.propIris.mentioned:
-                            this.props.mentioned.push(val);
-                            break;
-
-                        case this.propIris.name:
-                            this.props.name = val.getContent();
-                            break;
-
-                        case this.propIris.publisherLocation:
-                            this.props.publisherLocation = val.getContent();
-                            break;
-
-                        default:
-                        // do nothing
-                    }
-
-
-                }
-            }
-        }
+        this.props = props;
     }
 
     ngOnDestroy() {
