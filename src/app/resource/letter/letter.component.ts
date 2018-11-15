@@ -84,9 +84,9 @@ export class LetterComponent extends BeolResource implements OnDestroy {
                 protected _cacheService: OntologyCacheService,
                 protected _incomingService: IncomingService,
                 public location: Location,
-                private _beolService: BeolService) {
+                protected _beolService: BeolService) {
 
-        super(_resourceService, _cacheService, _incomingService);
+        super(_resourceService, _cacheService, _incomingService, _beolService);
 
         this._route.params.subscribe((params: Params) => {
             this.iri = params['id'];
@@ -117,10 +117,4 @@ export class LetterComponent extends BeolResource implements OnDestroy {
         }
     }
 
-    resLinkClicked(linkVal: ReadLinkValue) {
-
-        const refResType = (linkVal.referredResource !== undefined ? linkVal.referredResource.type : '');
-
-        this._beolService.routeByResourceType(refResType, linkVal.referredResourceIri);
-    }
 }

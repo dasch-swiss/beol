@@ -19,6 +19,7 @@ import {
 import { RequestStillImageRepresentations } from '@knora/viewer';
 import { Subscription } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { BeolService } from '../services/beol.service';
 
 declare let require: any; // http://stackoverflow.com/questions/34730010/angular2-5-minute-install-bug-require-is-not-defined
 let jsonld = require('jsonld');
@@ -48,7 +49,8 @@ export abstract class BeolResource {
 
     constructor(protected _resourceService: ResourceService,
                 protected _cacheService: OntologyCacheService,
-                protected _incomingService: IncomingService) {
+                protected _incomingService: IncomingService,
+                protected _beolService: BeolService) {
     }
 
     /**
@@ -170,6 +172,18 @@ export abstract class BeolResource {
                 }
             }
         }
+    }
+
+    /**
+     * The user clicked on an internal link.
+     *
+     * @param linkVal the value reprenting the referred resource.
+     */
+    protected resLinkClicked(linkVal: ReadLinkValue) {
+
+        const refResType = (linkVal.referredResource !== undefined ? linkVal.referredResource.type : '');
+
+        this._beolService.routeByResourceType(refResType, linkVal.referredResourceIri);
     }
 
     /**

@@ -44,8 +44,8 @@
                                                     [valueObject]="val.value"></read-text-value-as-xml>
                             <read-date-value *ngSwitchCase="KnoraConstants.ReadDateValue" [valueObject]="val.value"
                                              [calendar]="true" [era]="true"></read-date-value>
-                            <read-link-value *ngSwitchCase="KnoraConstants.ReadLinkValue" [valueObject]="val.value"
-                                             [ontologyInfo]="ontologyInfo"></read-link-value>
+                            <kui-link-value *ngSwitchCase="KnoraConstants.ReadLinkValue" [valueObject]="val.value"
+                                             [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
                             <read-integer-value *ngSwitchCase="KnoraConstants.ReadIntegerValue"
                                                 [valueObject]="val.value"></read-integer-value>
                             <read-decimal-value *ngSwitchCase="KnoraConstants.ReadDecimalValue"

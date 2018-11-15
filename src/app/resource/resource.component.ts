@@ -23,6 +23,7 @@ import {
 import { RequestStillImageRepresentations } from '@knora/viewer';
 import { BeolResource } from './beol-resource';
 import { Subscription } from 'rxjs';
+import { BeolService } from '../services/beol.service';
 
 @Component({
     selector: 'app-resource',
@@ -43,13 +44,14 @@ export class ResourceComponent extends BeolResource implements OnDestroy {
     propIris;
 
     constructor(private _route: ActivatedRoute,
-        private _router: Router,
-        protected _resourceService: ResourceService,
-        protected _cacheService: OntologyCacheService,
-        protected _incomingService: IncomingService,
-        public location: Location) {
+                private _router: Router,
+                protected _resourceService: ResourceService,
+                protected _cacheService: OntologyCacheService,
+                protected _incomingService: IncomingService,
+                public location: Location,
+                protected _beolService: BeolService) {
 
-        super(_resourceService, _cacheService, _incomingService);
+        super(_resourceService, _cacheService, _incomingService, _beolService);
 
         this._route.params.subscribe((params: Params) => {
             this.iri = params['id'];

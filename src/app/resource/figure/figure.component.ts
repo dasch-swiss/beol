@@ -13,6 +13,7 @@ import {
 } from '@knora/core';
 import { BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
 import { Subscription } from 'rxjs';
+import { BeolService } from '../../services/beol.service';
 
 class FigureProps implements PropertyValues {
     caption: ReadTextValue[] = [];
@@ -48,9 +49,10 @@ export class FigureComponent extends BeolResource implements OnDestroy {
                 protected _resourceService: ResourceService,
                 protected _cacheService: OntologyCacheService,
                 protected _incomingService: IncomingService,
-                public location: Location) {
+                public location: Location,
+                protected _beolService: BeolService) {
 
-        super(_resourceService, _cacheService, _incomingService);
+        super(_resourceService, _cacheService, _incomingService, _beolService);
 
         this._route.params.subscribe((params: Params) => {
             this.iri = params['id'];

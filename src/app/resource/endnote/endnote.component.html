@@ -12,8 +12,8 @@
 
             <section *ngIf="props.figure[0]">
                 <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.figure[0].propIri)}}</h4>
-                <read-link-value *ngFor="let fig of props.figure" [valueObject]="fig"
-                                 [ontologyInfo]="ontologyInfo"></read-link-value>
+                <kui-link-value *ngFor="let fig of props.figure" [valueObject]="fig"
+                                 [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
             </section>
 
         </div>
