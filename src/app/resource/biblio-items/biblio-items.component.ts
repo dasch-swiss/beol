@@ -2,18 +2,16 @@ import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import {
-    DateSalsah,
     IncomingService,
     KnoraConstants,
     OntologyCacheService,
     OntologyInformation,
+    ReadDateValue,
+    ReadLinkValue,
     ReadPropertyItem,
     ReadResource,
-    ResourceService,
-    ReadDateValue,
-    DateRangeSalsah,
     ReadTextValue,
-    ReadLinkValue
+    ResourceService
 } from '@knora/core';
 import { Subscription } from 'rxjs';
 import { BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
@@ -28,8 +26,8 @@ class BiblioItemsProps implements PropertyValues {
     isPartOfCollection: ReadLinkValue[] = [];
     isPartOfEditedBook: ReadLinkValue[] = [];
     journalVolume: ReadTextValue[] = [];
-    numVolumes: ReadTextValue[] = [];;
-    numPages: ReadTextValue[] = [];;
+    numVolumes: ReadTextValue[] = [];
+    numPages: ReadTextValue[] = [];
     author: ReadLinkValue[] = [];
     editor: ReadLinkValue[] = [];
     editorOrg: ReadLinkValue[] = [];

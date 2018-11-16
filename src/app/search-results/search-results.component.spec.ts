@@ -9,8 +9,8 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import { SearchResultsComponent } from './search-results.component';
 import { KuiActionModule } from '@knora/action';
-import { ReadDateValueComponent } from '../properties/read-date-value/read-date-value.component';
 import { KuiCoreConfig } from '@knora/core';
+import { KuiViewerModule } from '@knora/viewer';
 
 import { MathJaxDirective } from '../directives/mathjax.directive';
 
@@ -25,6 +25,7 @@ describe('SearchResultsComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 KuiActionModule,
+                KuiViewerModule,
                 RouterTestingModule,
                 MaterialModule,
                 InfiniteScrollModule,
@@ -33,7 +34,6 @@ describe('SearchResultsComponent', () => {
             declarations: [
                 SearchResultsComponent,
                 MathJaxDirective,
-                ReadDateValueComponent
             ],
             providers: [
                 {

@@ -8,10 +8,11 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { KuiActionModule } from '@knora/action';
 import { KuiCoreConfig } from '@knora/core';
+
 import { BiblioItemsComponent } from './biblio-items.component';
 import { ReadTextValueAsHtmlComponent } from '../../properties/read-text-value-as-html/read-text-value-as-html.component';
-import { ReadLinkValueComponent } from '../../properties/read-link-value/read-link-value.component';
 import { MathJaxDirective } from '../../directives/mathjax.directive';
+import { KuiViewerModule } from '@knora/viewer';
 
 describe('BiblioItemsComponent', () => {
   let component: BiblioItemsComponent;
@@ -23,6 +24,7 @@ describe('BiblioItemsComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         KuiActionModule,
+        KuiViewerModule,
         MaterialModule,
         RouterTestingModule,
         HttpClientModule,
@@ -31,7 +33,6 @@ describe('BiblioItemsComponent', () => {
       declarations: [
         BiblioItemsComponent,
         ReadTextValueAsHtmlComponent,
-        ReadLinkValueComponent,
         MathJaxDirective
       ],
       providers: [
