@@ -22,7 +22,6 @@ import { IntroductionComponent } from './introduction/introduction.component';
 import { ResourceComponent } from './resource/resource.component';
 import { PersonComponent } from './resource/person/person.component';
 import { LetterComponent } from './resource/letter/letter.component';
-import { ReadBooleanValueComponent } from './properties/read-boolean-value/read-boolean-value.component';
 import { ReadColorValueComponent } from './properties/read-color-value/read-color-value.component';
 import { ReadDateValueComponent } from './properties/read-date-value/read-date-value.component';
 import { ReadDecimalValueComponent } from './properties/read-decimal-value/read-decimal-value.component';
@@ -70,7 +69,6 @@ export function initializeApp(appConfig: AppConfig) {
         ResourceComponent,
         PersonComponent,
         LetterComponent,
-        ReadBooleanValueComponent,
         ReadColorValueComponent,
         ReadDateValueComponent,
         ReadDecimalValueComponent,

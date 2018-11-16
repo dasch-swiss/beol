@@ -12,7 +12,6 @@ import { ReadTextValueAsStringComponent } from '../properties/read-text-value-as
 import { ReadTextValueAsXmlComponent } from '../properties/read-text-value-as-xml/read-text-value-as-xml.component';
 import { ReadDateValueComponent } from '../properties/read-date-value/read-date-value.component';
 import { ReadIntegerValueComponent } from '../properties/read-integer-value/read-integer-value.component';
-import { ReadBooleanValueComponent } from '../properties/read-boolean-value/read-boolean-value.component';
 import { ReadDecimalValueComponent } from '../properties/read-decimal-value/read-decimal-value.component';
 import { ReadUriValueComponent } from '../properties/read-uri-value/read-uri-value.component';
 import { ReadIntervalValueComponent } from '../properties/read-interval-value/read-interval-value.component';
@@ -52,7 +51,6 @@ describe('IntroductionComponent', () => {
         ReadTextValueAsXmlComponent,
         ReadDateValueComponent,
         ReadIntegerValueComponent,
-        ReadBooleanValueComponent,
         ReadDecimalValueComponent,
         ReadUriValueComponent,
         ReadIntervalValueComponent,
