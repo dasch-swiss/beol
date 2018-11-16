@@ -10,7 +10,6 @@ import { ReadLinkValueComponent } from '../properties/read-link-value/read-link-
 import { ReadTextValueAsHtmlComponent } from '../properties/read-text-value-as-html/read-text-value-as-html.component';
 import { ReadTextValueAsStringComponent } from '../properties/read-text-value-as-string/read-text-value-as-string.component';
 import { ReadTextValueAsXmlComponent } from '../properties/read-text-value-as-xml/read-text-value-as-xml.component';
-import { ReadDateValueComponent } from '../properties/read-date-value/read-date-value.component';
 import { ReadIntegerValueComponent } from '../properties/read-integer-value/read-integer-value.component';
 import { ReadDecimalValueComponent } from '../properties/read-decimal-value/read-decimal-value.component';
 import { ReadUriValueComponent } from '../properties/read-uri-value/read-uri-value.component';
@@ -48,7 +47,6 @@ describe('IntroductionComponent', () => {
         ReadTextValueAsHtmlComponent,
         ReadTextValueAsStringComponent,
         ReadTextValueAsXmlComponent,
-        ReadDateValueComponent,
         ReadIntegerValueComponent,
         ReadDecimalValueComponent,
         ReadUriValueComponent,
