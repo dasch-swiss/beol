@@ -22,7 +22,6 @@ import { IntroductionComponent } from './introduction/introduction.component';
 import { ResourceComponent } from './resource/resource.component';
 import { PersonComponent } from './resource/person/person.component';
 import { LetterComponent } from './resource/letter/letter.component';
-import { ReadColorValueComponent } from './properties/read-color-value/read-color-value.component';
 import { ReadDateValueComponent } from './properties/read-date-value/read-date-value.component';
 import { ReadDecimalValueComponent } from './properties/read-decimal-value/read-decimal-value.component';
 import { ReadGeomValueComponent } from './properties/read-geom-value/read-geom-value.component';
@@ -69,7 +68,6 @@ export function initializeApp(appConfig: AppConfig) {
         ResourceComponent,
         PersonComponent,
         LetterComponent,
-        ReadColorValueComponent,
         ReadDateValueComponent,
         ReadDecimalValueComponent,
         ReadGeomValueComponent,

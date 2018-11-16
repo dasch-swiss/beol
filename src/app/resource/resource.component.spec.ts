@@ -23,7 +23,6 @@ import { ReadUriValueComponent } from '../properties/read-uri-value/read-uri-val
 import { ReadIntervalValueComponent } from '../properties/read-interval-value/read-interval-value.component';
 import { ReadListValueComponent } from '../properties/read-list-value/read-list-value.component';
 import { ReadGeomValueComponent } from '../properties/read-geom-value/read-geom-value.component';
-import { ReadColorValueComponent } from '../properties/read-color-value/read-color-value.component';
 import { ReadTextfileValueComponent } from '../properties/read-textfile-value/read-textfile-value.component';
 import { MathJaxDirective } from '../directives/mathjax.directive';
 import { KuiViewerModule } from '@knora/viewer';
@@ -57,7 +56,6 @@ describe('ResourceComponent', () => {
                 ReadIntervalValueComponent,
                 ReadListValueComponent,
                 ReadGeomValueComponent,
-                ReadColorValueComponent,
                 ReadTextfileValueComponent],
             providers: [
                 {
