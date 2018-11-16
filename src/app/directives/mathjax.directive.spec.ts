@@ -1,9 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MathJaxDirective } from './mathjax.directive';
-import { Component, OnInit } from '@angular/core';
+import { Component, DebugElement, OnInit } from '@angular/core';
 import { KuiCoreModule } from '@knora/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatSnackBarModule } from '@angular/material';
+import { By } from '@angular/platform-browser';
 
 describe('MathJaxDirective', () => {
 
@@ -61,9 +62,35 @@ describe('MathJaxDirective', () => {
         expect(component).toBeTruthy();
     });
 
+    it('should not render the text with MathJax', () => {
+        expect(component.bindEvents).toBeFalsy();
+        expect(component.renderMath).toBeFalsy();
+
+        const compDe = fixture.debugElement;
+
+        const spanDe: DebugElement = compDe.query(By.css('span'));
+
+        expect(spanDe.nativeElement.innerHTML).toEqual('(\\frac{1}{2})');
+
+        expect(mathJaxQueueCalledWith).toBeUndefined();
+    });
+
     it('should render the text with MathJax', () => {
+
+        component.renderMath = true;
+
+        fixture.detectChanges();
+
+        const compDe = fixture.debugElement;
+
+        const spanDe: DebugElement = compDe.query(By.css('span'));
+
+        expect(spanDe.nativeElement.innerHTML).toEqual('(\\frac{1}{2})');
+
         expect(mathJaxQueueCalledWith.innerHTML).toEqual('(\\frac{1}{2})');
     });
+
+    // TODO: add tests for bound events
 
 });
 
@@ -77,7 +104,7 @@ class TestComponent implements OnInit {
 
     text: string;
     bindEvents = false;
-    renderMath = true;
+    renderMath = false;
 
     ngOnInit() {
         this.text = '(\\frac{1}{2})';
