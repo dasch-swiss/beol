@@ -12,7 +12,6 @@ import { KuiActionModule } from '@knora/action';
 
 import { KuiCoreConfig } from '@knora/core';
 import { ReadTextValueAsHtmlComponent } from '../properties/read-text-value-as-html/read-text-value-as-html.component';
-import { ReadTextValueAsStringComponent } from '../properties/read-text-value-as-string/read-text-value-as-string.component';
 import { ReadTextValueAsXmlComponent } from '../properties/read-text-value-as-xml/read-text-value-as-xml.component';
 import { ReadUriValueComponent } from '../properties/read-uri-value/read-uri-value.component';
 import { ReadListValueComponent } from '../properties/read-list-value/read-list-value.component';
@@ -39,7 +38,6 @@ describe('ResourceComponent', () => {
                 ResourceComponent,
                 MathJaxDirective,
                 ReadTextValueAsHtmlComponent,
-                ReadTextValueAsStringComponent,
                 ReadTextValueAsXmlComponent,
                 ReadUriValueComponent,
                 ReadListValueComponent,
