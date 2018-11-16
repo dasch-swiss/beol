@@ -11,7 +11,6 @@ import { ReadTextValueAsHtmlComponent } from '../properties/read-text-value-as-h
 import { ReadTextValueAsStringComponent } from '../properties/read-text-value-as-string/read-text-value-as-string.component';
 import { ReadTextValueAsXmlComponent } from '../properties/read-text-value-as-xml/read-text-value-as-xml.component';
 import { ReadUriValueComponent } from '../properties/read-uri-value/read-uri-value.component';
-import { ReadIntervalValueComponent } from '../properties/read-interval-value/read-interval-value.component';
 import { ReadListValueComponent } from '../properties/read-list-value/read-list-value.component';
 import { ReadTextfileValueComponent } from '../properties/read-textfile-value/read-textfile-value.component';
 import { of } from 'rxjs';
@@ -45,7 +44,6 @@ describe('IntroductionComponent', () => {
         ReadTextValueAsStringComponent,
         ReadTextValueAsXmlComponent,
         ReadUriValueComponent,
-        ReadIntervalValueComponent,
         ReadListValueComponent,
         ReadTextfileValueComponent
       ],
