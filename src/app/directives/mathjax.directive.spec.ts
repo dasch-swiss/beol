@@ -1,36 +1,85 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MathJaxDirective } from './mathjax.directive';
-import { OnInit, Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { KuiCoreModule } from '@knora/core';
+import { RouterTestingModule } from '@angular/router/testing';
+import { MatSnackBarModule } from '@angular/material';
 
 describe('MathJaxDirective', () => {
 
-    /* let component: TestComponent;
+    // element to be rendered by MathJax
+    let mathJaxQueueCalledWith: Element;
+
+    // mock MathJax (declared in component)
+    const MathJax = {
+        Hub: {
+            Queue: (cb: () => {}) => {
+                cb();
+            },
+            Typeset: (ele: Element) => {
+                // queue was called with ele
+                mathJaxQueueCalledWith = ele;
+            }
+        }
+    };
+
+    // create a global MathJax object
+    // this normally happens when MathJax is loaded in index.html
+    (window as any).MathJax = MathJax;
+
+    let component: TestComponent;
     let fixture: ComponentFixture<TestComponent>;
- */
+
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [],
-            declarations: [MathJaxDirective],
-            providers: [
-            ]
-        });
+            imports: [
+                RouterTestingModule,
+                MatSnackBarModule,
+                KuiCoreModule,
+            ],
+            declarations: [
+                TestComponent,
+                MathJaxDirective
+            ],
+            providers: []
+        })
+            .compileComponents();
     });
 
-    xit('should create an instance', () => {
+    beforeEach(() => {
+
+        expect(MathJax).toBeDefined();
+        mathJaxQueueCalledWith = undefined;
+
+        fixture = TestBed.createComponent(TestComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+
+    });
+
+    it('should create an instance', () => {
+        expect(component).toBeTruthy();
+    });
+
+    it('should render the text with MathJax', () => {
+        expect(mathJaxQueueCalledWith.innerHTML).toEqual('(\\frac{1}{2})');
     });
 
 });
 
-/* @Component({
-    selector: 'kui-test',
+@Component({
     template: `
-    <span [valueObject]="valueObject" [mathJax]="valueObject?.getContent()" [ontologyInfo]="ontologyInfo" [bindEvents]="bindEvents"></span>
+        <span [mathJax]="text" [bindEvents]="bindEvents" [renderMath]="renderMath"></span>
     `
 })
 
 class TestComponent implements OnInit {
 
-    constructor() { }
+    text: string;
+    bindEvents = false;
+    renderMath = true;
 
-    ngOnInit() { }
-} */
+    ngOnInit() {
+        this.text = '(\\frac{1}{2})';
+    }
+}
