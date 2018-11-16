@@ -17,8 +17,6 @@ import { ReadTextValueAsHtmlComponent } from '../../properties/read-text-value-a
 import { ReadTextValueAsStringComponent } from '../../properties/read-text-value-as-string/read-text-value-as-string.component';
 import { ReadTextValueAsXmlComponent } from '../../properties/read-text-value-as-xml/read-text-value-as-xml.component';
 import { ReadIntegerValueComponent } from '../../properties/read-integer-value/read-integer-value.component';
-
-import { ReadDecimalValueComponent } from '../../properties/read-decimal-value/read-decimal-value.component';
 import { ReadUriValueComponent } from '../../properties/read-uri-value/read-uri-value.component';
 import { ReadIntervalValueComponent } from '../../properties/read-interval-value/read-interval-value.component';
 import { ReadListValueComponent } from '../../properties/read-list-value/read-list-value.component';
@@ -52,7 +50,6 @@ describe('LetterComponent', () => {
                 ReadTextValueAsStringComponent,
                 ReadTextValueAsXmlComponent,
                 ReadIntegerValueComponent,
-                ReadDecimalValueComponent,
                 ReadUriValueComponent,
                 ReadIntervalValueComponent,
                 ReadListValueComponent,
