@@ -20,7 +20,6 @@ import { ReadIntegerValueComponent } from '../../properties/read-integer-value/r
 import { ReadUriValueComponent } from '../../properties/read-uri-value/read-uri-value.component';
 import { ReadIntervalValueComponent } from '../../properties/read-interval-value/read-interval-value.component';
 import { ReadListValueComponent } from '../../properties/read-list-value/read-list-value.component';
-import { ReadGeomValueComponent } from '../../properties/read-geom-value/read-geom-value.component';
 import { ReadTextfileValueComponent } from '../../properties/read-textfile-value/read-textfile-value.component';
 
 import { MathJaxDirective } from '../../directives/mathjax.directive';
@@ -53,7 +52,6 @@ describe('LetterComponent', () => {
                 ReadUriValueComponent,
                 ReadIntervalValueComponent,
                 ReadListValueComponent,
-                ReadGeomValueComponent,
                 ReadTextfileValueComponent],
             providers: [
                 OntologyCacheService,
