@@ -22,7 +22,6 @@ import { IntroductionComponent } from './introduction/introduction.component';
 import { ResourceComponent } from './resource/resource.component';
 import { PersonComponent } from './resource/person/person.component';
 import { LetterComponent } from './resource/letter/letter.component';
-import { ReadIntegerValueComponent } from './properties/read-integer-value/read-integer-value.component';
 import { ReadIntervalValueComponent } from './properties/read-interval-value/read-interval-value.component';
 import { ReadLinkValueComponent } from './properties/read-link-value/read-link-value.component';
 import { ReadListValueComponent } from './properties/read-list-value/read-list-value.component';
@@ -65,7 +64,6 @@ export function initializeApp(appConfig: AppConfig) {
         ResourceComponent,
         PersonComponent,
         LetterComponent,
-        ReadIntegerValueComponent,
         ReadIntervalValueComponent,
         ReadLinkValueComponent,
         ReadListValueComponent,
