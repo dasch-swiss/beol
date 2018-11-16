@@ -1,6 +1,6 @@
 // angular modules
 import { BrowserModule } from '@angular/platform-browser';
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { environment } from '../environments/environment';
 // @knora modules
 import { KuiCoreModule } from '@knora/core';
@@ -24,9 +24,6 @@ import { PersonComponent } from './resource/person/person.component';
 import { LetterComponent } from './resource/letter/letter.component';
 import { ReadListValueComponent } from './properties/read-list-value/read-list-value.component';
 import { ReadTextValueAsHtmlComponent } from './properties/read-text-value-as-html/read-text-value-as-html.component';
-import { ReadTextValueAsXmlComponent } from './properties/read-text-value-as-xml/read-text-value-as-xml.component';
-import { ReadTextfileValueComponent } from './properties/read-textfile-value/read-textfile-value.component';
-import { ReadUriValueComponent } from './properties/read-uri-value/read-uri-value.component';
 import { LeooRouteComponent } from './leoo-route/leoo-route.component';
 import { EndnoteComponent } from './resource/endnote/endnote.component';
 import { FigureComponent } from './resource/figure/figure.component';
@@ -34,15 +31,12 @@ import { BiblioItemsComponent } from './resource/biblio-items/biblio-items.compo
 // directives
 import { MathJaxDirective } from './directives/mathjax.directive';
 // Loads the application configuration file during application startup
-import { AppConfig } from './app.config';
 import { CorrespondenceComponent } from './correspondence/correspondence.component';
 import { ContactComponent } from './contact/contact.component';
 import { ContactFormComponent } from './contact/contact-form/contact-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { APP_BASE_HREF } from '@angular/common';
 // import { RECAPTCHA_SETTINGS, RecaptchaSettings } from 'ng-recaptcha';
-import { AngularFirestore } from '../../node_modules/angularfire2/firestore';
-import { AngularFireModule } from '../../node_modules/@angular/fire';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 /*
@@ -63,9 +57,6 @@ export function initializeApp(appConfig: AppConfig) {
         LetterComponent,
         ReadListValueComponent,
         ReadTextValueAsHtmlComponent,
-        ReadTextValueAsXmlComponent,
-        ReadTextfileValueComponent,
-        ReadUriValueComponent,
         CorrespondenceComponent,
         ContactComponent,
         ContactFormComponent,

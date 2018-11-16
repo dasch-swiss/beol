@@ -5,17 +5,11 @@ import { MaterialModule } from '../../material-module';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
-
 import { LetterComponent } from './letter.component';
-
 import { KuiActionModule } from '@knora/action';
 import { KuiCoreConfig, OntologyCacheService } from '@knora/core';
 import { ReadTextValueAsHtmlComponent } from '../../properties/read-text-value-as-html/read-text-value-as-html.component';
-import { ReadTextValueAsXmlComponent } from '../../properties/read-text-value-as-xml/read-text-value-as-xml.component';
-import { ReadUriValueComponent } from '../../properties/read-uri-value/read-uri-value.component';
 import { ReadListValueComponent } from '../../properties/read-list-value/read-list-value.component';
-import { ReadTextfileValueComponent } from '../../properties/read-textfile-value/read-textfile-value.component';
-
 import { MathJaxDirective } from '../../directives/mathjax.directive';
 import { KuiViewerModule } from '@knora/viewer';
 
@@ -39,10 +33,8 @@ describe('LetterComponent', () => {
                 LetterComponent,
                 MathJaxDirective,
                 ReadTextValueAsHtmlComponent,
-                ReadTextValueAsXmlComponent,
-                ReadUriValueComponent,
                 ReadListValueComponent,
-                ReadTextfileValueComponent],
+            ],
             providers: [
                 OntologyCacheService,
                 {
