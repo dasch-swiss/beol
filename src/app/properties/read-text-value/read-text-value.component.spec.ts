@@ -49,19 +49,27 @@ describe('ReadTextValueComponent', () => {
 
     it('should create', () => {
         expect(testHostComponent.textValueComponent).toBeTruthy();
+
+        expect(testHostComponent.textValueComponent.valueObject.id).toEqual('http://rdfh.ch/0802/V/values/Q');
+        expect(testHostComponent.textValueComponent.valueObject.propIri).toEqual('http://0.0.0.0/ontology/0801/beol/v2#hasName');
+        expect(testHostComponent.textValueComponent.valueObject.getClassName()).toEqual('ReadTextValueAsString');
+        
+        expect(testHostComponent.textValueComponent.bindEvents).toBeFalsy();
+        expect(testHostComponent.textValueComponent.ontologyInfo).toEqual(ontoInfo);
+
     });
 
     it('should have created a TextValueAsStringComponent with the correct value', () => {
 
         const hostCompDe = testHostFixture.debugElement;
 
-        const stringValComp: DebugElement = hostCompDe.query(By.directive(TextValueAsStringComponent));
+        const textValDe: DebugElement = hostCompDe.query(By.directive(TextValueAsStringComponent));
 
-        expect(stringValComp).toBeTruthy();
+        expect(textValDe).toBeTruthy();
 
-        expect(stringValComp.componentInstance).toBeTruthy();
+        expect(textValDe.componentInstance).toBeTruthy();
 
-        const textValComp: TextValueAsStringComponent = stringValComp.componentInstance as TextValueAsStringComponent;
+        const textValComp: TextValueAsStringComponent = textValDe.componentInstance as TextValueAsStringComponent;
 
         expect(textValComp.valueObject.id).toEqual('http://rdfh.ch/0802/V/values/Q');
 
@@ -82,13 +90,13 @@ describe('ReadTextValueComponent', () => {
 
         const hostCompDe = testHostFixture.debugElement;
 
-        const stringValComp: DebugElement = hostCompDe.query(By.directive(TextValueAsXmlComponent));
+        const textValDe: DebugElement = hostCompDe.query(By.directive(TextValueAsXmlComponent));
 
-        expect(stringValComp).toBeTruthy();
+        expect(textValDe).toBeTruthy();
 
-        expect(stringValComp.componentInstance).toBeTruthy();
+        expect(textValDe.componentInstance).toBeTruthy();
 
-        const textValComp: TextValueAsXmlComponent = stringValComp.componentInstance as TextValueAsXmlComponent;
+        const textValComp: TextValueAsXmlComponent = textValDe.componentInstance as TextValueAsXmlComponent;
 
         expect(textValComp.valueObject.id).toEqual('http://rdfh.ch/0802/V/values/Y');
 
@@ -111,13 +119,13 @@ describe('ReadTextValueComponent', () => {
 
         const hostCompDe = testHostFixture.debugElement;
 
-        const stringValComp: DebugElement = hostCompDe.query(By.directive(ReadTextValueAsHtmlComponent));
+        const textValDe: DebugElement = hostCompDe.query(By.directive(ReadTextValueAsHtmlComponent));
 
-        expect(stringValComp).toBeTruthy();
+        expect(textValDe).toBeTruthy();
 
-        expect(stringValComp.componentInstance).toBeTruthy();
+        expect(textValDe.componentInstance).toBeTruthy();
 
-        const textValComp: ReadTextValueAsHtmlComponent = stringValComp.componentInstance as ReadTextValueAsHtmlComponent;
+        const textValComp: ReadTextValueAsHtmlComponent = textValDe.componentInstance as ReadTextValueAsHtmlComponent;
 
         expect(textValComp.valueObject.id).toEqual('http://rdfh.ch/0802/V/values/Z');
 
