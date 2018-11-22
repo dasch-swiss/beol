@@ -10,7 +10,6 @@ export class ReadTextValueComponent implements OnInit {
 
     private _textValue: ReadTextValue; // value object representing text without markup, XML or HTML
     private _ontoInfo: OntologyInformation; // needed if text has standoff links
-    private _renderMath: boolean;
     private _bindEvents: boolean; // indicates if click and mouseover events have to be bound
 
     KnoraConstants = KnoraConstants;

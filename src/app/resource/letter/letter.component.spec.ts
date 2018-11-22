@@ -12,6 +12,7 @@ import { ReadTextValueAsHtmlComponent } from '../../properties/read-text-value-a
 import { ReadListValueComponent } from '../../properties/read-list-value/read-list-value.component';
 import { MathJaxDirective } from '../../directives/mathjax.directive';
 import { KuiViewerModule } from '@knora/viewer';
+import { ReadTextValueComponent } from '../../properties/read-text-value/read-text-value.component';
 
 
 describe('LetterComponent', () => {
@@ -34,6 +35,7 @@ describe('LetterComponent', () => {
                 MathJaxDirective,
                 ReadTextValueAsHtmlComponent,
                 ReadListValueComponent,
+                ReadTextValueComponent
             ],
             providers: [
                 OntologyCacheService,

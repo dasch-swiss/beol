@@ -13,14 +13,16 @@
 
             <section>
                 <h4 *ngIf="props.title[0]" class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.title[0].propIri)}}</h4>
-                <p class="margin-left" *ngFor="let title of props.title">{{title.getContent()}}</p>
+                <p class="margin-left" *ngFor="let title of props.title">
+                    <read-text-value [valueObject]="title" [bindEvents]="true" [ontologyInfo]="ontologyInfo"></read-text-value>
+                </p>
 
                 <div *ngIf="props.repertorium[0]">
                     <p>
                         <strong>
                             {{ontologyInfo.getLabelForProperty(props.repertorium[0].propIri)}}:
                         </strong>
-                        <kui-text-value-as-string [valueObject]="props.repertorium[0]"></kui-text-value-as-string>
+                        <read-text-value [valueObject]="props.repertorium[0]" [bindEvents]="true" [ontologyInfo]="ontologyInfo"></read-text-value>
                     </p>
                 </div>
 
@@ -128,8 +130,7 @@
             </section>
 
             <section *ngIf="props.text[0]" class="text">
-                <read-text-value-as-html [valueObject]="props.text[0]" [ontologyInfo]="ontologyInfo"
-                                         [bindEvents]="true"></read-text-value-as-html>
+                <read-text-value [valueObject]="props.text[0]" [bindEvents]="true" [ontologyInfo]="ontologyInfo"></read-text-value>
             </section>
 
             <section class="images">

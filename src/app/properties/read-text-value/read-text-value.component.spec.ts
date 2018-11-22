@@ -53,7 +53,7 @@ describe('ReadTextValueComponent', () => {
         expect(testHostComponent.textValueComponent.valueObject.id).toEqual('http://rdfh.ch/0802/V/values/Q');
         expect(testHostComponent.textValueComponent.valueObject.propIri).toEqual('http://0.0.0.0/ontology/0801/beol/v2#hasName');
         expect(testHostComponent.textValueComponent.valueObject.getClassName()).toEqual('ReadTextValueAsString');
-        
+
         expect(testHostComponent.textValueComponent.bindEvents).toBeFalsy();
         expect(testHostComponent.textValueComponent.ontologyInfo).toEqual(ontoInfo);
 
