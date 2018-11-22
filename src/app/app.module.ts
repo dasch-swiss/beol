@@ -38,6 +38,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { APP_BASE_HREF } from '@angular/common';
 // import { RECAPTCHA_SETTINGS, RecaptchaSettings } from 'ng-recaptcha';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { ReadTextValueComponent } from './properties/read-text-value/read-text-value.component';
 
 /*
 export function initializeApp(appConfig: AppConfig) {
@@ -64,7 +65,8 @@ export function initializeApp(appConfig: AppConfig) {
         LeooRouteComponent,
         BiblioItemsComponent,
         EndnoteComponent,
-        FigureComponent
+        FigureComponent,
+        ReadTextValueComponent
     ],
     imports: [
         //        AngularFireModule.initializeApp(environment.firebase),
