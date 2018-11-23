@@ -73,8 +73,6 @@ export class FigureComponent extends BeolResource implements OnDestroy {
 
         this.mapper(props);
 
-        console.log(props);
-
         this.props = props;
     }
 

@@ -112,7 +112,7 @@
         <div class="main-content">
 
             <section class="title center">
-                <p *ngIf="props.number[0]"><kui-text-value-as-string [valueObject]="props.number[0]"></kui-text-value-as-string></p>
+                <p *ngIf="props.number[0]"><read-text-value [valueObject]="props.number[0]" [bindEvents]="true" [ontologyInfo]="ontologyInfo"></read-text-value></p>
                 <p class="names">
                 <span *ngFor="let author of props.author; let last = last">
                     <kui-link-value [valueObject]="author" [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
