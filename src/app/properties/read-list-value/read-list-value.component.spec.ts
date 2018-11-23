@@ -20,7 +20,7 @@ describe('ReadListValueComponent', () => {
             declarations: [
                 ReadListValueComponent,
                 TestHostComponent,
-                MathJaxDirective
+                MathJaxDirective // idea for mock: https://stackoverflow.com/questions/44495114/is-it-possible-to-mock-an-attribute-directive-in-angular
             ]
         })
             .compileComponents();
