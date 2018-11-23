@@ -83,7 +83,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         // unsubscribe from extendedSearchParamsSubscription
         // otherwise old queries are still active
         if (this.searchMode === 'extended' && this.extendedSearchParamsSubscription !== undefined) {
-            console.log(this.searchMode)
             this.extendedSearchParamsSubscription.unsubscribe();
         }
     }
