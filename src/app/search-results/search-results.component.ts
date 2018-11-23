@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
@@ -16,6 +16,7 @@ import {
 } from '@knora/core';
 import { BeolService } from '../services/beol.service';
 import { environment } from '../../environments/environment';
+import { Subscription } from 'rxjs';
 
 declare let require: any;
 const jsonld = require('jsonld');
@@ -25,7 +26,7 @@ const jsonld = require('jsonld');
     templateUrl: './search-results.component.html',
     styleUrls: ['./search-results.component.scss']
 })
-export class SearchResultsComponent implements OnInit {
+export class SearchResultsComponent implements OnInit, OnDestroy {
 
     isLoading = true;
 
@@ -48,6 +49,8 @@ export class SearchResultsComponent implements OnInit {
 
     searchQuery: string;
     searchMode: string;
+
+    extendedSearchParamsSubscription: Subscription;
 
     constructor(
         private _route: ActivatedRoute,
@@ -74,6 +77,15 @@ export class SearchResultsComponent implements OnInit {
             this.rerender = false;
         });
 
+    }
+
+    ngOnDestroy() {
+        // unsubscribe from extendedSearchParamsSubscription
+        // otherwise old queries are still active
+        if (this.searchMode === 'extended' && this.extendedSearchParamsSubscription !== undefined) {
+            console.log(this.searchMode)
+            this.extendedSearchParamsSubscription.unsubscribe();
+        }
     }
 
     /**
@@ -118,7 +130,7 @@ export class SearchResultsComponent implements OnInit {
                     );
             }
             // perform the extended search
-            this._searchParamsService.currentSearchParams
+            this.extendedSearchParamsSubscription = this._searchParamsService.currentSearchParams
                 .subscribe((extendedSearchParams: ExtendedSearchParams) => {
 
                     if (this.offset === 0) {
