@@ -12,6 +12,7 @@ import { of } from 'rxjs';
 import { BeolService } from '../services/beol.service';
 import { ActivatedRoute } from '@angular/router';
 import { AppConfig } from '../app.config';
+import { MathJaxDirective } from '../directives/mathjax.directive';
 
 describe('IntroductionComponent', () => {
     let component: IntroductionComponent;
@@ -36,6 +37,7 @@ describe('IntroductionComponent', () => {
                 IntroductionComponent,
                 ReadTextValueAsHtmlComponent,
                 ReadListValueComponent,
+                MathJaxDirective
             ],
             providers: [
                 BeolService,
@@ -55,7 +57,7 @@ describe('IntroductionComponent', () => {
         fixture.detectChanges();
     });
 
-    xit('should create', () => {
+    it('should create', () => {
         expect(component).toBeTruthy();
     });
 });
