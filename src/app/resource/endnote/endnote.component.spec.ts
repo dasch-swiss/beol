@@ -14,6 +14,7 @@ import { ReadTextValueAsHtmlComponent } from '../../properties/read-text-value-a
 import { MathJaxDirective } from '../../directives/mathjax.directive';
 import { RouterTestingModule } from '@angular/router/testing';
 import { KuiViewerModule } from '@knora/viewer';
+import { ReadTextValueComponent } from '../../properties/read-text-value/read-text-value.component';
 
 
 describe('EndnoteComponent', () => {
@@ -39,7 +40,8 @@ describe('EndnoteComponent', () => {
             declarations: [
                 EndnoteComponent,
                 ReadTextValueAsHtmlComponent,
-                MathJaxDirective
+                MathJaxDirective,
+                ReadTextValueComponent
             ],
             providers: [
                 {
