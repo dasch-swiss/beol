@@ -92,6 +92,9 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
      */
     getResult() {
 
+        this.result = [];
+        this.resetStep();
+
         // FULLTEXT SEARCH
         if (this.searchMode === 'fulltext') {
             // perform count query
