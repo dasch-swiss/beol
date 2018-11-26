@@ -13,6 +13,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ReadTextValueAsHtmlComponent } from '../../properties/read-text-value-as-html/read-text-value-as-html.component';
 import { MathJaxDirective } from '../../directives/mathjax.directive';
 import { KuiViewerModule } from '@knora/viewer';
+import { ReadTextValueComponent } from '../../properties/read-text-value/read-text-value.component';
 
 describe('PersonComponent', () => {
     let component: PersonComponent;
@@ -32,6 +33,7 @@ describe('PersonComponent', () => {
             declarations: [
                 PersonComponent,
                 ReadTextValueAsHtmlComponent,
+                ReadTextValueComponent,
                 MathJaxDirective
             ],
             providers: [
