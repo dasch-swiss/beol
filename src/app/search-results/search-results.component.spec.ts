@@ -3,34 +3,40 @@ import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { of } from 'rxjs';
-import { MaterialModule } from '../material-module';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 
 import { SearchResultsComponent } from './search-results.component';
 import { KuiActionModule } from '@knora/action';
-import { KuiCoreConfig } from '@knora/core';
+
+import { KuiCoreConfig, SearchParamsService } from '@knora/core';
 import { KuiViewerModule } from '@knora/viewer';
 
 import { MathJaxDirective } from '../directives/mathjax.directive';
+import { MatExpansionModule, MatIconModule } from '@angular/material';
 
 
 describe('SearchResultsComponent', () => {
     let component: SearchResultsComponent;
     let fixture: ComponentFixture<SearchResultsComponent>;
-    const mode = 'fulltext';
-    const q = 'haus';
+    const mode = 'extended';
+    const q = 'test';
+
+    let mockSearchParamService;
 
     beforeEach(async(() => {
+
+        mockSearchParamService = new MockSearchParamsService();
+
         TestBed.configureTestingModule({
             imports: [
                 KuiActionModule,
                 KuiViewerModule,
                 RouterTestingModule,
-                MaterialModule,
-                InfiniteScrollModule,
                 HttpClientModule,
-                HttpClientTestingModule],
+                HttpClientTestingModule,
+                MatIconModule,
+                MatExpansionModule
+            ],
             declarations: [
                 SearchResultsComponent,
                 MathJaxDirective,
@@ -40,7 +46,8 @@ describe('SearchResultsComponent', () => {
                     provide: ActivatedRoute,
                     useValue: { params: of({ mode, q }) }
                 },
-                { provide: 'config', useValue: KuiCoreConfig }
+                { provide: 'config', useValue: KuiCoreConfig },
+                { provide: SearchParamsService, useValue: mockSearchParamService}
             ]
         })
             .compileComponents();
@@ -55,4 +62,27 @@ describe('SearchResultsComponent', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    it('should have subscribed to SearchParamService', () => {
+        expect(component.extendedSearchParamsSubscription.closed).toBeFalsy();
+    });
+
+    it('should have unsubscribed from SearchParamService after component destruction', () => {
+        component.ngOnDestroy();
+
+        fixture.detectChanges();
+
+        expect(component.extendedSearchParamsSubscription.closed).toBeTruthy();
+    });
 });
+
+class MockSearchParamsService {
+
+    public currentSearchParams: Observable<any>;
+
+    constructor() {
+        this.currentSearchParams = new BehaviorSubject<any>(1).asObservable();
+    }
+
+
+}
