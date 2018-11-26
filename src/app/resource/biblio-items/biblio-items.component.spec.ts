@@ -13,6 +13,7 @@ import { BiblioItemsComponent } from './biblio-items.component';
 import { ReadTextValueAsHtmlComponent } from '../../properties/read-text-value-as-html/read-text-value-as-html.component';
 import { MathJaxDirective } from '../../directives/mathjax.directive';
 import { KuiViewerModule } from '@knora/viewer';
+import { ReadTextValueComponent } from '../../properties/read-text-value/read-text-value.component';
 
 describe('BiblioItemsComponent', () => {
   let component: BiblioItemsComponent;
@@ -33,7 +34,8 @@ describe('BiblioItemsComponent', () => {
       declarations: [
         BiblioItemsComponent,
         ReadTextValueAsHtmlComponent,
-        MathJaxDirective
+        MathJaxDirective,
+        ReadTextValueComponent
       ],
       providers: [
         {
