@@ -63,7 +63,7 @@
                 </p>
                 <mat-list *ngFor="let incomingLinkSourceRes of resource.incomingLinks">
                     <mat-list-item>
-                        <span (click)="showIncomingRes(incomingLinkSourceRes.id, incomingLinkSourceRes.type)">{{incomingLinkSourceRes.label}}</span>
+                        <span class="link" (click)="showIncomingRes(incomingLinkSourceRes.id, incomingLinkSourceRes.type)">{{incomingLinkSourceRes.label}}</span>
                     </mat-list-item>
                 </mat-list>
             </div>
