@@ -44,12 +44,12 @@ export class ResourceComponent extends BeolResource implements OnDestroy {
     propIris;
 
     constructor(private _route: ActivatedRoute,
-                private _router: Router,
-                protected _resourceService: ResourceService,
-                protected _cacheService: OntologyCacheService,
-                protected _incomingService: IncomingService,
-                public location: Location,
-                protected _beolService: BeolService) {
+        private _router: Router,
+        protected _resourceService: ResourceService,
+        protected _cacheService: OntologyCacheService,
+        protected _incomingService: IncomingService,
+        public location: Location,
+        protected _beolService: BeolService) {
 
         super(_resourceService, _cacheService, _incomingService, _beolService);
 
@@ -73,6 +73,16 @@ export class ResourceComponent extends BeolResource implements OnDestroy {
         if (this.navigationSubscription) {
             this.navigationSubscription.unsubscribe();
         }
+    }
+
+    /**
+     * Display incoming links as clickable links
+     *
+     * @param resIri
+     * @param resType
+     */
+    showIncomingRes(resIri, resType) {
+        this._beolService.routeByResourceType(resType, resIri);
     }
 
 }
