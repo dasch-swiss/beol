@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
-    ApiServiceError,
     ApiServiceResult,
     ConvertJSONLD,
     ExtendedSearchParams,
@@ -130,10 +129,11 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
                         }
                     );
             }
+
             // perform the extended search
             this.extendedSearchParamsSubscription = this._searchParamsService.currentSearchParams
                 .subscribe((extendedSearchParams: ExtendedSearchParams) => {
-                    
+
                     if (this.offset === 0) {
 
                         // console.log(this.searchQuery);
@@ -199,11 +199,12 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
      */
     private processSearchResults = (searchResult: ApiServiceResult) => {
 
-        this.isLoading = true;
-
-        if (this.offset === 0) {
-            this.result = [];
+        // unsubscribe from extendedSearchParamsSubscription when results are present
+        if (this.extendedSearchParamsSubscription !== undefined) {
+            this.extendedSearchParamsSubscription.unsubscribe();
         }
+
+        this.isLoading = true;
 
         const resPromises = jsonld.promises;
         // compact JSON-LD using an empty context: expands all Iris
@@ -277,21 +278,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * Infinite scroll event
-     *
-     * @param offsetToUse
-     */
-    onScroll(offsetToUse: number = 0) {
-
-        // console.log('scroll: ', offsetToUse);
-
-        // update the page offset when the end of scroll is reached to get the next page of search results
-        this.offset = (offsetToUse === this.offset ? this.offset += 1 : offsetToUse);
-
-        this.getResult();
-    }
-
-    /**
      * Load more results:
      * update the offset and append the results to the existing ones
      * (similar to infiniteScroll event)
@@ -300,7 +286,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
      */
     loadMore(offsetToUse: number) {
         // stop the offset, when all data is loaded
-
 
         // update the page offset when the end of scroll is reached to get the next page of search results
         this.offset = (offsetToUse === this.offset ? this.offset += 1 : offsetToUse);
