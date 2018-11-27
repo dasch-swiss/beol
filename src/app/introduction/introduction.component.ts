@@ -242,7 +242,12 @@ export class IntroductionComponent implements OnInit, OnDestroy {
                 }
             );
     }
-
+    /**
+     * Navigate to the page of the preface
+     */
+    goToPreface() {
+        this._router.navigateByUrl('introduction/leoo/goldbach_preface');
+    }
     /**
      * Navigate to the introduction page using the beolId as parameter
      * @param label beolID

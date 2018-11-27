@@ -1,6 +1,10 @@
 {
   "introductions": [
     {
+      "name": "preface",
+      "label": "Preface"
+    },
+    {
       "name": "introduction_1",
       "label": "Introduction 1",
       "children": [
