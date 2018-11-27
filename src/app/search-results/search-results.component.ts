@@ -71,6 +71,8 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
             // init offset to 0
             this.offset = 0;
+            this.result = [];
+            this.resetStep();
 
             this.rerender = true;
             this.getResult();
@@ -91,9 +93,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
      * Get search result from Knora - 2 cases: simple search and extended search
      */
     getResult() {
-
-        this.result = [];
-        this.resetStep();
 
         // FULLTEXT SEARCH
         if (this.searchMode === 'fulltext') {
@@ -134,7 +133,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
             // perform the extended search
             this.extendedSearchParamsSubscription = this._searchParamsService.currentSearchParams
                 .subscribe((extendedSearchParams: ExtendedSearchParams) => {
-
+                    
                     if (this.offset === 0) {
 
                         // console.log(this.searchQuery);
