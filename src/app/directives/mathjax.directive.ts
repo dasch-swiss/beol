@@ -15,7 +15,7 @@ declare var MathJax: {
  */
 // tslint:disable-next-line:directive-selector
 @Directive({selector: '[mathJax]'})
-export class MathJaxDirective implements OnChanges, OnInit {
+export class MathJaxDirective implements OnChanges {
 
     private _renderMath = false; // indicates if mathematical notation should be rendered by MathJax
 
@@ -210,9 +210,6 @@ export class MathJaxDirective implements OnChanges, OnInit {
             return false;
         }
 
-    }
-
-    ngOnInit() {
     }
 
     ngOnChanges() {

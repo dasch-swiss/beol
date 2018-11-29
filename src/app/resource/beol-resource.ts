@@ -19,10 +19,21 @@ import {
 import { RequestStillImageRepresentations, StillImageComponent } from '@knora/viewer';
 import { Subscription } from 'rxjs';
 import { environment } from '../../environments/environment';
+
 import { ViewChild } from '@angular/core';
+
+import { BeolService } from '../services/beol.service';
 
 declare let require: any; // http://stackoverflow.com/questions/34730010/angular2-5-minute-install-bug-require-is-not-defined
 let jsonld = require('jsonld');
+
+export interface PropIriToNameMapping {
+    [index: string]: string;
+}
+
+export interface PropertyValues {
+    [index: string]: ReadPropertyItem[];
+}
 
 export abstract class BeolResource {
 
@@ -39,9 +50,12 @@ export abstract class BeolResource {
     abstract KnoraConstants: KnoraConstants;
     apiUrl: string = environment.externalApiURL;
 
+    abstract propIris: PropIriToNameMapping;
+
     constructor(protected _resourceService: ResourceService,
                 protected _cacheService: OntologyCacheService,
-                protected _incomingService: IncomingService) {
+                protected _incomingService: IncomingService,
+                protected _beolService: BeolService) {
     }
 
     /**
@@ -121,10 +135,61 @@ export abstract class BeolResource {
     }
 
     /**
+     * Given a `PropIriToNameMapping`, inverts its keys and values.
+     *
+     * @param propMapping mapping of names to property Iris.
+     * @returns mapping of property Iris to names.
+     */
+    private static swap(propMapping: PropIriToNameMapping): object {
+        const invertedMapping: PropIriToNameMapping = {};
+        for (const key in propMapping) {
+            if (propMapping.hasOwnProperty(key)) {
+                invertedMapping[propMapping[key]] = key;
+            }
+        }
+        return invertedMapping;
+    }
+
+    /**
      * Initializes properties for a specific resource class.
      * To be implemented in template component.
      */
     abstract initProps(): void;
+
+    /**
+     * Assigns the resource's properties to `propClass`.
+     *
+     * @param propClass instance to assign the property values to.
+     */
+    protected mapper(propClass: PropertyValues) {
+
+        const swapped = BeolResource.swap(this.propIris);
+
+        for (const key in this.resource.properties) {
+            if (this.resource.properties.hasOwnProperty(key)) {
+                for (const val of this.resource.properties[key]) {
+
+                    const name = swapped[val.propIri];
+
+                    if (name !== undefined && Array.isArray(propClass[name])) {
+                        propClass[name].push(val);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * The user clicked on an internal link.
+     *
+     * @param linkVal the value reprenting the referred resource.
+     */
+    protected resLinkClicked(linkVal: ReadLinkValue) {
+
+        const refResType = (linkVal.referredResource !== undefined ? linkVal.referredResource.type : '');
+
+        this._beolService.routeByResourceType(refResType, linkVal.referredResourceIri);
+    }
 
     /**
      * Requests a resource.
@@ -256,8 +321,7 @@ export abstract class BeolResource {
 
                                 // prepare regions to be displayed
                                 BeolResource.collectImagesAndRegionsForResource(this.resource);
-
-                                // TODO: implement osdViewer
+                                
                                 if (this.osdViewer) {
                                     this.osdViewer.updateRegions();
                                 }
@@ -427,19 +491,6 @@ export abstract class BeolResource {
                 `Illegal argument for changeOffsetForStillImageRepresentations, must either be -1 or 1, but ${request.offsetChange} given.`
             );
         }
-    }
-
-    /**
-     * Shows the source of an incoming link (a resource) in a dialog box.
-     *
-     * @param {string} resourceIri the Iri of the source of the incoming link.
-     */
-    showSourceOfIncomingLinkInDialog(resourceIri: string) {
-
-        /* const config: MatDialogConfig = ObjectDialogComponent.createConfiguration(resourceIri);
-
-        this.dialog.open(ObjectDialogComponent, config); */
-
     }
 
     /**

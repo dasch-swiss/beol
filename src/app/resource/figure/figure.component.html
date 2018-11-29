@@ -18,28 +18,18 @@
                 <h2>{{resource?.label}}</h2>
             </section>
 
-            <section *ngIf="props.caption[0]">
-                <read-text-value-as-html [valueObject]="props.caption[0]" [ontologyInfo]="ontologyInfo"
-                                         [bindEvents]="true"></read-text-value-as-html>
+            <section *ngIf="props?.caption[0]">
+                <read-text-value [valueObject]="props?.caption[0]" [ontologyInfo]="ontologyInfo"
+                                         [bindEvents]="true"></read-text-value>
             </section>
 
-            <div mat-line *ngFor="let prop of resource?.properties | key" class="center osdPosition">
-                <div *ngIf="prop.key === KnoraConstants.hasStillImageFileValue">
+            <div mat-line *ngIf="resource?.stillImageRepresentationsToDisplay.length > 0" class="center osdPosition">
                     <kui-still-image #OSDViewer
                                      *ngIf="!isLoading && resource.stillImageRepresentationsToDisplay.length > 0"
                                      class="osd-viewer" [images]="resource?.stillImageRepresentationsToDisplay"
                                      [imageRangeStart]="0" [imageRangeEnd]="0" [imageChangeInterval]="1">
                     </kui-still-image>
-                </div>
             </div>
-
-            <!-- Check for incoming images -->
-            <kui-still-image #OSDViewer class="osd-viewer"
-                             *ngIf="resource?.incomingStillImageRepresentations?.length > 0;"
-                             (getImages)="changeOffsetForStillImageRepresentations($event)"
-                             [images]="resource?.stillImageRepresentationsToDisplay" [imageRangeStart]="0"
-                             [imageRangeEnd]="4" [imageChangeInterval]="5">
-            </kui-still-image>
 
         </div>
     </div>

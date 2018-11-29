@@ -39,6 +39,8 @@ export class MeditatioComponent extends BeolResource implements OnDestroy {
     KnoraConstants = KnoraConstants;
     navigationSubscription: Subscription;
 
+    propIris;
+
     regionToTranscription = {};
     transcriptionIrisReady = false;
     transcription: ReadTextValueAsHtml;
@@ -48,11 +50,11 @@ export class MeditatioComponent extends BeolResource implements OnDestroy {
                 protected _resourceService: ResourceService,
                 protected _cacheService: OntologyCacheService,
                 protected _incomingService: IncomingService,
-                private _beolService: BeolService,
+                protected _beolService: BeolService,
                 private _searchService: SearchService,
                 public location: Location) {
 
-        super(_resourceService, _cacheService, _incomingService);
+        super(_resourceService, _cacheService, _incomingService, _beolService);
 
         this._route.params.subscribe((params: Params) => {
             this.iri = params['id'];

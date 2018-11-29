@@ -2,35 +2,41 @@ import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import {
-    DateSalsah,
     IncomingService,
     KnoraConstants,
     OntologyCacheService,
     OntologyInformation,
-    ReadPropertyItem,
+    ReadDateValue,
+    ReadLinkValue,
+    ReadListValue, ReadPropertyItem,
     ReadResource,
+    ReadTextValue,
     ResourceService
 } from '@knora/core';
-import { BeolResource } from '../beol-resource';
+import { BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
 import { Subscription } from 'rxjs';
+import { BeolService } from '../../services/beol.service';
 
-interface LetterProps {
-    'author': ReadPropertyItem[];
-    'recipient': ReadPropertyItem[];
-    'figure': ReadPropertyItem[];
-    'date': DateSalsah;
-    'subject': ReadPropertyItem[];
-    'text': ReadPropertyItem[];
-    'mentionedPerson': ReadPropertyItem[];
-    'language': ReadPropertyItem[];
-    'number': string;
-    'original': ReadPropertyItem[];
-    'repertorium': string;
-    'translation': ReadPropertyItem[];
-    'published': ReadPropertyItem[];
-    'replyTo': ReadPropertyItem[];
-    'location': string;
-    'title': ReadPropertyItem[];
+class LetterProps implements PropertyValues {
+    id: ReadTextValue[] = [];
+    author: ReadLinkValue[] = [];
+    recipient: ReadLinkValue[] = [];
+    figure: ReadLinkValue[] = [];
+    date: ReadDateValue[] = [];
+    subject: ReadListValue[] = [];
+    text: ReadTextValue[] = [];
+    mentionedPerson: ReadLinkValue[] = [];
+    language: ReadTextValue[] = [];
+    number: ReadTextValue[] = [];
+    original: ReadLinkValue[] = [];
+    repertorium: ReadTextValue[] = [];
+    translation: ReadLinkValue[] = [];
+    published: ReadLinkValue[] = [];
+    replyTo: ReadLinkValue[] = [];
+    location: ReadTextValue[] = [];
+    title: ReadTextValue[] = [];
+
+    [index: string]: ReadPropertyItem[];
 }
 
 @Component({
@@ -49,7 +55,7 @@ export class LetterComponent extends BeolResource implements OnDestroy {
     navigationSubscription: Subscription;
     KnoraConstants = KnoraConstants;
 
-    propIris: any = {
+    propIris: PropIriToNameMapping = {
         'id': this.apiUrl + '/ontology/0801/beol/v2#beolIDs',
         'date': this.apiUrl + '/ontology/0801/beol/v2#creationDate',
         'author': this.apiUrl + '/ontology/0801/beol/v2#hasAuthorValue',
@@ -73,13 +79,14 @@ export class LetterComponent extends BeolResource implements OnDestroy {
     props: LetterProps;
 
     constructor(private _route: ActivatedRoute,
-        private _router: Router,
-        protected _resourceService: ResourceService,
-        protected _cacheService: OntologyCacheService,
-        protected _incomingService: IncomingService,
-        public location: Location) {
+                private _router: Router,
+                protected _resourceService: ResourceService,
+                protected _cacheService: OntologyCacheService,
+                protected _incomingService: IncomingService,
+                public location: Location,
+                protected _beolService: BeolService) {
 
-        super(_resourceService, _cacheService, _incomingService);
+        super(_resourceService, _cacheService, _incomingService, _beolService);
 
         this._route.params.subscribe((params: Params) => {
             this.iri = params['id'];
@@ -96,100 +103,11 @@ export class LetterComponent extends BeolResource implements OnDestroy {
 
     initProps() {
 
-        this.props = {
-            author: [],
-            recipient: [],
-            figure: [],
-            date: new DateSalsah(),
-            subject: [],
-            text: [],
-            mentionedPerson: [],
-            language: [],
-            number: '',
-            original: [],
-            repertorium: '',
-            translation: [],
-            published: [],
-            replyTo: [],
-            location: '',
-            title: []
-        };
+        const props = new LetterProps();
 
-        // props list
-        for (const key in this.resource.properties) {
-            if (this.resource.properties.hasOwnProperty(key)) {
-                for (const val of this.resource.properties[key]) {
-                    switch (val.propIri) {
-                        case this.propIris.author:
-                            this.props.author.push(val);
-                            break;
+        this.mapper(props);
 
-                        case this.propIris.recipient:
-                            this.props.recipient.push(val);
-                            break;
-
-                        case this.propIris.figure:
-                            this.props.figure.push(val);
-                            break;
-
-                        case this.propIris.date:
-                            this.props.date = val.getDate();
-                            break;
-
-                        case this.propIris.subject:
-                            this.props.subject.push(val);
-                            break;
-
-                        case this.propIris.text:
-                            this.props.text.push(val);
-                            break;
-
-                        case this.propIris.mentionedPerson:
-                            this.props.mentionedPerson.push(val);
-                            break;
-
-                        case this.propIris.language:
-                            this.props.language.push(val);
-                            break;
-
-                        case this.propIris.number:
-                            this.props.number = val.getContent();
-                            break;
-
-                        case this.propIris.original:
-                            this.props.original.push(val);
-                            break;
-
-                        case this.propIris.repertorium:
-                            this.props.repertorium = val.getContent();
-                            break;
-
-                        case this.propIris.translation:
-                            this.props.translation.push(val);
-                            break;
-
-                        case this.propIris.published:
-                            this.props.published.push(val);
-                            break;
-
-                        case this.propIris.replyTo:
-                            this.props.replyTo.push(val);
-                            break;
-
-                        case this.propIris.location:
-                            this.props.location = val.getContent();
-                            break;
-
-                        case this.propIris.title:
-                            this.props.title.push(val);
-                            break;
-
-                        default:
-                        // do nothing
-                    }
-                }
-            }
-        }
+        this.props = props;
 
     }
 
@@ -198,4 +116,5 @@ export class LetterComponent extends BeolResource implements OnDestroy {
             this.navigationSubscription.unsubscribe();
         }
     }
+
 }

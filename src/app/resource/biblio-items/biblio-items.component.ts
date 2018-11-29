@@ -2,47 +2,52 @@ import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import {
-    DateSalsah,
     IncomingService,
     KnoraConstants,
     OntologyCacheService,
     OntologyInformation,
+    ReadDateValue,
+    ReadLinkValue,
     ReadPropertyItem,
     ReadResource,
+    ReadTextValue,
     ResourceService
 } from '@knora/core';
 import { Subscription } from 'rxjs';
-import { BeolResource } from '../beol-resource';
+import { BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
+import { BeolService } from '../../services/beol.service';
 
-interface BiblioItemsProps {
-    'startPage': string;
-    'endPage': string;
-    'mentionedIn': ReadPropertyItem[];
-    'comment': ReadPropertyItem[];
-    'isPartOfJournal': ReadPropertyItem[];
-    'isPartOfCollection': ReadPropertyItem[];
-    'isPartOfEditedBook': ReadPropertyItem[];
-    'journalVolume': string;
-    'numVolumes': string;
-    'numPages': string;
-    'author': ReadPropertyItem[];
-    'editor': ReadPropertyItem[];
-    'editorOrg': ReadPropertyItem[];
-    'date': DateSalsah;
-    'title': ReadPropertyItem[];
-    'subtitle': ReadPropertyItem[];
-    'name': ReadPropertyItem[];
-    'publisher': ReadPropertyItem[];
-    'abbreviation': string;
-    'location': string;
-    'isReprinted': ReadPropertyItem[];
-    'bookContent': ReadPropertyItem[];
-    'isbn': string;
-    'collectionNumber': string;
-    'introduction': ReadPropertyItem[];
-    'translator': ReadPropertyItem[];
-    'isTranslationOf': ReadPropertyItem[];
-    'journalIssue': string;
+class BiblioItemsProps implements PropertyValues {
+    startPage: ReadTextValue[] = [];
+    endPage: ReadTextValue[] = [];
+    mentionedIn: ReadTextValue[] = [];
+    comment: ReadTextValue[] = [];
+    isPartOfJournal: ReadLinkValue[] = [];
+    isPartOfCollection: ReadLinkValue[] = [];
+    isPartOfEditedBook: ReadLinkValue[] = [];
+    journalVolume: ReadTextValue[] = [];
+    numVolumes: ReadTextValue[] = [];
+    numPages: ReadTextValue[] = [];
+    author: ReadLinkValue[] = [];
+    editor: ReadLinkValue[] = [];
+    editorOrg: ReadLinkValue[] = [];
+    date: ReadDateValue[] = [];
+    title: ReadTextValue[] = [];
+    subtitle: ReadTextValue[] = [];
+    name: ReadTextValue[] = [];
+    publisher: ReadLinkValue[] = [];
+    abbreviation: ReadTextValue[] = [];
+    location: ReadTextValue[] = [];
+    isReprinted: ReadLinkValue[] = [];
+    bookContent: ReadLinkValue[] = [];
+    isbn: ReadTextValue[] = [];
+    collectionNumber: ReadTextValue[] = [];
+    introduction: ReadLinkValue[] = [];
+    translator: ReadLinkValue[] = [];
+    isTranslationOf: ReadLinkValue[] = [];
+    journalIssue: ReadTextValue[] = [];
+
+    [index: string]: ReadPropertyItem[];
 }
 
 @Component({
@@ -61,7 +66,7 @@ export class BiblioItemsComponent extends BeolResource implements OnDestroy {
     navigationSubscription: Subscription;
     KnoraConstants = KnoraConstants;
 
-    propIris: any = {
+    propIris: PropIriToNameMapping = {
         'id': this.apiUrl + '/ontology/0801/beol/v2#beolIDs',
         'comment': this.apiUrl + '/ontology/0801/beol/v2#comment',
         'mentionedIn': this.apiUrl + '/ontology/0801/beol/v2#mentionedIn',
@@ -126,9 +131,10 @@ export class BiblioItemsComponent extends BeolResource implements OnDestroy {
                 protected _resourceService: ResourceService,
                 protected _cacheService: OntologyCacheService,
                 protected _incomingService: IncomingService,
-                public location: Location) {
+                public location: Location,
+                protected _beolService: BeolService) {
 
-        super(_resourceService, _cacheService, _incomingService);
+        super(_resourceService, _cacheService, _incomingService, _beolService);
 
         this._route.params.subscribe((params: Params) => {
             this.iri = params['id'];
@@ -145,162 +151,11 @@ export class BiblioItemsComponent extends BeolResource implements OnDestroy {
 
     initProps() {
 
-        this.props = {
-            startPage: '',
-            endPage: '',
-            mentionedIn: [],
-            comment: [],
-            isPartOfJournal: [],
-            isPartOfCollection: [],
-            isPartOfEditedBook: [],
-            journalVolume: '',
-            numVolumes: '',
-            numPages: '',
-            author: [],
-            editor: [],
-            editorOrg: [],
-            date: new DateSalsah(),
-            title: [],
-            subtitle: [],
-            name: [],
-            publisher: [],
-            abbreviation: '',
-            location: '',
-            isReprinted: [],
-            bookContent: [],
-            isbn: '',
-            collectionNumber: '',
-            introduction: [],
-            translator: [],
-            isTranslationOf: [],
-            journalIssue: ''
-        };
+        const props = new BiblioItemsProps();
 
-        // TODO: build the new props list
-        for (const key in this.resource.properties) {
-            if (this.resource.properties.hasOwnProperty(key)) {
-                for (const val of this.resource.properties[key]) {
-                    switch (val.propIri) {
+        this.mapper(props);
 
-
-                        case this.propIris.startPage:
-                            this.props.startPage = val.getContent();
-                            break;
-
-                        case this.propIris.endPage:
-                            this.props.endPage = val.getContent();
-                            break;
-
-                        case this.propIris.mentionedIn:
-                            this.props.mentionedIn.push(val);
-                            break;
-
-                        case this.propIris.comment:
-                            this.props.comment.push(val);
-                            break;
-
-                        case this.propIris.isPartOfJournal:
-                            this.props.isPartOfJournal.push(val);
-                            break;
-
-                        case this.propIris.isPartOfCollection:
-                            this.props.isPartOfCollection.push(val);
-                            break;
-
-                        case this.propIris.isPartOfEditedBook:
-                            this.props.isPartOfEditedBook.push(val);
-                            break;
-
-                        case this.propIris.journalVolume:
-                            this.props.journalVolume = val.getContent();
-                            break;
-
-                        case this.propIris.numVolumes:
-                            this.props.numVolumes = val.getContent();
-                            break;
-
-                        case this.propIris.numPages:
-                            this.props.numPages = val.getContent();
-                            break;
-
-                        case this.propIris.author:
-                            this.props.author.push(val);
-                            break;
-
-                        case this.propIris.editor:
-                            this.props.editor.push(val);
-                            break;
-
-                        case this.propIris.editorOrg:
-                            this.props.editorOrg.push(val);
-                            break;
-
-                        case this.propIris.date:
-                            this.props.date = val.getDate();
-                            break;
-
-                        case this.propIris.title:
-                            this.props.title.push(val);
-                            break;
-
-                        case this.propIris.subtitle:
-                            this.props.subtitle.push(val);
-                            break;
-
-                        case this.propIris.name:
-                            this.props.name.push(val);
-                            break;
-
-                        case this.propIris.publisher:
-                            this.props.publisher.push(val);
-                            break;
-
-                        case this.propIris.abbreviation:
-                            this.props.abbreviation = val.getContent();
-                            break;
-
-                        case this.propIris.location:
-                            this.props.location = val.getContent();
-                            break;
-
-                        case this.propIris.isReprinted:
-                            this.props.isReprinted.push(val);
-                            break;
-
-                        case this.propIris.bookContent:
-                            this.props.bookContent.push(val);
-                            break;
-
-                        case this.propIris.isbn:
-                            this.props.isbn = val.getContent();
-                            break;
-
-                        case this.propIris.collectionNumber:
-                            this.props.collectionNumber = val.getContent();
-                            break;
-
-                        case this.propIris.introduction:
-                            this.props.introduction.push(val);
-                            break;
-
-                        case this.propIris.translator:
-                            this.props.translator.push(val);
-                            break;
-
-                        case this.propIris.isTranslationOf:
-                            this.props.isTranslationOf.push(val);
-                            break;
-
-                        case this.propIris.journalIssue:
-                            this.props.journalIssue = val.getContent();
-                            break;
-
-                        default:
-                        // do nothing
-                    }
-                }
-            }
-        }
+        this.props = props;
     }
 
     ngOnDestroy() {

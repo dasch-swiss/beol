@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 import { IncomingService, KnoraConstants, OntologyCacheService, OntologyInformation, ReadResource, ResourceService } from '@knora/core';
 import { BeolResource } from './beol-resource';
 import { Subscription } from 'rxjs';
+import { BeolService } from '../services/beol.service';
 
 @Component({
     selector: 'app-resource',
@@ -21,14 +22,17 @@ export class ResourceComponent extends BeolResource implements OnDestroy {
     KnoraConstants = KnoraConstants;
     navigationSubscription: Subscription;
 
+    propIris;
+
     constructor(private _route: ActivatedRoute,
         private _router: Router,
         protected _resourceService: ResourceService,
         protected _cacheService: OntologyCacheService,
         protected _incomingService: IncomingService,
-        public location: Location) {
+        public location: Location,
+        protected _beolService: BeolService) {
 
-        super(_resourceService, _cacheService, _incomingService);
+        super(_resourceService, _cacheService, _incomingService, _beolService);
 
         this._route.params.subscribe((params: Params) => {
             this.iri = params['id'];
@@ -50,6 +54,16 @@ export class ResourceComponent extends BeolResource implements OnDestroy {
         if (this.navigationSubscription) {
             this.navigationSubscription.unsubscribe();
         }
+    }
+
+    /**
+     * Display incoming links as clickable links
+     *
+     * @param resIri
+     * @param resType
+     */
+    showIncomingRes(resIri, resType) {
+        this._beolService.routeByResourceType(resType, resIri);
     }
 
 }
