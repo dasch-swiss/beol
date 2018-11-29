@@ -1,36 +1,112 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MathJaxDirective } from './mathjax.directive';
-import { OnInit, Component } from '@angular/core';
+import { Component, DebugElement, OnInit } from '@angular/core';
+import { KuiCoreModule } from '@knora/core';
+import { RouterTestingModule } from '@angular/router/testing';
+import { MatSnackBarModule } from '@angular/material';
+import { By } from '@angular/platform-browser';
 
 describe('MathJaxDirective', () => {
 
-    /* let component: TestComponent;
+    // element to be rendered by MathJax
+    let mathJaxQueueCalledWith: Element;
+
+    // mock MathJax (declared in component)
+    const MathJax = {
+        Hub: {
+            Queue: (cb: () => {}) => {
+                cb();
+            },
+            Typeset: (ele: Element) => {
+                // queue was called with ele
+                mathJaxQueueCalledWith = ele;
+            }
+        }
+    };
+
+    // create a global MathJax object
+    // this normally happens when MathJax is loaded in index.html
+    (window as any).MathJax = MathJax;
+
+    let component: TestComponent;
     let fixture: ComponentFixture<TestComponent>;
- */
+
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [],
-            declarations: [MathJaxDirective],
-            providers: [
-            ]
-        });
+            imports: [
+                RouterTestingModule,
+                MatSnackBarModule,
+                KuiCoreModule,
+            ],
+            declarations: [
+                TestComponent,
+                MathJaxDirective
+            ],
+            providers: []
+        })
+            .compileComponents();
     });
 
-    xit('should create an instance', () => {
+    beforeEach(() => {
+
+        expect(MathJax).toBeDefined();
+        mathJaxQueueCalledWith = undefined;
+
+        fixture = TestBed.createComponent(TestComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+
     });
+
+    it('should create an instance', () => {
+        expect(component).toBeTruthy();
+    });
+
+    it('should not render the text with MathJax', () => {
+        expect(component.bindEvents).toBeFalsy();
+        expect(component.renderMath).toBeFalsy();
+
+        const compDe = fixture.debugElement;
+
+        const spanDe: DebugElement = compDe.query(By.css('span'));
+
+        expect(spanDe.nativeElement.innerHTML).toEqual('(\\frac{1}{2})');
+
+        expect(mathJaxQueueCalledWith).toBeUndefined();
+    });
+
+    it('should render the text with MathJax', () => {
+
+        component.renderMath = true;
+
+        fixture.detectChanges();
+
+        const compDe = fixture.debugElement;
+
+        const spanDe: DebugElement = compDe.query(By.css('span'));
+
+        expect(spanDe.nativeElement.innerHTML).toEqual('(\\frac{1}{2})');
+
+        expect(mathJaxQueueCalledWith.innerHTML).toEqual('(\\frac{1}{2})');
+    });
+
+    // TODO: add tests for bound events
 
 });
 
-/* @Component({
-    selector: 'kui-test',
+@Component({
     template: `
-    <span [valueObject]="valueObject" [mathJax]="valueObject?.getContent()" [ontologyInfo]="ontologyInfo" [bindEvents]="bindEvents"></span>
+        <span [mathJax]="text" [bindEvents]="bindEvents" [renderMath]="renderMath"></span>
     `
 })
 
 class TestComponent implements OnInit {
 
-    constructor() { }
+    text: string;
+    bindEvents = false;
+    renderMath = false;
 
-    ngOnInit() { }
-} */
+    ngOnInit() {
+        this.text = '(\\frac{1}{2})';
+    }
+}

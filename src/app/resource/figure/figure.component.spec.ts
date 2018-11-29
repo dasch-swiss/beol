@@ -10,6 +10,7 @@ import { ReadTextValueAsHtmlComponent } from '../../properties/read-text-value-a
 import { KuiViewerModule } from '@knora/viewer';
 import { MathJaxDirective } from '../../directives/mathjax.directive';
 import { RouterTestingModule } from '@angular/router/testing';
+import { ReadTextValueComponent } from '../../properties/read-text-value/read-text-value.component';
 
 describe('FigureComponent', () => {
   let component: FigureComponent;
@@ -23,7 +24,7 @@ describe('FigureComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [KuiActionModule, KuiViewerModule, MaterialModule, RouterTestingModule],
-      declarations: [FigureComponent, ReadTextValueAsHtmlComponent, MathJaxDirective],
+      declarations: [FigureComponent, ReadTextValueAsHtmlComponent, MathJaxDirective, ReadTextValueComponent],
       providers: [
         {
           provide: ActivatedRoute,

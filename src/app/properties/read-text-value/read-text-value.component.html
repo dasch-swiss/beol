@@ -1,0 +1,17 @@
+<span [ngSwitch]="valueObject.getClassName()">
+
+    <kui-text-value-as-string *ngSwitchCase="KnoraConstants.ReadTextValueAsString"
+                              [valueObject]="valueObject">
+    </kui-text-value-as-string>
+
+    <kui-text-value-as-xml *ngSwitchCase="KnoraConstants.ReadTextValueAsXml"
+                              [valueObject]="valueObject">
+    </kui-text-value-as-xml>
+
+    <read-text-value-as-html *ngSwitchCase="KnoraConstants.ReadTextValueAsHtml"
+                             [valueObject]="valueObject"
+                             [ontologyInfo]="ontologyInfo"
+                             [bindEvents]="bindEvents">
+    </read-text-value-as-html>
+
+</span>

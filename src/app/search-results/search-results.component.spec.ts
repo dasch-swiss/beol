@@ -4,13 +4,12 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { MaterialModule } from '../material-module';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import { SearchResultsComponent } from './search-results.component';
 import { KuiActionModule } from '@knora/action';
-import { ReadDateValueComponent } from '../properties/read-date-value/read-date-value.component';
-import { ExtendedSearchParams, KuiCoreConfig, SearchParamsService } from '@knora/core';
+
+import { KuiCoreConfig, SearchParamsService } from '@knora/core';
+import { KuiViewerModule } from '@knora/viewer';
 
 import { MathJaxDirective } from '../directives/mathjax.directive';
 import { MatExpansionModule, MatIconModule } from '@angular/material';
@@ -31,6 +30,7 @@ describe('SearchResultsComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 KuiActionModule,
+                KuiViewerModule,
                 RouterTestingModule,
                 HttpClientModule,
                 HttpClientTestingModule,
@@ -40,7 +40,6 @@ describe('SearchResultsComponent', () => {
             declarations: [
                 SearchResultsComponent,
                 MathJaxDirective,
-                ReadDateValueComponent
             ],
             providers: [
                 {

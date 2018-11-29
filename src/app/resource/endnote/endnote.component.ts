@@ -9,14 +9,18 @@ import {
     ReadPropertyItem,
     ReadResource,
     ResourceService,
+    ReadTextValue
 } from '@knora/core';
-import { BeolResource } from '../beol-resource';
+import { BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
 import { Subscription } from 'rxjs';
+import { BeolService } from '../../services/beol.service';
 
-interface EndnoteProps {
-    'number': string;
-    'text': ReadPropertyItem[];
-    'figure': ReadPropertyItem[];
+class EndnoteProps implements PropertyValues {
+    number: ReadTextValue[] = [];
+    text: ReadPropertyItem[] = [];
+    figure: ReadPropertyItem[] = [];
+
+    [index: string]: ReadPropertyItem[];
 }
 
 @Component({
@@ -35,7 +39,7 @@ export class EndnoteComponent extends BeolResource implements OnDestroy {
     navigationSubscription: Subscription;
     KnoraConstants = KnoraConstants;
 
-    propIris: any = {
+    propIris: PropIriToNameMapping = {
         'number': this.apiUrl + '/ontology/0801/beol/v2#endnoteHasNumber',
         'text': this.apiUrl + '/ontology/0801/beol/v2#hasText',
         'figure': this.apiUrl + '/ontology/0801/beol/v2#hasFigureValue'
@@ -48,9 +52,10 @@ export class EndnoteComponent extends BeolResource implements OnDestroy {
                 protected _resourceService: ResourceService,
                 protected _incomingService: IncomingService,
                 protected _cacheService: OntologyCacheService,
-                public location: Location) {
+                public location: Location,
+                protected _beolService: BeolService) {
 
-        super(_resourceService, _cacheService, _incomingService);
+        super(_resourceService, _cacheService, _incomingService, _beolService);
 
         this._route.params.subscribe((params: Params) => {
             this.iri = params['id'];
@@ -68,35 +73,11 @@ export class EndnoteComponent extends BeolResource implements OnDestroy {
 
     initProps() {
 
-        this.props = {
-            number: '',
-            text: [],
-            figure: []
-        };
+        const props = new EndnoteProps();
 
-        // props list
-        for (const key in this.resource.properties) {
-            if (this.resource.properties.hasOwnProperty(key)) {
-                for (const val of this.resource.properties[key]) {
-                    switch (val.propIri) {
-                        case this.propIris.number:
-                            this.props.number = val.getContent();
-                            break;
+        this.mapper(props);
 
-                        case this.propIris.text:
-                            this.props.text.push(val);
-                            break;
-
-                        case this.propIris.figure:
-                            this.props.figure.push(val);
-                            break;
-
-                        default:
-                        // do nothing
-                    }
-                }
-            }
-        }
+        this.props = props;
     }
 
     ngOnDestroy() {
