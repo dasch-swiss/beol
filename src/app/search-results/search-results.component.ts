@@ -142,24 +142,14 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
                         }
                     );
             }
-            // perform the extended search
-            if (this.offset === 0) {
-                this._searchService.doExtendedSearch(this.searchQuery)
-                    .subscribe(
-                        this.processSearchResults, // function pointer
-                        (error: any) => {
-                            this.errorMessage = <any>error;
-                        });
-            } else {
-                this._searchService.doExtendedSearch(this.searchQuery)
-                    .subscribe(
-                        this.processSearchResults, // function pointer
-                        (error: any) => {
-                            console.error('3', error);
-                            this.errorMessage = <any>error;
-                        }
-                    );
-            }
+
+            this._searchService.doExtendedSearch(this.searchQuery)
+                .subscribe(
+                    this.processSearchResults, // function pointer
+                    (error: any) => {
+                        this.errorMessage = <any>error;
+                    });
+            
         } else {
             this.errorMessage = `search mode invalid: ${this.searchMode}`;
         }
@@ -183,7 +173,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         }, function (err) {
             console.log('JSONLD could not be expanded:' + err);
         });
-    }
+    };
 
     /**
      *
@@ -242,7 +232,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
             console.log('JSONLD could not be expanded:' + err);
         });
 
-    }
+    };
 
     /* the following methods will be moved to @knora/viewer views */
 
