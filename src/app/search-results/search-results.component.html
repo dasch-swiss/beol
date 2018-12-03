@@ -44,7 +44,7 @@
                                 <span *ngSwitchCase="KnoraConstants.ReadTextValueAsHtml" [mathJax]="val.value?.getContent()" [renderMath]="step === i" [valueObject]="val.value" [ontologyInfo]="ontologyInfo" [bindEvents]="false"></span>
 
                                 <span class="bolder">
-                                    <read-date-value *ngSwitchCase="KnoraConstants.ReadDateValue" [valueObject]="val.value" [calendar]="true" [era]="true"></read-date-value>
+                                    <kui-date-value *ngSwitchCase="KnoraConstants.ReadDateValue" [valueObject]="val.value" [calendar]="true" [era]="true"></kui-date-value>
 
                                     <span *ngSwitchDefault="">{{val.value.getContent()}}</span>
                                 </span>

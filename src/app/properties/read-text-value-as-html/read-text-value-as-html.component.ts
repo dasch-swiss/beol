@@ -22,17 +22,41 @@ import { OntologyInformation, ReadTextValueAsHtml } from '@knora/core';
 })
 export class ReadTextValueAsHtmlComponent implements OnInit {
 
-    @Input() valueObject: ReadTextValueAsHtml;
-    @Input() ontologyInfo: OntologyInformation;
-    @Input('bindEvents') bindEvents: Boolean; // indicates if click and mouseover events have to be bound
+    private _valueObject: ReadTextValueAsHtml;
+    private _ontologyInfo: OntologyInformation;
+    private _bindEvents: boolean; // indicates if click and mouseover events have to be bound
+
+    @Input()
+    set valueObject(value: ReadTextValueAsHtml) {
+        this._valueObject = value;
+    }
+
+    get valueObject() {
+        return this._valueObject;
+    }
+
+    @Input()
+    set ontologyInfo(value: OntologyInformation) {
+        this._ontologyInfo = value;
+    }
+
+    get ontologyInfo() {
+        return this._ontologyInfo;
+    }
+
+    @Input()
+    set bindEvents(value: boolean) {
+        this._bindEvents = value;
+    }
+
+    get bindEvents() {
+        return this._bindEvents;
+    }
 
     constructor() {
     }
 
     ngOnInit() {
-
-        // console.log(this.valueObject);
-
     }
 
 }

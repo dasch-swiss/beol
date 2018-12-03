@@ -8,13 +8,17 @@ import {
     OntologyInformation,
     ReadPropertyItem,
     ReadResource,
-    ResourceService
+    ReadTextValue,
+    ResourceService,
 } from '@knora/core';
-import { BeolResource } from '../beol-resource';
+import { BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
 import { Subscription } from 'rxjs';
+import { BeolService } from '../../services/beol.service';
 
-interface FigureProps {
-    'caption': ReadPropertyItem[];
+class FigureProps implements PropertyValues {
+    caption: ReadTextValue[] = [];
+
+    [index: string]: ReadPropertyItem[];
 }
 
 @Component({
@@ -33,7 +37,7 @@ export class FigureComponent extends BeolResource implements OnDestroy {
     navigationSubscription: Subscription;
     KnoraConstants = KnoraConstants;
 
-    propIris: any = {
+    propIris: PropIriToNameMapping = {
         'id': this.apiUrl + '/ontology/0801/beol/v2#beolIDs',
         'caption': this.apiUrl + '/ontology/0801/beol/v2#hasCaption'
     };
@@ -45,9 +49,10 @@ export class FigureComponent extends BeolResource implements OnDestroy {
                 protected _resourceService: ResourceService,
                 protected _cacheService: OntologyCacheService,
                 protected _incomingService: IncomingService,
-                public location: Location) {
+                public location: Location,
+                protected _beolService: BeolService) {
 
-        super(_resourceService, _cacheService, _incomingService);
+        super(_resourceService, _cacheService, _incomingService, _beolService);
 
         this._route.params.subscribe((params: Params) => {
             this.iri = params['id'];
@@ -64,26 +69,11 @@ export class FigureComponent extends BeolResource implements OnDestroy {
 
     initProps() {
 
-        this.props = {
-            caption: []
-        };
+        const props = new FigureProps();
 
-        // TODO: build the new props list
-        for (const key in this.resource.properties) {
-            if (this.resource.properties.hasOwnProperty(key)) {
-                for (const val of this.resource.properties[key]) {
-                    switch (val.propIri) {
+        this.mapper(props);
 
-                        case this.propIris.caption:
-                            this.props.caption.push(val);
-                            break;
-
-                        default:
-                        // do nothing
-                    }
-                }
-            }
-        }
+        this.props = props;
     }
 
     ngOnDestroy() {
