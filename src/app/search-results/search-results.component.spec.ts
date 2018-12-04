@@ -63,17 +63,6 @@ describe('SearchResultsComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should have subscribed to SearchParamService', () => {
-        expect(component.extendedSearchParamsSubscription.closed).toBeFalsy();
-    });
-
-    it('should have unsubscribed from SearchParamService after component destruction', () => {
-        component.ngOnDestroy();
-
-        fixture.detectChanges();
-
-        expect(component.extendedSearchParamsSubscription.closed).toBeTruthy();
-    });
 });
 
 class MockSearchParamsService {
@@ -81,7 +70,7 @@ class MockSearchParamsService {
     public currentSearchParams: Observable<any>;
 
     constructor() {
-        this.currentSearchParams = new BehaviorSubject<any>(1).asObservable();
+        this.currentSearchParams = new BehaviorSubject<any>(1);
     }
 
 

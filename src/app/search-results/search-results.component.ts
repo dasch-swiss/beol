@@ -26,7 +26,7 @@ const jsonld = require('jsonld');
     templateUrl: './search-results.component.html',
     styleUrls: ['./search-results.component.scss']
 })
-export class SearchResultsComponent implements OnInit, OnDestroy {
+export class SearchResultsComponent implements OnInit {
 
     isLoading = true;
 
@@ -50,8 +50,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
     searchQuery: string;
     searchMode: string;
-
-    extendedSearchParamsSubscription: Subscription;
 
     constructor(
         private _route: ActivatedRoute,
@@ -78,12 +76,14 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
                 this.searchQuery = params['q'];
             } else if (this.searchMode === 'extended') {
                 this.gravsearchGenerator = this._searchParamsService.getSearchParams();
-                this.searchQuery = this.gravsearchGenerator.generateGravsearch(this.offset);
-                if (this.searchQuery === 'empty') {
+                const gravsearch: string | boolean = this.gravsearchGenerator.generateGravsearch(this.offset);
+                if (gravsearch === false) {
                     // no valid search params (application has been reloaded)
                     // go to root
                     this._router.navigate([''], {relativeTo: this._route});
                     return;
+                } else {
+                    this.searchQuery = <string> gravsearch;
                 }
             }
 
@@ -91,14 +91,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
             this.getResult();
         });
 
-    }
-
-    ngOnDestroy() {
-        // unsubscribe from extendedSearchParamsSubscription
-        // otherwise old queries are still active
-        if (this.searchMode === 'extended' && this.extendedSearchParamsSubscription !== undefined) {
-            this.extendedSearchParamsSubscription.unsubscribe();
-        }
     }
 
     /**
@@ -149,7 +141,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
                     (error: any) => {
                         this.errorMessage = <any>error;
                     });
-            
+
         } else {
             this.errorMessage = `search mode invalid: ${this.searchMode}`;
         }
@@ -274,7 +266,17 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
         // update the page offset when the end of scroll is reached to get the next page of search results
         this.offset = (offsetToUse === this.offset ? this.offset += 1 : offsetToUse);
-        this.searchQuery = this.gravsearchGenerator.generateGravsearch(this.offset);
+        const gravsearch: string | boolean = this.gravsearchGenerator.generateGravsearch(this.offset);
+
+        if (gravsearch === false) {
+            // no valid search params (application has been reloaded)
+            // go to root
+            this._router.navigate([''], {relativeTo: this._route});
+            return;
+        } else {
+            this.searchQuery = <string> gravsearch;
+        }
+
         this.getResult();
 
     }
