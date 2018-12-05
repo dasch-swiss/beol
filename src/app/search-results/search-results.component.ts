@@ -76,21 +76,29 @@ export class SearchResultsComponent implements OnInit {
                 this.searchQuery = params['q'];
             } else if (this.searchMode === 'extended') {
                 this.gravsearchGenerator = this._searchParamsService.getSearchParams();
-                const gravsearch: string | boolean = this.gravsearchGenerator.generateGravsearch(this.offset);
-                if (gravsearch === false) {
-                    // no valid search params (application has been reloaded)
-                    // go to root
-                    this._router.navigate([''], {relativeTo: this._route});
-                    return;
-                } else {
-                    this.searchQuery = <string> gravsearch;
-                }
+                this.generateGravsearchQuery();
             }
 
             this.rerender = true;
             this.getResult();
         });
 
+    }
+
+    /**
+     * Generates the Gravsearch query for the current offset.
+     */
+    private generateGravsearchQuery() {
+
+        const gravsearch: string | boolean = this.gravsearchGenerator.generateGravsearch(this.offset);
+        if (gravsearch === false) {
+            // no valid search params (application has been reloaded)
+            // go to root
+            this._router.navigate([''], {relativeTo: this._route});
+            return;
+        } else {
+            this.searchQuery = <string> gravsearch;
+        }
     }
 
     /**
@@ -161,7 +169,13 @@ export class SearchResultsComponent implements OnInit {
 
         resPromise.then((compacted) => {
             this.numberOfAllResults = compacted[KnoraConstants.schemaNumberOfItems];
-            this.maxOffset = Math.floor(this.numberOfAllResults / environment.pagingLimit);
+            if (this.numberOfAllResults > 0) {
+                // offset is 0-based
+                // if numberOfAllResults equals the pagingLimit, the max. offset is 0
+                this.maxOffset = Math.floor((this.numberOfAllResults - 1) / environment.pagingLimit);
+            } else {
+                this.maxOffset = 0;
+            }
         }, function (err) {
             console.log('JSONLD could not be expanded:' + err);
         });
@@ -255,26 +269,21 @@ export class SearchResultsComponent implements OnInit {
     }
 
     /**
-     * Load more results:
-     * update the offset and append the results to the existing ones
-     * (similar to infiniteScroll event)
+     * Loads the next page of results.
+     * The results will be appended to the existing ones.
      *
-     * @param offsetToUse
      */
-    loadMore(offsetToUse: number) {
-        // stop the offset, when all data is loaded
+    loadMore() {
 
         // update the page offset when the end of scroll is reached to get the next page of search results
-        this.offset = (offsetToUse === this.offset ? this.offset += 1 : offsetToUse);
-        const gravsearch: string | boolean = this.gravsearchGenerator.generateGravsearch(this.offset);
-
-        if (gravsearch === false) {
-            // no valid search params (application has been reloaded)
-            // go to root
-            this._router.navigate([''], {relativeTo: this._route});
-            return;
+        if (this.offset < this.maxOffset) {
+            this.offset++;
         } else {
-            this.searchQuery = <string> gravsearch;
+            return;
+        }
+
+        if (this.searchMode === 'extended') {
+            this.generateGravsearchQuery();
         }
 
         this.getResult();
