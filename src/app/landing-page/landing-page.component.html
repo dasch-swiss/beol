@@ -61,7 +61,26 @@
             </div>
 
             <div class="leoo-section">
-                <app-correspondence [project]="'leoo'"></app-correspondence>
+                <app-correspondence [project]="'leooIV'"></app-correspondence>
+            </div>
+            <h2 mat-card-title>Leonhardi Euleri Commercium Epistolicum</h2>
+            <div class="container">
+                <div class="flex-container" fxFlex fxLayout="row wrap" fxLayout.sm="column" fxlayout.xs="column" fxFlexFill>
+                    <div fxFlex routerLink="introduction/leooCondorcet/CondorcetTurgotIntroduction">
+                        <mat-card class="intro-card" fxFlex>
+                            Introduction
+                        </mat-card>
+                    </div>
+                    <div fxFlex routerLink="introduction/leooCondorcet/condorcet_edition_preface">
+                        <mat-card class="intro-card" fxFlex>
+                           Preface
+                        </mat-card>
+                    </div>
+                </div>
+            </div>
+            <div class="leoo-section">
+                <app-correspondence [project]="'leooCondorcet'"></app-correspondence>
+
             </div>
         </section>
 
