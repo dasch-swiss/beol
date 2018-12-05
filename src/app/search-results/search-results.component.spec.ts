@@ -22,7 +22,7 @@ import { MathJaxDirective } from '../directives/mathjax.directive';
 import { MatExpansionModule, MatIconModule } from '@angular/material';
 
 
-fdescribe('SearchResultsComponent', () => {
+describe('SearchResultsComponent', () => {
     let component: SearchResultsComponent;
     let fixture: ComponentFixture<SearchResultsComponent>;
     const mode = 'extended';
@@ -73,7 +73,7 @@ fdescribe('SearchResultsComponent', () => {
                 result.status = 200;
                 result.statusText = '';
                 result.url = '';
-                result.body = require('../test-data/search-results/search-response-letters-count.json') // mock response
+                result.body = require('../test-data/search-results/search-response-letters-count.json'); // mock response
 
                 return of(
                     result
@@ -118,10 +118,22 @@ fdescribe('SearchResultsComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should perform a count query', () => {
+    it('should perform a count query',() => {
         expect(searchServiceSpy.doExtendedSearchCountQuery).toHaveBeenCalledTimes(1);
 
         expect(searchServiceSpy.doExtendedSearchCountQuery).toHaveBeenCalledWith('testquery0');
+
+        // TODO: check for template status once JSON-LD processing is handled by SearchService, https://github.com/dhlab-basel/Knora-ui/issues/136
+
+    });
+
+    it('should perform a gravsearch query', () => {
+        expect(searchServiceSpy.doExtendedSearch).toHaveBeenCalledTimes(1);
+
+        expect(searchServiceSpy.doExtendedSearch).toHaveBeenCalledWith('testquery0');
+
+        // TODO: check for template status once JSON-LD processing is handled by SearchService, https://github.com/dhlab-basel/Knora-ui/issues/136
+
     });
 
 
