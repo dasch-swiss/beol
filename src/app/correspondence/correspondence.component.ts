@@ -95,6 +95,8 @@ export class CorrespondenceComponent implements OnInit {
   Condorcet = new Correspondent('Marie Jean Antoine Nicolas Condorcet', '(DE-588)118521772');
   Turgot = new Correspondent('Anne Robert Jacques Turgot', '(DE-588)118763202');
   Lexell = new Correspondent('Anders Johan Lexell', '(DE-588)100189180');
+  FussNI = new Correspondent('Niklaus (I) Fuss', '(DE-588)116878894');
+
 
   // project: string;
   leooIV: Book[];
@@ -321,7 +323,9 @@ export class CorrespondenceComponent implements OnInit {
           new CorrespondenceGroupWithSection(this.Condorcet, [
               new Section('condorcet', [
                     new Correspondence(this.Condorcet, this.Leonhard_Euler),
-                    new Correspondence(this.Condorcet, this.Johann_Albrecht_Euler)
+                    new Correspondence(this.Condorcet, this.Johann_Albrecht_Euler),
+                    new Correspondence(this.Condorcet, this.Lexell),
+                    new Correspondence(this.Condorcet, this.FussNI)
           ])]),
           new CorrespondenceGroupWithSection(this.Turgot, [
               new Section('turgot', [
