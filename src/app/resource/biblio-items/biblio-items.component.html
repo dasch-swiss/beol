@@ -50,7 +50,7 @@
                 </p>
 
                 <p>
-                    <span *ngIf="props?.location[0]">{{props?.location[0]}}, </span>
+                    <span *ngIf="props?.location[0]"><read-text-value [ontologyInfo]="ontologyInfo" [valueObject]="props?.location[0]"></read-text-value>, </span>
                     <span *ngIf="props?.date[0]">
                         <kui-date-value [valueObject]="props?.date[0]" [calendar]="false" [era]="true"></kui-date-value>
                     </span>
