@@ -1,0 +1,654 @@
+{
+  "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+    "id": "http://api.knora.org/ontology/knora-api/v2#attachedToProject",
+    "objectType": "http://api.knora.org/ontology/knora-api/v2#knoraProject",
+    "comment": "Connects something to a project",
+    "label": "attached to project",
+    "subPropertyOf": [],
+    "isEditable": false,
+    "isLinkProperty": false,
+    "isLinkValueProperty": false
+  },
+  "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+    "id": "http://api.knora.org/ontology/knora-api/v2#attachedToUser",
+    "objectType": "http://api.knora.org/ontology/knora-api/v2#User",
+    "comment": "Connects something to a user",
+    "label": "attached to user",
+    "subPropertyOf": [],
+    "isEditable": false,
+    "isLinkProperty": false,
+    "isLinkValueProperty": false
+  },
+  "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+    "id": "http://api.knora.org/ontology/knora-api/v2#creationDate",
+    "objectType": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+    "comment": "Indicates when a resource was created",
+    "subPropertyOf": [],
+    "isEditable": false,
+    "isLinkProperty": false,
+    "isLinkValueProperty": false
+  },
+  "http://api.knora.org/ontology/knora-api/v2#deleteComment": {
+    "id": "http://api.knora.org/ontology/knora-api/v2#deleteComment",
+    "objectType": "http://www.w3.org/2001/XMLSchema#string",
+    "comment": "A comment explaining why a resource or value was marked as deleted",
+    "subPropertyOf": [],
+    "isEditable": false,
+    "isLinkProperty": false,
+    "isLinkValueProperty": false
+  },
+  "http://api.knora.org/ontology/knora-api/v2#deleteDate": {
+    "id": "http://api.knora.org/ontology/knora-api/v2#deleteDate",
+    "objectType": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+    "comment": "Indicates when a resource or value was deleted",
+    "subPropertyOf": [],
+    "isEditable": false,
+    "isLinkProperty": false,
+    "isLinkValueProperty": false
+  },
+  "http://api.knora.org/ontology/knora-api/v2#hasIncomingLink": {
+    "id": "http://api.knora.org/ontology/knora-api/v2#hasIncomingLink",
+    "objectType": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+    "comment": "Indicates that this resource referred to by another resource",
+    "label": "has incoming links",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasLinkToValue"
+    ],
+    "isEditable": false,
+    "isLinkProperty": false,
+    "isLinkValueProperty": true
+  },
+  "http://api.knora.org/ontology/knora-api/v2#hasPermissions": {
+    "id": "http://api.knora.org/ontology/knora-api/v2#hasPermissions",
+    "objectType": "http://www.w3.org/2001/XMLSchema#string",
+    "subPropertyOf": [],
+    "isEditable": false,
+    "isLinkProperty": false,
+    "isLinkValueProperty": false
+  },
+  "http://api.knora.org/ontology/knora-api/v2#hasStandoffLinkTo": {
+    "id": "http://api.knora.org/ontology/knora-api/v2#hasStandoffLinkTo",
+    "objectType": "http://api.knora.org/ontology/knora-api/v2#Resource",
+    "comment": "Represents a link in standoff markup from one resource to another.",
+    "label": "has Standoff Link to",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasLinkTo"
+    ],
+    "isEditable": false,
+    "isLinkProperty": true,
+    "isLinkValueProperty": false
+  },
+  "http://api.knora.org/ontology/knora-api/v2#hasStandoffLinkToValue": {
+    "id": "http://api.knora.org/ontology/knora-api/v2#hasStandoffLinkToValue",
+    "objectType": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+    "comment": "Represents a link in standoff markup from one resource to another.",
+    "label": "has Standoff Link to",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasLinkToValue"
+    ],
+    "isEditable": false,
+    "isLinkProperty": false,
+    "isLinkValueProperty": true
+  },
+  "http://api.knora.org/ontology/knora-api/v2#isDeleted": {
+    "id": "http://api.knora.org/ontology/knora-api/v2#isDeleted",
+    "objectType": "http://www.w3.org/2001/XMLSchema#boolean",
+    "comment": "Exists and is true if the resource has been deleted",
+    "subPropertyOf": [],
+    "isEditable": false,
+    "isLinkProperty": false,
+    "isLinkValueProperty": false
+  },
+  "http://api.knora.org/ontology/knora-api/v2#lastModificationDate": {
+    "id": "http://api.knora.org/ontology/knora-api/v2#lastModificationDate",
+    "objectType": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+    "subPropertyOf": [],
+    "isEditable": false,
+    "isLinkProperty": false,
+    "isLinkValueProperty": false
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#hasRecipient": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#hasRecipient",
+    "objectType": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+    "comment": "Recipient",
+    "label": "Recipient",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasLinkTo"
+    ],
+    "isEditable": true,
+    "isLinkProperty": true,
+    "isLinkValueProperty": false
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#hasRecipientValue": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#hasRecipientValue",
+    "objectType": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+    "comment": "Recipient",
+    "label": "Recipient",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasLinkToValue"
+    ],
+    "isEditable": true,
+    "isLinkProperty": false,
+    "isLinkValueProperty": true
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#title": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#title",
+    "objectType": "http://api.knora.org/ontology/knora-api/v2#TextValue",
+    "comment": "Title",
+    "label": "Title",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasValue",
+      "http://purl.org/dc/terms/title"
+    ],
+    "isEditable": true,
+    "isLinkProperty": false,
+    "isLinkValueProperty": false
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#hasAuthor": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#hasAuthor",
+    "objectType": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+    "comment": "Author",
+    "label": "Author",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasLinkTo"
+    ],
+    "isEditable": true,
+    "isLinkProperty": true,
+    "isLinkValueProperty": false
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#hasAuthorValue": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#hasAuthorValue",
+    "objectType": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+    "comment": "Author",
+    "label": "Author",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasLinkToValue"
+    ],
+    "isEditable": true,
+    "isLinkProperty": false,
+    "isLinkValueProperty": true
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#letterHasNumber": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#letterHasNumber",
+    "objectType": "http://api.knora.org/ontology/knora-api/v2#TextValue",
+    "comment": "Number of the letter ",
+    "label": "Letter Number",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasValue"
+    ],
+    "isEditable": true,
+    "isLinkProperty": false,
+    "isLinkValueProperty": false
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#creationDate": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#creationDate",
+    "objectType": "http://api.knora.org/ontology/knora-api/v2#DateValue",
+    "comment": "Date of creation",
+    "label": "Date of creation",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasValue",
+      "http://purl.org/dc/terms/date"
+    ],
+    "isEditable": true,
+    "isLinkProperty": false,
+    "isLinkValueProperty": false
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#hasSubject": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#hasSubject",
+    "objectType": "http://api.knora.org/ontology/knora-api/v2#ListValue",
+    "comment": "Topics",
+    "label": "Topics",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasValue"
+    ],
+    "isEditable": true,
+    "isLinkProperty": false,
+    "isLinkValueProperty": false
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#hasFigure": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#hasFigure",
+    "objectType": "http://0.0.0.0:3333/ontology/0801/beol/v2#figure",
+    "comment": "Figure of Letter",
+    "label": "Figure",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasLinkTo"
+    ],
+    "isEditable": true,
+    "isLinkProperty": true,
+    "isLinkValueProperty": false
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#hasFigureValue": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#hasFigureValue",
+    "objectType": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+    "comment": "Figure of Letter",
+    "label": "Figure",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasLinkToValue"
+    ],
+    "isEditable": true,
+    "isLinkProperty": false,
+    "isLinkValueProperty": true
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#location": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#location",
+    "objectType": "http://api.knora.org/ontology/knora-api/v2#TextValue",
+    "comment": "Place where the physical original is located ",
+    "label": "Location",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasValue"
+    ],
+    "isEditable": true,
+    "isLinkProperty": false,
+    "isLinkValueProperty": false
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#hasText": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#hasText",
+    "objectType": "http://api.knora.org/ontology/knora-api/v2#TextValue",
+    "comment": "Text",
+    "label": "Text",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasValue"
+    ],
+    "isEditable": true,
+    "isLinkProperty": false,
+    "isLinkValueProperty": false
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#letterHasOriginal": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#letterHasOriginal",
+    "objectType": "http://0.0.0.0:3333/ontology/0801/beol/v2#manuscript",
+    "comment": "Manuscript of letter",
+    "label": "Manuscript of letter",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasLinkTo"
+    ],
+    "isEditable": true,
+    "isLinkProperty": true,
+    "isLinkValueProperty": false
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#letterHasOriginalValue": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#letterHasOriginalValue",
+    "objectType": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+    "comment": "Manuscript of letter",
+    "label": "Manuscript of letter",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasLinkToValue"
+    ],
+    "isEditable": true,
+    "isLinkProperty": false,
+    "isLinkValueProperty": true
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#beolIDs": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#beolIDs",
+    "objectType": "http://api.knora.org/ontology/knora-api/v2#TextValue",
+    "comment": "Represents IDs given to resource in BEOL project.",
+    "label": "BEOL-IDs",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasValue"
+    ],
+    "isEditable": true,
+    "isLinkProperty": false,
+    "isLinkValueProperty": false
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#letterHasTranslation": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#letterHasTranslation",
+    "objectType": "http://0.0.0.0:3333/ontology/0801/beol/v2#letter",
+    "comment": "Translation",
+    "label": "Translation",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasLinkTo"
+    ],
+    "isEditable": true,
+    "isLinkProperty": true,
+    "isLinkValueProperty": false
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#letterHasTranslationValue": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#letterHasTranslationValue",
+    "objectType": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+    "comment": "Translation",
+    "label": "Translation",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasLinkToValue"
+    ],
+    "isEditable": true,
+    "isLinkProperty": false,
+    "isLinkValueProperty": true
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#letterIsReplyTo": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#letterIsReplyTo",
+    "objectType": "http://0.0.0.0:3333/ontology/0801/beol/v2#letter",
+    "comment": "Letter is reply to another letter",
+    "label": "Reply to",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasLinkTo"
+    ],
+    "isEditable": true,
+    "isLinkProperty": true,
+    "isLinkValueProperty": false
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#letterIsReplyToValue": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#letterIsReplyToValue",
+    "objectType": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+    "comment": "Letter is reply to another letter",
+    "label": "Reply to",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasLinkToValue"
+    ],
+    "isEditable": true,
+    "isLinkProperty": false,
+    "isLinkValueProperty": true
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#letterIsPublished": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#letterIsPublished",
+    "objectType": "http://0.0.0.0:3333/ontology/0801/beol/v2#publishedLetter",
+    "comment": "Letter is published",
+    "label": "Letter is published",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasLinkTo"
+    ],
+    "isEditable": true,
+    "isLinkProperty": true,
+    "isLinkValueProperty": false
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#letterIsPublishedValue": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#letterIsPublishedValue",
+    "objectType": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+    "comment": "Letter is published",
+    "label": "Letter is published",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasLinkToValue"
+    ],
+    "isEditable": true,
+    "isLinkProperty": false,
+    "isLinkValueProperty": true
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#letterHasRepertoriumNumber": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#letterHasRepertoriumNumber",
+    "objectType": "http://api.knora.org/ontology/knora-api/v2#TextValue",
+    "comment": "Number in Repertorium of Euler correspondence (O.IVA/1, p.134-166)",
+    "label": "Repertorium-Number",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasValue"
+    ],
+    "isEditable": true,
+    "isLinkProperty": false,
+    "isLinkValueProperty": false
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#letterHasLanguage": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#letterHasLanguage",
+    "objectType": "http://api.knora.org/ontology/knora-api/v2#TextValue",
+    "comment": "Represents language of the letter.",
+    "label": "Language",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasValue"
+    ],
+    "isEditable": true,
+    "isLinkProperty": false,
+    "isLinkValueProperty": false
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#mentionsPerson": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#mentionsPerson",
+    "objectType": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+    "comment": "mentioned person",
+    "label": "Mentioned person",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasLinkTo"
+    ],
+    "isEditable": true,
+    "isLinkProperty": true,
+    "isLinkValueProperty": false
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#mentionsPersonValue": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#mentionsPersonValue",
+    "objectType": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+    "comment": "mentioned person",
+    "label": "Mentioned person",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasLinkToValue"
+    ],
+    "isEditable": true,
+    "isLinkProperty": false,
+    "isLinkValueProperty": true
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#comment": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#comment",
+    "objectType": "http://api.knora.org/ontology/knora-api/v2#TextValue",
+    "comment": "Comment",
+    "label": "Comment",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasComment"
+    ],
+    "isEditable": true,
+    "isLinkProperty": false,
+    "isLinkValueProperty": false
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#externalRepository": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#externalRepository",
+    "objectType": "http://api.knora.org/ontology/knora-api/v2#UriValue",
+    "comment": "Letter is also available at",
+    "label": "Letter is also available at",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasValue"
+    ],
+    "isEditable": true,
+    "isLinkProperty": false,
+    "isLinkValueProperty": false
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#hasSystemNumber": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#hasSystemNumber",
+    "objectType": "http://api.knora.org/ontology/knora-api/v2#TextValue",
+    "comment": "system number",
+    "label": "System number",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasValue"
+    ],
+    "isEditable": true,
+    "isLinkProperty": false,
+    "isLinkValueProperty": false
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#hasFamilyName": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#hasFamilyName",
+    "objectType": "http://api.knora.org/ontology/knora-api/v2#TextValue",
+    "comment": "Represents a family name.",
+    "label": "Family name",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasValue",
+      "http://xmlns.com/foaf/0.1/familyName"
+    ],
+    "isEditable": true,
+    "isLinkProperty": false,
+    "isLinkValueProperty": false
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#hasGivenName": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#hasGivenName",
+    "objectType": "http://api.knora.org/ontology/knora-api/v2#TextValue",
+    "comment": "Represents a Given name.",
+    "label": "Given name",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasValue",
+      "http://xmlns.com/foaf/0.1/givenName"
+    ],
+    "isEditable": true,
+    "isLinkProperty": false,
+    "isLinkValueProperty": false
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#personHasTitle": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#personHasTitle",
+    "objectType": "http://api.knora.org/ontology/knora-api/v2#TextValue",
+    "comment": "Represents title of person.",
+    "label": "Title",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasValue"
+    ],
+    "isEditable": true,
+    "isLinkProperty": false,
+    "isLinkValueProperty": false
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#hasAlternativeName": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#hasAlternativeName",
+    "objectType": "http://api.knora.org/ontology/knora-api/v2#TextValue",
+    "comment": "Represents alternative name.",
+    "label": "Alternative name",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasValue"
+    ],
+    "isEditable": true,
+    "isLinkProperty": false,
+    "isLinkValueProperty": false
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#hasIAFIdentifier": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#hasIAFIdentifier",
+    "objectType": "http://api.knora.org/ontology/knora-api/v2#TextValue",
+    "comment": "Represents an IAF identifier.",
+    "label": "Integrated Authority File",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasValue"
+    ],
+    "isEditable": true,
+    "isLinkProperty": false,
+    "isLinkValueProperty": false
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#hasBirthDate": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#hasBirthDate",
+    "objectType": "http://api.knora.org/ontology/knora-api/v2#DateValue",
+    "comment": "Represents a date of birth.",
+    "label": "Date of birth",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasValue"
+    ],
+    "isEditable": true,
+    "isLinkProperty": false,
+    "isLinkValueProperty": false
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#hasDeathDate": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#hasDeathDate",
+    "objectType": "http://api.knora.org/ontology/knora-api/v2#DateValue",
+    "comment": "Represents a date of death.",
+    "label": "Date of death",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasValue"
+    ],
+    "isEditable": true,
+    "isLinkProperty": false,
+    "isLinkValueProperty": false
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#hasFloruitDate": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#hasFloruitDate",
+    "objectType": "http://api.knora.org/ontology/knora-api/v2#DateValue",
+    "comment": "Represents a floruit date.",
+    "label": "Floruit Date",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasValue"
+    ],
+    "isEditable": true,
+    "isLinkProperty": false,
+    "isLinkValueProperty": false
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#hasMarriageDate": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#hasMarriageDate",
+    "objectType": "http://api.knora.org/ontology/knora-api/v2#DateValue",
+    "comment": "Represents a marriage date.",
+    "label": "Marriage Date",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasValue"
+    ],
+    "isEditable": true,
+    "isLinkProperty": false,
+    "isLinkValueProperty": false
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#hasBirthPlace": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#hasBirthPlace",
+    "objectType": "http://api.knora.org/ontology/knora-api/v2#TextValue",
+    "comment": "Represents a birth place.",
+    "label": "Birth Place",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasValue"
+    ],
+    "isEditable": true,
+    "isLinkProperty": false,
+    "isLinkValueProperty": false
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#hasDeathPlace": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#hasDeathPlace",
+    "objectType": "http://api.knora.org/ontology/knora-api/v2#TextValue",
+    "comment": "Represents a place of death.",
+    "label": "Place of death",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasValue"
+    ],
+    "isEditable": true,
+    "isLinkProperty": false,
+    "isLinkValueProperty": false
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#hasFloruitPlace": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#hasFloruitPlace",
+    "objectType": "http://api.knora.org/ontology/knora-api/v2#TextValue",
+    "comment": "Represents a place a person is seen.",
+    "label": "Place of Floruit",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasValue"
+    ],
+    "isEditable": true,
+    "isLinkProperty": false,
+    "isLinkValueProperty": false
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#hasMarriagePlace": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#hasMarriagePlace",
+    "objectType": "http://api.knora.org/ontology/knora-api/v2#TextValue",
+    "comment": "Represents a place a person is married in.",
+    "label": "Place of Marriage",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasValue"
+    ],
+    "isEditable": true,
+    "isLinkProperty": false,
+    "isLinkValueProperty": false
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#hasSonValue": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#hasSonValue",
+    "objectType": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+    "comment": "Repräsentiert eine Vater-Sohn Beziehung",
+    "label": "has son",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasLinkToValue"
+    ],
+    "isEditable": true,
+    "isLinkProperty": false,
+    "isLinkValueProperty": true
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#hasSon": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#hasSon",
+    "objectType": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+    "comment": "Repräsentiert eine Vater-Sohn Beziehung",
+    "label": "has son",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasLinkTo"
+    ],
+    "isEditable": true,
+    "isLinkProperty": true,
+    "isLinkValueProperty": false
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#hasDictionaryEntries": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#hasDictionaryEntries",
+    "objectType": "http://api.knora.org/ontology/knora-api/v2#TextValue",
+    "comment": "Represents entries in dictionaries about the person.",
+    "label": "Dictionary Entries",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasValue"
+    ],
+    "isEditable": true,
+    "isLinkProperty": false,
+    "isLinkValueProperty": false
+  },
+  "http://0.0.0.0:3333/ontology/0801/beol/v2#mentionedIn": {
+    "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#mentionedIn",
+    "objectType": "http://api.knora.org/ontology/knora-api/v2#TextValue",
+    "comment": "Represents where the resource is mentioned .",
+    "label": "Mentioned In",
+    "subPropertyOf": [
+      "http://api.knora.org/ontology/knora-api/v2#hasValue"
+    ],
+    "isEditable": true,
+    "isLinkProperty": false,
+    "isLinkValueProperty": false
+  }
+}
