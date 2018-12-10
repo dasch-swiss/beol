@@ -28,7 +28,7 @@
     "@firebase/app": "^0.3.4",
     "@firebase/app-types": "^0.3.2",
     "@knora/action": "github:dhlab-basel/Knora-ui-action-builds#v6-beta.1",
-    "@knora/core": "github:dhlab-basel/Knora-ui-core-builds#v6-beta.1.1",
+    "@knora/core": "github:dhlab-basel/Knora-ui-core-builds#v6-beta.1.2",
     "@knora/search": "github:dhlab-basel/Knora-ui-search-builds#v6-beta.1",
     "@knora/viewer": "github:dhlab-basel/Knora-ui-viewer-builds#v6-beta.1",
     "angularfire2": "^5.0.2",

@@ -26,7 +26,7 @@ const jsonld = require('jsonld');
     templateUrl: './search-results.component.html',
     styleUrls: ['./search-results.component.scss']
 })
-export class SearchResultsComponent implements OnInit, OnDestroy {
+export class SearchResultsComponent implements OnInit {
 
     isLoading = true;
 
@@ -43,14 +43,13 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
     offset = 0;
     maxOffset = 0;
+    gravsearchGenerator: ExtendedSearchParams;
 
     step: number = undefined;
     panelOpenState = false;
 
     searchQuery: string;
     searchMode: string;
-
-    extendedSearchParamsSubscription: Subscription;
 
     constructor(
         private _route: ActivatedRoute,
@@ -67,23 +66,38 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
         this._route.params.subscribe((params: Params) => {
             this.searchMode = params['mode'];
-            this.searchQuery = params['q'];
 
             // init offset to 0
             this.offset = 0;
+            this.result = [];
+            this.resetStep();
+
+            if (this.searchMode === 'fulltext') {
+                this.searchQuery = params['q'];
+            } else if (this.searchMode === 'extended') {
+                this.gravsearchGenerator = this._searchParamsService.getSearchParams();
+                this.generateGravsearchQuery();
+            }
 
             this.rerender = true;
             this.getResult();
-            this.rerender = false;
         });
 
     }
 
-    ngOnDestroy() {
-        // unsubscribe from extendedSearchParamsSubscription
-        // otherwise old queries are still active
-        if (this.searchMode === 'extended' && this.extendedSearchParamsSubscription !== undefined) {
-            this.extendedSearchParamsSubscription.unsubscribe();
+    /**
+     * Generates the Gravsearch query for the current offset.
+     */
+    private generateGravsearchQuery() {
+
+        const gravsearch: string | boolean = this.gravsearchGenerator.generateGravsearch(this.offset);
+        if (gravsearch === false) {
+            // no valid search params (application has been reloaded)
+            // go to root
+            this._router.navigate([''], {relativeTo: this._route});
+            return;
+        } else {
+            this.searchQuery = <string> gravsearch;
         }
     }
 
@@ -91,9 +105,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
      * Get search result from Knora - 2 cases: simple search and extended search
      */
     getResult() {
-
-        this.result = [];
-        this.resetStep();
 
         // FULLTEXT SEARCH
         if (this.searchMode === 'fulltext') {
@@ -117,7 +128,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
                     (error: any) => {
                         this.errorMessage = <any>error;
                     },
-            );
+                );
 
             // EXTENDED SEARCH
         } else if (this.searchMode === 'extended') {
@@ -131,36 +142,13 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
                         }
                     );
             }
-            // perform the extended search
-            this.extendedSearchParamsSubscription = this._searchParamsService.currentSearchParams
-                .subscribe((extendedSearchParams: ExtendedSearchParams) => {
 
-                    if (this.offset === 0) {
-
-                        // console.log(this.searchQuery);
-
-                        this._searchService.doExtendedSearch(this.searchQuery)
-                            .subscribe(
-                                this.processSearchResults, // function pointer
-                                (error: any) => {
-                                    this.errorMessage = <any>error;
-                                });
-                    } else {
-                        // generate new GravSearch
-                        const gravSearch = extendedSearchParams.generateGravsearch(this.offset);
-
-                        // console.log(gravSearch);
-
-                        this._searchService.doExtendedSearch(gravSearch)
-                            .subscribe(
-                                this.processSearchResults, // function pointer
-                                (error: any) => {
-                                    console.error('3', error);
-                                    this.errorMessage = <any>error;
-                                }
-                            );
-                    }
-                });
+            this._searchService.doExtendedSearch(this.searchQuery)
+                .subscribe(
+                    this.processSearchResults, // function pointer
+                    (error: any) => {
+                        this.errorMessage = <any>error;
+                    });
 
         } else {
             this.errorMessage = `search mode invalid: ${this.searchMode}`;
@@ -181,11 +169,17 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
         resPromise.then((compacted) => {
             this.numberOfAllResults = compacted[KnoraConstants.schemaNumberOfItems];
-            this.maxOffset = Math.floor(this.numberOfAllResults / environment.pagingLimit);
+            if (this.numberOfAllResults > 0) {
+                // offset is 0-based
+                // if numberOfAllResults equals the pagingLimit, the max. offset is 0
+                this.maxOffset = Math.floor((this.numberOfAllResults - 1) / environment.pagingLimit);
+            } else {
+                this.maxOffset = 0;
+            }
         }, function (err) {
             console.log('JSONLD could not be expanded:' + err);
         });
-    }
+    };
 
     /**
      *
@@ -201,10 +195,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     private processSearchResults = (searchResult: ApiServiceResult) => {
 
         this.isLoading = true;
-
-        if (this.offset === 0) {
-            this.result = [];
-        }
 
         const resPromises = jsonld.promises;
         // compact JSON-LD using an empty context: expands all Iris
@@ -234,6 +224,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
                     this.result = this.result.concat(resources.resources);
 
                     this.isLoading = false;
+                    this.rerender = false;
                     // console.log('results 2', this.result);
                 },
                 (err) => {
@@ -247,7 +238,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
             console.log('JSONLD could not be expanded:' + err);
         });
 
-    }
+    };
 
     /* the following methods will be moved to @knora/viewer views */
 
@@ -278,33 +269,23 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * Infinite scroll event
+     * Loads the next page of results.
+     * The results will be appended to the existing ones.
      *
-     * @param offsetToUse
      */
-    onScroll(offsetToUse: number = 0) {
-
-        // console.log('scroll: ', offsetToUse);
+    loadMore() {
 
         // update the page offset when the end of scroll is reached to get the next page of search results
-        this.offset = (offsetToUse === this.offset ? this.offset += 1 : offsetToUse);
+        if (this.offset < this.maxOffset) {
+            this.offset++;
+        } else {
+            return;
+        }
 
-        this.getResult();
-    }
+        if (this.searchMode === 'extended') {
+            this.generateGravsearchQuery();
+        }
 
-    /**
-     * Load more results:
-     * update the offset and append the results to the existing ones
-     * (similar to infiniteScroll event)
-     *
-     * @param offsetToUse
-     */
-    loadMore(offsetToUse: number) {
-        // stop the offset, when all data is loaded
-
-
-        // update the page offset when the end of scroll is reached to get the next page of search results
-        this.offset = (offsetToUse === this.offset ? this.offset += 1 : offsetToUse);
         this.getResult();
 
     }
