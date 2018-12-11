@@ -42,7 +42,7 @@
                     </span>
                 </p>
 
-                <p>
+                <p *ngIf="props?.author[0]">
                     <span *ngFor="let author of props?.author; let last = last">
                         <kui-link-value [valueObject]="author" [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
                         <span *ngIf="!last"> &amp; </span>
@@ -50,7 +50,7 @@
                 </p>
 
                 <p>
-                    <span *ngIf="props?.location[0]">{{props?.location[0]}}, </span>
+                    <span *ngFor="let loc of props?.location"><read-text-value [valueObject]="loc" [ontologyInfo]="ontologyInfo" [bindEvents]="false"></read-text-value>, </span>
                     <span *ngIf="props?.date[0]">
                         <kui-date-value [valueObject]="props?.date[0]" [calendar]="false" [era]="true"></kui-date-value>
                     </span>
