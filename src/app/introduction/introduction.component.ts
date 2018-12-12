@@ -53,8 +53,8 @@ export class IntroductionComponent implements OnInit {
 
     KnoraConstants = KnoraConstants;
 
-    list: Introduction[];
-
+    listLeooIV: Introduction[];
+    listLeooCondorcet: Introduction[];
     props: IntroProps;
 
     // current index of introduction
@@ -82,18 +82,17 @@ export class IntroductionComponent implements OnInit {
     ngOnInit() {
 
         const intro  = require('../../assets/data/introduction.json');
-        this.list = <Introduction[]> intro.introductions;
-
+        this.listLeooIV = <Introduction[]> intro.leooIVIntroduction;
+        this.listLeooCondorcet = <Introduction[]> intro.condorcetIntroduction;
         this._route.params.subscribe((params: Params) => {
             this.project = params['project'];
             this.id = params['id'];
-
-            this.searchForBook(this.id);
+            this.searchForIntro(this.id);
         });
 
     }
 
-    searchForBook(id: string): void {
+    searchForIntro(id: string): void {
 
         const gravsearch: string = this._beol.searchForIntroductionById(id);
 

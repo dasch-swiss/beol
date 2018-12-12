@@ -4,7 +4,7 @@
 
     <div *ngIf="!isLoading && props">
 
-        <div class="sidebar">
+        <div *ngIf="project=='leoo'" class="sidebar" >
 
             <button mat-stroked-button class="previousBtn" (click)="location.back()">
                 <mat-icon>arrow_back</mat-icon>
@@ -13,10 +13,10 @@
 
             <!-- Tree of introduction links to navigate through several levels on each intro page with data from json file called introductions.json -->
             <mat-list class="nav">
-                <div *ngFor="let item of list; let i = index;">
+                <div *ngFor="let item of listLeooIV; let i = index;">
 
                     <mat-list-item [class.parent]="item.children">
-                        <button mat-button [routerLink]="'/introduction/leoo/goldbach_' + item.name"
+                        <button mat-button [routerLink]="'/introduction/leoo/' + item.name"
                                 routerLinkActive="active-link" class="nav-item" (click)="toggleChildren(i)">
                             {{item.label}}
                             <mat-icon *ngIf="!item.children">keyboard_arrow_right</mat-icon>
@@ -27,7 +27,7 @@
                     <div *ngIf="item.children" class="nav-children" [class.open]="curIndex === i">
                         <div *ngFor="let child of item.children; let c = index;">
                             <mat-list-item>
-                                <button mat-button [routerLink]="'/introduction/leoo/goldbach_' + child.name"
+                                <button mat-button [routerLink]="'/introduction/leoo/' + child.name"
                                         routerLinkActive="active-link" class="nav-item"
                                         (click)="toggleGrandChildren(c)">
                                     {{child.label}}
@@ -39,7 +39,7 @@
                             <div *ngIf="child.children" class="nav-grand-children" [class.open]="curChildIndex === c">
                                 <mat-list-item *ngFor="let gc of child.children">
                                     <!-- [routerLink]="item.name -->
-                                    <button mat-button [routerLink]="'/introduction/leoo/goldbach_' + gc.name"
+                                    <button mat-button [routerLink]="'/introduction/leoo/' + gc.name"
                                             routerLinkActive="active-link" class="nav-item">
                                         {{gc.label}}
                                         <mat-icon>keyboard_arrow_right</mat-icon>
