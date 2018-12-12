@@ -81,16 +81,15 @@ export class BeolService {
      * @param id the id to display describing the introduction.
      * @returns Gravsearch query.
      */
-    searchForBookById(id: string): string {
+    searchForIntroductionById(id: string): string {
 
-        const bookTemplate = `
+        const introTemplate = `
     PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
     PREFIX beol: <${this.externalApiURL}/ontology/0801/beol/simple/v2#>
 
     CONSTRUCT {
 
         ?introSection knora-api:isMainResource true .
-        ?superSection beol:hasSection ?introSection .
 
     } WHERE {
 
@@ -103,16 +102,12 @@ export class BeolService {
 
         FILTER(?sectionId = "${id}")
 
-        OPTIONAL {
-            ?superSection beol:hasSection ?introSection .
-        }
-
     }
 
     OFFSET 0
         `;
 
-        return bookTemplate;
+        return introTemplate;
 
     }
 
