@@ -31,33 +31,27 @@ const appRoutes: Routes = [
     },
     {
         path: 'resource/:id',
-        component: ResourceComponent,
-        runGuardsAndResolvers: 'paramsChange'
+        component: ResourceComponent
     },
     {
         path: 'person/:id',
-        component: PersonComponent,
-        runGuardsAndResolvers: 'paramsChange'
+        component: PersonComponent
     },
     {
         path: 'figure/:id',
-        component: FigureComponent,
-        runGuardsAndResolvers: 'paramsChange'
+        component: FigureComponent
     },
     {
         path: 'biblio/:id',
-        component: BiblioItemsComponent,
-        runGuardsAndResolvers: 'paramsChange'
+        component: BiblioItemsComponent
     },
     {
         path: 'letter/:id',
-        component: LetterComponent,
-        runGuardsAndResolvers: 'paramsChange'
+        component: LetterComponent
     },
     {
         path: 'endnote/:id',
-        component: EndnoteComponent,
-        runGuardsAndResolvers: 'paramsChange'
+        component: EndnoteComponent
     },
     {
         path: 'search',

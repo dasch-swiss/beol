@@ -1,5 +1,5 @@
-import { Component, OnDestroy } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
+import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import {
     IncomingService,
@@ -55,7 +55,7 @@ class BiblioItemsProps implements PropertyValues {
     templateUrl: './biblio-items.component.html',
     styleUrls: ['./biblio-items.component.scss']
 })
-export class BiblioItemsComponent extends BeolResource implements OnDestroy {
+export class BiblioItemsComponent extends BeolResource {
 
     iri: string;
     resource: ReadResource;
@@ -126,27 +126,15 @@ export class BiblioItemsComponent extends BeolResource implements OnDestroy {
 
     props: BiblioItemsProps;
 
-    constructor(private _route: ActivatedRoute,
-                private _router: Router,
+    constructor(protected _route: ActivatedRoute,
                 protected _resourceService: ResourceService,
                 protected _cacheService: OntologyCacheService,
                 protected _incomingService: IncomingService,
                 public location: Location,
                 protected _beolService: BeolService) {
 
-        super(_resourceService, _cacheService, _incomingService, _beolService);
+        super(_route, _resourceService, _cacheService, _incomingService, _beolService);
 
-        this._route.params.subscribe((params: Params) => {
-            this.iri = params['id'];
-        });
-
-        // subscribe to the router events to reload the content
-        this.navigationSubscription = this._router.events.subscribe((e: any) => {
-            // if it is a NavigationEnd event re-initalise the component
-            if (e instanceof NavigationEnd) {
-                this.getResource(this.iri);
-            }
-        });
     }
 
     initProps() {
@@ -156,12 +144,6 @@ export class BiblioItemsComponent extends BeolResource implements OnDestroy {
         this.mapper(props);
 
         this.props = props;
-    }
-
-    ngOnDestroy() {
-        if (this.navigationSubscription) {
-            this.navigationSubscription.unsubscribe();
-        }
     }
 
 }
