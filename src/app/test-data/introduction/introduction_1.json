@@ -1,0 +1,167 @@
+{
+  "@id" : "http://rdfh.ch/0801/jTAU22HmTJWplGJgO6uVIw",
+  "@type" : "beol:section",
+  "beol:beolIDs" : {
+    "@id" : "http://rdfh.ch/0801/jTAU22HmTJWplGJgO6uVIw/values/3SmGPKo5Q8e8H-AVvsPPOQ",
+    "@type" : "knora-api:TextValue",
+    "knora-api:attachedToUser" : {
+      "@id" : "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+    },
+    "knora-api:hasPermissions" : "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+    "knora-api:valueAsString" : "goldbach_introduction_1"
+  },
+  "beol:hasSectionValue" : [ {
+    "@id" : "http://rdfh.ch/0801/jTAU22HmTJWplGJgO6uVIw/values/nup2y9J2SIabiJBNOFE7GA",
+    "@type" : "knora-api:LinkValue",
+    "knora-api:attachedToUser" : {
+      "@id" : "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+    },
+    "knora-api:hasPermissions" : "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+    "knora-api:linkValueHasTarget" : {
+      "@id" : "http://rdfh.ch/0801/OwE1nvFJSceUTQhZqwquUA",
+      "@type" : "beol:section",
+      "knora-api:attachedToProject" : {
+        "@id" : "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+      },
+      "knora-api:attachedToUser" : {
+        "@id" : "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+      },
+      "knora-api:creationDate" : {
+        "@type" : "xsd:dateTimeStamp",
+        "@value" : "2018-11-28T14:20:03.568Z"
+      },
+      "knora-api:hasPermissions" : "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+      "rdfs:label" : "Introduction 1.1"
+    }
+  }, {
+    "@id" : "http://rdfh.ch/0801/jTAU22HmTJWplGJgO6uVIw/values/BJvrB9F5RoONYtwSP5VLoA",
+    "@type" : "knora-api:LinkValue",
+    "knora-api:attachedToUser" : {
+      "@id" : "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+    },
+    "knora-api:hasPermissions" : "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+    "knora-api:linkValueHasTarget" : {
+      "@id" : "http://rdfh.ch/0801/2c1WD29lQruMzJqpD12lvg",
+      "@type" : "beol:section",
+      "knora-api:attachedToProject" : {
+        "@id" : "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+      },
+      "knora-api:attachedToUser" : {
+        "@id" : "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+      },
+      "knora-api:creationDate" : {
+        "@type" : "xsd:dateTimeStamp",
+        "@value" : "2018-11-28T14:20:03.568Z"
+      },
+      "knora-api:hasPermissions" : "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+      "rdfs:label" : "Introduction 1.2"
+    }
+  }, {
+    "@id" : "http://rdfh.ch/0801/jTAU22HmTJWplGJgO6uVIw/values/9qHMHoy3Rn2aJj8SnOd88w",
+    "@type" : "knora-api:LinkValue",
+    "knora-api:attachedToUser" : {
+      "@id" : "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+    },
+    "knora-api:hasPermissions" : "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+    "knora-api:linkValueHasTarget" : {
+      "@id" : "http://rdfh.ch/0801/Bkb1i96mQwC9k4t0aivYwA",
+      "@type" : "beol:section",
+      "knora-api:attachedToProject" : {
+        "@id" : "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+      },
+      "knora-api:attachedToUser" : {
+        "@id" : "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+      },
+      "knora-api:creationDate" : {
+        "@type" : "xsd:dateTimeStamp",
+        "@value" : "2018-11-28T14:20:03.568Z"
+      },
+      "knora-api:hasPermissions" : "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+      "rdfs:label" : "Introduction 1.3"
+    }
+  } ],
+  "beol:hasText" : {
+    "@id" : "http://rdfh.ch/0801/jTAU22HmTJWplGJgO6uVIw/values/Z04VFa4uSt6TelK-b3tJpA",
+    "@type" : "knora-api:TextValue",
+    "knora-api:attachedToUser" : {
+      "@id" : "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+    },
+    "knora-api:hasPermissions" : "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+    "knora-api:textValueAsHtml" : "<div>\n   <div id=\"transcription\">\n      \n      <p>Leonhard Euler is generally known as the leading\n         mathematician and theoretical physicist of his century and one of the\n         most productive scientists of all time; papers about single aspects\n         of his immense work, essays on its overall significance, and\n         biographical studies abound. By contrast, the general public has\n         never heard of Christian Goldbach, and mathematicians associate with\n         his name only one single idea: the “Goldbach Conjecture”, a\n         statement in number theory which is very easy to understand – one\n         version is: “every even integer greater than <span class=\"math\">\\(\\,2\\,\\)</span> is the sum of two\n         prime numbers” – but still unproved more than 250 years after he\n         first wrote it down in 1742. If Goldbach is awarded a few lines in\n         works of general reference, he is variously described as a German,\n         Prussian or even Russian mathematician, the last word often being\n         qualified by “amateur” or expanded by the statement that his\n         professional career was in law. The first editor of the\n         Euler-Goldbach correspondence, Euler’s great-grandson Paul Heinrich\n         Fuß<a class=\"person salsah-link\" href=\"http://rdfh.ch/0801/DotTpZofTc6CiU2YV-kMEg\"></a>, stated that “if he [Goldbach] did not become\n         famous in any specialty, the reason must be attributed to the great\n         universality of his knowledge”.<a class=\"salsah-link\" href=\"http://rdfh.ch/0801/3NtqKZyZRIujwFeDts9T3Q\"><sup>1</sup></a></p>\n      \n   </div>\n   <div id=\"references\">\n      <ol></ol>\n   </div>\n</div>"
+  },
+  "beol:sectionHasTitle" : {
+    "@id" : "http://rdfh.ch/0801/jTAU22HmTJWplGJgO6uVIw/values/p98t726zRey5Z9Xoazf_DA",
+    "@type" : "knora-api:TextValue",
+    "knora-api:attachedToUser" : {
+      "@id" : "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+    },
+    "knora-api:hasPermissions" : "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+    "knora-api:valueAsString" : "Historical and biographical setting"
+  },
+  "knora-api:attachedToProject" : {
+    "@id" : "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+  },
+  "knora-api:attachedToUser" : {
+    "@id" : "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+  },
+  "knora-api:creationDate" : {
+    "@type" : "xsd:dateTimeStamp",
+    "@value" : "2018-11-28T14:20:03.568Z"
+  },
+  "knora-api:hasPermissions" : "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+  "knora-api:hasStandoffLinkToValue" : [ {
+    "@id" : "http://rdfh.ch/0801/jTAU22HmTJWplGJgO6uVIw/values/mzkc0gTmSeO4zD8boZcx6g",
+    "@type" : "knora-api:LinkValue",
+    "knora-api:attachedToUser" : {
+      "@id" : "http://www.knora.org/ontology/knora-base#SystemUser"
+    },
+    "knora-api:hasPermissions" : "CR knora-base:SystemUser|V knora-base:UnknownUser",
+    "knora-api:linkValueHasTarget" : {
+      "@id" : "http://rdfh.ch/0801/3NtqKZyZRIujwFeDts9T3Q",
+      "@type" : "beol:endnote",
+      "knora-api:attachedToProject" : {
+        "@id" : "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+      },
+      "knora-api:attachedToUser" : {
+        "@id" : "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+      },
+      "knora-api:creationDate" : {
+        "@type" : "xsd:dateTimeStamp",
+        "@value" : "2018-11-28T14:20:03.568Z"
+      },
+      "knora-api:hasPermissions" : "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+      "rdfs:label" : "goldbach_introduction_1 note-1"
+    }
+  }, {
+    "@id" : "http://rdfh.ch/0801/jTAU22HmTJWplGJgO6uVIw/values/u-6HP4BeQU6r_Z6uo4Mzpg",
+    "@type" : "knora-api:LinkValue",
+    "knora-api:attachedToUser" : {
+      "@id" : "http://www.knora.org/ontology/knora-base#SystemUser"
+    },
+    "knora-api:hasPermissions" : "CR knora-base:SystemUser|V knora-base:UnknownUser",
+    "knora-api:linkValueHasTarget" : {
+      "@id" : "http://rdfh.ch/0801/DotTpZofTc6CiU2YV-kMEg",
+      "@type" : "beol:person",
+      "knora-api:attachedToProject" : {
+        "@id" : "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+      },
+      "knora-api:attachedToUser" : {
+        "@id" : "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+      },
+      "knora-api:creationDate" : {
+        "@type" : "xsd:dateTimeStamp",
+        "@value" : "2018-11-28T14:13:40.968Z"
+      },
+      "knora-api:hasPermissions" : "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+      "rdfs:label" : "Paul Heinrich Fuss"
+    }
+  } ],
+  "rdfs:label" : "Introduction 1",
+  "@context" : {
+    "rdf" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "knora-api" : "http://api.knora.org/ontology/knora-api/v2#",
+    "rdfs" : "http://www.w3.org/2000/01/rdf-schema#",
+    "beol" : "http://0.0.0.0:3333/ontology/0801/beol/v2#",
+    "xsd" : "http://www.w3.org/2001/XMLSchema#"
+  }
+}
