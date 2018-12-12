@@ -28,21 +28,13 @@ export interface IntroProps {
     'text': ReadPropertyItem[];
 }
 
+export interface Introduction {
 
-/**
- *
- */
-@JsonObject('introduction')
-export class Introduction {
+    name: string;
 
-    @JsonProperty('name', String)
-    public name: string = undefined;
+    label: string;
 
-    @JsonProperty('label', String)
-    public label: string = undefined;
-
-    @JsonProperty('children', [Introduction], true)
-    public children?: Introduction[] = [];
+    children?: Introduction[];
 }
 
 @Component({
@@ -50,18 +42,16 @@ export class Introduction {
     templateUrl: './introduction.component.html',
     styleUrls: ['./introduction.component.scss']
 })
-export class IntroductionComponent implements OnInit, OnDestroy {
+export class IntroductionComponent implements OnInit {
 
     id: string;
     iri: string;
     project: string;
-    isbn: string;
     resource: ReadResource;
     ontologyInfo: OntologyInformation;
     errorMessage;
 
     KnoraConstants = KnoraConstants;
-    sectionUrl = environment.externalApiURL + '/ontology/0801/beol/v2#section';
 
     list: Introduction[];
 
@@ -78,8 +68,6 @@ export class IntroductionComponent implements OnInit, OnDestroy {
         'text': environment.externalApiURL + '/ontology/0801/beol/v2#hasText',
     };
 
-    navigationSubscription;
-
     constructor(private _route: ActivatedRoute,
         private _http: HttpClient,
         private _router: Router,
@@ -87,49 +75,27 @@ export class IntroductionComponent implements OnInit, OnDestroy {
         private _beol: BeolService,
         private _resourceService: ResourceService,
         private _cacheService: OntologyCacheService,
-        private _incomingService: IncomingService,
         public location: Location) {
-
-        // subscribe to the router events
-        this.navigationSubscription = this._router.events.subscribe((e: any) => {
-            // if it is a NavigationEnd event re-initalise the component
-            if (e instanceof NavigationEnd) {
-                this.searchForBook(this.id);
-            }
-        });
 
     }
 
     ngOnInit() {
 
-        this._http.get('assets/data/introduction.json').subscribe(
-            (result: any) => {
-                this.list = result.introductions;
-                this.isLoading = false;
-            },
-            (error: any) => {
-                console.error(error);
-            }
-        );
+        const intro  = require('../../assets/data/introduction.json');
+        this.list = <Introduction[]> intro.introductions;
 
         this._route.params.subscribe((params: Params) => {
             this.project = params['project'];
-            // console.log('project', this.project);
             this.id = params['id'];
-            // console.log('id ', this.id);
-        });
-        this.searchForBook(this.id);
-    }
 
-    ngOnDestroy() {
-        if (this.navigationSubscription) {
-            this.navigationSubscription.unsubscribe();
-        }
+            this.searchForBook(this.id);
+        });
+
     }
 
     searchForBook(id: string): void {
 
-        const gravsearch: string = this._beol.searchForBookById(id);
+        const gravsearch: string = this._beol.searchForIntroductionById(id);
 
         this._searchService.doExtendedSearch(gravsearch).subscribe(
             (result: ApiServiceResult) => {
@@ -141,7 +107,7 @@ export class IntroductionComponent implements OnInit, OnDestroy {
                 promise.then((compacted) => {
 
                     const resourceSeq: ReadResourcesSequence = ConvertJSONLD.createReadResourcesSequenceFromJsonLD(compacted);
-                    // console.log('resourceSeq', resourceSeq);
+
                     if (resourceSeq.resources.length === 1) {
                         // console.log('we got a resource sequence ', resourceSeq.resources);
                         this.requestResource(resourceSeq.resources[0].id);
@@ -163,8 +129,6 @@ export class IntroductionComponent implements OnInit, OnDestroy {
      * @param iri the Iri of the resource to be requested.
      */
     private requestResource(iri: string): void {
-
-        this.props = undefined;
 
         this._resourceService.getResource(iri)
             .subscribe(
@@ -188,6 +152,8 @@ export class IntroductionComponent implements OnInit, OnDestroy {
                             // request ontology information about resource class Iris (properties are implied)
                             this._cacheService.getResourceClassDefinitions(resourceClassIris).subscribe(
                                 (resourceClassInfos: OntologyInformation) => {
+
+                                    // console.log(JSON.stringify(resourceClassInfos.getResourceClasses()))
 
                                     // initialize ontology information
                                     this.ontologyInfo = resourceClassInfos;
@@ -225,7 +191,7 @@ export class IntroductionComponent implements OnInit, OnDestroy {
                                 });
                         } else {
                             // exactly one resource was expected, but resourceSeq.resources.length != 1
-                            this.errorMessage = `Exactly one resource was expected, but ${resourceSeq.resources.length} resource(s) given.`
+                            this.errorMessage = `Exactly one resource was expected, but ${resourceSeq.resources.length} resource(s) given.`;
 
                         }
 
@@ -241,28 +207,6 @@ export class IntroductionComponent implements OnInit, OnDestroy {
                     this.isLoading = false;
                 }
             );
-    }
-
-    /**
-     * Navigate to the introduction page using the beolId as parameter
-     * @param label beolID
-     */
-    goToIntro(label: any) {
-
-        // recreate the beolId based on the referred resource label
-        let beolId = label.toLowerCase();
-        beolId = beolId.replace(' ', '_');
-        beolId = 'goldbach_' + beolId;
-
-        this._router.navigateByUrl('introduction/leoo/' + beolId);
-
-    }
-
-    /**
-     * Navigate to the page of the list of abbreviations
-     */
-    goToListAbbreviation() {
-        this._router.navigateByUrl('introduction/leoo/goldbach_abbreviations');
     }
 
     toggleChildren(index: number) {
