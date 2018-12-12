@@ -61,7 +61,15 @@ describe('IntroductionComponent', () => {
             providers: [
                 {
                     provide: ActivatedRoute,
-                    useValue: {params: of({project, id})}
+                    useValue: { paramMap: of({
+                                get: (param) => {
+                                    if (param === 'project') {
+                                        return project;
+                                    } else {
+                                        return id;
+                                    }
+                                }}
+                        )}
                 },
                 { provide: BeolService, useValue: spyBeolService },
                 { provide: SearchService, useValue: spySearchService },

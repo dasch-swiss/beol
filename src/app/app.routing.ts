@@ -22,8 +22,7 @@ const appRoutes: Routes = [
     },
     {
         path: 'introduction/:project/:id',
-        component: IntroductionComponent,
-        runGuardsAndResolvers: 'paramsChange'
+        component: IntroductionComponent
     },
     {
         path: 'correspondence/:project',
