@@ -13,7 +13,7 @@
 
             <!-- Tree of introduction links to navigate through several levels on each intro page with data from json file called introductions.json -->
             <mat-list class="nav">
-                <div *ngFor="let item of listLeooIV; let i = index;">
+                <div *ngFor="let item of listLeoo; let i = index;">
 
                     <mat-list-item [class.parent]="item.children">
                         <button mat-button [routerLink]="'/introduction/leoo/' + item.name"
