@@ -3,14 +3,12 @@
     <kui-progress-indicator *ngIf="isLoading" [color]="'#D88958'"></kui-progress-indicator>
 
     <div *ngIf="!isLoading && props">
-
+        <button mat-stroked-button class="previousBtn" (click)="location.back()">
+            <mat-icon>arrow_back</mat-icon>
+            Previous
+        </button>
         <div *ngIf="project=='leoo'" class="sidebar" >
-
-            <button mat-stroked-button class="previousBtn" (click)="location.back()">
-                <mat-icon>arrow_back</mat-icon>
-                Previous
-            </button>
-
+            
             <!-- Tree of introduction links to navigate through several levels on each intro page with data from json file called introductions.json -->
             <mat-list class="nav">
                 <div *ngFor="let item of listLeoo; let i = index;">
