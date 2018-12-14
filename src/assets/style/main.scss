@@ -239,9 +239,11 @@ td.center {
   margin-left: 20px;
 }
 .icon-fxM:after {
-  content:" \25b1 ";
+  content:" \25B1 ";
   font-size: 20px;
   vertical-align: middle;
+  bottom: 2px;
+  position: relative;
 }
 
 @font-face {

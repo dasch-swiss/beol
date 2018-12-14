@@ -25,7 +25,7 @@ import { MathJaxDirective } from '../directives/mathjax.directive';
 describe('IntroductionComponent', () => {
     let component: IntroductionComponent;
     let fixture: ComponentFixture<IntroductionComponent>;
-    const project = 'leoo';
+    const project = 'leooIV';
     const id = 'goldbach_introduction_1';
 
     let beolServiceSpy: jasmine.SpyObj<BeolService>; // see https://angular.io/guide/testing#angular-testbed

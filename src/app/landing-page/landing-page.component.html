@@ -22,6 +22,20 @@
 
 
             <div class="leoo-section">
+                <div class="container">
+                    <div class="flex-container" fxFlex fxLayout="row wrap" fxLayout.sm="column" fxlayout.xs="column" fxFlexFill>
+                        <div fxFlex routerLink="introduction/leoo/goldbach_preface">
+                            <mat-card class="intro-card" fxFlex>
+                                Preface
+                            </mat-card>
+                        </div>
+                        <div fxFlex routerLink="introduction/leoo/goldbach_abbreviations">
+                            <mat-card class="intro-card" fxFlex>
+                                List of Abbreviations
+                            </mat-card>
+                        </div>
+                    </div>
+                </div>
                 <p fxLayout="column"><strong>Introductions</strong></p>
                 <div class="container">
                     <div class="flex-container" fxFlex fxLayout="row wrap" fxLayout.sm="column" fxlayout.xs="column" fxFlexFill>
@@ -40,17 +54,35 @@
                                 Editing the Euler-Goldbach correspondence
                             </mat-card>
                         </div>
-                        <div fxFlex routerLink="introduction/leoo/goldbach_abbreviations">
-                            <mat-card class="intro-card">
-                                List of Abbreviations
-                            </mat-card>
-                        </div>
+
                     </div>
                 </div>
+
             </div>
 
             <div class="leoo-section">
-                <app-correspondence [project]="'leoo'"></app-correspondence>
+                <app-correspondence [project]="'leooIV'"></app-correspondence>
+            </div>
+            <h2 mat-card-title>Leonhardi Euleri Commercium Epistolicum</h2>
+
+            <p fxLayout="column"><strong>Introductions</strong></p>
+            <div class="container">
+                <div class="flex-container" fxFlex fxLayout="row wrap" fxLayout.sm="column" fxlayout.xs="column" fxFlexFill>
+                    <div fxFlex routerLink="introduction/leooCondorcet/CondorcetMJA_Introduction">
+                        <mat-card class="intro-card" fxFlex>
+                            Correspondance d'Euler avec Condorcet
+                        </mat-card>
+                    </div>
+                    <div fxFlex routerLink="introduction/leooCondorcet/Turgot_Introduction">
+                        <mat-card class="intro-card" fxFlex>
+                            Correspondance d'Euler avec Turgot
+                        </mat-card>
+                    </div>
+                </div>
+            </div>
+            <div class="leoo-section">
+                <app-correspondence [project]="'leooCondorcet'"></app-correspondence>
+
             </div>
         </section>
 
