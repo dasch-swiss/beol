@@ -34,10 +34,10 @@
 
                 <!-- content of the resource -->
                 <!-- this should be implemented from @knora/viewer object -->
-                <div mat-line *ngFor="let prop of res.properties | key">
+                <div mat-line *ngFor="let prop of res.properties | kuiKey">
                     <!--<span>{{ontologyInfo?.getLabelForProperty(prop.key)}}</span>-->
                     <ul>
-                        <li *ngFor="let val of prop.value | key" class="without-bullets">
+                        <li *ngFor="let val of prop.value | kuiKey" class="without-bullets">
                             <div [ngSwitch]="val.value.getClassName()">
 
                                 <!-- only render math if panel is open: step === i-->
@@ -49,8 +49,8 @@
                                     <span *ngSwitchDefault="">{{val.value.getContent()}}</span>
                                 </span>
                                 <br>
-                                <span class="mat-caption" *ngIf="ontologyInfo?.getLabelForProperty(prop.key) !== 'Text'">
-                                    {{ontologyInfo?.getLabelForProperty(prop.key)}}
+                                <span class="mat-caption" *ngIf="ontologyInfo?.getLabelForProperty(prop.kuiKey) !== 'Text'">
+                                    {{ontologyInfo?.getLabelForProperty(prop.kuiKey)}}
                                 </span>
 
                             </div>
