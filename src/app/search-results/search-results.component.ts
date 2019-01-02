@@ -26,7 +26,7 @@ const jsonld = require('jsonld');
     templateUrl: './search-results.component.html',
     styleUrls: ['./search-results.component.scss']
 })
-export class SearchResultsComponent implements OnInit {
+export class SearchResultsComponent implements OnInit, OnDestroy {
 
     isLoading = true;
 
@@ -51,6 +51,8 @@ export class SearchResultsComponent implements OnInit {
     searchQuery: string;
     searchMode: string;
 
+    navigationSubscription: Subscription;
+
     constructor(
         private _route: ActivatedRoute,
         private _searchService: SearchService,
@@ -64,8 +66,8 @@ export class SearchResultsComponent implements OnInit {
 
     ngOnInit() {
 
-        this._route.params.subscribe((params: Params) => {
-            this.searchMode = params['mode'];
+        this.navigationSubscription = this._route.paramMap.subscribe((params: Params) => {
+            this.searchMode = params.get('mode');
 
             // init offset to 0
             this.offset = 0;
@@ -73,7 +75,7 @@ export class SearchResultsComponent implements OnInit {
             this.resetStep();
 
             if (this.searchMode === 'fulltext') {
-                this.searchQuery = params['q'];
+                this.searchQuery = params.get('q');
             } else if (this.searchMode === 'extended') {
                 this.gravsearchGenerator = this._searchParamsService.getSearchParams();
                 this.generateGravsearchQuery();
@@ -83,6 +85,12 @@ export class SearchResultsComponent implements OnInit {
             this.getResult();
         });
 
+    }
+
+    ngOnDestroy() {
+        if (this.navigationSubscription !== undefined) {
+            this.navigationSubscription.unsubscribe();
+        }
     }
 
     /**

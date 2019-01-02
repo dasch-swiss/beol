@@ -157,10 +157,9 @@ export abstract class BeolResource implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        if (this.navigationSubscription) {
+        if (this.navigationSubscription !== undefined) {
             this.navigationSubscription.unsubscribe();
         }
-
     }
 
     /**
