@@ -49,8 +49,8 @@
                                     <span *ngSwitchDefault="">{{val.value.getContent()}}</span>
                                 </span>
                                 <br>
-                                <span class="mat-caption" *ngIf="ontologyInfo?.getLabelForProperty(prop.kuiKey) !== 'Text'">
-                                    {{ontologyInfo?.getLabelForProperty(prop.kuiKey)}}
+                                <span class="mat-caption" *ngIf="ontologyInfo?.getLabelForProperty(prop.key) !== 'Text'">
+                                    {{ontologyInfo?.getLabelForProperty(prop.key)}}
                                 </span>
 
                             </div>

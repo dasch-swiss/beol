@@ -19,7 +19,7 @@
 
             <div mat-line *ngFor="let prop of resource?.properties | kuiKey">
 
-                <div *ngIf="prop.kuiKey === KnoraConstants.hasStillImageFileValue; else noImage">
+                <div *ngIf="prop.key === KnoraConstants.hasStillImageFileValue; else noImage">
                     <!-- resource has images attached directly, display them -->
 
                     <kui-still-image #OSDViewer *ngIf="!isLoading && resource.stillImageRepresentationsToDisplay.length > 0" class="osd-viewer" [images]="resource?.stillImageRepresentationsToDisplay" [imageRangeStart]="0" [imageRangeEnd]="0" [imageChangeInterval]="1">
@@ -28,7 +28,7 @@
 
                 <ng-template #noImage>
                     <!-- resource has no images attached directly -->
-                    <span>{{ontologyInfo?.getLabelForProperty(prop.kuiKey)}}</span>
+                    <span>{{ontologyInfo?.getLabelForProperty(prop.key)}}</span>
                     <ul>
                         <li *ngFor="let val of prop.value | kuiKey">
                             <span [ngSwitch]="val.value.getClassName()">
