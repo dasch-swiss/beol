@@ -1,10 +1,10 @@
 <div [ngSwitch]="project">
 
     <!-- display the correspondences of the LEOO project -->
-    <div *ngSwitchCase="'leoo'">
-        <div *ngFor="let book of leoo">
+    <div *ngSwitchCase="'leooIV'">
+        <div *ngFor="let book of leooIV">
             <div *ngFor="let corrGroup of book.correspondences">
-                <p><strong>Correspondences {{corrGroup.description}}</strong></p>
+                <p><strong>Correspondence {{corrGroup.description}}</strong></p>
                 <div class="container">
                     <div class="flex-container" fxFlex fxLayout="row wrap" fxLayout.sm="column" fxlayout.xs="column" fxFlexFill>
                         <mat-card class="intro-card" fxFlex *ngFor="let corr of corrGroup.correspondences"
@@ -16,7 +16,26 @@
             </div>
         </div>
     </div>
-
+    <!-- display the correspondences of the LEOO project -->
+    <div *ngSwitchCase="'leooCondorcet'">
+        <div *ngFor="let corrGroup of leooCondorcet">
+                <p>Correspondence between <strong>{{corrGroup.mainCorrespondent.name}}</strong> and
+                <!-- select list to choose the recipient name (among one or several choices) -->
+                <mat-form-field>
+                    <mat-select placeholder="Select Recipient">
+                        <div *ngFor="let section of corrGroup.sections">
+                            <div *ngFor="let corr of section.correspondences">
+                                <mat-option [value]="corr.correspondent2.name"
+                                            (click)="searchForCorrespondence(corr.correspondent1.gnd, corr.correspondent2.gnd)">
+                                    {{corr.correspondent2.name}}
+                                </mat-option>
+                            </div>
+                        </div>
+                    </mat-select>
+                </mat-form-field>
+            </p>
+        </div>
+    </div>
     <!-- display the correspondences of the BEBB project -->
     <div *ngSwitchCase="'bebb'">
         <div *ngFor="let corrGroup of wiki">

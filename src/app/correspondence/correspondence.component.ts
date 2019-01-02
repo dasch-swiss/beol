@@ -92,9 +92,15 @@ export class CorrespondenceComponent implements OnInit {
   Christian_Goldbach = new Correspondent('Christian Goldbach', '(DE-588)118696149');
   Leonhard_Euler = new Correspondent('Leonhard Euler', '(DE-588)118531379');
   Johann_Albrecht_Euler = new Correspondent('Johann Albrecht Euler', '(DE-588)116610832');
+  Condorcet = new Correspondent('Marie Jean Antoine Nicolas Condorcet', '(DE-588)118521772');
+  Turgot = new Correspondent('Anne Robert Jacques Turgot', '(DE-588)118763202');
+  Lexell = new Correspondent('Anders Johan Lexell', '(DE-588)100189180');
+  FussNI = new Correspondent('Niklaus (I) Fuss', '(DE-588)116878894');
+
 
   // project: string;
-  leoo: Book[];
+  leooIV: Book[];
+  leooCondorcet: CorrespondenceGroupWithSection[];
   wiki: CorrespondenceGroupWithSection[];
 
   constructor(
@@ -298,20 +304,34 @@ export class CorrespondenceComponent implements OnInit {
     const Francesco_Maria_Zanotti = new Correspondent('Francesco Maria Zanotti', '(DE-588)117592307');
 
     /**
-     * Correspondences for LEOO project
+     * Correspondences for LEOOIV project
      */
-    this.leoo = [
+    this.leooIV = [
       new Book('LEOO IVA.IV', '978-3-0348-0880-4', [
         new CorrespondenceGroup(this.Leonhard_Euler, [
           new Correspondence(this.Leonhard_Euler, this.Christian_Goldbach, 'Original', true),
           new Correspondence(this.Leonhard_Euler, this.Christian_Goldbach, 'Translation')
-        ], 'from Leonhard Euler to Christian Goldbach'),
+        ], 'between Leonhard Euler and Christian Goldbach'),
         new CorrespondenceGroup(this.Johann_Albrecht_Euler, [
           new Correspondence(this.Johann_Albrecht_Euler, this.Christian_Goldbach, 'Original', true),
           new Correspondence(this.Johann_Albrecht_Euler, this.Christian_Goldbach, 'Translation')
-        ], 'from Johann Albrecht Euler to Christian Goldbach')
+        ], 'between Johann Albrecht Euler and Christian Goldbach')
       ])
     ];
+    this.leooCondorcet = [
+
+          new CorrespondenceGroupWithSection(this.Condorcet, [
+              new Section('condorcet', [
+                    new Correspondence(this.Condorcet, this.Leonhard_Euler),
+                    new Correspondence(this.Condorcet, this.Johann_Albrecht_Euler),
+                    new Correspondence(this.Condorcet, this.Lexell),
+                    new Correspondence(this.Condorcet, this.FussNI)
+          ])]),
+          new CorrespondenceGroupWithSection(this.Turgot, [
+              new Section('turgot', [
+                    new Correspondence(this.Turgot, this.Leonhard_Euler)
+              ])])
+        ];
 
     /**
      * Collection of correspondences the user can select from.
