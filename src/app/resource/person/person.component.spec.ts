@@ -40,7 +40,11 @@ describe('PersonComponent', () => {
                 {provide: Location},
                 {
                     provide: ActivatedRoute,
-                    useValue: {params: of({id})}
+                    useValue: { paramMap: of({
+                            get: () => {
+                                return id;
+                            }
+                        })}
                 },
                 {provide: 'config', useValue: KuiCoreConfig}
             ]
