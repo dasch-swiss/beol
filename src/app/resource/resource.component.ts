@@ -1,26 +1,7 @@
-import { Component, OnDestroy } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
+import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import {
-    ApiServiceError,
-    ApiServiceResult,
-    ConvertJSONLD,
-    ImageRegion,
-    IncomingService,
-    KnoraConstants,
-    OntologyCacheService,
-    OntologyInformation,
-    ReadLinkValue,
-    ReadPropertyItem,
-    ReadResource,
-    ReadResourcesSequence,
-    ReadStillImageFileValue,
-    ResourceService,
-    SearchService,
-    StillImageRepresentation,
-    Utils
-} from '@knora/core';
-import { RequestStillImageRepresentations } from '@knora/viewer';
+import { IncomingService, KnoraConstants, OntologyCacheService, OntologyInformation, ReadResource, ResourceService } from '@knora/core';
 import { BeolResource } from './beol-resource';
 import { Subscription } from 'rxjs';
 import { BeolService } from '../services/beol.service';
@@ -30,7 +11,7 @@ import { BeolService } from '../services/beol.service';
     templateUrl: './resource.component.html',
     styleUrls: ['./resource.component.scss']
 })
-export class ResourceComponent extends BeolResource implements OnDestroy {
+export class ResourceComponent extends BeolResource {
 
     iri: string;
     resource: ReadResource;
@@ -43,36 +24,17 @@ export class ResourceComponent extends BeolResource implements OnDestroy {
 
     propIris;
 
-    constructor(private _route: ActivatedRoute,
-        private _router: Router,
+    constructor(protected _route: ActivatedRoute,
         protected _resourceService: ResourceService,
         protected _cacheService: OntologyCacheService,
         protected _incomingService: IncomingService,
         public location: Location,
         protected _beolService: BeolService) {
 
-        super(_resourceService, _cacheService, _incomingService, _beolService);
-
-        this._route.params.subscribe((params: Params) => {
-            this.iri = params['id'];
-        });
-
-        // subscribe to the router events
-        this.navigationSubscription = this._router.events.subscribe((e: any) => {
-            // if it is a NavigationEnd event re-initalise the component
-            if (e instanceof NavigationEnd) {
-                this.getResource(this.iri);
-            }
-        });
+        super(_route, _resourceService, _cacheService, _incomingService, _beolService);
     }
 
     initProps() {
-    }
-
-    ngOnDestroy() {
-        if (this.navigationSubscription) {
-            this.navigationSubscription.unsubscribe();
-        }
     }
 
     /**
