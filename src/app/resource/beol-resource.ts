@@ -156,7 +156,8 @@ export abstract class BeolResource implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.navigationSubscription = this._route.paramMap.subscribe((params: ParamMap) => {
-            this.getResource(params.get('id'));
+            this.iri = params.get('id');
+            this.getResource(this.iri);
         });
 
     }
