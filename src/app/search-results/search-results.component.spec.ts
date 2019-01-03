@@ -55,7 +55,15 @@ describe('SearchResultsComponent', () => {
             providers: [
                 {
                     provide: ActivatedRoute,
-                    useValue: { params: of({ mode, q }) }
+                    useValue: { paramMap: of({
+                            get: (param: string) => {
+                                if (param === 'q') {
+                                    return q;
+                                } else {
+                                    return mode;
+                                }
+                            }
+                        })}
                 },
                 { provide: 'config', useValue: KuiCoreConfig },
                 { provide: SearchParamsService, useValue: mockSearchParamService},

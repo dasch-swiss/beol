@@ -1,6 +1,6 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { Location } from '@angular/common';
-import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import {
     IncomingService,
     KnoraConstants,
@@ -8,8 +8,8 @@ import {
     OntologyInformation,
     ReadPropertyItem,
     ReadResource,
-    ResourceService,
-    ReadTextValue
+    ReadTextValue,
+    ResourceService
 } from '@knora/core';
 import { BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
 import { Subscription } from 'rxjs';
@@ -28,7 +28,7 @@ class EndnoteProps implements PropertyValues {
     templateUrl: './endnote.component.html',
     styleUrls: ['./endnote.component.scss']
 })
-export class EndnoteComponent extends BeolResource implements OnDestroy {
+export class EndnoteComponent extends BeolResource {
 
     iri: string;
     resource: ReadResource;
@@ -47,27 +47,14 @@ export class EndnoteComponent extends BeolResource implements OnDestroy {
 
     props: EndnoteProps;
 
-    constructor(private _router: Router,
-                private _route: ActivatedRoute,
+    constructor(protected _route: ActivatedRoute,
                 protected _resourceService: ResourceService,
                 protected _incomingService: IncomingService,
                 protected _cacheService: OntologyCacheService,
                 public location: Location,
                 protected _beolService: BeolService) {
 
-        super(_resourceService, _cacheService, _incomingService, _beolService);
-
-        this._route.params.subscribe((params: Params) => {
-            this.iri = params['id'];
-        });
-
-        // subscribe to the router events to reload the content
-        this.navigationSubscription = this._router.events.subscribe((e: any) => {
-            // if it is a NavigationEnd event re-initalise the component
-            if (e instanceof NavigationEnd) {
-                this.getResource(this.iri);
-            }
-        });
+        super(_route, _resourceService, _cacheService, _incomingService, _beolService);
 
     }
 
@@ -80,9 +67,4 @@ export class EndnoteComponent extends BeolResource implements OnDestroy {
         this.props = props;
     }
 
-    ngOnDestroy() {
-        if (this.navigationSubscription) {
-            this.navigationSubscription.unsubscribe();
-        }
-    }
 }

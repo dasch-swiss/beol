@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, ParamMap, Params, Router } from '@angular/router';
 import {
     ApiServiceError,
     ApiServiceResult,
@@ -19,6 +19,7 @@ import { BeolService } from '../services/beol.service';
 import { JsonObject, JsonProperty } from 'json2typescript';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { Subscription } from 'rxjs';
 
 declare let require: any;
 const jsonld = require('jsonld');
@@ -42,7 +43,7 @@ export interface Introduction {
     templateUrl: './introduction.component.html',
     styleUrls: ['./introduction.component.scss']
 })
-export class IntroductionComponent implements OnInit {
+export class IntroductionComponent implements OnInit, OnDestroy {
 
     id: string;
     iri: string;
@@ -63,34 +64,43 @@ export class IntroductionComponent implements OnInit {
 
     isLoading = true;
 
+    paramsSubscription: Subscription;
+
     propIris: any = {
         'title': environment.externalApiURL + '/ontology/0801/beol/v2#sectionHasTitle',
         'text': environment.externalApiURL + '/ontology/0801/beol/v2#hasText',
     };
 
     constructor(private _route: ActivatedRoute,
-        private _http: HttpClient,
-        private _router: Router,
-        private _searchService: SearchService,
-        private _beol: BeolService,
-        private _resourceService: ResourceService,
-        private _cacheService: OntologyCacheService,
-        public location: Location) {
+                private _http: HttpClient,
+                private _router: Router,
+                private _searchService: SearchService,
+                private _beol: BeolService,
+                private _resourceService: ResourceService,
+                private _cacheService: OntologyCacheService,
+                public location: Location) {
 
     }
 
     ngOnInit() {
 
-        const introleoo  = require('../../assets/data/introductionLeoo.json');
-        const introLece  = require('../../assets/data/introductionLece.json');
+        const introleoo = require('../../assets/data/introductionLeoo.json');
+        const introLece = require('../../assets/data/introductionLece.json');
         this.listLeoo = <Introduction[]> introleoo.Introductions;
         this.listLece = <Introduction[]> introLece.introductions;
-        this._route.params.subscribe((params: Params) => {
-            this.project = params['project'];
-            this.id = params['id'];
+
+        this.paramsSubscription = this._route.paramMap.subscribe((params: ParamMap) => {
+            this.project = params.get('project');
+            this.id = params.get('id');
             this.searchForIntro(this.id);
         });
 
+    }
+
+    ngOnDestroy() {
+        if (this.paramsSubscription !== undefined) {
+            this.paramsSubscription.unsubscribe();
+        }
     }
 
     searchForIntro(id: string): void {

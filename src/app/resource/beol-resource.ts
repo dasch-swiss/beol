@@ -23,6 +23,8 @@ import { environment } from '../../environments/environment';
 import { ViewChild } from '@angular/core';
 
 import { BeolService } from '../services/beol.service';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { OnDestroy, OnInit } from '@angular/core';
 
 declare let require: any; // http://stackoverflow.com/questions/34730010/angular2-5-minute-install-bug-require-is-not-defined
 let jsonld = require('jsonld');
@@ -35,7 +37,7 @@ export interface PropertyValues {
     [index: string]: ReadPropertyItem[];
 }
 
-export abstract class BeolResource {
+export abstract class BeolResource implements OnInit, OnDestroy {
 
     abstract iri: string;
     abstract resource: ReadResource;
@@ -52,10 +54,12 @@ export abstract class BeolResource {
 
     abstract propIris: PropIriToNameMapping;
 
-    constructor(protected _resourceService: ResourceService,
-                protected _cacheService: OntologyCacheService,
-                protected _incomingService: IncomingService,
-                protected _beolService: BeolService) {
+    constructor(
+        protected _route: ActivatedRoute,
+        protected _resourceService: ResourceService,
+        protected _cacheService: OntologyCacheService,
+        protected _incomingService: IncomingService,
+        protected _beolService: BeolService) {
     }
 
     /**
@@ -148,6 +152,19 @@ export abstract class BeolResource {
             }
         }
         return invertedMapping;
+    }
+
+    ngOnInit() {
+        this.navigationSubscription = this._route.paramMap.subscribe((params: ParamMap) => {
+            this.getResource(params.get('id'));
+        });
+
+    }
+
+    ngOnDestroy() {
+        if (this.navigationSubscription !== undefined) {
+            this.navigationSubscription.unsubscribe();
+        }
     }
 
     /**
@@ -321,7 +338,7 @@ export abstract class BeolResource {
 
                                 // prepare regions to be displayed
                                 BeolResource.collectImagesAndRegionsForResource(this.resource);
-                                
+
                                 if (this.osdViewer) {
                                     this.osdViewer.updateRegions();
                                 }

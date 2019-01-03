@@ -45,7 +45,7 @@ export class MeditatioComponent extends BeolResource implements OnDestroy {
     transcriptionIrisReady = false;
     transcription: ReadTextValueAsHtml;
 
-    constructor(private _route: ActivatedRoute,
+    constructor(protected _route: ActivatedRoute,
                 private _router: Router,
                 protected _resourceService: ResourceService,
                 protected _cacheService: OntologyCacheService,
@@ -54,19 +54,7 @@ export class MeditatioComponent extends BeolResource implements OnDestroy {
                 private _searchService: SearchService,
                 public location: Location) {
 
-        super(_resourceService, _cacheService, _incomingService, _beolService);
-
-        this._route.params.subscribe((params: Params) => {
-            this.iri = params['id'];
-        });
-
-        // subscribe to the router events
-        this.navigationSubscription = this._router.events.subscribe((e: any) => {
-            // if it is a NavigationEnd event re-initalise the component
-            if (e instanceof NavigationEnd) {
-                this.getResource(this.iri);
-            }
-        });
+        super(_route, _resourceService, _cacheService, _incomingService, _beolService);
     }
 
     initProps() {
@@ -123,12 +111,6 @@ export class MeditatioComponent extends BeolResource implements OnDestroy {
         );
 
 
-    }
-
-    ngOnDestroy() {
-        if (this.navigationSubscription) {
-            this.navigationSubscription.unsubscribe();
-        }
     }
 
     regionActive(regionIri) {

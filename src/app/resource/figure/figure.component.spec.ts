@@ -28,7 +28,11 @@ describe('FigureComponent', () => {
       providers: [
         {
           provide: ActivatedRoute,
-          useValue: { params: of({ id }) }
+          useValue: { paramMap: of({
+                  get: () => {
+                      return id;
+                  }
+              })}
         },
         { provide: Location, useValue: locationStub }
       ]
