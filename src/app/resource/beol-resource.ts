@@ -46,6 +46,7 @@ export abstract class BeolResource implements OnInit, OnDestroy {
     abstract errorMessage: any;
     abstract incomingStillImageRepresentationCurrentOffset: number;
     abstract navigationSubscription: Subscription;
+    protected params;
 
     @ViewChild('OSDViewer') osdViewer: StillImageComponent;
 
@@ -156,6 +157,7 @@ export abstract class BeolResource implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.navigationSubscription = this._route.paramMap.subscribe((params: ParamMap) => {
+            this.params = params;
             this.iri = params.get('id');
             this.getResource(this.iri);
         });

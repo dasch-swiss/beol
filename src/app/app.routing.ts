@@ -51,8 +51,11 @@ const appRoutes: Routes = [
     },
     {
         path: 'meditatio/:id',
-        component: MeditatioComponent,
-        runGuardsAndResolvers: 'paramsChange'
+        component: MeditatioComponent
+    },
+    {
+        path: 'meditatio/:id/:region',
+        component: MeditatioComponent
     },
     {
         path: 'endnote/:id',

@@ -25,16 +25,20 @@ export class ResourceComponent extends BeolResource {
     propIris;
 
     constructor(protected _route: ActivatedRoute,
-        protected _resourceService: ResourceService,
-        protected _cacheService: OntologyCacheService,
-        protected _incomingService: IncomingService,
-        public location: Location,
-        protected _beolService: BeolService) {
+                protected _resourceService: ResourceService,
+                protected _cacheService: OntologyCacheService,
+                protected _incomingService: IncomingService,
+                public location: Location,
+                protected _beolService: BeolService) {
 
         super(_route, _resourceService, _cacheService, _incomingService, _beolService);
     }
 
     initProps() {
+
+        // if this resource is a region, refer to page it belongs to
+        this._beolService.routeToPageWithActiveRegion(this.resource);
+
     }
 
     /**
