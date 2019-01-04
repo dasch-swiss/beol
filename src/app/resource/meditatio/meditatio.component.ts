@@ -91,6 +91,13 @@ export class MeditatioComponent extends BeolResource implements OnDestroy {
 
                             this.transcriptionIrisReady = true;
 
+                            // check if there is an active region (submitted as a parameter)
+                            const activeRegionIri = this.params.get('region');
+
+                            if (activeRegionIri !== null) {
+                                this.regionActive(activeRegionIri);
+                            }
+
                         },
                         (err) => {
 
@@ -113,7 +120,7 @@ export class MeditatioComponent extends BeolResource implements OnDestroy {
 
     }
 
-    regionActive(regionIri) {
+    private getTranscription(regionIri: string) {
 
         const transcrIri = this.regionToTranscription[regionIri];
 
@@ -158,5 +165,11 @@ export class MeditatioComponent extends BeolResource implements OnDestroy {
                 }
             );
         }
+    }
+
+    regionActive(regionIri: string) {
+
+        this.getTranscription(regionIri);
+
     }
 }
