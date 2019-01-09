@@ -209,59 +209,34 @@ export abstract class BeolResource implements OnInit, OnDestroy {
      * @param iri the Iri of the resource to be requested.
      */
     getResource(iri: string): void {
-        this._resourceService.getResource(iri)
+
+        this._resourceService.getReadResource(iri)
             .subscribe(
-                (result: ApiServiceResult) => {
-                    const promises = jsonld.promises;
-                    // compact JSON-LD using an empty context: expands all Iris
-                    const promise = promises.compact(result.body, {});
+                (result: ReadResourcesSequence) => {
 
-                    promise.then((compacted) => {
+                    // make sure that exactly one resource is returned
+                    if (result.resources.length === 1) {
 
-                        const resourceSeq: ReadResourcesSequence = ConvertJSONLD.createReadResourcesSequenceFromJsonLD(compacted);
+                        // initialize ontology information
+                        this.ontologyInfo = result.ontologyInformation;
 
-                        // make sure that exactly one resource is returned
-                        if (resourceSeq.resources.length === 1) {
+                        // prepare a possibly attached image file to be displayed
+                        BeolResource.collectImagesAndRegionsForResource(result.resources[0]);
 
-                            // get resource class Iris from response
-                            const resourceClassIris: string[] = ConvertJSONLD.getResourceClassesFromJsonLD(compacted);
+                        this.resource = result.resources[0];
 
-                            // console.log(resourceClassIris)
+                        this.initProps();
 
-                            // request ontology information about resource class Iris (properties are implied)
-                            this._cacheService.getResourceClassDefinitions(resourceClassIris).subscribe(
-                                (resourceClassInfos: OntologyInformation) => {
+                        this.isLoading = false;
 
-                                    // initialize ontology information
-                                    this.ontologyInfo = resourceClassInfos;
+                        this.requestIncomingResources();
 
-                                    // prepare a possibly attached image file to be displayed
-                                    BeolResource.collectImagesAndRegionsForResource(resourceSeq.resources[0]);
+                    } else {
+                        // exactly one resource was expected, but resourceSeq.resources.length != 1
+                        this.errorMessage = `Exactly one resource was expected, but ${result.resources.length} resource(s) given.`;
 
-                                    this.resource = resourceSeq.resources[0];
+                    }
 
-                                    this.initProps();
-
-                                    this.requestIncomingResources();
-
-                                    // console.log(this.resource);
-                                },
-                                (err) => {
-
-                                    console.log('cache request failed: ' + err);
-                                });
-                        } else {
-                            // exactly one resource was expected, but resourceSeq.resources.length != 1
-                            this.errorMessage = `Exactly one resource was expected, but ${resourceSeq.resources.length} resource(s) given.`;
-
-                        }
-
-                    }, function (err) {
-
-                        console.log('JSONLD of full resource request could not be expanded:' + err);
-                    });
-
-                    this.isLoading = false;
                 },
                 (error: ApiServiceError) => {
                     this.errorMessage = <any>error;
@@ -317,38 +292,38 @@ export abstract class BeolResource implements OnInit, OnDestroy {
             (result: ApiServiceResult) => {
                 const promise = jsonld.promises.compact(result.body, {});
                 promise.then((compacted) => {
-                    const regions: ReadResourcesSequence = ConvertJSONLD.createReadResourcesSequenceFromJsonLD(compacted);
+                        const regions: ReadResourcesSequence = ConvertJSONLD.createReadResourcesSequenceFromJsonLD(compacted);
 
-                    // get resource class Iris from response
-                    const resourceClassIris: string[] = ConvertJSONLD.getResourceClassesFromJsonLD(compacted);
+                        // get resource class Iris from response
+                        const resourceClassIris: string[] = ConvertJSONLD.getResourceClassesFromJsonLD(compacted);
 
-                    // request ontology information about resource class Iris (properties are implied)
-                    this._cacheService.getResourceClassDefinitions(resourceClassIris).subscribe(
-                        (resourceClassInfos: OntologyInformation) => {
-                            // update ontology information
-                            this.ontologyInfo.updateOntologyInformation(resourceClassInfos);
+                        // request ontology information about resource class Iris (properties are implied)
+                        this._cacheService.getResourceClassDefinitions(resourceClassIris).subscribe(
+                            (resourceClassInfos: OntologyInformation) => {
+                                // update ontology information
+                                this.ontologyInfo.updateOntologyInformation(resourceClassInfos);
 
-                            // Append elements of regions.resources to resource.incoming
-                            Array.prototype.push.apply(this.resource.incomingRegions, regions.resources);
+                                // Append elements of regions.resources to resource.incoming
+                                Array.prototype.push.apply(this.resource.incomingRegions, regions.resources);
 
-                            // prepare regions to be displayed
-                            BeolResource.collectImagesAndRegionsForResource(this.resource);
+                                // prepare regions to be displayed
+                                BeolResource.collectImagesAndRegionsForResource(this.resource);
 
-                            // TODO: implement osdViewer
-                            /* if (this.osdViewer) {
-                              this.osdViewer.updateRegions();
-                            } */
+                                // TODO: implement osdViewer
+                                /* if (this.osdViewer) {
+                                  this.osdViewer.updateRegions();
+                                } */
 
-                            // if callback is given, execute function with the amount of new images as the parameter
-                            if (callback !== undefined) {
-                                callback(regions.resources.length);
-                            }
-                        },
-                        (err) => {
+                                // if callback is given, execute function with the amount of new images as the parameter
+                                if (callback !== undefined) {
+                                    callback(regions.resources.length);
+                                }
+                            },
+                            (err) => {
 
-                            console.log('cache request failed: ' + err);
-                        });
-                },
+                                console.log('cache request failed: ' + err);
+                            });
+                    },
                     function (err) {
                         console.log('JSONLD of regions request could not be expanded:' + err);
                     });
@@ -384,45 +359,45 @@ export abstract class BeolResource implements OnInit, OnDestroy {
 
                 const promise = jsonld.promises.compact(result.body, {});
                 promise.then((compacted) => {
-                    // console.log(compacted);
+                        // console.log(compacted);
 
-                    const incomingImageRepresentations: ReadResourcesSequence = ConvertJSONLD.createReadResourcesSequenceFromJsonLD(compacted);
+                        const incomingImageRepresentations: ReadResourcesSequence = ConvertJSONLD.createReadResourcesSequenceFromJsonLD(compacted);
 
-                    // get resource class Iris from response
-                    const resourceClassIris: string[] = ConvertJSONLD.getResourceClassesFromJsonLD(compacted);
+                        // get resource class Iris from response
+                        const resourceClassIris: string[] = ConvertJSONLD.getResourceClassesFromJsonLD(compacted);
 
-                    // request ontology information about resource class Iris (properties are implied)
-                    this._cacheService.getResourceClassDefinitions(resourceClassIris).subscribe(
-                        (resourceClassInfos: OntologyInformation) => {
+                        // request ontology information about resource class Iris (properties are implied)
+                        this._cacheService.getResourceClassDefinitions(resourceClassIris).subscribe(
+                            (resourceClassInfos: OntologyInformation) => {
 
-                            if (incomingImageRepresentations.resources.length > 0) {
-                                // update ontology information
-                                this.ontologyInfo.updateOntologyInformation(resourceClassInfos);
+                                if (incomingImageRepresentations.resources.length > 0) {
+                                    // update ontology information
+                                    this.ontologyInfo.updateOntologyInformation(resourceClassInfos);
 
-                                // set current offset
-                                this.incomingStillImageRepresentationCurrentOffset = offset;
+                                    // set current offset
+                                    this.incomingStillImageRepresentationCurrentOffset = offset;
 
-                                // TODO: implement prepending of StillImageRepresentations when moving to the left (getting previous pages)
-                                // TODO: append existing images to response and then assign response to `this.resource.incomingStillImageRepresentations`
-                                // TODO: maybe we have to support non consecutive arrays (sparse arrays)
+                                    // TODO: implement prepending of StillImageRepresentations when moving to the left (getting previous pages)
+                                    // TODO: append existing images to response and then assign response to `this.resource.incomingStillImageRepresentations`
+                                    // TODO: maybe we have to support non consecutive arrays (sparse arrays)
 
-                                // append incomingImageRepresentations.resources to this.resource.incomingStillImageRepresentations
-                                Array.prototype.push.apply(this.resource.incomingStillImageRepresentations, incomingImageRepresentations.resources);
+                                    // append incomingImageRepresentations.resources to this.resource.incomingStillImageRepresentations
+                                    Array.prototype.push.apply(this.resource.incomingStillImageRepresentations, incomingImageRepresentations.resources);
 
-                                // prepare attached image files to be displayed
-                                BeolResource.collectImagesAndRegionsForResource(this.resource);
-                            }
+                                    // prepare attached image files to be displayed
+                                    BeolResource.collectImagesAndRegionsForResource(this.resource);
+                                }
 
-                            // if callback is given, execute function with the amount of new images as the parameter
-                            if (callback !== undefined) {
-                                callback(incomingImageRepresentations.resources.length);
-                            }
-                        },
-                        (err) => {
+                                // if callback is given, execute function with the amount of new images as the parameter
+                                if (callback !== undefined) {
+                                    callback(incomingImageRepresentations.resources.length);
+                                }
+                            },
+                            (err) => {
 
-                            console.log('cache request failed: ' + err);
-                        });
-                },
+                                console.log('cache request failed: ' + err);
+                            });
+                    },
                     function (err) {
                         console.log('JSONLD of regions request could not be expanded:' + err);
                     });
@@ -450,31 +425,31 @@ export abstract class BeolResource implements OnInit, OnDestroy {
             (result: ApiServiceResult) => {
                 const promise = jsonld.promises.compact(result.body, {});
                 promise.then((compacted) => {
-                    const incomingResources: ReadResourcesSequence = ConvertJSONLD.createReadResourcesSequenceFromJsonLD(compacted);
+                        const incomingResources: ReadResourcesSequence = ConvertJSONLD.createReadResourcesSequenceFromJsonLD(compacted);
 
-                    // get resource class Iris from response
-                    const resourceClassIris: string[] = ConvertJSONLD.getResourceClassesFromJsonLD(compacted);
+                        // get resource class Iris from response
+                        const resourceClassIris: string[] = ConvertJSONLD.getResourceClassesFromJsonLD(compacted);
 
-                    // request ontology information about resource class Iris (properties are implied)
-                    this._cacheService.getResourceClassDefinitions(resourceClassIris).subscribe(
-                        (resourceClassInfos: OntologyInformation) => {
-                            // update ontology information
-                            this.ontologyInfo.updateOntologyInformation(resourceClassInfos);
+                        // request ontology information about resource class Iris (properties are implied)
+                        this._cacheService.getResourceClassDefinitions(resourceClassIris).subscribe(
+                            (resourceClassInfos: OntologyInformation) => {
+                                // update ontology information
+                                this.ontologyInfo.updateOntologyInformation(resourceClassInfos);
 
-                            // Append elements incomingResources to this.resource.incomingLinks
-                            Array.prototype.push.apply(this.resource.incomingLinks, incomingResources.resources);
+                                // Append elements incomingResources to this.resource.incomingLinks
+                                Array.prototype.push.apply(this.resource.incomingLinks, incomingResources.resources);
 
-                            // if callback is given, execute function with the amount of incoming resources as the parameter
-                            if (callback !== undefined) {
-                                callback(incomingResources.resources.length);
-                            }
+                                // if callback is given, execute function with the amount of incoming resources as the parameter
+                                if (callback !== undefined) {
+                                    callback(incomingResources.resources.length);
+                                }
 
-                        },
-                        (err) => {
+                            },
+                            (err) => {
 
-                            console.log('cache request failed: ' + err);
-                        });
-                },
+                                console.log('cache request failed: ' + err);
+                            });
+                    },
                     function (err) {
                         console.log('JSONLD of regions request could not be expanded:' + err);
                     });
