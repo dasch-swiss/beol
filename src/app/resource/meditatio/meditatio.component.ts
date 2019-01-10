@@ -19,10 +19,6 @@ import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { BeolService } from '../../services/beol.service';
 
-
-declare let require: any; // http://stackoverflow.com/questions/34730010/angular2-5-minute-install-bug-require-is-not-defined
-let jsonld = require('jsonld');
-
 @Component({
     selector: 'app-meditatio',
     templateUrl: './meditatio.component.html',
@@ -61,54 +57,27 @@ export class MeditatioComponent extends BeolResource implements OnDestroy {
 
         const gravsearchQuery = this._beolService.getTranscriptionIrisForPage(this.iri, 0);
 
-        this._searchService.doExtendedSearch(gravsearchQuery).subscribe(
-            (result: ApiServiceResult) => {
+        this._searchService.doExtendedSearchReadResourceSequence(gravsearchQuery).subscribe(
+            (result: ReadResourcesSequence) => {
 
-                const promises = jsonld.promises;
-                // compact JSON-LD using an empty context: expands all Iris
-                const promise = promises.compact(result.body, {});
+                // initialize ontology information
+                this.ontologyInfo.updateOntologyInformation(result.ontologyInformation);
 
-                promise.then((compacted) => {
+                for (const trans of result.resources) {
+                    const linkVal =
+                        trans.properties[this.apiUrl + '/ontology/0801/beol/v2#transcriptionOfValue'][0] as ReadLinkValue;
 
-                    const resourceSeq: ReadResourcesSequence = ConvertJSONLD.createReadResourcesSequenceFromJsonLD(compacted);
+                    this.regionToTranscription[linkVal.referredResourceIri] = trans.id;
+                }
 
-                    // get resource class Iris from response
-                    const resourceClassIris: string[] = ConvertJSONLD.getResourceClassesFromJsonLD(compacted);
+                this.transcriptionIrisReady = true;
 
-                    // request ontology information about resource class Iris (properties are implied)
-                    this._cacheService.getResourceClassDefinitions(resourceClassIris).subscribe(
-                        (resourceClassInfos: OntologyInformation) => {
+                // check if there is an active region (submitted as a parameter)
+                const activeRegionIri = this.params.get('region');
 
-                            // initialize ontology information
-                            this.ontologyInfo.updateOntologyInformation(resourceClassInfos);
-
-                            for (const trans of resourceSeq.resources) {
-                                const linkVal =
-                                    trans.properties[this.apiUrl + '/ontology/0801/beol/v2#transcriptionOfValue'][0] as ReadLinkValue;
-
-                                this.regionToTranscription[linkVal.referredResourceIri] = trans.id;
-                            }
-
-                            this.transcriptionIrisReady = true;
-
-                            // check if there is an active region (submitted as a parameter)
-                            const activeRegionIri = this.params.get('region');
-
-                            if (activeRegionIri !== null) {
-                                this.regionActive(activeRegionIri);
-                            }
-
-                        },
-                        (err) => {
-
-                            console.log('cache request failed: ' + err);
-                        });
-
-
-                }, function (err) {
-
-                    console.log('JSONLD of full resource request could not be expanded:' + err);
-                });
+                if (activeRegionIri !== null) {
+                    this.regionActive(activeRegionIri);
+                }
 
             },
             (error: ApiServiceError) => {
@@ -116,8 +85,6 @@ export class MeditatioComponent extends BeolResource implements OnDestroy {
                 this.isLoading = false;
             }
         );
-
-
     }
 
     private getTranscription(regionIri: string) {
@@ -127,41 +94,19 @@ export class MeditatioComponent extends BeolResource implements OnDestroy {
         if (transcrIri !== undefined) {
 
             // get transcription associated to region
-            this._resourceService.getResource(transcrIri).subscribe(
-                (result: ApiServiceResult) => {
-                    const promises = jsonld.promises;
-                    // compact JSON-LD using an empty context: expands all Iris
-                    const promise = promises.compact(result.body, {});
+            this._resourceService.getReadResource(transcrIri).subscribe(
+                (result: ReadResourcesSequence) => {
 
-                    promise.then((compacted) => {
+                    // initialize ontology information
+                    this.ontologyInfo.updateOntologyInformation(result.ontologyInformation);
 
-                            const resourceSeq: ReadResourcesSequence = ConvertJSONLD.createReadResourcesSequenceFromJsonLD(compacted);
+                    this.transcription =
+                        result.resources[0].properties[this.apiUrl + '/ontology/0801/beol/v2#hasText'][0] as ReadTextValueAsHtml;
 
-                            // get resource class Iris from response
-                            const resourceClassIris: string[] = ConvertJSONLD.getResourceClassesFromJsonLD(compacted);
-
-                            // request ontology information about resource class Iris (properties are implied)
-                            this._cacheService.getResourceClassDefinitions(resourceClassIris).subscribe(
-                                (resourceClassInfos: OntologyInformation) => {
-
-                                    // initialize ontology information
-                                    this.ontologyInfo.updateOntologyInformation(resourceClassInfos);
-
-                                    this.transcription =
-                                        resourceSeq.resources[0].properties[this.apiUrl + '/ontology/0801/beol/v2#hasText'][0] as ReadTextValueAsHtml;
-
-                                },
-                                (err) => {
-                                    console.error('cache request failed');
-                                });
-                        },
-                        (err) => {
-                            console.log('JSONLD of full resource request could not be expanded:' + err);
-                        }
-                    );
                 },
-                () => {
-
+                (error) => {
+                    this.errorMessage = <any>error;
+                    this.isLoading = false;
                 }
             );
         }
