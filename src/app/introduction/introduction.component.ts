@@ -22,7 +22,6 @@ import { environment } from '../../environments/environment';
 import { Subscription } from 'rxjs';
 
 declare let require: any;
-const jsonld = require('jsonld');
 
 export interface IntroProps {
     'title': ReadPropertyItem[];
