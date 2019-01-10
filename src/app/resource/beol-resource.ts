@@ -233,7 +233,7 @@ export abstract class BeolResource implements OnInit, OnDestroy {
                     }
 
                 },
-                (error: ApiServiceError) => {
+                (error: any) => {
                     this.errorMessage = <any>error;
                     this.isLoading = false;
                 }
@@ -304,7 +304,7 @@ export abstract class BeolResource implements OnInit, OnDestroy {
                     callback(regions.resources.length);
                 }
             },
-            (error: ApiServiceError) => {
+            (error: any) => {
                 this.errorMessage = <any>error;
                 this.isLoading = false;
             }
@@ -356,7 +356,7 @@ export abstract class BeolResource implements OnInit, OnDestroy {
                     callback(incomingImageRepresentations.resources.length);
                 }
             },
-            (error: ApiServiceError) => {
+            (error: any) => {
                 this.errorMessage = <any>error;
                 this.isLoading = false;
             }
@@ -386,7 +386,7 @@ export abstract class BeolResource implements OnInit, OnDestroy {
                     callback(incomingResources.resources.length);
                 }
             },
-            (error: ApiServiceError) => {
+            (error: any) => {
                 this.errorMessage = <any>error;
                 this.isLoading = false;
             }
