@@ -107,30 +107,18 @@ export class IntroductionComponent implements OnInit, OnDestroy {
 
         const gravsearch: string = this._beol.searchForIntroductionById(id);
 
-        this._searchService.doExtendedSearch(gravsearch).subscribe(
-            (result: ApiServiceResult) => {
+        this._searchService.doExtendedSearchReadResourceSequence(gravsearch).subscribe(
+            (result: ReadResourcesSequence) => {
 
-                const promises = jsonld.promises;
-                // compact JSON-LD using an empty context: expands all Iris
-                const promise = promises.compact(result.body, {});
+                if (result.resources.length === 1) {
+                    // console.log('we got a resource sequence ', resourceSeq.resources);
+                    this.requestResource(result.resources[0].id);
+                }
 
-                promise.then((compacted) => {
-
-                    const resourceSeq: ReadResourcesSequence = ConvertJSONLD.createReadResourcesSequenceFromJsonLD(compacted);
-
-                    if (resourceSeq.resources.length === 1) {
-                        // console.log('we got a resource sequence ', resourceSeq.resources);
-                        this.requestResource(resourceSeq.resources[0].id);
-                    }
-
-                }, function (err) {
-
-                    console.log('JSONLD of full resource request could not be expanded:' + err);
-                });
-
-            }
-        );
-
+            }, (error) => {
+                this.errorMessage = <any>error;
+                this.isLoading = false;
+            });
     }
 
     /**
@@ -140,76 +128,42 @@ export class IntroductionComponent implements OnInit, OnDestroy {
      */
     private requestResource(iri: string): void {
 
-        this._resourceService.getResource(iri)
+        this._resourceService.getReadResource(iri)
             .subscribe(
-                (result: ApiServiceResult) => {
-                    const promises = jsonld.promises;
-                    // compact JSON-LD using an empty context: expands all Iris
-                    const promise = promises.compact(result.body, {});
+                (result: ReadResourcesSequence) => {
 
-                    promise.then((compacted) => {
+                    // make sure that exactly one resource is returned
+                    if (result.resources.length === 1) {
 
-                        const resourceSeq: ReadResourcesSequence = ConvertJSONLD.createReadResourcesSequenceFromJsonLD(compacted);
+                        // initialize ontology information
+                        this.ontologyInfo = result.ontologyInformation;
 
-                        // make sure that exactly one resource is returned
-                        if (resourceSeq.resources.length === 1) {
+                        this.resource = result.resources[0];
 
-                            // get resource class Iris from response
-                            const resourceClassIris: string[] = ConvertJSONLD.getResourceClassesFromJsonLD(compacted);
+                        this.props = {
+                            title: [],
+                            text: []
+                        };
 
-                            // console.log(resourceClassIris)
+                        for (const key in this.resource.properties) {
+                            if (this.resource.properties.hasOwnProperty(key)) {
+                                for (const val of this.resource.properties[key]) {
+                                    switch (val.propIri) {
+                                        case this.propIris.title:
+                                            this.props.title.push(val);
+                                            break;
 
-                            // request ontology information about resource class Iris (properties are implied)
-                            this._cacheService.getResourceClassDefinitions(resourceClassIris).subscribe(
-                                (resourceClassInfos: OntologyInformation) => {
+                                        case this.propIris.text:
+                                            this.props.text.push(val);
+                                            break;
 
-                                    // console.log(JSON.stringify(resourceClassInfos.getResourceClasses()))
-
-                                    // initialize ontology information
-                                    this.ontologyInfo = resourceClassInfos;
-
-                                    this.resource = resourceSeq.resources[0];
-                                    // console.log('resource: ', this.resource);
-
-                                    this.props = {
-                                        title: [],
-                                        text: []
-                                    };
-
-                                    for (const key in this.resource.properties) {
-                                        if (this.resource.properties.hasOwnProperty(key)) {
-                                            for (const val of this.resource.properties[key]) {
-                                                switch (val.propIri) {
-                                                    case this.propIris.title:
-                                                        this.props.title.push(val);
-                                                        break;
-
-                                                    case this.propIris.text:
-                                                        this.props.text.push(val);
-                                                        break;
-
-                                                    default:
-                                                    // do nothing
-                                                }
-                                            }
-                                        }
+                                        default:
+                                        // do nothing
                                     }
-                                },
-                                (err) => {
-
-                                    console.log('cache request failed: ' + err);
-                                });
-                        } else {
-                            // exactly one resource was expected, but resourceSeq.resources.length != 1
-                            this.errorMessage = `Exactly one resource was expected, but ${resourceSeq.resources.length} resource(s) given.`;
-
+                                }
+                            }
                         }
-
-                    }, function (err) {
-
-                        console.log('JSONLD of full resource request could not be expanded:' + err);
-                    });
-
+                    }
                     this.isLoading = false;
                 },
                 (error: ApiServiceError) => {
