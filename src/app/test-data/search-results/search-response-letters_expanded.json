@@ -1,0 +1,2050 @@
+{
+  "@graph": [
+    {
+      "@id": "http://rdfh.ch/0801/nwiZ3biLQNisA4eWj53_Cg",
+      "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#letter",
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#creationDate": {
+        "@id": "http://rdfh.ch/0801/nwiZ3biLQNisA4eWj53_Cg/values/Cg3R5NUiQYyap4-IKiNExQ",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#DateValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasCalendar": "JULIAN",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndDay": 13,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndMonth": 10,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndYear": 1729,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartDay": 13,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartMonth": 10,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartYear": 1729,
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#valueAsString": "JULIAN:1729-10-13 CE"
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasAuthorValue": {
+        "@id": "http://rdfh.ch/0801/nwiZ3biLQNisA4eWj53_Cg/values/Que-ZHfvRFCvimpuUG6Yug",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/q9o5fzr3T0i0nxBrZBw0Lw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Leonhard Euler"
+        }
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasRecipientValue": {
+        "@id": "http://rdfh.ch/0801/nwiZ3biLQNisA4eWj53_Cg/values/d8UZENx_QJeSTMDNjWyZjg",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/0y8s1fR9S4m6v_OQfjjOZw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Christian Goldbach"
+        }
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+        "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+        "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+        "@value": "2018-11-28T14:15:23.153Z"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+      "http://www.w3.org/2000/01/rdf-schema#label": "L001 Original"
+    },
+    {
+      "@id": "http://rdfh.ch/0801/ri8w3b8kRKupJhGMtVcltg",
+      "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#letter",
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#creationDate": {
+        "@id": "http://rdfh.ch/0801/ri8w3b8kRKupJhGMtVcltg/values/83tyo5pESreyzTnEiQUj1w",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#DateValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasCalendar": "GREGORIAN",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndDay": 1,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndMonth": 12,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndYear": 1729,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartDay": 1,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartMonth": 12,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartYear": 1729,
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#valueAsString": "GREGORIAN:1729-12-01 CE"
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasAuthorValue": {
+        "@id": "http://rdfh.ch/0801/ri8w3b8kRKupJhGMtVcltg/values/Ku_axNCJSDy45yWpCRqmbA",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/0y8s1fR9S4m6v_OQfjjOZw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Christian Goldbach"
+        }
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasRecipientValue": {
+        "@id": "http://rdfh.ch/0801/ri8w3b8kRKupJhGMtVcltg/values/attSel7dRAGrtrCZIDU7PQ",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/q9o5fzr3T0i0nxBrZBw0Lw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Leonhard Euler"
+        }
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+        "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+        "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+        "@value": "2018-11-28T14:15:25.783Z"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+      "http://www.w3.org/2000/01/rdf-schema#label": "L002 Original"
+    },
+    {
+      "@id": "http://rdfh.ch/0801/1Y4uIIamSWuGOvxKY9YZJg",
+      "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#letter",
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#creationDate": {
+        "@id": "http://rdfh.ch/0801/1Y4uIIamSWuGOvxKY9YZJg/values/SrcBCdEMR1u8dBjoM8JXEQ",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#DateValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasCalendar": "JULIAN",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndDay": 6,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndMonth": 1,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndYear": 1730,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartDay": 6,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartMonth": 1,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartYear": 1730,
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#valueAsString": "JULIAN:1730-01-06 CE"
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasAuthorValue": {
+        "@id": "http://rdfh.ch/0801/1Y4uIIamSWuGOvxKY9YZJg/values/T2CLngIHT-yUev4zFbWuhA",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/q9o5fzr3T0i0nxBrZBw0Lw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Leonhard Euler"
+        }
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasRecipientValue": {
+        "@id": "http://rdfh.ch/0801/1Y4uIIamSWuGOvxKY9YZJg/values/JslA8hgMTQe2BNjLNoesSQ",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/0y8s1fR9S4m6v_OQfjjOZw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Christian Goldbach"
+        }
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+        "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+        "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+        "@value": "2018-11-28T14:15:28.972Z"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+      "http://www.w3.org/2000/01/rdf-schema#label": "L003d Original"
+    },
+    {
+      "@id": "http://rdfh.ch/0801/5S1A7iMXQgWIydn2bAy-OA",
+      "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#letter",
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#creationDate": {
+        "@id": "http://rdfh.ch/0801/5S1A7iMXQgWIydn2bAy-OA/values/HdDMUxIlTxueQxhz1H-r0g",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#DateValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasCalendar": "JULIAN",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndDay": 8,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndMonth": 1,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndYear": 1730,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartDay": 8,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartMonth": 1,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartYear": 1730,
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#valueAsString": "JULIAN:1730-01-08 CE"
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasAuthorValue": {
+        "@id": "http://rdfh.ch/0801/5S1A7iMXQgWIydn2bAy-OA/values/WJVgyEAER26i06sHQ6ruQA",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/q9o5fzr3T0i0nxBrZBw0Lw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Leonhard Euler"
+        }
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasRecipientValue": {
+        "@id": "http://rdfh.ch/0801/5S1A7iMXQgWIydn2bAy-OA/values/EGs_e2AQQI29Lk7N2lD6Bg",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/0y8s1fR9S4m6v_OQfjjOZw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Christian Goldbach"
+        }
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+        "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+        "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+        "@value": "2018-11-28T14:15:27.307Z"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+      "http://www.w3.org/2000/01/rdf-schema#label": "L003 Original"
+    },
+    {
+      "@id": "http://rdfh.ch/0801/Ijs8o4ATRKqFF162MLljXg",
+      "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#letter",
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#creationDate": {
+        "@id": "http://rdfh.ch/0801/Ijs8o4ATRKqFF162MLljXg/values/X-Hg3zcySeGTdSNWlJAJ2g",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#DateValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasCalendar": "GREGORIAN",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndDay": 22,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndMonth": 5,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndYear": 1730,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartDay": 22,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartMonth": 5,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartYear": 1730,
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#valueAsString": "GREGORIAN:1730-05-22 CE"
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasAuthorValue": {
+        "@id": "http://rdfh.ch/0801/Ijs8o4ATRKqFF162MLljXg/values/7Qs08V62QqqIOTsOePOPAg",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/0y8s1fR9S4m6v_OQfjjOZw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Christian Goldbach"
+        }
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasRecipientValue": {
+        "@id": "http://rdfh.ch/0801/Ijs8o4ATRKqFF162MLljXg/values/C0Jf3v-vRaqf0yC6NUOitg",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/q9o5fzr3T0i0nxBrZBw0Lw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Leonhard Euler"
+        }
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+        "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+        "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+        "@value": "2018-11-28T14:15:29.962Z"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+      "http://www.w3.org/2000/01/rdf-schema#label": "L004 Original"
+    },
+    {
+      "@id": "http://rdfh.ch/0801/0LQaEsQoSbuImiY5CWuTWA",
+      "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#letter",
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#creationDate": {
+        "@id": "http://rdfh.ch/0801/0LQaEsQoSbuImiY5CWuTWA/values/dgnbxgExT8SH4Wn5kcL9Ag",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#DateValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasCalendar": "GREGORIAN",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndDay": 15,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndMonth": 6,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndYear": 1730,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartDay": 15,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartMonth": 6,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartYear": 1730,
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#valueAsString": "GREGORIAN:1730-06-15 CE"
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasAuthorValue": {
+        "@id": "http://rdfh.ch/0801/0LQaEsQoSbuImiY5CWuTWA/values/RiHkrsWnRpGnjUdutJesYQ",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/0y8s1fR9S4m6v_OQfjjOZw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Christian Goldbach"
+        }
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasRecipientValue": {
+        "@id": "http://rdfh.ch/0801/0LQaEsQoSbuImiY5CWuTWA/values/QuL5sgoYTdyO_OoQxl6AVg",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/q9o5fzr3T0i0nxBrZBw0Lw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Leonhard Euler"
+        }
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+        "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+        "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+        "@value": "2018-11-28T14:15:32.567Z"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+      "http://www.w3.org/2000/01/rdf-schema#label": "L006 Original"
+    },
+    {
+      "@id": "http://rdfh.ch/0801/RdJJYnNEQomN6u7k9-h-EA",
+      "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#letter",
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#creationDate": {
+        "@id": "http://rdfh.ch/0801/RdJJYnNEQomN6u7k9-h-EA/values/7KD-2aSIRD-zN-Gpeg8TkQ",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#DateValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasCalendar": "JULIAN",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndDay": 4,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndMonth": 6,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndYear": 1730,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartDay": 4,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartMonth": 6,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartYear": 1730,
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#valueAsString": "JULIAN:1730-06-04 CE"
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasAuthorValue": {
+        "@id": "http://rdfh.ch/0801/RdJJYnNEQomN6u7k9-h-EA/values/Aerq_2UTQFSanjpHZKKGwg",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/q9o5fzr3T0i0nxBrZBw0Lw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Leonhard Euler"
+        }
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasRecipientValue": {
+        "@id": "http://rdfh.ch/0801/RdJJYnNEQomN6u7k9-h-EA/values/ih2t9bdNQ0u64ApJZsSAPA",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/0y8s1fR9S4m6v_OQfjjOZw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Christian Goldbach"
+        }
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+        "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+        "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+        "@value": "2018-11-28T14:15:30.902Z"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+      "http://www.w3.org/2000/01/rdf-schema#label": "L005 Original"
+    },
+    {
+      "@id": "http://rdfh.ch/0801/AbIvN9YNQ7Wqw0_zmazbig",
+      "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#letter",
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#creationDate": {
+        "@id": "http://rdfh.ch/0801/AbIvN9YNQ7Wqw0_zmazbig/values/2JZZug8LTM-wey_nrTdG4w",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#DateValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasCalendar": "JULIAN",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndDay": 25,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndMonth": 6,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndYear": 1730,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartDay": 25,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartMonth": 6,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartYear": 1730,
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#valueAsString": "JULIAN:1730-06-25 CE"
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasAuthorValue": {
+        "@id": "http://rdfh.ch/0801/AbIvN9YNQ7Wqw0_zmazbig/values/nTYtkgIfRqCBJg0cCLi4_Q",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/q9o5fzr3T0i0nxBrZBw0Lw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Leonhard Euler"
+        }
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasRecipientValue": {
+        "@id": "http://rdfh.ch/0801/AbIvN9YNQ7Wqw0_zmazbig/values/sdxGeOnuT5a7IjmeQJ1cDQ",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/0y8s1fR9S4m6v_OQfjjOZw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Christian Goldbach"
+        }
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+        "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+        "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+        "@value": "2018-11-28T14:15:33.784Z"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+      "http://www.w3.org/2000/01/rdf-schema#label": "L007 Original"
+    },
+    {
+      "@id": "http://rdfh.ch/0801/aONxG3E1SZauKaWgVFhEZg",
+      "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#letter",
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#creationDate": {
+        "@id": "http://rdfh.ch/0801/aONxG3E1SZauKaWgVFhEZg/values/Nmu8s8RRT3KWtHHd4_wPzA",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#DateValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasCalendar": "GREGORIAN",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndDay": 20,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndMonth": 7,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndYear": 1730,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartDay": 20,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartMonth": 7,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartYear": 1730,
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#valueAsString": "GREGORIAN:1730-07-20 CE"
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasAuthorValue": {
+        "@id": "http://rdfh.ch/0801/aONxG3E1SZauKaWgVFhEZg/values/4J9JNnGmQo-_XX9UZSFO-g",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/0y8s1fR9S4m6v_OQfjjOZw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Christian Goldbach"
+        }
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasRecipientValue": {
+        "@id": "http://rdfh.ch/0801/aONxG3E1SZauKaWgVFhEZg/values/RhSZ2jUiRgm-CCM5Es8L_Q",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/q9o5fzr3T0i0nxBrZBw0Lw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Leonhard Euler"
+        }
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+        "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+        "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+        "@value": "2018-11-28T14:15:35.507Z"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+      "http://www.w3.org/2000/01/rdf-schema#label": "L008 Original"
+    },
+    {
+      "@id": "http://rdfh.ch/0801/kQX0KoOSTKmYIhDQUpYZmQ",
+      "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#letter",
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#creationDate": {
+        "@id": "http://rdfh.ch/0801/kQX0KoOSTKmYIhDQUpYZmQ/values/GHTgbcWBSr2sY-zbgUCZzA",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#DateValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasCalendar": "JULIAN",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndDay": 10,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndMonth": 8,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndYear": 1730,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartDay": 10,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartMonth": 8,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartYear": 1730,
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#valueAsString": "JULIAN:1730-08-10 CE"
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasAuthorValue": {
+        "@id": "http://rdfh.ch/0801/kQX0KoOSTKmYIhDQUpYZmQ/values/vhxCdGBOQWibQX0MwJ5isA",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/q9o5fzr3T0i0nxBrZBw0Lw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Leonhard Euler"
+        }
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasRecipientValue": {
+        "@id": "http://rdfh.ch/0801/kQX0KoOSTKmYIhDQUpYZmQ/values/l9QTf2W3R7y72v27KGgc0Q",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/0y8s1fR9S4m6v_OQfjjOZw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Christian Goldbach"
+        }
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+        "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+        "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+        "@value": "2018-11-28T14:15:36.964Z"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+      "http://www.w3.org/2000/01/rdf-schema#label": "L009 Original"
+    },
+    {
+      "@id": "http://rdfh.ch/0801/KRx80XagQsWbe5RuBk-Xzg",
+      "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#letter",
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#creationDate": {
+        "@id": "http://rdfh.ch/0801/KRx80XagQsWbe5RuBk-Xzg/values/LSmx8qZyTA-MEjJMX5zkQA",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#DateValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasCalendar": "GREGORIAN",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndDay": 9,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndMonth": 10,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndYear": 1730,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartDay": 9,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartMonth": 10,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartYear": 1730,
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#valueAsString": "GREGORIAN:1730-10-09 CE"
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasAuthorValue": {
+        "@id": "http://rdfh.ch/0801/KRx80XagQsWbe5RuBk-Xzg/values/xEg3EXEGTLuSUwZYdFQzSQ",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/0y8s1fR9S4m6v_OQfjjOZw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Christian Goldbach"
+        }
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasRecipientValue": {
+        "@id": "http://rdfh.ch/0801/KRx80XagQsWbe5RuBk-Xzg/values/DoACyO2pT2SXt-76OX5NRA",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/q9o5fzr3T0i0nxBrZBw0Lw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Leonhard Euler"
+        }
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+        "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+        "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+        "@value": "2018-11-28T14:15:39.069Z"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+      "http://www.w3.org/2000/01/rdf-schema#label": "L010 Original"
+    },
+    {
+      "@id": "http://rdfh.ch/0801/IzGSv6ZxSD-6JWgtgQh8Fg",
+      "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#letter",
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#creationDate": {
+        "@id": "http://rdfh.ch/0801/IzGSv6ZxSD-6JWgtgQh8Fg/values/C9OBHXPPSnqdhGsdykNPtQ",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#DateValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasCalendar": "JULIAN",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndDay": 17,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndMonth": 10,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndYear": 1730,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartDay": 17,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartMonth": 10,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartYear": 1730,
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#valueAsString": "JULIAN:1730-10-17 CE"
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasAuthorValue": {
+        "@id": "http://rdfh.ch/0801/IzGSv6ZxSD-6JWgtgQh8Fg/values/Gav9VSqiT_2nhU3suKlKJg",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/q9o5fzr3T0i0nxBrZBw0Lw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Leonhard Euler"
+        }
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasRecipientValue": {
+        "@id": "http://rdfh.ch/0801/IzGSv6ZxSD-6JWgtgQh8Fg/values/zsQuQ5MCSL-sZpwrgTV6hw",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/0y8s1fR9S4m6v_OQfjjOZw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Christian Goldbach"
+        }
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+        "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+        "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+        "@value": "2018-11-28T14:15:41.085Z"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+      "http://www.w3.org/2000/01/rdf-schema#label": "L011 Original"
+    },
+    {
+      "@id": "http://rdfh.ch/0801/2DQetnQJQK2cc45FCVbnbQ",
+      "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#letter",
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#creationDate": {
+        "@id": "http://rdfh.ch/0801/2DQetnQJQK2cc45FCVbnbQ/values/V_BTAl4NQP6QBQT4FCSTDg",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#DateValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasCalendar": "GREGORIAN",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndDay": 6,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndMonth": 11,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndYear": 1730,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartDay": 6,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartMonth": 11,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartYear": 1730,
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#valueAsString": "GREGORIAN:1730-11-06 CE"
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasAuthorValue": {
+        "@id": "http://rdfh.ch/0801/2DQetnQJQK2cc45FCVbnbQ/values/NfnGQCkbTCK5fPCivP4lhQ",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/0y8s1fR9S4m6v_OQfjjOZw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Christian Goldbach"
+        }
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasRecipientValue": {
+        "@id": "http://rdfh.ch/0801/2DQetnQJQK2cc45FCVbnbQ/values/1TcOm_U-Sh-QyuzriLBxRw",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/q9o5fzr3T0i0nxBrZBw0Lw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Leonhard Euler"
+        }
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+        "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+        "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+        "@value": "2018-11-28T14:15:42.821Z"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+      "http://www.w3.org/2000/01/rdf-schema#label": "L012 Original"
+    },
+    {
+      "@id": "http://rdfh.ch/0801/LLcFYQfjQ7qXBv6hFDqcOQ",
+      "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#letter",
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#creationDate": {
+        "@id": "http://rdfh.ch/0801/LLcFYQfjQ7qXBv6hFDqcOQ/values/lhsOwZkuQv66CpiENwP1wg",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#DateValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasCalendar": "JULIAN",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndDay": 9,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndMonth": 11,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndYear": 1730,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartDay": 9,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartMonth": 11,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartYear": 1730,
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#valueAsString": "JULIAN:1730-11-09 CE"
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasAuthorValue": {
+        "@id": "http://rdfh.ch/0801/LLcFYQfjQ7qXBv6hFDqcOQ/values/r38mstanSnSVyDL0LhK_Ow",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/q9o5fzr3T0i0nxBrZBw0Lw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Leonhard Euler"
+        }
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasRecipientValue": {
+        "@id": "http://rdfh.ch/0801/LLcFYQfjQ7qXBv6hFDqcOQ/values/5i0UCa3lRxaH1IB8Bkdnuw",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/0y8s1fR9S4m6v_OQfjjOZw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Christian Goldbach"
+        }
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+        "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+        "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+        "@value": "2018-11-28T14:15:43.722Z"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+      "http://www.w3.org/2000/01/rdf-schema#label": "L013 Original"
+    },
+    {
+      "@id": "http://rdfh.ch/0801/mQyn6axuSRiwgVBYXAVhRg",
+      "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#letter",
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#creationDate": {
+        "@id": "http://rdfh.ch/0801/mQyn6axuSRiwgVBYXAVhRg/values/DJB4h451QGClcpUfK8BZSw",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#DateValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasCalendar": "GREGORIAN",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndDay": 18,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndMonth": 11,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndYear": 1731,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartDay": 18,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartMonth": 11,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartYear": 1731,
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#valueAsString": "GREGORIAN:1731-11-18 CE"
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasAuthorValue": {
+        "@id": "http://rdfh.ch/0801/mQyn6axuSRiwgVBYXAVhRg/values/R1dzOgpsRLuOn2Hr2tp02Q",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/0y8s1fR9S4m6v_OQfjjOZw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Christian Goldbach"
+        }
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasRecipientValue": {
+        "@id": "http://rdfh.ch/0801/mQyn6axuSRiwgVBYXAVhRg/values/hwefbYUqQ5KHppzpzihWgQ",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/q9o5fzr3T0i0nxBrZBw0Lw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Leonhard Euler"
+        }
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+        "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+        "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+        "@value": "2018-11-28T14:15:44.743Z"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+      "http://www.w3.org/2000/01/rdf-schema#label": "L014 Original"
+    },
+    {
+      "@id": "http://rdfh.ch/0801/0Gs1dwQKTbC5dPSpdxW3Ow",
+      "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#letter",
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#creationDate": {
+        "@id": "http://rdfh.ch/0801/0Gs1dwQKTbC5dPSpdxW3Ow/values/MAb1uxXrSRmy-lflLp9LTQ",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#DateValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasCalendar": "JULIAN",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndDay": 25,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndMonth": 11,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndYear": 1731,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartDay": 25,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartMonth": 11,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartYear": 1731,
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#valueAsString": "JULIAN:1731-11-25 CE"
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasAuthorValue": {
+        "@id": "http://rdfh.ch/0801/0Gs1dwQKTbC5dPSpdxW3Ow/values/3UfXrjuXRUyfnc4wtrBydA",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/q9o5fzr3T0i0nxBrZBw0Lw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Leonhard Euler"
+        }
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasRecipientValue": {
+        "@id": "http://rdfh.ch/0801/0Gs1dwQKTbC5dPSpdxW3Ow/values/K3ZWoWLnQK6aU4k7m1OM6Q",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/0y8s1fR9S4m6v_OQfjjOZw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Christian Goldbach"
+        }
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+        "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+        "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+        "@value": "2018-11-28T14:15:45.888Z"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+      "http://www.w3.org/2000/01/rdf-schema#label": "L015 Original"
+    },
+    {
+      "@id": "http://rdfh.ch/0801/euDimKfbSLi1ocbp5LWfMw",
+      "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#letter",
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#creationDate": {
+        "@id": "http://rdfh.ch/0801/euDimKfbSLi1ocbp5LWfMw/values/X2Lw9CVtQSanjizLlk1kDA",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#DateValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasCalendar": "GREGORIAN",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndDay": 6,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndMonth": 12,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndYear": 1731,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartDay": 6,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartMonth": 12,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartYear": 1731,
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#valueAsString": "GREGORIAN:1731-12-06 CE"
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasAuthorValue": {
+        "@id": "http://rdfh.ch/0801/euDimKfbSLi1ocbp5LWfMw/values/f72TWgh9Ry2IQTC2fOXoSw",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/0y8s1fR9S4m6v_OQfjjOZw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Christian Goldbach"
+        }
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasRecipientValue": {
+        "@id": "http://rdfh.ch/0801/euDimKfbSLi1ocbp5LWfMw/values/Pxdvj68AR-aPzGnn21_5Og",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/q9o5fzr3T0i0nxBrZBw0Lw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Leonhard Euler"
+        }
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+        "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+        "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+        "@value": "2018-11-28T14:15:47.567Z"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+      "http://www.w3.org/2000/01/rdf-schema#label": "L016 Original"
+    },
+    {
+      "@id": "http://rdfh.ch/0801/ZQtds6ohSpm9eUNgxeaPJg",
+      "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#letter",
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#creationDate": {
+        "@id": "http://rdfh.ch/0801/ZQtds6ohSpm9eUNgxeaPJg/values/sxGbA7j0T9m1fKLNA0RsOA",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#DateValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasCalendar": "JULIAN",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndMonth": 1,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndYear": 1732,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartMonth": 1,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartYear": 1732,
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#valueAsString": "JULIAN:1732-01 CE"
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasAuthorValue": {
+        "@id": "http://rdfh.ch/0801/ZQtds6ohSpm9eUNgxeaPJg/values/W5miN6yZQG6Smp64faaHXQ",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/q9o5fzr3T0i0nxBrZBw0Lw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Leonhard Euler"
+        }
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasRecipientValue": {
+        "@id": "http://rdfh.ch/0801/ZQtds6ohSpm9eUNgxeaPJg/values/Rj0IGz6qTZec6vuHWkCtGg",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/0y8s1fR9S4m6v_OQfjjOZw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Christian Goldbach"
+        }
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+        "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+        "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+        "@value": "2018-11-28T14:15:51.845Z"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+      "http://www.w3.org/2000/01/rdf-schema#label": "L020 Original"
+    },
+    {
+      "@id": "http://rdfh.ch/0801/c7sZ23VuTvK9mdYiNIlagA",
+      "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#letter",
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#creationDate": {
+        "@id": "http://rdfh.ch/0801/c7sZ23VuTvK9mdYiNIlagA/values/OHeblZL-SPeRAZ7Y56t9bw",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#DateValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasCalendar": "JULIAN",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndDay": 3,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndMonth": 1,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndYear": 1732,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartDay": 3,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartMonth": 1,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartYear": 1732,
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#valueAsString": "JULIAN:1732-01-03 CE"
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasAuthorValue": {
+        "@id": "http://rdfh.ch/0801/c7sZ23VuTvK9mdYiNIlagA/values/F967ITuxQKCDC4Gs0dpy3Q",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/q9o5fzr3T0i0nxBrZBw0Lw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Leonhard Euler"
+        }
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasRecipientValue": {
+        "@id": "http://rdfh.ch/0801/c7sZ23VuTvK9mdYiNIlagA/values/FTnQYhuHSH6bAHwrskebYQ",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/0y8s1fR9S4m6v_OQfjjOZw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Christian Goldbach"
+        }
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+        "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+        "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+        "@value": "2018-11-28T14:15:48.316Z"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+      "http://www.w3.org/2000/01/rdf-schema#label": "L017 Original"
+    },
+    {
+      "@id": "http://rdfh.ch/0801/nAE8ojLPTTuzZT1Ow9BHGw",
+      "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#letter",
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#creationDate": {
+        "@id": "http://rdfh.ch/0801/nAE8ojLPTTuzZT1Ow9BHGw/values/NXtD0XDTSB6zrDrtoC9Iow",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#DateValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasCalendar": "GREGORIAN",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndDay": 15,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndMonth": 1,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndYear": 1732,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartDay": 15,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartMonth": 1,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartYear": 1732,
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#valueAsString": "GREGORIAN:1732-01-15 CE"
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasAuthorValue": {
+        "@id": "http://rdfh.ch/0801/nAE8ojLPTTuzZT1Ow9BHGw/values/te0uIo-YQHCSXyQzKrCTCA",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/0y8s1fR9S4m6v_OQfjjOZw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Christian Goldbach"
+        }
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasRecipientValue": {
+        "@id": "http://rdfh.ch/0801/nAE8ojLPTTuzZT1Ow9BHGw/values/iNRdoQ6QQVOO1SAVYy5BGA",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/q9o5fzr3T0i0nxBrZBw0Lw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Leonhard Euler"
+        }
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+        "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+        "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+        "@value": "2018-11-28T14:15:49.203Z"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+      "http://www.w3.org/2000/01/rdf-schema#label": "L018 Original"
+    },
+    {
+      "@id": "http://rdfh.ch/0801/WaBD5hKJQDiTZGGUZot05w",
+      "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#letter",
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#creationDate": {
+        "@id": "http://rdfh.ch/0801/WaBD5hKJQDiTZGGUZot05w/values/gv2gRDBoQXWoyppeboSeJA",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#DateValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasCalendar": "JULIAN",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndDay": 31,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndMonth": 1,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndYear": 1732,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartDay": 31,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartMonth": 1,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartYear": 1732,
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#valueAsString": "JULIAN:1732-01-31 CE"
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasAuthorValue": {
+        "@id": "http://rdfh.ch/0801/WaBD5hKJQDiTZGGUZot05w/values/yYLO_Al-QgiSujDUJzkRug",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/q9o5fzr3T0i0nxBrZBw0Lw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Leonhard Euler"
+        }
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasRecipientValue": {
+        "@id": "http://rdfh.ch/0801/WaBD5hKJQDiTZGGUZot05w/values/g5q_bv3eSZWXqmiP4N6ZLw",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/0y8s1fR9S4m6v_OQfjjOZw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Christian Goldbach"
+        }
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+        "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+        "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+        "@value": "2018-11-28T14:15:50.228Z"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+      "http://www.w3.org/2000/01/rdf-schema#label": "L019 Original"
+    },
+    {
+      "@id": "http://rdfh.ch/0801/LD_YvfXkTr2blJgLQZQahQ",
+      "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#letter",
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#creationDate": {
+        "@id": "http://rdfh.ch/0801/LD_YvfXkTr2blJgLQZQahQ/values/nQrKdWjNSmO9QHRFoMy66A",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#DateValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasCalendar": "JULIAN",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndDay": 17,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndMonth": 3,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndYear": 1735,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartDay": 17,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartMonth": 3,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartYear": 1735,
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#valueAsString": "JULIAN:1735-03-17 CE"
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasAuthorValue": {
+        "@id": "http://rdfh.ch/0801/LD_YvfXkTr2blJgLQZQahQ/values/IEg7ozZESuakzvJPy6T7rg",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/q9o5fzr3T0i0nxBrZBw0Lw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Leonhard Euler"
+        }
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasRecipientValue": {
+        "@id": "http://rdfh.ch/0801/LD_YvfXkTr2blJgLQZQahQ/values/qCuwi3g6TGyucUMOYutYVA",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/0y8s1fR9S4m6v_OQfjjOZw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Christian Goldbach"
+        }
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+        "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+        "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+        "@value": "2018-11-28T14:15:52.761Z"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+      "http://www.w3.org/2000/01/rdf-schema#label": "L021 Original"
+    },
+    {
+      "@id": "http://rdfh.ch/0801/tRdcgLvwRU6oSo7mtdcPSw",
+      "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#letter",
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#creationDate": {
+        "@id": "http://rdfh.ch/0801/tRdcgLvwRU6oSo7mtdcPSw/values/y6r5N8w3QIKvGxEMBzl6zA",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#DateValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasCalendar": "GREGORIAN",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndDay": 12,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndMonth": 10,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndYear": 1735,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartDay": 12,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartMonth": 10,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartYear": 1735,
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#valueAsString": "GREGORIAN:1735-10-12 CE"
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasAuthorValue": {
+        "@id": "http://rdfh.ch/0801/tRdcgLvwRU6oSo7mtdcPSw/values/eU_BuxvrR2mUb-c9rRBmRg",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/0y8s1fR9S4m6v_OQfjjOZw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Christian Goldbach"
+        }
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasRecipientValue": {
+        "@id": "http://rdfh.ch/0801/tRdcgLvwRU6oSo7mtdcPSw/values/wvodE4rwTDqQZ-HJvw2K3w",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/q9o5fzr3T0i0nxBrZBw0Lw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Leonhard Euler"
+        }
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+        "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+        "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+        "@value": "2018-11-28T14:15:53.779Z"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+      "http://www.w3.org/2000/01/rdf-schema#label": "L022 Original"
+    },
+    {
+      "@id": "http://rdfh.ch/0801/nE9ztH4BTn2TbmQy6-XYpw",
+      "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#letter",
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#creationDate": {
+        "@id": "http://rdfh.ch/0801/nE9ztH4BTn2TbmQy6-XYpw/values/xl_N3-LSTP-Gyp1gvRTqdQ",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#DateValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasCalendar": "GREGORIAN",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndMonth": 2,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndYear": 1736,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartMonth": 2,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartYear": 1736,
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#valueAsString": "GREGORIAN:1736-02 CE"
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasAuthorValue": {
+        "@id": "http://rdfh.ch/0801/nE9ztH4BTn2TbmQy6-XYpw/values/kdQ0Nv-tT1iO74yixkeg3w",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/0y8s1fR9S4m6v_OQfjjOZw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Christian Goldbach"
+        }
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasRecipientValue": {
+        "@id": "http://rdfh.ch/0801/nE9ztH4BTn2TbmQy6-XYpw/values/Wo6J6qvTSD211yTlKxyFLQ",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/q9o5fzr3T0i0nxBrZBw0Lw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Leonhard Euler"
+        }
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+        "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+        "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+        "@value": "2018-11-28T14:15:54.589Z"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+      "http://www.w3.org/2000/01/rdf-schema#label": "L023 Original"
+    },
+    {
+      "@id": "http://rdfh.ch/0801/pHnQCfuPRA6bivbwx-NrXQ",
+      "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#letter",
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#creationDate": {
+        "@id": "http://rdfh.ch/0801/pHnQCfuPRA6bivbwx-NrXQ/values/-DNVKTvyRmKJax1ajk6H3w",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#DateValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasCalendar": "JULIAN",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndDay": 23,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndMonth": 7,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasEndYear": 1737,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartDay": 23,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartEra": "CE",
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartMonth": 7,
+        "http://api.knora.org/ontology/knora-api/v2#dateValueHasStartYear": 1737,
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#valueAsString": "JULIAN:1737-07-23 CE"
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasAuthorValue": {
+        "@id": "http://rdfh.ch/0801/pHnQCfuPRA6bivbwx-NrXQ/values/-k6p7rd1SIypIjGQ-NTV9Q",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/q9o5fzr3T0i0nxBrZBw0Lw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Leonhard Euler"
+        }
+      },
+      "http://0.0.0.0:3333/ontology/0801/beol/v2#hasRecipientValue": {
+        "@id": "http://rdfh.ch/0801/pHnQCfuPRA6bivbwx-NrXQ/values/dpyQYmKUTGW1_rzsSx_8-A",
+        "@type": "http://api.knora.org/ontology/knora-api/v2#LinkValue",
+        "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+          "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+        },
+        "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+        "http://api.knora.org/ontology/knora-api/v2#linkValueHasTarget": {
+          "@id": "http://rdfh.ch/0801/0y8s1fR9S4m6v_OQfjjOZw",
+          "@type": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
+          "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+            "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+            "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "@value": "2018-11-28T14:13:40.968Z"
+          },
+          "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+          "http://www.w3.org/2000/01/rdf-schema#label": "Christian Goldbach"
+        }
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToProject": {
+        "@id": "http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#attachedToUser": {
+        "@id": "http://rdfh.ch/users/PSGbemdjZi4kQ6GHJVkLGE"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#creationDate": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+        "@value": "2018-11-28T14:15:55.437Z"
+      },
+      "http://api.knora.org/ontology/knora-api/v2#hasPermissions": "CR knora-base:Creator|M knora-base:ProjectMember|V knora-base:KnownUser|RV knora-base:UnknownUser",
+      "http://www.w3.org/2000/01/rdf-schema#label": "L024 Original"
+    }
+  ]
+}

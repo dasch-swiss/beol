@@ -9,12 +9,13 @@ import { SearchResultsComponent } from './search-results.component';
 import { KuiActionModule } from '@knora/action';
 
 import {
-    ApiServiceResult,
+    ConvertJSONLD,
     ExtendedSearchParams,
     KuiCoreConfig,
     OntologyCacheService, OntologyInformation, Properties, ResourceClasses,
     SearchParamsService,
-    SearchService
+    SearchService,
+    CountQueryResult,
 } from '@knora/core';
 import { KuiViewerModule } from '@knora/viewer';
 
@@ -30,13 +31,12 @@ describe('SearchResultsComponent', () => {
 
     let mockSearchParamService;
     let searchServiceSpy: jasmine.SpyObj<SearchService>; // see https://angular.io/guide/testing#angular-testbed
-    let ontoCacheSpy: jasmine.SpyObj<OntologyCacheService>;
 
     beforeEach(async(() => {
 
         mockSearchParamService = new MockSearchParamsService();
-        const spySearchService = jasmine.createSpyObj('SearchService', ['doExtendedSearchCountQuery', 'doExtendedSearch']);
-        const spyOntoCache = jasmine.createSpyObj('OntologyCacheService', ['getResourceClassDefinitions']);
+        const spySearchService =
+            jasmine.createSpyObj('SearchService', ['doExtendedSearchCountQueryCountQueryResult', 'doExtendedSearchReadResourceSequence']);
 
         TestBed.configureTestingModule({
             imports: [
@@ -68,52 +68,40 @@ describe('SearchResultsComponent', () => {
                 { provide: 'config', useValue: KuiCoreConfig },
                 { provide: SearchParamsService, useValue: mockSearchParamService},
                 { provide: SearchService, useValue: spySearchService },
-                { provide: OntologyCacheService, useValue: spyOntoCache }
             ]
         })
             .compileComponents();
 
         searchServiceSpy = TestBed.get(SearchService);
 
-        searchServiceSpy.doExtendedSearchCountQuery.and.callFake((gravsearch: string) => {
+        searchServiceSpy.doExtendedSearchCountQueryCountQueryResult.and.callFake((gravsearch: string) => {
 
-                const result = new ApiServiceResult();
-                result.status = 200;
-                result.statusText = '';
-                result.url = '';
-                result.body = require('../test-data/search-results/search-response-letters-count.json'); // mock response
+                const countQueryRes = new CountQueryResult(197);
 
                 return of(
-                    result
+                    countQueryRes
                 );
             }
         );
 
-        searchServiceSpy.doExtendedSearch.and.callFake((gravsearch: string) => {
+        searchServiceSpy.doExtendedSearchReadResourceSequence.and.callFake((gravsearch: string) => {
 
-            const result = new ApiServiceResult();
-            result.status = 200;
-            result.statusText = '';
-            result.url = '';
-            result.body = require('../test-data/search-results/search-response-letters.json'); // mock response
+            const letters = require('../test-data/search-results/search-response-letters_expanded.json'); // mock response
 
-            return of(
-                result
-            );
-        });
+            const lettersSeq = ConvertJSONLD.createReadResourcesSequenceFromJsonLD(letters);
 
-        ontoCacheSpy = TestBed.get(OntologyCacheService);
-
-        ontoCacheSpy.getResourceClassDefinitions.and.callFake(() => {
             const resClasses: ResourceClasses = require('../test-data/search-results/ontology-info-resource-classes.json');
             const properties: Properties = require('../test-data/search-results/ontology-info-properties.json');
 
             const ontoInfo = new OntologyInformation({}, resClasses, properties);
 
+            lettersSeq.ontologyInformation.updateOntologyInformation(ontoInfo);
+
             return of(
-                ontoInfo
+                lettersSeq
             );
         });
+
     }));
 
     beforeEach(() => {
@@ -126,21 +114,21 @@ describe('SearchResultsComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should perform a count query',() => {
-        expect(searchServiceSpy.doExtendedSearchCountQuery).toHaveBeenCalledTimes(1);
+    it('should perform a count query', () => {
+        expect(searchServiceSpy.doExtendedSearchCountQueryCountQueryResult).toHaveBeenCalledTimes(1);
 
-        expect(searchServiceSpy.doExtendedSearchCountQuery).toHaveBeenCalledWith('testquery0');
+        expect(searchServiceSpy.doExtendedSearchCountQueryCountQueryResult).toHaveBeenCalledWith('testquery0');
 
-        // TODO: check for template status once JSON-LD processing is handled by SearchService, https://github.com/dhlab-basel/Knora-ui/issues/136
+        expect(component.numberOfAllResults).toEqual(197);
 
     });
 
     it('should perform a gravsearch query', () => {
-        expect(searchServiceSpy.doExtendedSearch).toHaveBeenCalledTimes(1);
+        expect(searchServiceSpy.doExtendedSearchReadResourceSequence).toHaveBeenCalledTimes(1);
 
-        expect(searchServiceSpy.doExtendedSearch).toHaveBeenCalledWith('testquery0');
+        expect(searchServiceSpy.doExtendedSearchReadResourceSequence).toHaveBeenCalledWith('testquery0');
 
-        // TODO: check for template status once JSON-LD processing is handled by SearchService, https://github.com/dhlab-basel/Knora-ui/issues/136
+        expect(component.result.length).toEqual(25);
 
     });
 

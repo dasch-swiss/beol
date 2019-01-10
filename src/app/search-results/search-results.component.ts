@@ -4,7 +4,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
     ApiServiceError,
     ApiServiceResult,
-    ConvertJSONLD,
+    ConvertJSONLD, CountQueryResult,
     ExtendedSearchParams,
     KnoraConstants,
     OntologyCacheService,
@@ -17,9 +17,6 @@ import {
 import { BeolService } from '../services/beol.service';
 import { environment } from '../../environments/environment';
 import { Subscription } from 'rxjs';
-
-declare let require: any;
-const jsonld = require('jsonld');
 
 @Component({
     selector: 'app-search-results',
@@ -113,13 +110,14 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
      * Get search result from Knora - 2 cases: simple search and extended search
      */
     getResult() {
+        this.isLoading = true;
 
         // FULLTEXT SEARCH
         if (this.searchMode === 'fulltext') {
             // perform count query
             if (this.offset === 0) {
 
-                this._searchService.doFulltextSearchCountQuery(this.searchQuery)
+                this._searchService.doFullTextSearchCountQueryCountQueryResult(this.searchQuery)
                     .subscribe(
                         this.showNumberOfAllResults,
                         (error: any) => {
@@ -130,7 +128,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
             }
 
             // perform full text search
-            this._searchService.doFulltextSearch(this.searchQuery, this.offset)
+            this._searchService.doFullTextSearchReadResourceSequence(this.searchQuery, this.offset)
                 .subscribe(
                     this.processSearchResults, // function pointer
                     (error: any) => {
@@ -142,7 +140,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         } else if (this.searchMode === 'extended') {
             // perform count query
             if (this.offset === 0) {
-                this._searchService.doExtendedSearchCountQuery(this.searchQuery)
+                this._searchService.doExtendedSearchCountQueryCountQueryResult(this.searchQuery)
                     .subscribe(
                         this.showNumberOfAllResults,
                         (error: any) => {
@@ -151,7 +149,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
                     );
             }
 
-            this._searchService.doExtendedSearch(this.searchQuery)
+            this._searchService.doExtendedSearchReadResourceSequence(this.searchQuery)
                 .subscribe(
                     this.processSearchResults, // function pointer
                     (error: any) => {
@@ -169,24 +167,16 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
      *
      * @param {ApiServiceResult} countQueryResult the response to a count query.
      */
-    private showNumberOfAllResults = (countQueryResult: ApiServiceResult) => {
+    private showNumberOfAllResults = (countQueryResult: CountQueryResult) => {
+        this.numberOfAllResults = countQueryResult.numberOfResults;
 
-        const resPromises = jsonld.promises;
-        // compact JSON-LD using an empty context: expands all Iris
-        const resPromise = resPromises.compact(countQueryResult.body, {});
-
-        resPromise.then((compacted) => {
-            this.numberOfAllResults = compacted[KnoraConstants.schemaNumberOfItems];
-            if (this.numberOfAllResults > 0) {
-                // offset is 0-based
-                // if numberOfAllResults equals the pagingLimit, the max. offset is 0
-                this.maxOffset = Math.floor((this.numberOfAllResults - 1) / environment.pagingLimit);
-            } else {
-                this.maxOffset = 0;
-            }
-        }, function (err) {
-            console.log('JSONLD could not be expanded:' + err);
-        });
+        if (this.numberOfAllResults > 0) {
+            // offset is 0-based
+            // if numberOfAllResults equals the pagingLimit, the max. offset is 0
+            this.maxOffset = Math.floor((this.numberOfAllResults - 1) / environment.pagingLimit);
+        } else {
+            this.maxOffset = 0;
+        }
     };
 
     /**
@@ -200,52 +190,21 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
      *
      * @param {ApiServiceResult} searchResult the answer to a search request.
      */
-    private processSearchResults = (searchResult: ApiServiceResult) => {
+    private processSearchResults = (searchResult: ReadResourcesSequence) => {
+        // assign ontology information to a variable so it can be used in the component's template
+        if (this.ontologyInfo === undefined) {
+            // init ontology information
+            this.ontologyInfo = searchResult.ontologyInformation;
+        } else {
+            // update ontology information
+            this.ontologyInfo.updateOntologyInformation(searchResult.ontologyInformation);
+        }
+        // append results to search results
+        // console.log('results 1', this.result);
+        this.result = this.result.concat(searchResult.resources);
 
-        this.isLoading = true;
-
-        const resPromises = jsonld.promises;
-        // compact JSON-LD using an empty context: expands all Iris
-        const resPromise = resPromises.compact(searchResult.body, {});
-
-        resPromise.then((compacted) => {
-
-            // get resource class Iris from response
-            const resourceClassIris: string[] = ConvertJSONLD.getResourceClassesFromJsonLD(compacted);
-
-            // request ontology information about resource class Iris (properties are implied)
-            this._cacheService.getResourceClassDefinitions(resourceClassIris).subscribe(
-                (resourceClassInfos: OntologyInformation) => {
-
-                    const resources: ReadResourcesSequence = ConvertJSONLD.createReadResourcesSequenceFromJsonLD(compacted);
-
-                    // assign ontology information to a variable so it can be used in the component's template
-                    if (this.ontologyInfo === undefined) {
-                        // init ontology information
-                        this.ontologyInfo = resourceClassInfos;
-                    } else {
-                        // update ontology information
-                        this.ontologyInfo.updateOntologyInformation(resourceClassInfos);
-                    }
-                    // append results to search results
-                    // console.log('results 1', this.result);
-                    this.result = this.result.concat(resources.resources);
-
-                    this.isLoading = false;
-                    this.rerender = false;
-                    // console.log('results 2', this.result);
-                },
-                (err) => {
-
-                    console.log('cache request failed: ' + err);
-                }
-            );
-
-        }, function (err) {
-
-            console.log('JSONLD could not be expanded:' + err);
-        });
-
+        this.isLoading = false;
+        this.rerender = false;
     };
 
     /* the following methods will be moved to @knora/viewer views */

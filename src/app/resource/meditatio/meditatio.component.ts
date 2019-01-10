@@ -128,7 +128,7 @@ export class MeditatioComponent extends BeolResource implements OnDestroy {
 
             // get transcription associated to region
             this._resourceService.getResource(transcrIri).subscribe(
-                (result) => {
+                (result: ApiServiceResult) => {
                     const promises = jsonld.promises;
                     // compact JSON-LD using an empty context: expands all Iris
                     const promise = promises.compact(result.body, {});
