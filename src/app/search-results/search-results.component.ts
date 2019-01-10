@@ -205,7 +205,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
         this.isLoading = false;
         this.rerender = false;
-        // console.log('results 2', this.result);
     };
 
     /* the following methods will be moved to @knora/viewer views */
