@@ -4,7 +4,7 @@ import { MaterialModule } from '../material-module';
 import { environment } from '../../environments/environment';
 import { KuiActionModule } from '@knora/action';
 import {
-    ApiServiceResult,
+    ApiServiceResult, ConvertJSONLD,
     KuiCoreModule,
     OntologyCacheService, OntologyInformation,
     Properties,
@@ -31,12 +31,10 @@ describe('IntroductionComponent', () => {
     let beolServiceSpy: jasmine.SpyObj<BeolService>; // see https://angular.io/guide/testing#angular-testbed
     let searchServiceSpy: jasmine.SpyObj<SearchService>;
     let resourceServiceSpy: jasmine.SpyObj<ResourceService>;
-    let ontoCacheSpy: jasmine.SpyObj<OntologyCacheService>;
 
     const spyBeolService = jasmine.createSpyObj('BeolService', ['searchForIntroductionById']);
-    const spySearchService = jasmine.createSpyObj('SearchService', ['doExtendedSearch']);
-    const spyResourceService = jasmine.createSpyObj('ResourceService', ['getResource']);
-    const spyOntoCache = jasmine.createSpyObj('OntologyCacheService', ['getResourceClassDefinitions']);
+    const spySearchService = jasmine.createSpyObj('SearchService', ['doExtendedSearchReadResourceSequence']);
+    const spyResourceService = jasmine.createSpyObj('ResourceService', ['getReadResource']);
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -73,8 +71,7 @@ describe('IntroductionComponent', () => {
                 },
                 { provide: BeolService, useValue: spyBeolService },
                 { provide: SearchService, useValue: spySearchService },
-                { provide: ResourceService, useValue: spyResourceService },
-                { provide: OntologyCacheService, useValue: spyOntoCache }
+                { provide: ResourceService, useValue: spyResourceService }
             ]
         })
             .compileComponents();
@@ -112,45 +109,41 @@ describe('IntroductionComponent', () => {
 
         searchServiceSpy = TestBed.get(SearchService);
 
-        searchServiceSpy.doExtendedSearch.and.callFake((gravsearch: string) => {
+        searchServiceSpy.doExtendedSearchReadResourceSequence.and.callFake((gravsearch: string) => {
 
-            const result = new ApiServiceResult();
-            result.status = 200;
-            result.statusText = '';
-            result.url = '';
-            result.body = require('../test-data/introduction/gravsearch-result-goldbach_introduction_1.json'); // mock response
+            const introJson = require('../test-data/introduction/gravsearch-result-goldbach_introduction_1-expanded.json'); // mock response
 
-            return of(
-                result
-            );
-        });
+            const intro = ConvertJSONLD.createReadResourcesSequenceFromJsonLD(introJson);
 
-        resourceServiceSpy = TestBed.get(ResourceService);
-
-        resourceServiceSpy.getResource.and.callFake((resIri) => {
-
-            const result = new ApiServiceResult();
-            result.status = 200;
-            result.statusText = '';
-            result.url = '';
-            result.body = require('../test-data/introduction/introduction_1.json'); // mock response
-
-            return of(
-                result
-            );
-
-        });
-
-        ontoCacheSpy = TestBed.get(OntologyCacheService);
-
-        ontoCacheSpy.getResourceClassDefinitions.and.callFake((resIris) => {
             const resClasses: ResourceClasses = require('../test-data/introduction/resource-classes.json');
             const properties: Properties = require('../test-data/introduction/properties.json');
 
             const ontoInfo = new OntologyInformation({}, resClasses, properties);
 
+            intro.ontologyInformation.updateOntologyInformation(ontoInfo);
+
             return of(
-                ontoInfo
+                intro
+            );
+        });
+
+        resourceServiceSpy = TestBed.get(ResourceService);
+
+        resourceServiceSpy.getReadResource.and.callFake((resIri) => {
+
+            const introJson = require('../test-data/introduction/introduction_1-expanded.json'); // mock response
+
+            const intro = ConvertJSONLD.createReadResourcesSequenceFromJsonLD(introJson);
+
+            const resClasses: ResourceClasses = require('../test-data/introduction/resource-classes.json');
+            const properties: Properties = require('../test-data/introduction/properties.json');
+
+            const ontoInfo = new OntologyInformation({}, resClasses, properties);
+
+            intro.ontologyInformation.updateOntologyInformation(ontoInfo);
+
+            return of(
+                intro
             );
 
         });
@@ -170,9 +163,13 @@ describe('IntroductionComponent', () => {
 
         expect(beolServiceSpy.searchForIntroductionById).toHaveBeenCalledWith('goldbach_introduction_1');
 
-        expect(searchServiceSpy.doExtendedSearch).toHaveBeenCalledTimes(1);
+        expect(searchServiceSpy.doExtendedSearchReadResourceSequence).toHaveBeenCalledTimes(1);
 
-        // TODO: once jsonld handling is done by the service directly, add more tests
+        expect(resourceServiceSpy.getReadResource).toHaveBeenCalledTimes(1);
+
+        expect(resourceServiceSpy.getReadResource).toHaveBeenCalledWith('http://rdfh.ch/0801/jTAU22HmTJWplGJgO6uVIw');
+
+        expect(component.ontologyInfo).not.toBeUndefined();
     });
 
 });
