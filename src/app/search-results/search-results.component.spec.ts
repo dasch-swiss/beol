@@ -101,7 +101,7 @@ describe('SearchResultsComponent', () => {
                 lettersSeq
             );
         });
-        
+
     }));
 
     beforeEach(() => {
@@ -119,7 +119,7 @@ describe('SearchResultsComponent', () => {
 
         expect(searchServiceSpy.doExtendedSearchCountQueryCountQueryResult).toHaveBeenCalledWith('testquery0');
 
-        // TODO: check for template status once JSON-LD processing is handled by SearchService, https://github.com/dhlab-basel/Knora-ui/issues/136
+        expect(component.numberOfAllResults).toEqual(197);
 
     });
 
@@ -128,7 +128,7 @@ describe('SearchResultsComponent', () => {
 
         expect(searchServiceSpy.doExtendedSearchReadResourceSequence).toHaveBeenCalledWith('testquery0');
 
-        // TODO: check for template status once JSON-LD processing is handled by SearchService, https://github.com/dhlab-basel/Knora-ui/issues/136
+        expect(component.result.length).toEqual(25);
 
     });
 
