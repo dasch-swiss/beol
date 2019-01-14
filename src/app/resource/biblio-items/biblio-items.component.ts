@@ -11,6 +11,7 @@ import {
     ReadPropertyItem,
     ReadResource,
     ReadTextValue,
+    ReadUriValue,
     ResourceService
 } from '@knora/core';
 import { Subscription } from 'rxjs';
@@ -46,6 +47,7 @@ class BiblioItemsProps implements PropertyValues {
     translator: ReadLinkValue[] = [];
     isTranslationOf: ReadLinkValue[] = [];
     journalIssue: ReadTextValue[] = [];
+    externalLink: ReadUriValue[] = [];
 
     [index: string]: ReadPropertyItem[];
 }
@@ -95,7 +97,8 @@ export class BiblioItemsComponent extends BeolResource {
         'introduction': this.apiUrl + '/ontology/0801/biblio/v2#hasIntroductionValue',
         'translator': this.apiUrl + '/ontology/0801/biblio/v2#publicationHasTranslatorValue',
         'isTranslationOf': this.apiUrl + '/ontology/0801/biblio/v2#publicationIsTranslationOfValue',
-        'journalIssue': this.apiUrl + '/ontology/0801/biblio/v2#journalIssue'
+        'journalIssue': this.apiUrl + '/ontology/0801/biblio/v2#journalIssue',
+        'externalLink': this.apiUrl + '/ontology/0801/biblio/v2#publicationHasExternalLink',
 
         /* // Unused properties (names come from Knora biblio ontology)
         'volumeSubtitle': this.apiUrl + '/ontology/0801/biblio/v2#volumeSubtitle',
