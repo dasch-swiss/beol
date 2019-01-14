@@ -29,8 +29,11 @@
                 <div *ngIf="props?.figure[0]">
                     <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.figure[0].propIri)}}</h4>
                     <p class="margin-left">
-                        <kui-link-value *ngFor="let fig of props?.figure" [valueObject]="fig"
-                                         [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
+                        <mat-list>
+                            <mat-list-item *ngFor="let fig of props?.figure">
+                                <kui-link-value [valueObject]="fig" [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
+                            </mat-list-item>
+                        </mat-list>
                     </p>
                 </div>
 
@@ -39,8 +42,12 @@
                         {{ontologyInfo?.getLabelForProperty(props?.replyTo[0].propIri)}}
                     </h4>
                     <p class="margin-left">
-                        <kui-link-value *ngFor="let rt of props?.replyTo" [valueObject]="rt"
-                                         [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
+
+                        <mat-list>
+                            <mat-list-item *ngFor="let rt of props?.replyTo">
+                                <kui-link-value [valueObject]="rt" [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
+                            </mat-list-item>
+                        </mat-list>
                     </p>
                 </div>
 
