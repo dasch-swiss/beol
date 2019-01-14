@@ -6,7 +6,7 @@ import {
     KnoraConstants,
     OntologyCacheService,
     OntologyInformation,
-    ReadDateValue,
+    ReadLinkValue,
     ReadPropertyItem,
     ReadResource,
     ReadTextValue,
@@ -16,25 +16,21 @@ import { BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-reso
 import { Subscription } from 'rxjs';
 import { BeolService } from '../../services/beol.service';
 
-class PersonProps implements PropertyValues {
+class PublisherProps implements PropertyValues {
     comment: ReadTextValue[] = [];
-    alternative: ReadTextValue[] = [];
-    birthDate: ReadDateValue[] = [];
-    birthPlace: ReadTextValue[] = [];
-    deathDate: ReadDateValue[] = [];
-    deathPlace: ReadTextValue[] = [];
-    dictionary: ReadTextValue[] = [];
-    IAF: ReadTextValue[] = [];
     mentioned: ReadTextValue[] = [];
+    name: ReadTextValue[] = [];
+    publisherLocation: ReadTextValue[] = [];
+    publishingPerson: ReadLinkValue[] = [];
     [index: string]: ReadPropertyItem[];
 }
 
 @Component({
-    selector: 'app-person',
-    templateUrl: './person.component.html',
-    styleUrls: ['./person.component.scss']
+    selector: 'app-publisher',
+    templateUrl: './publisher.component.html',
+    styleUrls: ['./publisher.component.scss']
 })
-export class PersonComponent extends BeolResource {
+export class PublisherComponent extends BeolResource {
 
     iri: string;
     resource: ReadResource;
@@ -48,19 +44,13 @@ export class PersonComponent extends BeolResource {
     propIris: PropIriToNameMapping = {
         'id': this.apiUrl + '/ontology/0801/beol/v2#beolIDs',
         'comment': this.apiUrl + '/ontology/0801/beol/v2#comment',
-        'alternative': this.apiUrl + '/ontology/0801/beol/v2#hasAlternativeName',
-        'birthDate': this.apiUrl + '/ontology/0801/beol/v2#hasBirthDate',
-        'birthPlace': this.apiUrl + '/ontology/0801/beol/v2#hasBirthPlace',
-        'deathDate': this.apiUrl + '/ontology/0801/beol/v2#hasDeathDate',
-        'deathPlace': this.apiUrl + '/ontology/0801/beol/v2#hasDeathPlace',
-        'dictionary': this.apiUrl + '/ontology/0801/beol/v2#hasDictionaryEntries',
-        'familyName': this.apiUrl + '/ontology/0801/beol/v2#hasFamilyName',
-        'givenName': this.apiUrl + '/ontology/0801/beol/v2#hasGivenName',
-        'IAF': this.apiUrl + '/ontology/0801/beol/v2#hasIAFIdentifier',
         'mentioned': this.apiUrl + '/ontology/0801/beol/v2#mentionedIn',
+        'name': this.apiUrl + '/ontology/0801/biblio/v2#hasName',
+        'publisherLocation': this.apiUrl + '/ontology/0801/biblio/v2#publisherHasLocation',
+        'publishingPerson': this.apiUrl + '/ontology/0801/biblio/v2#publishingPerson'
     };
 
-    props: PersonProps;
+    props: PublisherProps;
 
     constructor(protected _route: ActivatedRoute,
                 protected _resourceService: ResourceService,
@@ -75,7 +65,7 @@ export class PersonComponent extends BeolResource {
 
     initProps() {
 
-        const props = new PersonProps();
+        const props = new PublisherProps();
 
         this.mapper(props);
 
