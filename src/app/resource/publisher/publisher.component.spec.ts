@@ -18,7 +18,7 @@ import { ReadTextValueComponent } from '../../properties/read-text-value/read-te
 describe('PublisherComponent', () => {
     let component: PublisherComponent;
     let fixture: ComponentFixture<PublisherComponent>;
-    const id = 'http://rdfh.ch/0802/shubb5TjTnu84MqkM6uHlA'; // Christian Goldbach id
+    const id = 'http://rdfh.ch/0802/o2zZYlxUTnqPSx3pW0h7nQ'; // Olms Hildesheim id
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
