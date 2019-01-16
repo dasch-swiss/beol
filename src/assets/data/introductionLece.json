@@ -1,6 +1,15 @@
 {
   "Introductions": [
     {
+      "name": "CondorcetTurgot_preface",
+      "label": "Préface",
+      "children": [
+        {"name":  "CondorcetTurgot_preface_subsection",
+          "label": "Remarques sur la transcription et l'annotation du texte"
+        }
+      ]
+    },
+    {
       "name": "condorcet_edition_introduction",
       "label": "Introduction of Leonhardi Euleri Commercium Epistolicum",
       "children":[
