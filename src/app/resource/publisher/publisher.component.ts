@@ -47,7 +47,7 @@ export class PublisherComponent extends BeolResource {
         'mentioned': this.apiUrl + '/ontology/0801/beol/v2#mentionedIn',
         'name': this.apiUrl + '/ontology/0801/biblio/v2#hasName',
         'publisherLocation': this.apiUrl + '/ontology/0801/biblio/v2#publisherHasLocation',
-        'publishingPerson': this.apiUrl + '/ontology/0801/biblio/v2#publishingPerson'
+        'publishingPerson': this.apiUrl + '/ontology/0801/biblio/v2#publishingPersonValue'
     };
 
     props: PublisherProps;
