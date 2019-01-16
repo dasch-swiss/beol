@@ -1,21 +1,20 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { BeolResource } from '../beol-resource';
 import {
     ApiServiceError,
-    ApiServiceResult,
-    ConvertJSONLD,
     IncomingService,
     KnoraConstants,
     OntologyCacheService,
     OntologyInformation,
-    ReadResource, ReadResourcesSequence,
-    ResourceService,
-    SearchService,
+    ReadLinkValue,
+    ReadResource,
+    ReadResourcesSequence,
     ReadTextValueAsHtml,
-    ReadLinkValue
+    ResourceService,
+    SearchService
 } from '@knora/core';
 import { Subscription } from 'rxjs';
-import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { BeolService } from '../../services/beol.service';
 

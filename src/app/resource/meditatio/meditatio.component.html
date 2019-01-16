@@ -1,9 +1,9 @@
 <div class="full-size scroll-y-only">
 
-    <div *ngIf="!isLoading && transcriptionIrisReady && resource?.stillImageRepresentationsToDisplay.length > 0">
+    <div *ngIf="!isLoading && resource?.stillImageRepresentationsToDisplay.length > 0">
         <kui-still-image #OSDViewer
-                         class="osd-viewer" [images]="resource?.stillImageRepresentationsToDisplay"
-                         [imageRangeStart]="0" [imageRangeEnd]="0" [imageChangeInterval]="1"
+                         class="osd-viewer"
+                         [images]="resource?.stillImageRepresentationsToDisplay"
                          (regionHovered)="regionActive($event)">
         </kui-still-image>
     </div>
