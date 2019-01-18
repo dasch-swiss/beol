@@ -39,6 +39,7 @@ import { APP_BASE_HREF } from '@angular/common';
 // import { RECAPTCHA_SETTINGS, RecaptchaSettings } from 'ng-recaptcha';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ReadTextValueComponent } from './properties/read-text-value/read-text-value.component';
+import { HanCatalogueDirective } from './directives/han-catalogue.directive';
 
 /*
 export function initializeApp(appConfig: AppConfig) {
@@ -66,7 +67,8 @@ export function initializeApp(appConfig: AppConfig) {
         BiblioItemsComponent,
         EndnoteComponent,
         FigureComponent,
-        ReadTextValueComponent
+        ReadTextValueComponent,
+        HanCatalogueDirective
     ],
     imports: [
         //        AngularFireModule.initializeApp(environment.firebase),
