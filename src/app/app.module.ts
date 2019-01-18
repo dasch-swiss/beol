@@ -21,6 +21,7 @@ import { ErrorComponent } from './error/error.component';
 import { IntroductionComponent } from './introduction/introduction.component';
 import { ResourceComponent } from './resource/resource.component';
 import { PersonComponent } from './resource/person/person.component';
+import { PublisherComponent } from './resource/publisher/publisher.component';
 import { LetterComponent } from './resource/letter/letter.component';
 import { ReadListValueComponent } from './properties/read-list-value/read-list-value.component';
 import { ReadTextValueAsHtmlComponent } from './properties/read-text-value-as-html/read-text-value-as-html.component';
@@ -55,6 +56,7 @@ export function initializeApp(appConfig: AppConfig) {
         IntroductionComponent,
         ResourceComponent,
         PersonComponent,
+        PublisherComponent,
         LetterComponent,
         ReadListValueComponent,
         ReadTextValueAsHtmlComponent,
