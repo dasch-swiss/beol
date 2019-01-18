@@ -205,6 +205,8 @@ export abstract class BeolResource implements OnInit, OnDestroy {
      */
     getResource(iri: string): void {
 
+        this.iri = iri;
+
         this._resourceService.getReadResource(iri)
             .subscribe(
                 (result: ReadResourcesSequence) => {

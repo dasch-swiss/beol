@@ -17,6 +17,7 @@ import {
 import { BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
 import { Subscription } from 'rxjs';
 import { BeolService } from '../../services/beol.service';
+import { environment } from '../../../environments/environment';
 
 class LetterProps implements PropertyValues {
     id: ReadTextValue[] = [];
@@ -55,6 +56,7 @@ export class LetterComponent extends BeolResource {
     errorMessage: any;
     navigationSubscription: Subscription;
     KnoraConstants = KnoraConstants;
+    teiLink: string;
 
     propIris: PropIriToNameMapping = {
         'id': this.apiUrl + '/ontology/0801/beol/v2#beolIDs',
@@ -98,6 +100,14 @@ export class LetterComponent extends BeolResource {
 
         this.props = props;
 
+        const letterConfig = environment.tei.letter;
+
+        this.teiLink = environment.externalApiURL + '/v2/tei/' + encodeURIComponent(this.iri) + '?' + 'textProperty=' + encodeURIComponent(letterConfig.textProperty)
+            + '&mappingIri=' + encodeURIComponent(letterConfig.mappingIRI)
+            + '&gravsearchTemplateIri=' + encodeURIComponent(letterConfig.gravsearchTemplateIri)
+            + '&teiHeaderXSLTIri=' + encodeURIComponent(letterConfig.teiHeaderXSLTIri);
+
     }
+
 
 }

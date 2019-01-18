@@ -140,6 +140,12 @@
                 <read-text-value [valueObject]="props?.text[0]" [bindEvents]="true" [ontologyInfo]="ontologyInfo"></read-text-value>
             </section>
 
+            <section>
+                <p>
+                    <a href="{{teiLink}}" target="_blank">TEI/XML</a>
+                </p>
+            </section>
+
             <section class="images">
                 <!-- Check for incoming images -->
                 <kui-still-image #OSDViewer class="osd-viewer"
