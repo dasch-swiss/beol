@@ -186,6 +186,10 @@
                     </read-text-value>
                 </p>
             </div>
+            <span *ngIf="props?.externalLink[0]">
+                <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.externalLink[0].propIri)}}</h4>
+                <kui-uri-value *ngFor="let ipoeb of props?.externalLink" [valueObject]="ipoeb" (referredResourceClicked)="resLinkClicked($event)"></kui-uri-value>
+            </span>
 
         </div>
     </div>
