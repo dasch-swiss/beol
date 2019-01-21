@@ -276,10 +276,12 @@ export class BeolService {
      */
     routeByResourceType(referredResourceType: string, referredResourceIri: string): void {
 
-        if (referredResourceType === this.externalApiURL + '/ontology/0801/beol/v2#person' ||
-            referredResourceType === this.externalApiURL + '/ontology/0801/biblio/v2#Publisher') {
+        if (referredResourceType === this.externalApiURL + '/ontology/0801/beol/v2#person') {
             // route to person template
             this._router.navigateByUrl('person/' + encodeURIComponent(referredResourceIri));
+        } else if (referredResourceType === this.externalApiURL + '/ontology/0801/biblio/v2#Publisher')  {
+            // route to publisher template
+            this._router.navigateByUrl('publisher/' + encodeURIComponent(referredResourceIri));
         } else if (referredResourceType === this.externalApiURL + '/ontology/0801/beol/v2#letter') {
             // route to letter template
             this._router.navigateByUrl('letter/' + encodeURIComponent(referredResourceIri));
