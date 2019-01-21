@@ -1,0 +1,67 @@
+<div class="full-size scroll-y-only">
+
+    <kui-progress-indicator *ngIf="isLoading" [color]="'#D88958'"></kui-progress-indicator>
+
+    <div *ngIf="!isLoading && props">
+
+        <div class="sidebar">
+
+            <button mat-stroked-button class="previousBtn" (click)="location.back()">
+                <mat-icon>arrow_back</mat-icon>
+                Previous
+            </button>
+
+        </div>
+
+
+        <div class="main-content">
+            <section class="center">
+                <h2 *ngIf="resource.label" class="mat-display-1 margins">{{resource?.label}}</h2>
+            </section>
+
+
+            <section class="text comment" *ngIf="props?.comment[0]">
+                <span *ngFor="let com of props?.comment">
+                    <p><read-text-value class="margin-left" [valueObject]="com" [ontologyInfo]="ontologyInfo" [bindEvents]="true"></read-text-value></p>
+                </span>
+            </section>
+
+            <section class="links">
+
+                <div *ngIf="props?.name[0]">
+                    <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.name[0].propIri)}}</h4>
+                    <p><read-text-value class="margin-left" [valueObject]="props?.name[0]" [ontologyInfo]="ontologyInfo" [bindEvents]="false">
+                    </read-text-value></p>
+                </div>
+
+                <div *ngIf="props?.publisherLocation[0]">
+                    <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.publisherLocation[0].propIri)}}</h4>
+                    <p><read-text-value class="margin-left" [valueObject]="props?.publisherLocation[0]" [ontologyInfo]="ontologyInfo" [bindEvents]="false">
+                    </read-text-value></p>
+                </div>
+                <div *ngIf="props?.publishingPerson[0]">
+                    <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.publishingPerson[0].propIri)}}</h4>
+                    <mat-list>
+                        <mat-list-item *ngFor="let publishingPerson of props?.publishingPerson">
+                            <kui-link-value [valueObject]="publishingPerson" [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
+                        </mat-list-item>
+                    </mat-list>
+                </div>
+                <div *ngIf="props?.mentioned[0]">
+                    <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.mentioned[0].propIri)}}: </h4>
+                    <p *ngFor="let m of props?.mentioned">
+                        <read-text-value class="margin-left" [valueObject]=m [ontologyInfo]="ontologyInfo" [bindEvents]="false">
+                        </read-text-value>
+                    </p>
+                </div>
+            </section>
+
+            <section class="links">
+                <!-- Incoming links? -->
+                <!--<div *ngFor=""></div>-->
+            </section>
+
+        </div>
+    </div>
+
+</div>
