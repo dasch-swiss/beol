@@ -84,7 +84,6 @@ export class NewtonLetterComponent extends BeolResource {
         const props = new LetterProps();
 
         this.mapper(props);
-        props.text.values()[0] = this.getNewtonLetterText();
         this.props = props;
 
     }
