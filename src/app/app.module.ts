@@ -23,6 +23,7 @@ import { ResourceComponent } from './resource/resource.component';
 import { PersonComponent } from './resource/person/person.component';
 import { PublisherComponent } from './resource/publisher/publisher.component';
 import { LetterComponent } from './resource/letter/letter.component';
+import { NewtonLetterComponent } from './resource/newtonLetter/newtonLetter.component';
 import { ReadListValueComponent } from './properties/read-list-value/read-list-value.component';
 import { ReadTextValueAsHtmlComponent } from './properties/read-text-value-as-html/read-text-value-as-html.component';
 import { LeooRouteComponent } from './leoo-route/leoo-route.component';
@@ -61,6 +62,7 @@ export function initializeApp(appConfig: AppConfig) {
         PersonComponent,
         PublisherComponent,
         LetterComponent,
+        NewtonLetterComponent,
         ReadListValueComponent,
         ReadTextValueAsHtmlComponent,
         CorrespondenceComponent,

@@ -14,6 +14,7 @@ import { EndnoteComponent } from './resource/endnote/endnote.component';
 import { LeooRouteComponent } from './leoo-route/leoo-route.component';
 import { FigureComponent } from './resource/figure/figure.component';
 import { BiblioItemsComponent } from './resource/biblio-items/biblio-items.component';
+import {NewtonLetterComponent} from './resource/newtonLetter/newtonLetter.component';
 
 
 const appRoutes: Routes = [
@@ -52,6 +53,10 @@ const appRoutes: Routes = [
     {
         path: 'letter/:id',
         component: LetterComponent
+    },
+    {
+        path: 'newtonLetter/:id',
+        component: NewtonLetterComponent
     },
     {
         path: 'endnote/:id',
