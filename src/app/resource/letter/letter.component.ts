@@ -36,6 +36,7 @@ class LetterProps implements PropertyValues {
     replyTo: ReadLinkValue[] = [];
     location: ReadTextValue[] = [];
     title: ReadTextValue[] = [];
+    sysnum: ReadTextValue[] = [];
 
     [index: string]: ReadPropertyItem[];
 }
@@ -74,6 +75,7 @@ export class LetterComponent extends BeolResource {
         'replyTo': this.apiUrl + '/ontology/0801/beol/v2#letterIsReplyToValue',
         'location': this.apiUrl + '/ontology/0801/beol/v2#location',
         'title': this.apiUrl + '/ontology/0801/beol/v2#title',
+        'sysnum': this.apiUrl + '/ontology/0801/beol/v2#hasSystemNumber',
         'standoff': this.apiUrl + '/ontology/knora-api/v2#hasStandoffLinkToValue'
     };
 
