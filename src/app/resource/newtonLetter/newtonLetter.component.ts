@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+
 import {
     IncomingService,
     KnoraConstants,
@@ -11,7 +13,10 @@ import {
     ReadListValue,
     ReadPropertyItem,
     ReadResource,
-    ReadTextValue, ReadTextValueAsHtml, ReadTextValueAsString, ReadUriValue,
+    ReadTextValue,
+    ReadTextValueAsHtml,
+    ReadTextValueAsString,
+    ReadUriValue,
     ResourceService
 } from '@knora/core';
 import { BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
@@ -25,7 +30,7 @@ class LetterProps implements PropertyValues {
     facsimiles: ReadUriValue[] = [];
     date: ReadDateValue[] = [];
     subject: ReadListValue[] = [];
-    text: ReadTextValueAsHtml[] = [];
+    text: ReadTextValueAsString[] = [];
     mentionedPerson: ReadLinkValue[] = [];
     replyTo: ReadLinkValue[] = [];
     location: ReadTextValue[] = [];
@@ -73,7 +78,8 @@ export class NewtonLetterComponent extends BeolResource {
                 protected _cacheService: OntologyCacheService,
                 protected _incomingService: IncomingService,
                 public location: Location,
-                protected _beolService: BeolService) {
+                protected _beolService: BeolService,
+                private http: HttpClient) {
 
         super(_route, _resourceService, _cacheService, _incomingService, _beolService);
 
@@ -85,12 +91,19 @@ export class NewtonLetterComponent extends BeolResource {
 
         this.mapper(props);
         this.props = props;
-
+        this.getNewtonLetterText('NATP00120');
     }
-    private getNewtonLetterText() {
-        const basePath = 'http://www.newtonproject.ox.ac.uk/view/texts/normalized/';
-        const url = basePath + this.props.npID;
 
-        return `<a href="${url}" target="_blank">${this.props.npID}</a>`;
+    private getNewtonLetterText(filename) {
+        const basePath = 'http://www.newtonproject.ox.ac.uk/view/texts/normalized/';
+        const url = basePath + filename;
+        console.log(url)
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type':  'application/html',
+                'Authorization': 'Basic YmlibGlvQGV4YW1wbGUuY29tOnRlc3Q='
+            })
+        };
+        return this.http.get(url, httpOptions).subscribe(data => console.log(data));
     }
 }

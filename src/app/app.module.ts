@@ -12,6 +12,8 @@ import { MaterialModule } from './material-module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 // router module and app routing with all the path definitions
 // import { RouterModule } from '@angular/router';
+import {HttpClientModule} from '@angular/common/http';
+
 import { AppRouting } from './app.routing';
 // app components
 import { AppComponent } from './app.component';
