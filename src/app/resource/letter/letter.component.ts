@@ -37,6 +37,7 @@ class LetterProps implements PropertyValues {
     location: ReadTextValue[] = [];
     title: ReadTextValue[] = [];
     sysnum: ReadTextValue[] = [];
+    npID: ReadTextValue[] = [];
 
     [index: string]: ReadPropertyItem[];
 }
@@ -76,6 +77,7 @@ export class LetterComponent extends BeolResource {
         'location': this.apiUrl + '/ontology/0801/beol/v2#location',
         'title': this.apiUrl + '/ontology/0801/beol/v2#title',
         'sysnum': this.apiUrl + '/ontology/0801/beol/v2#hasSystemNumber',
+        'npID': this.apiUrl + '/ontology/0801/newton/v2#newtonProjectID',
         'standoff': this.apiUrl + '/ontology/knora-api/v2#hasStandoffLinkToValue'
     };
 

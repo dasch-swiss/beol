@@ -31,6 +31,8 @@ import { FigureComponent } from './resource/figure/figure.component';
 import { BiblioItemsComponent } from './resource/biblio-items/biblio-items.component';
 // directives
 import { MathJaxDirective } from './directives/mathjax.directive';
+import { HanCatalogueDirective } from './directives/han-catalogue.directive';
+import { NewtonProjectDirective } from './directives/newton-project.directive';
 // Loads the application configuration file during application startup
 import { CorrespondenceComponent } from './correspondence/correspondence.component';
 import { ContactComponent } from './contact/contact.component';
@@ -40,7 +42,7 @@ import { APP_BASE_HREF } from '@angular/common';
 // import { RECAPTCHA_SETTINGS, RecaptchaSettings } from 'ng-recaptcha';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ReadTextValueComponent } from './properties/read-text-value/read-text-value.component';
-import { HanCatalogueDirective } from './directives/han-catalogue.directive';
+
 
 /*
 export function initializeApp(appConfig: AppConfig) {
@@ -70,7 +72,8 @@ export function initializeApp(appConfig: AppConfig) {
         EndnoteComponent,
         FigureComponent,
         ReadTextValueComponent,
-        HanCatalogueDirective
+        HanCatalogueDirective,
+        NewtonProjectDirective
     ],
     imports: [
         //        AngularFireModule.initializeApp(environment.firebase),
