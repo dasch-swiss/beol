@@ -25,7 +25,7 @@ import { ResourceComponent } from './resource/resource.component';
 import { PersonComponent } from './resource/person/person.component';
 import { PublisherComponent } from './resource/publisher/publisher.component';
 import { LetterComponent } from './resource/letter/letter.component';
-import { NewtonLetterComponent } from './resource/newtonLetter/newtonLetter.component';
+import { NewtonLetterComponent } from './resource/newton-letter/newton-letter.component';
 import { ReadListValueComponent } from './properties/read-list-value/read-list-value.component';
 import { ReadTextValueAsHtmlComponent } from './properties/read-text-value-as-html/read-text-value-as-html.component';
 import { LeooRouteComponent } from './leoo-route/leoo-route.component';
@@ -45,6 +45,7 @@ import { APP_BASE_HREF } from '@angular/common';
 // import { RECAPTCHA_SETTINGS, RecaptchaSettings } from 'ng-recaptcha';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ReadTextValueComponent } from './properties/read-text-value/read-text-value.component';
+import {SanitizeHtmlPipe} from './pipes/sanitize-html.pipe';
 
 
 /*
@@ -77,7 +78,8 @@ export function initializeApp(appConfig: AppConfig) {
         FigureComponent,
         ReadTextValueComponent,
         HanCatalogueDirective,
-        NewtonProjectDirective
+        NewtonProjectDirective,
+        SanitizeHtmlPipe
     ],
     imports: [
         //        AngularFireModule.initializeApp(environment.firebase),

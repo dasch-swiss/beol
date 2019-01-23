@@ -5,7 +5,7 @@ import { MaterialModule } from '../../material-module';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
-import { NewtonLetterComponent } from './newtonLetter.component';
+import { NewtonLetterComponent } from './newton-letter.component';
 import { KuiActionModule } from '@knora/action';
 import { KuiCoreConfig, OntologyCacheService } from '@knora/core';
 import { ReadTextValueAsHtmlComponent } from '../../properties/read-text-value-as-html/read-text-value-as-html.component';

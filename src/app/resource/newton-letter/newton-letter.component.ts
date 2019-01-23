@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, ParamMap} from '@angular/router';
+import {Location} from '@angular/common';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 import {
@@ -19,9 +19,9 @@ import {
     ReadUriValue,
     ResourceService
 } from '@knora/core';
-import { BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
-import { Subscription } from 'rxjs';
-import { BeolService } from '../../services/beol.service';
+import {BeolResource, PropertyValues, PropIriToNameMapping} from '../beol-resource';
+import {Subscription} from 'rxjs';
+import {BeolService} from '../../services/beol.service';
 
 class LetterProps implements PropertyValues {
     id: ReadTextValue[] = [];
@@ -41,13 +41,13 @@ class LetterProps implements PropertyValues {
 }
 
 @Component({
-    selector: 'app-newtonLetter',
-    templateUrl: './newtonLetter.component.html',
-    styleUrls: ['./newtonLetter.component.scss']
+    selector: 'app-newton-letter',
+    templateUrl: './newton-letter.component.html',
+    styleUrls: ['./newton-letter.component.scss']
 })
-export class NewtonLetterComponent extends BeolResource {
+export class NewtonLetterComponent {
 
-    iri: string;
+    id: string;
     resource: ReadResource;
     ontologyInfo: OntologyInformation;
     incomingStillImageRepresentationCurrentOffset: number; // last offset requested for `this.resource.incomingStillImageRepresentations`
@@ -56,6 +56,9 @@ export class NewtonLetterComponent extends BeolResource {
     navigationSubscription: Subscription;
     KnoraConstants = KnoraConstants;
 
+    letter: string;
+
+    /*
     propIris: PropIriToNameMapping = {
         'id': this.apiUrl + '/ontology/0801/beol/v2#beolIDs',
         'date': this.apiUrl + '/ontology/0801/beol/v2#creationDate',
@@ -70,6 +73,7 @@ export class NewtonLetterComponent extends BeolResource {
         'title': this.apiUrl + '/ontology/0801/beol/v2#title',
         'npID': this.apiUrl + '/ontology/0801/newton/v2#newtonProjectID',
     };
+    */
 
     props: LetterProps;
 
@@ -81,29 +85,56 @@ export class NewtonLetterComponent extends BeolResource {
                 protected _beolService: BeolService,
                 private http: HttpClient) {
 
-        super(_route, _resourceService, _cacheService, _incomingService, _beolService);
+        // super(_route, _resourceService, _cacheService, _incomingService, _beolService);
+
+        // get the id from the route newtonletter/:id e.g. NATP00120
+        this.navigationSubscription = this._route.paramMap.subscribe((params: ParamMap) => {
+            this.id = params.get('id');
+            // and get the letter from newton page by this id
+            this.getNewtonLetterText(this.id);
+        });
 
     }
 
+    /*
+    // this is for our own (knora) resources
     initProps() {
 
         const props = new LetterProps();
 
         this.mapper(props);
         this.props = props;
-        this.getNewtonLetterText('NATP00120');
     }
+    */
 
     private getNewtonLetterText(filename) {
+
+        this.isLoading = true;
+        // use a proxy url as described here:
+        // https://stackoverflow.com/questions/43871637/no-access-control-allow-origin-header-is-present-on-the-requested-resource-whe
+        const proxyurl = 'https://cors-anywhere.herokuapp.com/';
         const basePath = 'http://www.newtonproject.ox.ac.uk/view/texts/normalized/';
-        const url = basePath + filename;
-        console.log(url)
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type':  'application/html',
-                'Authorization': 'Basic YmlibGlvQGV4YW1wbGUuY29tOnRlc3Q='
+
+        const url = basePath + filename; // site that doesn’t send Access-Control-*
+
+
+        fetch(proxyurl + url) // https://cors-anywhere.herokuapp.com/https://example.com
+            .then(response => response.text())
+            .then(contents => {
+                // console.log(contents);
+                this.letter = contents;
+                this.isLoading = false;
             })
-        };
-        return this.http.get(url, httpOptions).subscribe(data => console.log(data));
+            .catch(() => console.log('Can’t access ' + url + ' response. Blocked by browser?'));
+
+
+
+        // const httpOptions = {
+        //     headers: new HttpHeaders({
+        //         'Content-Type': 'application/html',
+        //         'Authorization': 'Basic YmlibGlvQGV4YW1wbGUuY29tOnRlc3Q='
+        //     })
+        // };
+       // return this.http.get(url, httpOptions).subscribe(data => console.log(data));
     }
 }
