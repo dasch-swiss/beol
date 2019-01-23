@@ -43,6 +43,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { MeditatioComponent } from './resource/meditatio/meditatio.component';
 
 import { ReadTextValueComponent } from './properties/read-text-value/read-text-value.component';
+import { HanCatalogueDirective } from './directives/han-catalogue.directive';
 
 
 /*
@@ -73,7 +74,8 @@ export function initializeApp(appConfig: AppConfig) {
         EndnoteComponent,
         FigureComponent,
         MeditatioComponent,
-        ReadTextValueComponent
+        ReadTextValueComponent,
+        HanCatalogueDirective,
     ],
     imports: [
         //        AngularFireModule.initializeApp(environment.firebase),
