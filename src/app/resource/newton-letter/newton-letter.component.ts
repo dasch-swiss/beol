@@ -127,8 +127,20 @@ export class NewtonLetterComponent extends BeolResource {
         for (let divIt = 0; divIt < divs.length; divIt++) {
             const divEl = divs[divIt];
             if (divEl.id === 'tei') {
-                this.letter = divEl.children[0].innerHTML;
+                const divelement = this.imageSrcAttribute(divEl.children[0])
+                this.letter = divelement.innerHTML;
             }
         }
+    }
+    private imageSrcAttribute(element) {
+        const imgs = element.getElementsByTagName('img');
+        for (let imgIt = 0; imgIt < imgs.length; imgIt++) {
+            const image = imgs[imgIt];
+            if (image.src) {
+                image.src = image.src.replace('http://localhost:4200', 'http://www.newtonproject.ox.ac.uk');
+                console.log(image.src);
+            }
+        }
+        return element;
     }
 }
