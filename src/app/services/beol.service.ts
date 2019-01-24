@@ -285,7 +285,7 @@ export class BeolService {
         } else if (referredResourceType === this.externalApiURL + '/ontology/0801/beol/v2#letter') {
             // route to letter template
             this._router.navigateByUrl('letter/' + encodeURIComponent(referredResourceIri));
-        } else if (referredResourceType === this.externalApiURL + '/ontology/0801/newton#letter') {
+        } else if (referredResourceType === this.externalApiURL + '/ontology/0801/newton/v2#letter') {
             this._router.navigateByUrl('newtonLetter/' + encodeURIComponent(referredResourceIri));
         } else if (referredResourceType === this.externalApiURL + '/ontology/0801/beol/v2#endnote') {
             // route to letter template
