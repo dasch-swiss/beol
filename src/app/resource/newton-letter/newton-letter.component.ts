@@ -55,6 +55,7 @@ export class NewtonLetterComponent extends BeolResource {
     KnoraConstants = KnoraConstants;
 
     letter: string;
+    test: string;
 
     propIris: PropIriToNameMapping = {
         'id': this.apiUrl + '/ontology/0801/beol/v2#beolIDs',
@@ -84,6 +85,7 @@ export class NewtonLetterComponent extends BeolResource {
         super(_route, _resourceService, _cacheService, _incomingService, _beolService);
 
     }
+
     // this is for our own (knora) resources
     initProps() {
 
@@ -109,24 +111,24 @@ export class NewtonLetterComponent extends BeolResource {
 
         const url = basePath + filename; // site that doesn’t send Access-Control-*
 
-
         fetch(proxyurl + url) // https://cors-anywhere.herokuapp.com/https://example.com
             .then(response => response.text())
             .then(contents => {
-                // console.log(contents);
-                this.letter = contents;
+                this.getNewtonLetterBody(contents);
                 this.isLoading = false;
             })
             .catch(() => console.log('Can’t access ' + url + ' response. Blocked by browser?'));
+    }
 
-        console.log(this.letter);
+    private getNewtonLetterBody(contents) {
 
-        // const httpOptions = {
-        //     headers: new HttpHeaders({
-        //         'Content-Type': 'application/html',
-        //         'Authorization': 'Basic YmlibGlvQGV4YW1wbGUuY29tOnRlc3Q='
-        //     })
-        // };
-       // return this.http.get(url, httpOptions).subscribe(data => console.log(data));
+        const html = new DOMParser().parseFromString(contents, 'text/html');
+        const divs = html.getElementsByTagName('div');
+        for (let divIt = 0; divIt < divs.length; divIt++) {
+            const divEl = divs[divIt];
+            if (divEl.id === 'tei') {
+                this.letter = divEl.children[0].innerHTML;
+            }
+        }
     }
 }
