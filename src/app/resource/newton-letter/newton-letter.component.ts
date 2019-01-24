@@ -121,14 +121,17 @@ export class NewtonLetterComponent extends BeolResource {
     }
 
     private getNewtonLetterBody(contents) {
-
+        let text = '';
         const html = new DOMParser().parseFromString(contents, 'text/html');
         const divs = html.getElementsByTagName('div');
         for (let divIt = 0; divIt < divs.length; divIt++) {
             const divEl = divs[divIt];
             if (divEl.id === 'tei') {
-                const divelement = this.imageSrcAttribute(divEl.children[0])
-                this.letter = divelement.innerHTML;
+                for (let child = 0; child < divEl.children.length; child++) {
+                    const divelement = this.imageSrcAttribute(divEl.children[child]);
+                    text = text.concat(divelement.innerHTML);
+                }
+                this.letter = text;
             }
         }
     }
