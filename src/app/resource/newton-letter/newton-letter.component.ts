@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, ParamMap} from '@angular/router';
 import {Location} from '@angular/common';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
@@ -14,7 +14,6 @@ import {
     ReadPropertyItem,
     ReadResource,
     ReadTextValue,
-    ReadTextValueAsHtml,
     ReadTextValueAsString,
     ReadUriValue,
     ResourceService
@@ -45,9 +44,8 @@ class LetterProps implements PropertyValues {
     templateUrl: './newton-letter.component.html',
     styleUrls: ['./newton-letter.component.scss']
 })
-export class NewtonLetterComponent {
-
-    id: string;
+export class NewtonLetterComponent extends BeolResource {
+    iri: string;
     resource: ReadResource;
     ontologyInfo: OntologyInformation;
     incomingStillImageRepresentationCurrentOffset: number; // last offset requested for `this.resource.incomingStillImageRepresentations`
@@ -58,7 +56,6 @@ export class NewtonLetterComponent {
 
     letter: string;
 
-    /*
     propIris: PropIriToNameMapping = {
         'id': this.apiUrl + '/ontology/0801/beol/v2#beolIDs',
         'date': this.apiUrl + '/ontology/0801/beol/v2#creationDate',
@@ -73,7 +70,6 @@ export class NewtonLetterComponent {
         'title': this.apiUrl + '/ontology/0801/beol/v2#title',
         'npID': this.apiUrl + '/ontology/0801/newton/v2#newtonProjectID',
     };
-    */
 
     props: LetterProps;
 
@@ -85,18 +81,9 @@ export class NewtonLetterComponent {
                 protected _beolService: BeolService,
                 private http: HttpClient) {
 
-        // super(_route, _resourceService, _cacheService, _incomingService, _beolService);
-
-        // get the id from the route newtonletter/:id e.g. NATP00120
-        this.navigationSubscription = this._route.paramMap.subscribe((params: ParamMap) => {
-            this.id = params.get('id');
-            // and get the letter from newton page by this id
-            this.getNewtonLetterText(this.id);
-        });
+        super(_route, _resourceService, _cacheService, _incomingService, _beolService);
 
     }
-
-    /*
     // this is for our own (knora) resources
     initProps() {
 
@@ -104,8 +91,13 @@ export class NewtonLetterComponent {
 
         this.mapper(props);
         this.props = props;
+        // get the id from the route newtonletter/:id e.g. NATP00120
+        this.navigationSubscription = this._route.paramMap.subscribe((params: ParamMap) => {
+            // and get the letter from newton page by this id
+            this.getNewtonLetterText(this.props.npID[0].getContent());
+        });
     }
-    */
+
 
     private getNewtonLetterText(filename) {
 
@@ -127,7 +119,7 @@ export class NewtonLetterComponent {
             })
             .catch(() => console.log('Can’t access ' + url + ' response. Blocked by browser?'));
 
-
+        console.log(this.letter);
 
         // const httpOptions = {
         //     headers: new HttpHeaders({

@@ -2,11 +2,9 @@
 
     <kui-progress-indicator *ngIf="isLoading" [color]="'#D88958'"></kui-progress-indicator>
 
-    <div *ngIf="!isLoading && letter"  class="main-content without-sidebar">
-        <div [innerHTML]="letter | sanitizeHtml"></div>
-    </div>
 
-    <!--
+
+
     <div *ngIf="!isLoading && props">
 
         <div class="sidebar">
@@ -98,7 +96,7 @@
                 <p>
 
             </section>
-
+        </div>
 
             <!--<section class="images">-->
                 <!--&lt;!&ndash; Check for incoming images &ndash;&gt;-->
@@ -108,9 +106,12 @@
                                  <!--[imageRangeEnd]="4" [imageChangeInterval]="5">-->
                 <!--</kui-still-image>-->
             <!--</section>-->
-    <!--
+
+
+        <div *ngIf="!isLoading && letter"  class="main-content without-sidebar">
+            <div [innerHTML]="letter | sanitizeHtml"></div>
         </div>
     </div>
-    -->
+
 
 </div>
