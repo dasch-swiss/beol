@@ -36,9 +36,6 @@ export class ResourceComponent extends BeolResource {
 
     initProps() {
 
-        // if this resource is a region, refer to page it belongs to
-        this._beolService.routeToPageWithActiveRegion(this.resource);
-
     }
 
     /**

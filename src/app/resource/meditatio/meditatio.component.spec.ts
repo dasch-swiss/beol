@@ -8,11 +8,13 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { KuiCoreConfig, OntologyCacheService } from '@knora/core';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpTestingController } from '@angular/common/http/testing';
 
 describe('MeditatioComponent', () => {
     let component: MeditatioComponent;
     let fixture: ComponentFixture<MeditatioComponent>;
-    const id = 'http://rdfh.ch/0801/7ZvL2A5PQ9C4eAmr-n26gw';
+    const id = 'http://rdfh.ch/0801/gggg';
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -21,7 +23,7 @@ describe('MeditatioComponent', () => {
                 ReadTextValueAsHtmlComponent,
                 MathJaxDirective
             ],
-            imports: [KuiViewerModule, RouterTestingModule],
+            imports: [KuiViewerModule, RouterTestingModule, HttpClientModule],
             providers: [
                 OntologyCacheService,
                 {

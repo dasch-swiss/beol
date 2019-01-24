@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ExtendedSearchParams, KnoraConstants, ReadLinkValue, ReadResource, SearchParamsService } from '@knora/core';
+import { ExtendedSearchParams, KnoraConstants, ReadLinkValue, ReadResourcesSequence, ResourceService, SearchParamsService } from '@knora/core';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 
@@ -11,7 +11,7 @@ export class BeolService {
     apiUrl = environment.api;
     externalApiURL = environment.externalApiURL;
 
-    constructor(private _searchParamsService: SearchParamsService, private _router: Router) {
+    constructor(private _searchParamsService: SearchParamsService, private _resourceService: ResourceService, private _router: Router) {
     }
 
     /**
@@ -296,27 +296,34 @@ export class BeolService {
     /**
      * Routes to the page a region belongs to, submitting the Iri of the region.
      *
-     * @param resource the region to be displayed on the page it belongs to.
+     * @param regionIri the region to be displayed on the page it belongs to.
      */
-    routeToPageWithActiveRegion(resource: ReadResource) {
+    routeToPageWithActiveRegion(regionIri: string) {
         const isRegionOfValueProp = 'http://api.knora.org/ontology/knora-api/v2#isRegionOfValue';
 
-        // if the resource is a region, refer to page template (page pointed to by the region)
-        if (resource.type === KnoraConstants.Region
-            && Array.isArray(resource.properties[isRegionOfValueProp])
-            && resource.properties[isRegionOfValueProp].length === 1) {
+        this._resourceService.getReadResource(regionIri).subscribe(
+            (regionRes: ReadResourcesSequence) => {
 
-            const regionOfVal: ReadLinkValue = <ReadLinkValue> resource.properties[isRegionOfValueProp][0];
+                if (regionRes.numberOfResources === 1 && regionRes.resources[0].type === KnoraConstants.Region
+                    && Array.isArray(regionRes.resources[0].properties[isRegionOfValueProp])
+                    && regionRes.resources[0].properties[isRegionOfValueProp].length === 1) {
 
-            if (regionOfVal.referredResource !== undefined) {
-                const pageIri = regionOfVal.referredResource.id;
-                const page = regionOfVal.referredResource.type;
+                    const regionOfVal: ReadLinkValue = <ReadLinkValue> regionRes.resources[0].properties[isRegionOfValueProp][0];
 
-                // refer directly to page template, indicating the active region
-                this._router.navigateByUrl('meditatio/' + encodeURIComponent(pageIri) + '/' + encodeURIComponent(resource.id));
+                    if (regionOfVal.referredResource !== undefined) {
+                        const pageIri = regionOfVal.referredResource.id;
+                        const page = regionOfVal.referredResource.type;
+
+                        // refer directly to page template, indicating the active region
+                        this._router.navigateByUrl('meditatio/' + encodeURIComponent(pageIri) + '/' + encodeURIComponent(regionRes.resources[0].id));
+                    } else {
+                        console.error(`Could not route region ${regionIri} to page`);
+                    }
+                } else {
+                    console.error(`Could not route region ${regionIri} to page`);
+                }
             }
-
-        }
+        );
     }
 
     /**
@@ -353,6 +360,9 @@ export class BeolService {
             this._router.navigateByUrl('biblio/' + encodeURIComponent(referredResourceIri));
         } else if (referredResourceType === this.externalApiURL + '/ontology/0801/beol/v2#page') {
             this._router.navigateByUrl('meditatio/' + encodeURIComponent(referredResourceIri));
+        } else if (referredResourceType === 'http://api.knora.org/ontology/knora-api/v2#Region') {
+            // route region to page it belongs to
+            this.routeToPageWithActiveRegion(referredResourceIri);
         } else {
             // route to generic template
             this._router.navigateByUrl('resource/' + encodeURIComponent(referredResourceIri));
