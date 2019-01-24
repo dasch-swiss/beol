@@ -91,6 +91,11 @@
                     <kui-link-value [valueObject]="author" [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
                     <span *ngIf="!last"> &amp; </span>
                 </span>
+                <span *ngFor="let recipient of props?.recipient; let last = last">
+                    to
+                    <kui-link-value [valueObject]="recipient" [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
+                    <span *ngIf="!last"> &amp; </span>
+                </span>
                 </p>
                     <span *ngIf="props?.date[0]"><kui-date-value [valueObject]="props?.date[0]" [calendar]="true" [era]="true"></kui-date-value></span>
                 <p>
