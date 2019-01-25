@@ -271,7 +271,8 @@ export class BeolService {
     /**
      * Given a page Iri, returns the Gravsearch query to obtain associated region and transcription Iris.
      *
-     * @param regionIri the region's Iri.
+     * @param pageIri Iri of the page.
+     * @param offset offset to be used.
      * @returns the Gravsearch query to get the transcription Iris.
      */
     getTranscriptionIrisForPage(pageIri: string, offset: number = 0) {
@@ -291,6 +292,41 @@ export class BeolService {
         `;
 
         return transcriptionIrisForPage;
+    }
+
+    /**
+     * Given a region Iri, get the manuscript entries that point to this region via standoff link.
+     *
+     * @param regionIri Iri of the region.
+     * @param offset offset to be used.
+     * @returns the Gravsearch query to get the manuscript entries.
+     */
+    getManuscriptEntryForRegion(regionIri: string, offset: number = 0) {
+
+        const manuscriptEntriesForRegion = `
+        PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
+        CONSTRUCT {
+
+            ?manEntry knora-api:isMainResource true .
+
+            ?manEntry <${this.externalApiURL}/ontology/0801/beol/simple/v2#title> ?title .
+
+        } WHERE {
+
+            ?manEntry a knora-api:Resource .
+
+            ?manEntry a <${this.externalApiURL}/ontology/0801/beol/simple/v2#manuscriptEntry> .
+
+            ?manEntry <${this.externalApiURL}/ontology/0801/beol/simple/v2#title> ?title .
+
+            ?manEntry knora-api:hasStandoffLinkTo <${regionIri}>
+
+        }
+
+        OFFSET ${offset}
+        `;
+
+        return manuscriptEntriesForRegion;
     }
 
     /**
