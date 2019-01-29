@@ -1,16 +1,20 @@
 {
   "Introductions": [
     {
+      "name": "CondorcetTurgot_preface",
+      "label": "Préface"
+    },
+    {
       "name": "condorcet_edition_introduction",
-      "label": "Introduction of Leonhardi Euleri Commercium Epistolicum",
+      "label": "Introduction",
       "children":[
         {
           "name": "CondorcetMJA_Introduction",
-          "label": "Condorcet Correspondence Introduction"
+          "label": "Condorcet Correspondence"
         },
         {
           "name": "Turgot_Introduction",
-          "label": "Turgot Correspondence Introduction"
+          "label": "Turgot Correspondence"
         }
       ]
     }

@@ -89,18 +89,9 @@ export class CorrespondenceComponent implements OnInit {
 
   @Input() project?: string;
 
-  Christian_Goldbach = new Correspondent('Christian Goldbach', '(DE-588)118696149');
-  Leonhard_Euler = new Correspondent('Leonhard Euler', '(DE-588)118531379');
-  Johann_Albrecht_Euler = new Correspondent('Johann Albrecht Euler', '(DE-588)116610832');
-  Condorcet = new Correspondent('Marie Jean Antoine Nicolas Condorcet', '(DE-588)118521772');
-  Turgot = new Correspondent('Anne Robert Jacques Turgot', '(DE-588)118763202');
-  Lexell = new Correspondent('Anders Johan Lexell', '(DE-588)100189180');
-  FussNI = new Correspondent('Niklaus (I) Fuss', '(DE-588)116878894');
-
-
   // project: string;
   leooIV: Book[];
-  leooCondorcet: CorrespondenceGroupWithSection[];
+  lece: CorrespondenceGroupWithSection[];
   wiki: CorrespondenceGroupWithSection[];
 
   constructor(
@@ -123,8 +114,11 @@ export class CorrespondenceComponent implements OnInit {
      * List of all existing correspondents
      */
     const Leonhard_Euler = new Correspondent('Leonhard Euler', '(DE-588)118531379');
-
     const Johann_Albrecht_Euler = new Correspondent('Johann Albrecht Euler', '(DE-588)116610832');
+    const Condorcet = new Correspondent('Marie Jean Antoine Nicolas Condorcet', '(DE-588)118521772');
+    const Turgot = new Correspondent('Anne Robert Jacques Turgot', '(DE-588)118763202');
+    const Lexell = new Correspondent('Anders Johan Lexell', '(DE-588)100189180');
+    const FussNI = new Correspondent('Niklaus (I) Fuss', '(DE-588)116878894');
 
     const Christian_Goldbach = new Correspondent('Christian Goldbach', '(DE-588)118696149');
 
@@ -308,28 +302,28 @@ export class CorrespondenceComponent implements OnInit {
      */
     this.leooIV = [
       new Book('LEOO IVA.IV', '978-3-0348-0880-4', [
-        new CorrespondenceGroup(this.Leonhard_Euler, [
-          new Correspondence(this.Leonhard_Euler, this.Christian_Goldbach, 'Original', true),
-          new Correspondence(this.Leonhard_Euler, this.Christian_Goldbach, 'Translation')
+        new CorrespondenceGroup(Leonhard_Euler, [
+          new Correspondence(Leonhard_Euler, Christian_Goldbach, 'Original', true),
+          new Correspondence(Leonhard_Euler, Christian_Goldbach, 'Translation')
         ], 'between Leonhard Euler and Christian Goldbach'),
-        new CorrespondenceGroup(this.Johann_Albrecht_Euler, [
-          new Correspondence(this.Johann_Albrecht_Euler, this.Christian_Goldbach, 'Original', true),
-          new Correspondence(this.Johann_Albrecht_Euler, this.Christian_Goldbach, 'Translation')
+        new CorrespondenceGroup(Johann_Albrecht_Euler, [
+          new Correspondence(Johann_Albrecht_Euler, Christian_Goldbach, 'Original', true),
+          new Correspondence(Johann_Albrecht_Euler, Christian_Goldbach, 'Translation')
         ], 'between Johann Albrecht Euler and Christian Goldbach')
       ])
     ];
-    this.leooCondorcet = [
+    this.lece = [
 
-          new CorrespondenceGroupWithSection(this.Condorcet, [
+          new CorrespondenceGroupWithSection(Condorcet, [
               new Section('condorcet', [
-                    new Correspondence(this.Condorcet, this.Leonhard_Euler),
-                    new Correspondence(this.Condorcet, this.Johann_Albrecht_Euler),
-                    new Correspondence(this.Condorcet, this.Lexell),
-                    new Correspondence(this.Condorcet, this.FussNI)
+                    new Correspondence(Condorcet, Leonhard_Euler),
+                    new Correspondence(Condorcet, Johann_Albrecht_Euler),
+                    new Correspondence(Condorcet, Lexell),
+                    new Correspondence(Condorcet, FussNI)
           ])]),
-          new CorrespondenceGroupWithSection(this.Turgot, [
+          new CorrespondenceGroupWithSection(Turgot, [
               new Section('turgot', [
-                    new Correspondence(this.Turgot, this.Leonhard_Euler)
+                    new Correspondence(Turgot, Leonhard_Euler)
               ])])
         ];
 

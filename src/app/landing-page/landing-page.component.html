@@ -67,17 +67,26 @@
         </section>
         <mat-divider></mat-divider>
         <section>
+            <h3 mat-card-subtitle>LECE</h3>
             <h2 mat-card-title>Leonhardi Euleri Commercium Epistolicum</h2>
-
-            <p fxLayout="column"><strong>Introductions</strong></p>
             <div class="container">
                 <div class="flex-container" fxFlex fxLayout="row wrap" fxLayout.sm="column" fxlayout.xs="column" fxFlexFill>
-                    <div fxFlex routerLink="introduction/leooCondorcet/CondorcetMJA_Introduction">
+                    <div fxFlex routerLink="introduction/lece/CondorcetTurgot_preface">
+                        <mat-card class="intro-card" fxFlex>
+                            Préface
+                        </mat-card>
+                    </div>
+                </div>
+            </div>
+            <p fxLayout="column"><strong>Introduction</strong></p>
+            <div class="container">
+                <div class="flex-container" fxFlex fxLayout="row wrap" fxLayout.sm="column" fxlayout.xs="column" fxFlexFill>
+                    <div fxFlex routerLink="introduction/lece/CondorcetMJA_Introduction">
                         <mat-card class="intro-card" fxFlex>
                             Correspondance d'Euler avec Condorcet
                         </mat-card>
                     </div>
-                    <div fxFlex routerLink="introduction/leooCondorcet/Turgot_Introduction">
+                    <div fxFlex routerLink="introduction/lece/Turgot_Introduction">
                         <mat-card class="intro-card" fxFlex>
                             Correspondance d'Euler avec Turgot
                         </mat-card>
@@ -85,7 +94,7 @@
                 </div>
             </div>
             <div class="leoo-section">
-                <app-correspondence [project]="'leooCondorcet'"></app-correspondence>
+                <app-correspondence [project]="'lece'"></app-correspondence>
 
             </div>
 

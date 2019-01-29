@@ -86,7 +86,7 @@ export class IntroductionComponent implements OnInit, OnDestroy {
         const introleoo = require('../../assets/data/introductionLeoo.json');
         const introLece = require('../../assets/data/introductionLece.json');
         this.listLeoo = <Introduction[]> introleoo.Introductions;
-        this.listLece = <Introduction[]> introLece.introductions;
+        this.listLece = <Introduction[]> introLece.Introductions;
 
         this.paramsSubscription = this._route.paramMap.subscribe((params: ParamMap) => {
             this.project = params.get('project');
