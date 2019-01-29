@@ -50,6 +50,34 @@
                         </div>
                     </div>
                 </div>
+                <div  *ngIf="project=='lece'">
+                    <div *ngFor="let item of listLece; let i = index;">
+
+                        <mat-list-item [class.parent]="item.children">
+                            <button mat-button [routerLink]="'/introduction/lece/' + item.name"
+                                    routerLinkActive="active-link" class="nav-item" (click)="toggleChildren(i)">
+                                {{item.label}}
+                                <mat-icon *ngIf="!item.children">keyboard_arrow_right</mat-icon>
+                                <mat-icon *ngIf="item.children">keyboard_arrow_down</mat-icon>
+                            </button>
+                        </mat-list-item>
+
+                        <div *ngIf="item.children" class="nav-children" [class.open]="curIndex === i">
+                            <div *ngFor="let child of item.children; let c = index;">
+                                <mat-list-item>
+                                    <button mat-button [routerLink]="'/introduction/lece/' + child.name"
+                                            routerLinkActive="active-link" class="nav-item"
+                                            (click)="toggleGrandChildren(c)">
+                                        {{child.label}}
+                                        <mat-icon *ngIf="!child.children">keyboard_arrow_right</mat-icon>
+                                        <mat-icon *ngIf="child.children">keyboard_arrow_down</mat-icon>
+                                    </button>
+                                </mat-list-item>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </mat-list>
 
         </div>
