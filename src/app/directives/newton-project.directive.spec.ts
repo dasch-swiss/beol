@@ -30,7 +30,7 @@ describe('NewtonProjectDirective', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should render the catalogue link', () => {
+    it('should render the newton link', () => {
 
         const compDe = fixture.debugElement;
 
@@ -40,9 +40,9 @@ describe('NewtonProjectDirective', () => {
             .toEqual('<a href="http://www.newtonproject.ox.ac.uk/view/texts/normalized/NATP00120" target="_blank">NATP00120</a>');
     });
 
-    it('should render the catalogue link', () => {
+    it('should render the newton link', () => {
 
-        component.npID = 'NATP00120';
+        component.newtonProjectID = 'NATP00120';
 
         fixture.detectChanges();
 
@@ -63,9 +63,9 @@ describe('NewtonProjectDirective', () => {
 
 class TestComponent implements OnInit {
 
-    npID: string;
+    newtonProjectID: string;
 
     ngOnInit() {
-        this.npID = 'NATP00120';
+        this.newtonProjectID = 'NATP00120';
     }
 }
