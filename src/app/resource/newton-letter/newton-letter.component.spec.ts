@@ -15,6 +15,7 @@ import { KuiViewerModule } from '@knora/viewer';
 import { ReadTextValueComponent } from '../../properties/read-text-value/read-text-value.component';
 import { HanCatalogueDirective } from '../../directives/han-catalogue.directive';
 import { NewtonProjectDirective } from '../../directives/newton-project.directive';
+import {SanitizeHtmlPipe} from '../../pipes/sanitize-html.pipe';
 
 describe('NewtonLetterComponent', () => {
     let component: NewtonLetterComponent;
@@ -37,8 +38,8 @@ describe('NewtonLetterComponent', () => {
                 ReadTextValueAsHtmlComponent,
                 ReadListValueComponent,
                 ReadTextValueComponent,
-                HanCatalogueDirective,
-                NewtonProjectDirective
+                NewtonProjectDirective,
+                SanitizeHtmlPipe
             ],
             providers: [
                 OntologyCacheService,
