@@ -57,7 +57,7 @@ describe('NewtonProjectDirective', () => {
 
 @Component({
     template: `
-        <span appHanCatalogue [sysnum]="letterSysnum"></span>
+        <span appNewtonProject [npID]="newtonProjectID"></span>
     `
 })
 
