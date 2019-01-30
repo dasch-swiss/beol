@@ -46,7 +46,7 @@ import { APP_BASE_HREF } from '@angular/common';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ReadTextValueComponent } from './properties/read-text-value/read-text-value.component';
 import {SanitizeHtmlPipe} from './pipes/sanitize-html.pipe';
-
+import {SanitizeUrlPipe} from './pipes/sanitize-url.pipe';
 
 /*
 export function initializeApp(appConfig: AppConfig) {
@@ -79,7 +79,8 @@ export function initializeApp(appConfig: AppConfig) {
         ReadTextValueComponent,
         HanCatalogueDirective,
         NewtonProjectDirective,
-        SanitizeHtmlPipe
+        SanitizeHtmlPipe,
+        SanitizeUrlPipe
     ],
     imports: [
         //        AngularFireModule.initializeApp(environment.firebase),
