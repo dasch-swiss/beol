@@ -51,7 +51,7 @@ describe('NewtonProjectDirective', () => {
         const spanDe: DebugElement = compDe.query(By.css('span'));
 
         expect(spanDe.nativeElement.innerHTML)
-            .toEqual('<a href="http://www.newtonproject.ox.ac.uk/view/texts/normalized/NATP00120" target="_blank">000059882</a>');
+            .toEqual('<a href="http://www.newtonproject.ox.ac.uk/view/texts/normalized/NATP00120" target="_blank">NATP00120</a>');
     });
 });
 
