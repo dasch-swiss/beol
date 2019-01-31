@@ -140,7 +140,7 @@ export class NewtonLetterComponent extends BeolResource {
         for (let imgIt = 0; imgIt < imgs.length; imgIt++) {
             const image = imgs[imgIt];
             if (image.src) {
-                image.src = image.src.replace('http://localhost:4200', 'http://www.newtonproject.ox.ac.uk');
+                image.src = image.src.replace(this.apiUrl, 'http://www.newtonproject.ox.ac.uk');
                 console.log(image.src);
             }
         }
