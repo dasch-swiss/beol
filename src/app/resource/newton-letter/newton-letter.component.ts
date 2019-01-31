@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, ParamMap} from '@angular/router';
 import {Location} from '@angular/common';
-import {HttpClient} from '@angular/common/http';
 
 import {
     IncomingService,
@@ -79,8 +78,7 @@ export class NewtonLetterComponent extends BeolResource {
                 protected _cacheService: OntologyCacheService,
                 protected _incomingService: IncomingService,
                 public location: Location,
-                protected _beolService: BeolService,
-                private http: HttpClient) {
+                protected _beolService: BeolService) {
 
         super(_route, _resourceService, _cacheService, _incomingService, _beolService);
 
