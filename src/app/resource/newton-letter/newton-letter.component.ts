@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, ParamMap} from '@angular/router';
 import {Location} from '@angular/common';
-
+import {environment} from '../../../environments/environment',
 import {
     IncomingService,
     KnoraConstants,
@@ -138,8 +138,8 @@ export class NewtonLetterComponent extends BeolResource {
         for (let imgIt = 0; imgIt < imgs.length; imgIt++) {
             const image = imgs[imgIt];
             if (image.src) {
-                image.src = image.src.replace(this.apiUrl, 'http://www.newtonproject.ox.ac.uk');
-                console.log(image.src);
+                image.src = image.src.replace(environment.app, 'http://www.newtonproject.ox.ac.uk');
+                console.log(environment.app);
             }
         }
         return element;
