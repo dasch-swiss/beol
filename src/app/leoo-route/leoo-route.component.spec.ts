@@ -24,7 +24,11 @@ describe('LeooRouteComponent', () => {
       providers: [
         {
           provide: ActivatedRoute,
-          useValue: { params: of({ rn }) }
+            useValue: { paramMap: of({
+                    get: () => {
+                        return rn;
+                    }
+                })}
         },
         { provide: 'config', useValue: KuiCoreConfig }
       ]
