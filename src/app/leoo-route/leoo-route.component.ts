@@ -1,12 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, Params } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { BeolService } from '../services/beol.service';
-import { ApiServiceResult, ConvertJSONLD, SearchService, ReadResourcesSequence } from '@knora/core';
-import { AppConfig } from '../app.config';
+import { ReadResourcesSequence, SearchService } from '@knora/core';
 import { environment } from '../../environments/environment';
-
-declare let require: any;
-let jsonld = require('jsonld');
 
 @Component({
     selector: 'app-leoo-route',
@@ -27,46 +23,34 @@ export class LeooRouteComponent implements OnInit {
     }
 
     ngOnInit() {
-        this._route.params.subscribe((params: Params) => {
+        this._route.paramMap.subscribe((params: ParamMap) => {
 
-            this.repertoriumNumber = params['rn'];
+            this.repertoriumNumber = params.get('rn');
 
-            if (this.repertoriumNumber !== undefined) {
+            if (this.repertoriumNumber !== null) {
 
                 // create a query that gets the Iri of the LEOO letter
                 const query = this._beolService.searchForLetterFromLEOO(this.repertoriumNumber);
 
-                this._searchService.doExtendedSearch(query).subscribe(
-                    (result: ApiServiceResult) => {
+                this._searchService.doExtendedSearchReadResourceSequence(query).subscribe(
+                    (resourceSeq: ReadResourcesSequence) => {
 
-                        const promises = jsonld.promises;
-                        // compact JSON-LD using an empty context: expands all Iris
-                        const promise = promises.compact(result.body, {});
+                        if (resourceSeq.numberOfResources === 1) {
 
-                        promise.then((compacted) => {
+                            const letterIri: string = resourceSeq.resources[0].id;
 
-                            const resourceSeq: ReadResourcesSequence = ConvertJSONLD.createReadResourcesSequenceFromJsonLD(compacted);
+                            // given the Iri of the letter, display the whole resource
+                            this._beolService.routeByResourceType(this.apiUrl + '/ontology/0801/beol/v2#letter', letterIri);
+                        } else {
+                            // letter not found
+                            console.log(`letter with repertorium number ${this.repertoriumNumber} not found`);
+                        }
 
-                            if (resourceSeq.numberOfResources === 1) {
-
-                                const letterIri: string = resourceSeq.resources[0].id;
-
-                                // given the Iri of the letter, display the whole resource
-                                this._beolService.routeByResourceType(this.apiUrl + '/ontology/0801/beol/v2#letter', letterIri);
-                            } else {
-                                // letter not found
-                                console.log(`letter with repertorium number ${this.repertoriumNumber} not found`);
-                            }
-
-                        }, function (err) {
-                            console.log('JSONLD of full resource request could not be expanded:' + err);
-                        });
-
-
+                    }, function (err) {
+                        console.log('search failed ' + err);
                     }
                 );
             }
         });
     }
-
 }
