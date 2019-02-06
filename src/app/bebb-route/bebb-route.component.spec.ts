@@ -1,17 +1,17 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute } from '@angular/router';
+
+import { BebbRouteComponent } from './bebb-route.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-
-import { LeooRouteComponent } from './leoo-route.component';
-import { of } from 'rxjs';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { KuiCoreConfig } from '@knora/core';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
-describe('LeooRouteComponent', () => {
-    let component: LeooRouteComponent;
-    let fixture: ComponentFixture<LeooRouteComponent>;
-    const rn = '721';
+describe('BebbRouteComponent', () => {
+    let component: BebbRouteComponent;
+    let fixture: ComponentFixture<BebbRouteComponent>;
+    const lt = '1706-03-17_Hermann_Jacob-Scheuchzer_Johannes';
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -20,14 +20,14 @@ describe('LeooRouteComponent', () => {
                 HttpClientTestingModule,
                 RouterTestingModule
             ],
-            declarations: [LeooRouteComponent],
+            declarations: [BebbRouteComponent],
             providers: [
                 {
                     provide: ActivatedRoute,
                     useValue: {
                         paramMap: of({
                             get: () => {
-                                return rn;
+                                return lt;
                             }
                         })
                     }
@@ -39,7 +39,7 @@ describe('LeooRouteComponent', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(LeooRouteComponent);
+        fixture = TestBed.createComponent(BebbRouteComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
