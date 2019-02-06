@@ -6,14 +6,22 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 
 import { LeooRouteComponent } from './leoo-route.component';
 import { of } from 'rxjs';
-import { KuiCoreConfig } from '@knora/core';
+import { KuiCoreConfig, ReadResource, ReadResourcesSequence, SearchService } from '@knora/core';
+import { BeolService } from '../services/beol.service';
 
 describe('LeooRouteComponent', () => {
     let component: LeooRouteComponent;
     let fixture: ComponentFixture<LeooRouteComponent>;
     const rn = '721';
 
+    let beolService: BeolService;
+    let searchService: SearchService;
+
     beforeEach(async(() => {
+
+        const beolServiceSpy = jasmine.createSpyObj('BeolService', ['searchForLetterFromLEOO', 'routeByResourceType']); // see https://angular.io/guide/testing#angular-testbed
+        const searchServiceSpy = jasmine.createSpyObj('SearchService', ['doExtendedSearchReadResourceSequence']);
+
         TestBed.configureTestingModule({
             imports: [
                 HttpClientModule,
@@ -32,10 +40,27 @@ describe('LeooRouteComponent', () => {
                         })
                     }
                 },
-                {provide: 'config', useValue: KuiCoreConfig}
+                { provide: 'config', useValue: KuiCoreConfig },
+                { provide: BeolService, useValue: beolServiceSpy },
+                { provide: SearchService, useValue: searchServiceSpy }
             ]
         })
             .compileComponents();
+
+        beolServiceSpy.searchForLetterFromLEOO.and.returnValue('gravsearchQuery');
+
+        beolService = TestBed.get(BeolService);
+
+        const mockRes = of(
+            new ReadResourcesSequence(
+                [new ReadResource('letterIri', 'http://0.0.0.0:3333/ontology/0801/beol/v2#letter', 'label', [], [], [], [], {})],
+                1
+            )
+        );
+
+        searchServiceSpy.doExtendedSearchReadResourceSequence.and.returnValue(mockRes);
+
+        searchService = TestBed.get(SearchService);
     }));
 
     beforeEach(() => {
@@ -46,5 +71,14 @@ describe('LeooRouteComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
+    });
+
+    it('should perform a query to get the letter\'s actual Iri', () => {
+
+        expect(beolService.searchForLetterFromLEOO).toHaveBeenCalledWith(rn);
+
+        expect(searchService.doExtendedSearchReadResourceSequence).toHaveBeenCalledWith('gravsearchQuery');
+
+        expect(beolService.routeByResourceType).toHaveBeenCalledWith('http://0.0.0.0:3333/ontology/0801/beol/v2#letter', 'letterIri');
     });
 });

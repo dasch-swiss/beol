@@ -40,9 +40,9 @@ describe('BebbRouteComponent', () => {
                         })
                     }
                 },
-                {provide: 'config', useValue: KuiCoreConfig},
-                {provide: BeolService, useValue: beolServiceSpy},
-                {provide: SearchService, useValue: searchServiceSpy}
+                { provide: 'config', useValue: KuiCoreConfig },
+                { provide: BeolService, useValue: beolServiceSpy },
+                { provide: SearchService, useValue: searchServiceSpy }
             ]
         })
             .compileComponents();
