@@ -4,6 +4,7 @@
         <kui-still-image #OSDViewer
                          class="osd-viewer"
                          [images]="resource?.stillImageRepresentationsToDisplay"
+                         [activateRegion]="activeRegion"
                          (regionHovered)="regionActive($event)">
         </kui-still-image>
     </div>
@@ -15,6 +16,16 @@
         <read-text-value-as-html
             [valueObject]="transcription" [ontologyInfo]="ontologyInfo"
             [bindEvents]="true"></read-text-value-as-html>
+    </div>
+
+    <br/>
+    <div *ngIf="!isLoading && manuscriptEntries.length > 0">
+        <div>Manuscript entries pointing to this region:</div>
+        <mat-list>
+            <mat-list-item *ngFor="let entry of manuscriptEntries">
+                <span (click)="goToResource(entry.type, entry.id)">{{entry.label}}</span>
+            </mat-list-item>
+        </mat-list>
     </div>
 
 </div>

@@ -10,6 +10,7 @@ import { of } from 'rxjs';
 import { KuiCoreConfig, OntologyCacheService } from '@knora/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { HttpTestingController } from '@angular/common/http/testing';
+import { MatListModule } from '@angular/material';
 
 describe('MeditatioComponent', () => {
     let component: MeditatioComponent;
@@ -23,7 +24,7 @@ describe('MeditatioComponent', () => {
                 ReadTextValueAsHtmlComponent,
                 MathJaxDirective
             ],
-            imports: [KuiViewerModule, RouterTestingModule, HttpClientModule],
+            imports: [KuiViewerModule, RouterTestingModule, HttpClientModule, MatListModule],
             providers: [
                 OntologyCacheService,
                 {

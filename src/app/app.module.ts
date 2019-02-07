@@ -41,7 +41,6 @@ import { APP_BASE_HREF } from '@angular/common';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import { MeditatioComponent } from './resource/meditatio/meditatio.component';
-
 import { ReadTextValueComponent } from './properties/read-text-value/read-text-value.component';
 import { HanCatalogueDirective } from './directives/han-catalogue.directive';
 

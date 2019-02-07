@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { BeolResource } from '../beol-resource';
 import {
     ApiServiceError,
@@ -23,7 +23,7 @@ import { BeolService } from '../../services/beol.service';
     templateUrl: './meditatio.component.html',
     styleUrls: ['./meditatio.component.scss']
 })
-export class MeditatioComponent extends BeolResource implements OnDestroy {
+export class MeditatioComponent extends BeolResource {
 
     iri: string;
     resource: ReadResource;
@@ -39,6 +39,9 @@ export class MeditatioComponent extends BeolResource implements OnDestroy {
     regionToTranscription = {};
     transcriptionIrisReady = false;
     transcription: ReadTextValueAsHtml;
+    manuscriptEntries: ReadResource[] = [];
+
+    activeRegion: string;
 
     constructor(protected _route: ActivatedRoute,
                 private _router: Router,
@@ -88,6 +91,7 @@ export class MeditatioComponent extends BeolResource implements OnDestroy {
 
     private getTranscription(regionIri: string) {
 
+        this.isLoading = true;
         const transcrIri = this.regionToTranscription[regionIri];
 
         if (transcrIri !== undefined) {
@@ -101,19 +105,32 @@ export class MeditatioComponent extends BeolResource implements OnDestroy {
 
                     this.transcription =
                         result.resources[0].properties[this.apiUrl + '/ontology/0801/beol/v2#hasText'][0] as ReadTextValueAsHtml;
-
+                    this.isLoading = false;
                 },
                 (error) => {
                     this.errorMessage = <any>error;
                     this.isLoading = false;
                 }
             );
+
+            const manuscriptEntriesQuery = this._beolService.getManuscriptEntryForRegion(regionIri);
+
+            this._searchService.doExtendedSearchReadResourceSequence(manuscriptEntriesQuery).subscribe(
+                (manEntries: ReadResourcesSequence) => {
+                    if (manEntries.numberOfResources > 0) {
+                        this.manuscriptEntries = manEntries.resources;
+                    }
+                }
+            );
         }
     }
 
     regionActive(regionIri: string) {
-
+        this.activeRegion = regionIri;
         this.getTranscription(regionIri);
+    }
 
+    goToResource(resType: string, resIri: string) {
+        this._beolService.routeByResourceType(resType, resIri);
     }
 }
