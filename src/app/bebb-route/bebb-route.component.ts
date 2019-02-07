@@ -12,6 +12,7 @@ import { environment } from '../../environments/environment';
 export class BebbRouteComponent implements OnInit {
 
     bebbLettertitle: string;
+    notFound: boolean;
 
     apiUrl = environment.externalApiURL;
 
@@ -43,10 +44,12 @@ export class BebbRouteComponent implements OnInit {
                             this._beolService.routeByResourceType(this.apiUrl + '/ontology/0801/beol/v2#letter', letterIri);
                         } else {
                             // letter not found
+                            this.notFound = true;
                             console.log(`letter with title ${this.bebbLettertitle} not found`);
                         }
 
-                    }, function (err) {
+                    }, (err) => {
+                        this.notFound = true;
                         console.log('search failed ' + err);
                     }
                 );
