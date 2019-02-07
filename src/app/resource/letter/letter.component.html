@@ -149,7 +149,8 @@
             <section class="images">
                 <!-- Check for incoming images -->
                 <kui-still-image #OSDViewer class="osd-viewer"
-                                 *ngIf="resource?.incomingStillImageRepresentations?.length > 0">
+                                 *ngIf="resource?.incomingStillImageRepresentations?.length > 0;"
+                                 [images]="resource?.stillImageRepresentationsToDisplay">
                 </kui-still-image>
             </section>
 

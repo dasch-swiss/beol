@@ -13,7 +13,9 @@ import {
     StillImageRepresentation,
     Utils
 } from '@knora/core';
+
 import { StillImageComponent } from '@knora/viewer';
+
 import { Subscription } from 'rxjs';
 import { environment } from '../../environments/environment';
 
@@ -284,8 +286,6 @@ export abstract class BeolResource implements OnInit, OnDestroy {
      * Gets the incoming regions for [[this.resource]].
      *
      * @param {number} offset the offset to be used (needed for paging). First request uses an offset of 0.
-     * @param callback function to be called when new images have been loaded from the server. It takes the
-     * number of images returned as an argument.
      */
     protected getIncomingRegions(offset: number): void {
         this._incomingService.getIncomingRegions(this.resource.id, offset).subscribe(
@@ -313,7 +313,6 @@ export abstract class BeolResource implements OnInit, OnDestroy {
      * This method may have to called several times with an increasing offsetChange in order to get all available StillImageRepresentations.
      *
      * @param offset the offset to be used (needed for paging). First request uses an offset of 0.
-     * @param callback function to be called when new images have been loaded from the server.
      * It takes the number of images returned as an argument.
      */
     protected getIncomingStillImageRepresentations(offset: number): void {
@@ -360,7 +359,6 @@ export abstract class BeolResource implements OnInit, OnDestroy {
      * Get resources pointing to [[this.resource]] with properties other than knora-api:isPartOf and knora-api:isRegionOf.
      *
      * @param offset the offset to be used (needed for paging). First request uses an offset of 0.
-     * @param callback function to be called when new images have been loaded from the server.
      * It takes the number of images returned as an argument.
      */
     protected getIncomingLinks(offset: number): void {
@@ -372,7 +370,6 @@ export abstract class BeolResource implements OnInit, OnDestroy {
 
                 // Append elements incomingResources to this.resource.incomingLinks
                 Array.prototype.push.apply(this.resource.incomingLinks, incomingResources.resources);
-
             },
             (error: any) => {
                 this.errorMessage = <any>error;
