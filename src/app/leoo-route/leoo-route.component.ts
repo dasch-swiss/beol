@@ -12,6 +12,7 @@ import { environment } from '../../environments/environment';
 export class LeooRouteComponent implements OnInit {
 
     repertoriumNumber: string;
+    notFound: boolean;
 
     apiUrl = environment.externalApiURL;
 
@@ -44,10 +45,12 @@ export class LeooRouteComponent implements OnInit {
                         } else {
                             // letter not found
                             console.log(`letter with repertorium number ${this.repertoriumNumber} not found`);
+                            this.notFound = true;
                         }
 
-                    }, function (err) {
+                    }, (err) => {
                         console.log('search failed ' + err);
+                        this.notFound = true;
                     }
                 );
             }
