@@ -22,7 +22,7 @@
                 <div *ngIf="prop.key === KnoraConstants.hasStillImageFileValue; else noImage">
                     <!-- resource has images attached directly, display them -->
 
-                    <kui-still-image #OSDViewer *ngIf="!isLoading && resource.stillImageRepresentationsToDisplay.length > 0" class="osd-viewer" [images]="resource?.stillImageRepresentationsToDisplay" [imageRangeStart]="0" [imageRangeEnd]="0" [imageChangeInterval]="1">
+                    <kui-still-image #OSDViewer *ngIf="!isLoading && resource.stillImageRepresentationsToDisplay.length > 0" class="osd-viewer" [images]="resource?.stillImageRepresentationsToDisplay">
                     </kui-still-image>
                 </div>
 
@@ -54,7 +54,7 @@
             </div>
 
             <!-- Check for incoming images pointing to this resource -->
-            <kui-still-image #OSDViewer class="osd-viewer" *ngIf="resource?.incomingStillImageRepresentations?.length > 0;" (getImages)="changeOffsetForStillImageRepresentations($event)" [images]="resource?.stillImageRepresentationsToDisplay" [imageRangeStart]="0" [imageRangeEnd]="4" [imageChangeInterval]="5">
+            <kui-still-image #OSDViewer class="osd-viewer" *ngIf="resource?.incomingStillImageRepresentations?.length > 0;" (getImages)="changeOffsetForStillImageRepresentations($event)" [images]="resource?.stillImageRepresentationsToDisplay">
             </kui-still-image>
 
             <br>

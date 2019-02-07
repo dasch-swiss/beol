@@ -30,7 +30,7 @@
     "@knora/action": "6.0.1",
     "@knora/core": "github:dhlab-basel/Knora-ui-core-builds#v6.3.1-beta",
     "@knora/search": "github:dhlab-basel/Knora-ui-search-builds#v6.1.1-beta",
-    "@knora/viewer": "6.0.0-alpha",
+    "@knora/viewer": "github:dhlab-basel/Knora-ui-viewer-builds#v6.1.0-beta",
     "angularfire2": "^5.0.2",
     "core-js": "^2.5.4",
     "firebase": "^5.5.2",
