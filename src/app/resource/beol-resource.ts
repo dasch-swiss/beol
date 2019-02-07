@@ -14,7 +14,6 @@ import {
     StillImageRepresentation,
     Utils
 } from '@knora/core';
-import { RequestStillImageRepresentations } from '@knora/viewer';
 import { Subscription } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { BeolService } from '../services/beol.service';
@@ -279,10 +278,8 @@ export abstract class BeolResource implements OnInit, OnDestroy {
      * Gets the incoming regions for [[this.resource]].
      *
      * @param {number} offset the offset to be used (needed for paging). First request uses an offset of 0.
-     * @param callback function to be called when new images have been loaded from the server. It takes the
-     * number of images returned as an argument.
      */
-    protected getIncomingRegions(offset: number, callback?: (numberOfResources: number) => void): void {
+    protected getIncomingRegions(offset: number): void {
         this._incomingService.getIncomingRegions(this.resource.id, offset).subscribe(
             (regions: ReadResourcesSequence) => {
                 // update ontology information
@@ -298,11 +295,6 @@ export abstract class BeolResource implements OnInit, OnDestroy {
                 /* if (this.osdViewer) {
                   this.osdViewer.updateRegions();
                 } */
-
-                // if callback is given, execute function with the amount of new images as the parameter
-                if (callback !== undefined) {
-                    callback(regions.resources.length);
-                }
             },
             (error: any) => {
                 this.errorMessage = <any>error;
@@ -316,10 +308,9 @@ export abstract class BeolResource implements OnInit, OnDestroy {
      * This method may have to called several times with an increasing offsetChange in order to get all available StillImageRepresentations.
      *
      * @param offset the offset to be used (needed for paging). First request uses an offset of 0.
-     * @param callback function to be called when new images have been loaded from the server.
      * It takes the number of images returned as an argument.
      */
-    protected getIncomingStillImageRepresentations(offset: number, callback?: (numberOfResources: number) => void): void {
+    protected getIncomingStillImageRepresentations(offset: number): void {
         // make sure that this.resource has been initialized correctly
         if (this.resource === undefined) {
             return;
@@ -350,11 +341,6 @@ export abstract class BeolResource implements OnInit, OnDestroy {
                     // prepare attached image files to be displayed
                     BeolResource.collectImagesAndRegionsForResource(this.resource);
                 }
-
-                // if callback is given, execute function with the amount of new images as the parameter
-                if (callback !== undefined) {
-                    callback(incomingImageRepresentations.resources.length);
-                }
             },
             (error: any) => {
                 this.errorMessage = <any>error;
@@ -368,10 +354,9 @@ export abstract class BeolResource implements OnInit, OnDestroy {
      * Get resources pointing to [[this.resource]] with properties other than knora-api:isPartOf and knora-api:isRegionOf.
      *
      * @param offset the offset to be used (needed for paging). First request uses an offset of 0.
-     * @param callback function to be called when new images have been loaded from the server.
      * It takes the number of images returned as an argument.
      */
-    protected getIncomingLinks(offset: number, callback?: (numberOfResources: number) => void): void {
+    protected getIncomingLinks(offset: number): void {
 
         this._incomingService.getIncomingLinksForResource(this.resource.id, offset).subscribe(
             (incomingResources: ReadResourcesSequence) => {
@@ -380,37 +365,12 @@ export abstract class BeolResource implements OnInit, OnDestroy {
 
                 // Append elements incomingResources to this.resource.incomingLinks
                 Array.prototype.push.apply(this.resource.incomingLinks, incomingResources.resources);
-
-                // if callback is given, execute function with the amount of incoming resources as the parameter
-                if (callback !== undefined) {
-                    callback(incomingResources.resources.length);
-                }
             },
             (error: any) => {
                 this.errorMessage = <any>error;
                 this.isLoading = false;
             }
         );
-    }
-
-    /**
-     * Gets the next or previous set of StillImageRepresentations from the server.
-     *
-     * @param request message sent from the child component requiring the loading of more incoming StillImageRepresentations.
-     */
-    changeOffsetForStillImageRepresentations(request: RequestStillImageRepresentations) {
-
-        // TODO: implement negative offset change
-
-        if (request.offsetChange === 1) {
-            // get StillImageRepresentations for next page by increasing current offset
-            this.getIncomingStillImageRepresentations(this.incomingStillImageRepresentationCurrentOffset + 1, request.whenLoadedCB);
-
-        } else {
-            console.log(
-                `Illegal argument for changeOffsetForStillImageRepresentations, must either be -1 or 1, but ${request.offsetChange} given.`
-            );
-        }
     }
 
     /**
