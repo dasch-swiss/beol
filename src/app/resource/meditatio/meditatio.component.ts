@@ -78,7 +78,8 @@ export class MeditatioComponent extends BeolResource {
                 const activeRegionIri = this.params.get('region');
 
                 if (activeRegionIri !== null) {
-                    this.regionActive(activeRegionIri);
+                    this.activeRegion = activeRegionIri;
+                    this.getTranscription(activeRegionIri);
                 }
 
             },
@@ -126,8 +127,7 @@ export class MeditatioComponent extends BeolResource {
     }
 
     regionActive(regionIri: string) {
-        this.activeRegion = regionIri;
-        this.getTranscription(regionIri);
+        this._beolService.routeToPageWithActiveRegion(regionIri);
     }
 
     goToResource(resType: string, resIri: string) {
