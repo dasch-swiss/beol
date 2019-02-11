@@ -269,23 +269,21 @@ export class BeolService {
     }
 
     /**
-     * Given a page Iri, returns the Gravsearch query to obtain associated region and transcription Iris.
+     * Given a region Iri, returns the Gravsearch query to obtain associated transcription Iris.
      *
-     * @param pageIri Iri of the page.
+     * @param regionIri Iri of the page.
      * @param offset offset to be used.
      * @returns the Gravsearch query to get the transcription Iris.
      */
-    getTranscriptionIrisForPage(pageIri: string, offset: number = 0) {
+    getTranscriptionIrisForRegion(regionIri: string, offset: number = 0) {
 
         const transcriptionIrisForPage = `
         PREFIX beol: <${this.externalApiURL}/ontology/0801/beol/simple/v2#>
         PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>  
         CONSTRUCT {
             ?transcription knora-api:isMainResource true .
-            ?transcription beol:transcriptionOf ?region .
         } WHERE {
-            ?region knora-api:isRegionOf <${pageIri}> .
-            ?transcription beol:transcriptionOf ?region .
+            ?transcription beol:transcriptionOf <${regionIri}> .
         }
 
         OFFSET ${offset}

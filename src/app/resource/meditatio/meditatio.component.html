@@ -12,7 +12,7 @@
     <div style="height: 200px;">
     </div>
 
-    <div *ngIf="!isLoading && transcriptionIrisReady && transcription !== undefined">
+    <div *ngIf="!isLoading && transcription !== undefined">
         <read-text-value-as-html
             [valueObject]="transcription" [ontologyInfo]="ontologyInfo"
             [bindEvents]="true"></read-text-value-as-html>

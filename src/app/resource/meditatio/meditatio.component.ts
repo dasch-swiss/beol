@@ -36,8 +36,6 @@ export class MeditatioComponent extends BeolResource {
 
     propIris;
 
-    regionToTranscription = {};
-    transcriptionIrisReady = false;
     transcription: ReadTextValueAsHtml;
     manuscriptEntries: ReadResource[] = [];
 
@@ -57,73 +55,53 @@ export class MeditatioComponent extends BeolResource {
 
     initProps() {
 
-        const gravsearchQuery = this._beolService.getTranscriptionIrisForPage(this.iri, 0);
+        // check if there is an active region (submitted as a parameter)
+        const activeRegionIri = this.params.get('region');
 
-        this._searchService.doExtendedSearchReadResourceSequence(gravsearchQuery).subscribe(
-            (result: ReadResourcesSequence) => {
-
-                // initialize ontology information
-                this.ontologyInfo.updateOntologyInformation(result.ontologyInformation);
-
-                for (const trans of result.resources) {
-                    const linkVal =
-                        trans.properties[this.apiUrl + '/ontology/0801/beol/v2#transcriptionOfValue'][0] as ReadLinkValue;
-
-                    this.regionToTranscription[linkVal.referredResourceIri] = trans.id;
-                }
-
-                this.transcriptionIrisReady = true;
-
-                // check if there is an active region (submitted as a parameter)
-                const activeRegionIri = this.params.get('region');
-
-                if (activeRegionIri !== null) {
-                    this.activeRegion = activeRegionIri;
-                    this.getTranscription(activeRegionIri);
-                }
-
-            },
-            (error: ApiServiceError) => {
-                this.errorMessage = <any>error;
-                this.isLoading = false;
-            }
-        );
+        if (activeRegionIri !== null) {
+            this.activeRegion = activeRegionIri;
+            this.getTranscription(activeRegionIri);
+        }
     }
 
     private getTranscription(regionIri: string) {
 
-        this.isLoading = true;
-        const transcrIri = this.regionToTranscription[regionIri];
+        const gravsearchQuery: string = this._beolService.getTranscriptionIrisForRegion(regionIri);
 
-        if (transcrIri !== undefined) {
+        this._searchService.doExtendedSearchReadResourceSequence(gravsearchQuery).subscribe(
+            (transcriptions: ReadResourcesSequence) => {
+                if (transcriptions.numberOfResources === 1) {
+                    // get transcription associated to region
+                    this._resourceService.getReadResource(transcriptions.resources[0].id).subscribe(
+                        (result: ReadResourcesSequence) => {
 
-            // get transcription associated to region
-            this._resourceService.getReadResource(transcrIri).subscribe(
-                (result: ReadResourcesSequence) => {
+                            // initialize ontology information
+                            this.ontologyInfo.updateOntologyInformation(result.ontologyInformation);
 
-                    // initialize ontology information
-                    this.ontologyInfo.updateOntologyInformation(result.ontologyInformation);
+                            this.transcription =
+                               result.resources[0].properties[this.apiUrl + '/ontology/0801/beol/v2#hasText'][0] as ReadTextValueAsHtml;
+                        },
+                        (error) => {
+                            this.errorMessage = <any>error;
+                            this.isLoading = false;
+                        }
+                    );
 
-                    this.transcription =
-                        result.resources[0].properties[this.apiUrl + '/ontology/0801/beol/v2#hasText'][0] as ReadTextValueAsHtml;
-                    this.isLoading = false;
-                },
-                (error) => {
-                    this.errorMessage = <any>error;
-                    this.isLoading = false;
+                    const manuscriptEntriesQuery = this._beolService.getManuscriptEntryForRegion(regionIri);
+
+                    this._searchService.doExtendedSearchReadResourceSequence(manuscriptEntriesQuery).subscribe(
+                        (manEntries: ReadResourcesSequence) => {
+                            if (manEntries.numberOfResources > 0) {
+                                this.manuscriptEntries = manEntries.resources;
+                            }
+                        }
+                    );
                 }
-            );
-
-            const manuscriptEntriesQuery = this._beolService.getManuscriptEntryForRegion(regionIri);
-
-            this._searchService.doExtendedSearchReadResourceSequence(manuscriptEntriesQuery).subscribe(
-                (manEntries: ReadResourcesSequence) => {
-                    if (manEntries.numberOfResources > 0) {
-                        this.manuscriptEntries = manEntries.resources;
-                    }
-                }
-            );
-        }
+            },
+            (err) => {
+                console.log('Could not load transcription for active region');
+            }
+        );
     }
 
     regionActive(regionIri: string) {
