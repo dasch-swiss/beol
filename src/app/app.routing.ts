@@ -14,6 +14,7 @@ import { EndnoteComponent } from './resource/endnote/endnote.component';
 import { LeooRouteComponent } from './leoo-route/leoo-route.component';
 import { FigureComponent } from './resource/figure/figure.component';
 import { BiblioItemsComponent } from './resource/biblio-items/biblio-items.component';
+import { BebbRouteComponent } from './bebb-route/bebb-route.component';
 
 
 const appRoutes: Routes = [
@@ -69,6 +70,10 @@ const appRoutes: Routes = [
     {
         path: 'leoo/:rn',
         component: LeooRouteComponent
+    },
+    {
+        path: 'bebb/:lt',
+        component: BebbRouteComponent
     },
     {
         path: 'contact',

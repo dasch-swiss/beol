@@ -41,6 +41,7 @@ import { APP_BASE_HREF } from '@angular/common';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ReadTextValueComponent } from './properties/read-text-value/read-text-value.component';
 import { HanCatalogueDirective } from './directives/han-catalogue.directive';
+import { BebbRouteComponent } from './bebb-route/bebb-route.component';
 
 /*
 export function initializeApp(appConfig: AppConfig) {
@@ -70,7 +71,8 @@ export function initializeApp(appConfig: AppConfig) {
         EndnoteComponent,
         FigureComponent,
         ReadTextValueComponent,
-        HanCatalogueDirective
+        HanCatalogueDirective,
+        BebbRouteComponent
     ],
     imports: [
         //        AngularFireModule.initializeApp(environment.firebase),
