@@ -234,7 +234,6 @@ export class BeolService {
      * Given the repertorium number of a letter from LEOO, searches for that letter.
      *
      * @param repertoriumNumber the repertorium number to search for.
-     * @param originalLanguage indicates if the original language or the translation should be searched for.
      * @returns the Gravsearch query.
      */
     searchForLetterFromLEOO(repertoriumNumber: string): string {
@@ -358,6 +357,43 @@ export class BeolService {
                 }
             }
         );
+    }
+
+    /*
+     * Given the title of a letter from BEBB, searches for that letter.
+     *
+     * @param title the title of the BEBB letter to search for.
+     * @returns the Gravsearch query.
+     */
+    searchForLetterFromBEBB(title: string): string {
+
+        const letterByTitleTemplate = `
+        PREFIX beol: <${this.externalApiURL}/ontology/0801/beol/simple/v2#>
+        PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>  
+        CONSTRUCT {
+
+            ?letter knora-api:isMainResource true .
+
+
+        } WHERE {
+
+            ?letter a knora-api:Resource .
+
+            ?letter a beol:letter .
+
+            ?letter beol:title ?title .
+            beol:title knora-api:objectType <http://www.w3.org/2001/XMLSchema#string> .
+            ?title a <http://www.w3.org/2001/XMLSchema#string> .
+
+            FILTER(?title = "${title}"^^<http://www.w3.org/2001/XMLSchema#string>)
+
+        }
+
+        OFFSET 0
+        `;
+
+        return letterByTitleTemplate;
+
     }
 
     /**

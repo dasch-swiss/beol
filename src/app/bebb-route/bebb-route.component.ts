@@ -6,12 +6,12 @@ import { environment } from '../../environments/environment';
 
 @Component({
     selector: 'app-leoo-route',
-    templateUrl: './leoo-route.component.html',
+    templateUrl: './bebb-route.component.html',
     styleUrls: ['./leoo-route.component.scss']
 })
-export class LeooRouteComponent implements OnInit {
+export class BebbRouteComponent implements OnInit {
 
-    repertoriumNumber: string;
+    bebbLettertitle: string;
     notFound: boolean;
 
     apiUrl = environment.externalApiURL;
@@ -26,12 +26,12 @@ export class LeooRouteComponent implements OnInit {
     ngOnInit() {
         this._route.paramMap.subscribe((params: ParamMap) => {
 
-            this.repertoriumNumber = params.get('rn');
+            this.bebbLettertitle = params.get('lt');
 
-            if (this.repertoriumNumber !== null) {
+            if (this.bebbLettertitle !== null) {
 
                 // create a query that gets the Iri of the LEOO letter
-                const query = this._beolService.searchForLetterFromLEOO(this.repertoriumNumber);
+                const query = this._beolService.searchForLetterFromBEBB(this.bebbLettertitle);
 
                 this._searchService.doExtendedSearchReadResourceSequence(query).subscribe(
                     (resourceSeq: ReadResourcesSequence) => {
@@ -44,13 +44,13 @@ export class LeooRouteComponent implements OnInit {
                             this._beolService.routeByResourceType(this.apiUrl + '/ontology/0801/beol/v2#letter', letterIri);
                         } else {
                             // letter not found
-                            console.log(`letter with repertorium number ${this.repertoriumNumber} not found`);
                             this.notFound = true;
+                            console.log(`letter with title ${this.bebbLettertitle} not found`);
                         }
 
                     }, (err) => {
-                        console.log('search failed ' + err);
                         this.notFound = true;
+                        console.log('search failed ' + err);
                     }
                 );
             }
