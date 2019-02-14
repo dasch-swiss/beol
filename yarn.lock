@@ -465,9 +465,9 @@
   dependencies:
     tslib "^1.9.0"
 
-"@knora/search@github:dhlab-basel/Knora-ui-search-builds#v6.1.1-beta":
-  version "6.1.0"
-  resolved "https://codeload.github.com/dhlab-basel/Knora-ui-search-builds/tar.gz/09728f74509b9c37c23ab77bf73496760726cdfc"
+"@knora/search@github:dhlab-basel/Knora-ui-search-builds#v6.1.2":
+  version "6.1.2"
+  resolved "https://codeload.github.com/dhlab-basel/Knora-ui-search-builds/tar.gz/73f79d51e03c3dbeb0e8dc2f3b01121b59bea591"
   dependencies:
     tslib "^1.9.0"
 
