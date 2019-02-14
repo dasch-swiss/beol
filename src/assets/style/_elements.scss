@@ -25,7 +25,7 @@
   width: calc(100vw - #{$sidenav-width} - 48px - 96px);
 
   &.without-sidebar {
-    margin: 0 auto 0 $sidenav-width;
+    margin: 0 auto;
   }
 }
 
@@ -86,9 +86,10 @@
 // optimize search-bar from @knora/search module
 .search-bar-elements {
   border-bottom: 1px solid $primary;
-  position: absolute;
-  top: 24px;
-  left: calc(#{$sidenav-width} + 48px);
+  position: relative;
+
+//  top: 24px;
+//  left: calc(#{$sidenav-width} + 48px);
 
   .search-panel {
 
