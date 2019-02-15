@@ -34,8 +34,6 @@ import { FigureComponent } from './resource/figure/figure.component';
 import { BiblioItemsComponent } from './resource/biblio-items/biblio-items.component';
 // directives
 import { MathJaxDirective } from './directives/mathjax.directive';
-import { HanCatalogueDirective } from './directives/han-catalogue.directive';
-import { NewtonProjectDirective } from './directives/newton-project.directive';
 // Loads the application configuration file during application startup
 import { CorrespondenceComponent } from './correspondence/correspondence.component';
 import { ContactComponent } from './contact/contact.component';
@@ -48,6 +46,7 @@ import { ReadTextValueComponent } from './properties/read-text-value/read-text-v
 
 import {SanitizeHtmlPipe} from './pipes/sanitize-html.pipe';
 import {SanitizeUrlPipe} from './pipes/sanitize-url.pipe';
+import { NewtonProjectDirective } from './directives/newton-project.directive';
 
 import { HanCatalogueDirective } from './directives/han-catalogue.directive';
 import { BebbRouteComponent } from './bebb-route/bebb-route.component';
