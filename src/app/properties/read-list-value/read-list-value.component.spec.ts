@@ -20,6 +20,7 @@ describe('ReadListValueComponent', () => {
             declarations: [
                 ReadListValueComponent,
                 TestHostComponent,
+                TestHostComponent2,
                 MathJaxDirective // idea for mock: https://stackoverflow.com/questions/44495114/is-it-possible-to-mock-an-attribute-directive-in-angular
             ]
         })
@@ -36,6 +37,10 @@ describe('ReadListValueComponent', () => {
 
     it('should create', () => {
         expect(testHostComponent.listValueComponent).toBeTruthy();
+    });
+
+    it('should have render math option set to "true" by default', () => {
+        expect(testHostComponent.listValueComponent.renderMath).toBeTruthy();
     });
 
     it('should be equal to the list node label value "ListNodeLabel1"', () => {
@@ -78,6 +83,18 @@ describe('ReadListValueComponent', () => {
 
     });
 
+    it('should have render math option set to "false" through input by the parent component', () => {
+
+        const testHostFixture2 = TestBed.createComponent(TestHostComponent2);
+        const testHostComponent2 = testHostFixture2.componentInstance;
+        testHostFixture2.detectChanges();
+
+        expect(testHostComponent2).toBeTruthy();
+
+        expect(testHostComponent2.listValueComponent.renderMath).toBeFalsy();
+
+    });
+
 });
 
 
@@ -93,6 +110,29 @@ class TestHostComponent implements OnInit {
     @ViewChild('listVal') listValueComponent: ReadListValueComponent;
 
     listValue;
+
+    constructor() {
+    }
+
+    ngOnInit() {
+        this.listValue = new ReadListValue('id', 'propIri', 'http://rdfh.ch/8be1b7cf7103', 'ListNodeLabel1');
+    }
+}
+
+/**
+ * Test host component to simulate parent component.
+ */
+@Component({
+    template: `
+        <read-list-value #listVal [valueObject]="listValue" [renderMath]="renderMathInput"></read-list-value>`
+})
+class TestHostComponent2 implements OnInit {
+
+    @ViewChild('listVal') listValueComponent: ReadListValueComponent;
+
+    listValue;
+
+    renderMathInput = false;
 
     constructor() {
     }
