@@ -1,25 +1,25 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
-import { LeooRouteComponent } from './leoo-route.component';
-import { of } from 'rxjs';
+import { BebbRouteComponent } from './bebb-route.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { KuiCoreConfig, ReadResource, ReadResourcesSequence, SearchService } from '@knora/core';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 import { BeolService } from '../services/beol.service';
 
-describe('LeooRouteComponent', () => {
-    let component: LeooRouteComponent;
-    let fixture: ComponentFixture<LeooRouteComponent>;
-    const rn = '721';
+describe('BebbRouteComponent', () => {
+    let component: BebbRouteComponent;
+    let fixture: ComponentFixture<BebbRouteComponent>;
+    const lt = '1706-03-17_Hermann_Jacob-Scheuchzer_Johannes';
 
     let beolService: BeolService;
     let searchService: SearchService;
 
     beforeEach(async(() => {
 
-        const beolServiceSpy = jasmine.createSpyObj('BeolService', ['searchForLetterFromLEOO', 'routeByResourceType']); // see https://angular.io/guide/testing#angular-testbed
+        const beolServiceSpy = jasmine.createSpyObj('BeolService', ['searchForLetterFromBEBB', 'routeByResourceType']); // see https://angular.io/guide/testing#angular-testbed
         const searchServiceSpy = jasmine.createSpyObj('SearchService', ['doExtendedSearchReadResourceSequence']);
 
         TestBed.configureTestingModule({
@@ -28,14 +28,14 @@ describe('LeooRouteComponent', () => {
                 HttpClientTestingModule,
                 RouterTestingModule
             ],
-            declarations: [LeooRouteComponent],
+            declarations: [BebbRouteComponent],
             providers: [
                 {
                     provide: ActivatedRoute,
                     useValue: {
                         paramMap: of({
                             get: () => {
-                                return rn;
+                                return lt;
                             }
                         })
                     }
@@ -47,7 +47,7 @@ describe('LeooRouteComponent', () => {
         })
             .compileComponents();
 
-        beolServiceSpy.searchForLetterFromLEOO.and.returnValue('gravsearchQuery');
+        beolServiceSpy.searchForLetterFromBEBB.and.returnValue('gravsearchQuery');
 
         beolService = TestBed.get(BeolService);
 
@@ -61,10 +61,11 @@ describe('LeooRouteComponent', () => {
         searchServiceSpy.doExtendedSearchReadResourceSequence.and.returnValue(mockRes);
 
         searchService = TestBed.get(SearchService);
+
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(LeooRouteComponent);
+        fixture = TestBed.createComponent(BebbRouteComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
@@ -75,7 +76,7 @@ describe('LeooRouteComponent', () => {
 
     it('should perform a query to get the letter\'s actual Iri', () => {
 
-        expect(beolService.searchForLetterFromLEOO).toHaveBeenCalledWith(rn);
+        expect(beolService.searchForLetterFromBEBB).toHaveBeenCalledWith(lt);
 
         expect(searchService.doExtendedSearchReadResourceSequence).toHaveBeenCalledWith('gravsearchQuery');
 

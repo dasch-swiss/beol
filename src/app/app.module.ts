@@ -45,8 +45,13 @@ import { APP_BASE_HREF } from '@angular/common';
 // import { RECAPTCHA_SETTINGS, RecaptchaSettings } from 'ng-recaptcha';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ReadTextValueComponent } from './properties/read-text-value/read-text-value.component';
+
 import {SanitizeHtmlPipe} from './pipes/sanitize-html.pipe';
 import {SanitizeUrlPipe} from './pipes/sanitize-url.pipe';
+
+import { HanCatalogueDirective } from './directives/han-catalogue.directive';
+import { BebbRouteComponent } from './bebb-route/bebb-route.component';
+
 
 /*
 export function initializeApp(appConfig: AppConfig) {
@@ -80,7 +85,8 @@ export function initializeApp(appConfig: AppConfig) {
         HanCatalogueDirective,
         NewtonProjectDirective,
         SanitizeHtmlPipe,
-        SanitizeUrlPipe
+        SanitizeUrlPipe,
+        BebbRouteComponent
     ],
     imports: [
         //        AngularFireModule.initializeApp(environment.firebase),

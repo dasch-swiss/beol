@@ -86,9 +86,10 @@
 // optimize search-bar from @knora/search module
 .search-bar-elements {
   border-bottom: 1px solid $primary;
-  position: absolute;
-  top: 24px;
-  left: calc(#{$sidenav-width} + 48px);
+  position: relative;
+
+//  top: 24px;
+//  left: calc(#{$sidenav-width} + 48px);
 
   .search-panel {
 
