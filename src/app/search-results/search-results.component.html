@@ -46,8 +46,11 @@
                                 <span class="bolder">
                                     <kui-date-value *ngSwitchCase="KnoraConstants.ReadDateValue" [valueObject]="val.value" [calendar]="true" [era]="true"></kui-date-value>
 
+                                    <read-list-value *ngSwitchCase="KnoraConstants.ReadListValue" [valueObject]="val.value" [renderMath]="step === i"></read-list-value>
+
                                     <span *ngSwitchDefault="">{{val.value.getContent()}}</span>
                                 </span>
+
                                 <br>
                                 <span class="mat-caption" *ngIf="ontologyInfo?.getLabelForProperty(prop.key) !== 'Text'">
                                     {{ontologyInfo?.getLabelForProperty(prop.key)}}
