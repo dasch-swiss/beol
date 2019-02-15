@@ -21,6 +21,7 @@ import { KuiViewerModule } from '@knora/viewer';
 
 import { MathJaxDirective } from '../directives/mathjax.directive';
 import { MatExpansionModule, MatIconModule } from '@angular/material';
+import { ReadListValueComponent } from '../properties/read-list-value/read-list-value.component';
 
 
 describe('SearchResultsComponent', () => {
@@ -51,6 +52,7 @@ describe('SearchResultsComponent', () => {
             declarations: [
                 SearchResultsComponent,
                 MathJaxDirective,
+                ReadListValueComponent
             ],
             providers: [
                 {

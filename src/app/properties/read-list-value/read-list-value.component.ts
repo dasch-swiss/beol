@@ -10,6 +10,17 @@ export class ReadListValueComponent implements OnInit {
 
     @Input() valueObject: ReadListValue;
 
+    private _renderMath = true;
+
+    @Input()
+    set renderMath(value: boolean) {
+        this._renderMath = value;
+    }
+
+    get renderMath() {
+        return this._renderMath;
+    }
+
     constructor() {
     }
 
