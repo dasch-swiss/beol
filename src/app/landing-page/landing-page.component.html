@@ -17,8 +17,8 @@
         <mat-divider></mat-divider>
 
         <section>
-            <h3 mat-card-subtitle>LEOO</h3>
-            <h2 mat-card-title>Leonhardi Euleri Opera Omnia (Series Quarta A, vol. IV)</h2>
+            <h3 mat-card-subtitle>Leonhardi Euleri Opera Omnia (LEOO)</h3>
+            <h2 mat-card-title>Leonhard Euler's correspondence with Goldbach</h2>
 
 
             <div class="leoo-section">
@@ -38,7 +38,7 @@
                 </div>
 
 
-                <p fxLayout="column"><strong>Introductions</strong></p>
+                <p fxLayout="column"><strong>Introduction</strong></p>
                 <div class="container">
                     <div class="flex-container" fxFlex fxLayout="row wrap" fxLayout.sm="column" fxlayout.xs="column" fxFlexFill>
                         <div fxFlex routerLink="introduction/leoo/goldbach_introduction_1">
@@ -69,9 +69,11 @@
         </section>
         <mat-divider></mat-divider>
         <section>
-            <h3 mat-card-subtitle>LECE</h3>
-            <h2 mat-card-title>Leonhardi Euleri Commercium Epistolicum</h2>
-            <div class="container">
+            <h3 mat-card-subtitle>Leonhardi Euleri Commercium Epistolicum (LECE)</h3>
+            <h2 mat-card-title>Correspondance d'Euler avec Condorcet et Turgot</h2>
+
+            <div class="leoo-section">
+                <div class="container">
                 <div class="flex-container" fxFlex fxLayout="row wrap" fxLayout.sm="column" fxlayout.xs="column" fxFlexFill>
                     <div fxFlex routerLink="introduction/lece/CondorcetTurgot_preface">
                         <mat-card class="intro-card" fxFlex>
@@ -79,6 +81,7 @@
                         </mat-card>
                     </div>
                 </div>
+            </div>
             </div>
             <p fxLayout="column"><strong>Introduction</strong></p>
             <div class="container">
@@ -95,7 +98,7 @@
                     </div>
                 </div>
             </div>
-            <div class="leoo-section">
+            <div class="lece-section">
                 <app-correspondence [project]="'lece'"></app-correspondence>
 
             </div>
