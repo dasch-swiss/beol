@@ -512,7 +512,7 @@ export class CorrespondenceComponent implements OnInit {
   */
   searchForNewtonCorrespondence() {
 
-      const gravsearch: string = this._beol.searchForNewtonCorrespondence();
+      const gravsearch: string = this._beol.searchForNewtonCorrespondence(0);
 
       this.submitQuery(gravsearch);
   }

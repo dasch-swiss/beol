@@ -232,7 +232,7 @@ export class BeolService {
     /**
      * Creates the Gravsearch needed for the search for the newton correspodence.
      */
-    searchForNewtonCorrespondence(): string {
+    searchForNewtonCorrespondence(offset: number = 0): string {
 
         const correspondenceTemplate = `
             PREFIX newton: <${this.externalApiURL}/ontology/0801/newton/simple/v2#>
@@ -241,25 +241,34 @@ export class BeolService {
             CONSTRUCT {
                 ?letter knora-api:isMainResource true .
 
-                ?letter beol:creationDate ?date .
-
-
             } WHERE {
 
                 ?letter a knora-api:Resource .
                 ?letter a newton:letter .
-                ?letter beol:creationDate ?date .
 
-                beol:creationDate knora-api:objectType knora-api:Date .
-                ?date a knora-api:Date .
-
-            } ORDER BY ?date
-            OFFSET 0
+            }
         `;
 
-        console.log(correspondenceTemplate);
 
-        return correspondenceTemplate;
+        // offset component of the Gravsearch query
+        const offsetTemplate = `
+        OFFSET ${offset}
+        `;
+
+        // function that generates the same Gravsearch query with the given offset
+        const generateGravsearchWithCustomOffset = (localOffset: number): string => {
+            const offsetCustomTemplate = `
+            OFFSET ${localOffset}
+            `;
+
+            return correspondenceTemplate + offsetCustomTemplate;
+        };
+
+        if (offset === 0) {
+            // store the function so another Gravsearch query can be created with an increased offset
+            this._searchParamsService.changeSearchParamsMsg(new ExtendedSearchParams(generateGravsearchWithCustomOffset));
+        }
+        return correspondenceTemplate + offsetTemplate;
     }
 
 
