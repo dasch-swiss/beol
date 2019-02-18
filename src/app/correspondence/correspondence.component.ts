@@ -67,6 +67,13 @@ class Section {
   }
 }
 
+class ThirdPartyProject {
+
+    constructor(
+        readonly description: string = '',
+    ) {}
+}
+
 class CorrespondenceGroupWithSection {
 
   constructor(
@@ -93,6 +100,7 @@ export class CorrespondenceComponent implements OnInit {
   leooIV: Book[];
   lece: CorrespondenceGroupWithSection[];
   wiki: CorrespondenceGroupWithSection[];
+  newton: ThirdPartyProject[];
 
   constructor(
     private _router: Router,
@@ -326,7 +334,10 @@ export class CorrespondenceComponent implements OnInit {
                     new Correspondence(Turgot, Leonhard_Euler)
               ])])
         ];
+    this.newton = [
+        new ThirdPartyProject('The Newton Project')
 
+    ];
     /**
      * Collection of correspondences the user can select from.
      */
@@ -495,7 +506,16 @@ export class CorrespondenceComponent implements OnInit {
 
     this.submitQuery(gravsearch);
   }
+  /**
+  * Generate Gravsearch query to search for The Newton project Correspondence.
 
+  */
+  searchForNewtonCorrespondence() {
+
+      const gravsearch: string = this._beol.searchForNewtonCorrespondence();
+
+      this.submitQuery(gravsearch);
+  }
   /**
    * Show a correspondence between two persons.
    *

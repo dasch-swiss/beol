@@ -229,8 +229,41 @@ export class BeolService {
         return correspondenceTemplate + offsetTemplate;
     }
 
-
     /**
+     * Creates the Gravsearch needed for the search for the newton correspodence.
+     */
+    searchForNewtonCorrespondence(): string {
+
+        const correspondenceTemplate = `
+            PREFIX newton: <${this.externalApiURL}/ontology/0801/newton/simple/v2#>
+            PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
+
+            CONSTRUCT {
+                ?letter knora-api:isMainResource true .
+
+                ?letter beol:creationDate ?date .
+
+
+            } WHERE {
+
+                ?letter a knora-api:Resource .
+                ?letter a newton:letter .
+                ?letter beol:creationDate ?date .
+
+                beol:creationDate knora-api:objectType knora-api:Date .
+                ?date a knora-api:Date .
+
+            } ORDER BY ?date
+            OFFSET 0
+        `;
+
+        console.log(correspondenceTemplate);
+
+        return correspondenceTemplate;
+    }
+
+
+        /**
      * Given the repertorium number of a letter from LEOO, searches for that letter.
      *
      * @param repertoriumNumber the repertorium number to search for.
