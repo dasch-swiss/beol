@@ -24,6 +24,9 @@ class PersonProps implements PropertyValues {
     deathDate: ReadDateValue[] = [];
     deathPlace: ReadTextValue[] = [];
     dictionary: ReadTextValue[] = [];
+    givenName:  ReadTextValue[] = [];
+    familyName:  ReadTextValue[] = [];
+    title:  ReadTextValue[] = [];
     IAF: ReadTextValue[] = [];
     mentioned: ReadTextValue[] = [];
     [index: string]: ReadPropertyItem[];
@@ -56,6 +59,7 @@ export class PersonComponent extends BeolResource {
         'dictionary': this.apiUrl + '/ontology/0801/beol/v2#hasDictionaryEntries',
         'familyName': this.apiUrl + '/ontology/0801/beol/v2#hasFamilyName',
         'givenName': this.apiUrl + '/ontology/0801/beol/v2#hasGivenName',
+        'title': this.apiUrl + '/ontology/0801/beol/v2#personHasTitle',
         'IAF': this.apiUrl + '/ontology/0801/beol/v2#hasIAFIdentifier',
         'mentioned': this.apiUrl + '/ontology/0801/beol/v2#mentionedIn',
     };
