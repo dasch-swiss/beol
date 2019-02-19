@@ -115,7 +115,7 @@ export class CorrespondenceComponent implements OnInit {
      */
     const Leonhard_Euler = new Correspondent('Leonhard Euler', '(DE-588)118531379');
     const Johann_Albrecht_Euler = new Correspondent('Johann Albrecht Euler', '(DE-588)116610832');
-    const Condorcet = new Correspondent('the Marquis de Condorcet', '(DE-588)118521772');
+    const Condorcet = new Correspondent('Le marquis de Condorcet', '(DE-588)118521772');
     const Turgot = new Correspondent('Anne Robert Jacques Turgot', '(DE-588)118763202');
     const Lexell = new Correspondent('Anders Johan Lexell', '(DE-588)100189180');
     const FussNI = new Correspondent('Niklaus (I) Fuss', '(DE-588)116878894');
