@@ -148,5 +148,7 @@ export class BiblioItemsComponent extends BeolResource {
 
         this.props = props;
     }
-
+    showIncomingRes(resIri, resType) {
+        this._beolService.routeByResourceType(resType, resIri);
+    }
 }
