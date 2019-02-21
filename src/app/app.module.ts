@@ -34,7 +34,7 @@ import { MathJaxDirective } from './directives/mathjax.directive';
 // Loads the application configuration file during application startup
 import { CorrespondenceComponent } from './correspondence/correspondence.component';
 import { ContactComponent } from './contact/contact.component';
-import { ContactFormComponent } from './contact/contact-form/contact-form.component';
+
 import { ReactiveFormsModule } from '@angular/forms';
 import { APP_BASE_HREF } from '@angular/common';
 // import { RECAPTCHA_SETTINGS, RecaptchaSettings } from 'ng-recaptcha';
@@ -66,7 +66,6 @@ export function initializeApp(appInitService: AppInitService) {
         ReadTextValueAsHtmlComponent,
         CorrespondenceComponent,
         ContactComponent,
-        ContactFormComponent,
         MathJaxDirective,
         LeooRouteComponent,
         BiblioItemsComponent,

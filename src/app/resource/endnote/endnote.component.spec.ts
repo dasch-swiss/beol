@@ -7,7 +7,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
 
 import { KuiActionModule } from '@knora/action';
-import { KuiCoreConfig } from '@knora/core';
+import { KuiCoreConfig, KuiCoreConfigToken } from '@knora/core';
 
 import { EndnoteComponent } from './endnote.component';
 import { ReadTextValueAsHtmlComponent } from '../../properties/read-text-value-as-html/read-text-value-as-html.component';
@@ -52,7 +52,7 @@ describe('EndnoteComponent', () => {
                             }
                         })}
                 },
-                {provide: 'config', useValue: KuiCoreConfig},
+                {provide: KuiCoreConfigToken, useValue: KuiCoreConfig},
                 {provide: Location, useValue: locationStub}
             ]
         })

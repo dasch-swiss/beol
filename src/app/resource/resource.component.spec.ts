@@ -7,7 +7,7 @@ import { of } from 'rxjs';
 import { MaterialModule } from '../material-module';
 import { ResourceComponent } from './resource.component';
 import { KuiActionModule } from '@knora/action';
-import { KuiCoreConfig } from '@knora/core';
+import { KuiCoreConfig, KuiCoreConfigToken } from '@knora/core';
 import { ReadTextValueAsHtmlComponent } from '../properties/read-text-value-as-html/read-text-value-as-html.component';
 import { ReadListValueComponent } from '../properties/read-list-value/read-list-value.component';
 import { MathJaxDirective } from '../directives/mathjax.directive';
@@ -43,7 +43,7 @@ describe('ResourceComponent', () => {
                             }
                         })}
                 },
-                {provide: 'config', useValue: KuiCoreConfig}
+                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig }
             ]
         })
             .compileComponents();
