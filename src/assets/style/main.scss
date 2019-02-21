@@ -207,7 +207,8 @@ p.i35 {
 }
 .pagenumber {
   margin: 0;
-  position: relative;
-  left: 48%;
+  width: 100%;
+  text-align: center;
   color: blue;
+  display: block;
 }
