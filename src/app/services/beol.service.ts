@@ -268,62 +268,62 @@ export class BeolService {
     }
 
     /**
-     * Given a region Iri, returns the Gravsearch query to obtain associated transcription Iris.
+     * Given a region Iri, returns the Gravsearch query to obtain the associated transcription Iri.
      *
-     * @param regionIri Iri of the page.
+     * @param regionIri Iri of the region.
      * @param offset offset to be used.
      * @returns the Gravsearch query to get the transcription Iris.
      */
-    getTranscriptionIrisForRegion(regionIri: string, offset: number = 0) {
+    getTranscriptionIriForRegion(regionIri: string, offset: number = 0) {
 
-        const transcriptionIrisForPage = `
+        const transcriptionIriForPage = `
         PREFIX beol: <${this.externalApiURL}/ontology/0801/beol/simple/v2#>
         PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>  
         CONSTRUCT {
             ?transcription knora-api:isMainResource true .
         } WHERE {
-            ?transcription beol:transcriptionOf <${regionIri}> .
+            ?transcription beol:belongsToRegion <${regionIri}> .
         }
 
         OFFSET ${offset}
         `;
 
-        return transcriptionIrisForPage;
+        return transcriptionIriForPage;
     }
 
     /**
      * Given a region Iri, get the manuscript entries that point to this region via standoff link.
      *
-     * @param regionIri Iri of the region.
+     * @param manuscriptEntryIri Iri of the region.
      * @param offset offset to be used.
      * @returns the Gravsearch query to get the manuscript entries.
      */
-    getManuscriptEntryForRegion(regionIri: string, offset: number = 0) {
+    getTranscriptionsForManuscriptEntry(manuscriptEntryIri: string, excludeLayer: number, offset: number = 0) {
 
-        const manuscriptEntriesForRegion = `
+        const transcriptionsForManuscriptEntry = `
         PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
         CONSTRUCT {
 
-            ?manEntry knora-api:isMainResource true .
-
-            ?manEntry <${this.externalApiURL}/ontology/0801/beol/simple/v2#title> ?title .
+            ?trans knora-api:isMainResource true .
 
         } WHERE {
 
-            ?manEntry a knora-api:Resource .
+            ?trans a knora-api:Resource .
 
-            ?manEntry a <${this.externalApiURL}/ontology/0801/beol/simple/v2#manuscriptEntry> .
-
-            ?manEntry <${this.externalApiURL}/ontology/0801/beol/simple/v2#title> ?title .
-
-            ?manEntry knora-api:hasStandoffLinkTo <${regionIri}>
+            ?trans a <${this.externalApiURL}/ontology/0801/beol/simple/v2#transcription> .
+            
+            ?trans <${this.externalApiURL}/ontology/0801/beol/simple/v2#transcriptionOf> <${manuscriptEntryIri}> .
+            
+            ?trans <${this.externalApiURL}/ontology/0801/beol/simple/v2#layer> ?layer .
+            
+            FILTER(?layer != ${excludeLayer})
 
         }
 
         OFFSET ${offset}
         `;
 
-        return manuscriptEntriesForRegion;
+        return transcriptionsForManuscriptEntry;
     }
 
     /**

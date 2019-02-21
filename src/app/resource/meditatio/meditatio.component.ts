@@ -37,7 +37,7 @@ export class MeditatioComponent extends BeolResource {
     propIris;
 
     transcription: ReadTextValueAsHtml;
-    manuscriptEntries: ReadResource[] = [];
+    transcriptionsForManuscriptEntry: ReadResource[] = [];
 
     activeRegion: string;
 
@@ -66,7 +66,7 @@ export class MeditatioComponent extends BeolResource {
 
     private getTranscription(regionIri: string) {
 
-        const gravsearchQuery: string = this._beolService.getTranscriptionIrisForRegion(regionIri);
+        const gravsearchQuery: string = this._beolService.getTranscriptionIriForRegion(regionIri);
 
         this._searchService.doExtendedSearchReadResourceSequence(gravsearchQuery).subscribe(
             (transcriptions: ReadResourcesSequence) => {
@@ -80,20 +80,22 @@ export class MeditatioComponent extends BeolResource {
 
                             this.transcription =
                                result.resources[0].properties[this.apiUrl + '/ontology/0801/beol/v2#hasText'][0] as ReadTextValueAsHtml;
+
+                            const manuscriptEntryLinkValue = result.resources[0].properties[this.apiUrl + '/ontology/0801/beol/v2#transcriptionOfValue'][0] as ReadLinkValue;
+
+                            const transcriptionsFormManuscriptEntry = this._beolService.getTranscriptionsForManuscriptEntry(manuscriptEntryLinkValue.referredResourceIri, 0);
+
+                            this._searchService.doExtendedSearchReadResourceSequence(transcriptionsFormManuscriptEntry).subscribe(
+                                (manEntries: ReadResourcesSequence) => {
+                                    if (manEntries.numberOfResources > 0) {
+                                        this.transcriptionsForManuscriptEntry = manEntries.resources;
+                                    }
+                                }
+                            );
                         },
                         (error) => {
                             this.errorMessage = <any>error;
                             this.isLoading = false;
-                        }
-                    );
-
-                    const manuscriptEntriesQuery = this._beolService.getManuscriptEntryForRegion(regionIri);
-
-                    this._searchService.doExtendedSearchReadResourceSequence(manuscriptEntriesQuery).subscribe(
-                        (manEntries: ReadResourcesSequence) => {
-                            if (manEntries.numberOfResources > 0) {
-                                this.manuscriptEntries = manEntries.resources;
-                            }
                         }
                     );
                 }
