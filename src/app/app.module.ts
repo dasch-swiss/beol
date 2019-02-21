@@ -1,9 +1,9 @@
 // angular modules
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { environment } from '../environments/environment';
 // @knora modules
-import { KuiCoreModule } from '@knora/core';
+import { KuiCoreModule, KuiCoreConfigToken } from '@knora/core';
 import { KuiActionModule } from '@knora/action';
 import { KuiSearchModule } from '@knora/search';
 import { KuiViewerModule } from '@knora/viewer';
@@ -42,12 +42,14 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ReadTextValueComponent } from './properties/read-text-value/read-text-value.component';
 import { HanCatalogueDirective } from './directives/han-catalogue.directive';
 import { BebbRouteComponent } from './bebb-route/bebb-route.component';
+import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
+import { AppInitService } from './app-init.service';
 
-/*
-export function initializeApp(appConfig: AppConfig) {
-    return () => appConfig.loadAppConfig();
+export function initializeApp(appInitService: AppInitService) {
+    return (): Promise<any> => {
+        return appInitService.Init();
+    };
 }
-*/
 
 @NgModule({
     declarations: [
@@ -80,12 +82,7 @@ export function initializeApp(appConfig: AppConfig) {
         BrowserModule,
         FlexLayoutModule,
         InfiniteScrollModule,
-        KuiCoreModule.forRoot({
-            name: environment.appName,
-            api: environment.api,
-            media: environment.media,
-            app: environment.app,
-        }),
+        KuiCoreModule,
         KuiActionModule,
         KuiSearchModule,
         KuiViewerModule,
@@ -93,17 +90,18 @@ export function initializeApp(appConfig: AppConfig) {
         ReactiveFormsModule
     ],
     providers: [
-        /*        AppConfig,
-                {
-                    provide: APP_INITIALIZER,
-                    useFactory: initializeApp,
-                    deps: [AppConfig],
-                    multi: true
-                },*/
-        //        AngularFirestore,
+        AppInitService,
         {
-            provide: APP_BASE_HREF,
-            useValue: '/'
+            provide: APP_INITIALIZER, useFactory: initializeApp, deps: [AppInitService], multi: true
+        },
+        {
+            provide: KuiCoreConfigToken, useFactory: () => AppInitService.coreConfig
+        },
+        {
+            provide: MAT_DIALOG_DEFAULT_OPTIONS,
+            useValue: {
+                hasBackdrop: false
+            }
         }
     ],
     bootstrap: [AppComponent]
