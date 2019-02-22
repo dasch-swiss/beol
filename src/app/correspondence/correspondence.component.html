@@ -22,7 +22,7 @@
                 <p>Correspondence between <strong>{{corrGroup.mainCorrespondent.name}}</strong> and
                 <!-- select list to choose the recipient name (among one or several choices) -->
                 <mat-form-field>
-                    <mat-select placeholder="Select Recipient">
+                    <mat-select placeholder="Select Correspondent">
                         <div *ngFor="let section of corrGroup.sections">
                             <div *ngFor="let corr of section.correspondences">
                                 <mat-option [value]="corr.correspondent2.name"
@@ -43,7 +43,7 @@
             <p>Correspondence between <strong>{{corrGroup.mainCorrespondent.name}}</strong> and
                 <!-- select list to choose the recipient name (among one or several choices) -->
                 <mat-form-field>
-                    <mat-select placeholder="Select Recipient">
+                    <mat-select placeholder="Select Correspondent">
                         <div *ngFor="let section of corrGroup.sections">
                             <div *ngFor="let corr of section.correspondences">
                                 <mat-option [value]="corr.correspondent2.name"

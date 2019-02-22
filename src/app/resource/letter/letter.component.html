@@ -153,6 +153,18 @@
                                  [images]="resource?.stillImageRepresentationsToDisplay">
                 </kui-still-image>
             </section>
+            <section class="links">
+                <div *ngIf="resource?.incomingLinks?.length > 0" class="incoming-link-position">
+                    <p>
+                        <strong>Referenced In:</strong>
+                    </p>
+                    <mat-list *ngFor="let incomingLinkSourceRes of resource.incomingLinks">
+                        <mat-list-item>
+                            <span class="link" (click)="showIncomingRes(incomingLinkSourceRes.id, incomingLinkSourceRes.type)">{{incomingLinkSourceRes.label}}</span>
+                        </mat-list-item>
+                    </mat-list>
+                </div>
+            </section>
 
         </div>
     </div>

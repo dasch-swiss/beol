@@ -13,8 +13,8 @@ a.facsimile {
       filter: grayscale(100%) brightness(65%) sepia(100%) hue-rotate(345deg) saturate(600%) contrast(0.8);
 }
 a.figure {
-  width: 24px;
-  height: 24px;
+  width: 30px;
+  height: 30px;
   display: inline-flex;
   background: url('/assets/icons/beol/figure.png');
   background-size: cover;
@@ -22,8 +22,8 @@ a.figure {
       filter: grayscale(100%) brightness(65%) sepia(100%) hue-rotate(345deg) saturate(600%) contrast(0.8);
 }
 a.person {
-  width: 16px;
-  height: 16px;
+  width: 12px;
+  height: 12px;
   display: inline-flex;
   background: url('/assets/icons/beol/person_gr.png');
   background-size: cover;
@@ -31,8 +31,8 @@ a.person {
       filter: grayscale(100%) brightness(25%) sepia(100%) hue-rotate(-10deg) saturate(600%) contrast(0.8);
 }
 a.item {
-  width: 16px;
-  height: 16px;
+  width: 12px;
+  height: 12px;
   display: inline-flex;
   background: url('/assets/icons/beol/biblio_item_gr.png');
   background-size: cover;
