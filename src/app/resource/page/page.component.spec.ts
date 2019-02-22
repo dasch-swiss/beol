@@ -11,6 +11,7 @@ import { KuiCoreConfig, OntologyCacheService } from '@knora/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { HttpTestingController } from '@angular/common/http/testing';
 import { MatListModule } from '@angular/material';
+import { ReadTextValueComponent } from '../../properties/read-text-value/read-text-value.component';
 
 describe('PageComponent', () => {
     let component: PageComponent;
@@ -22,6 +23,7 @@ describe('PageComponent', () => {
             declarations: [
                 PageComponent,
                 ReadTextValueAsHtmlComponent,
+                ReadTextValueComponent,
                 MathJaxDirective
             ],
             imports: [KuiViewerModule, RouterTestingModule, HttpClientModule, MatListModule],

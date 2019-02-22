@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BeolResource } from '../beol-resource';
+import { BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
 import {
     ApiServiceError,
     IncomingService,
@@ -11,12 +11,23 @@ import {
     ReadResourcesSequence,
     ReadTextValueAsHtml,
     ResourceService,
-    SearchService
+    SearchService,
+    ReadTextValue,
+    ReadPropertyItem,
+    ReadIntegerValue
 } from '@knora/core';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { BeolService } from '../../services/beol.service';
+
+class PageProps implements PropertyValues {
+
+    pagenum: ReadTextValue[] = [];
+    seqnum: ReadIntegerValue[] = [];
+
+    [index: string]: ReadPropertyItem[];
+}
 
 @Component({
     selector: 'app-page',
@@ -34,7 +45,12 @@ export class PageComponent extends BeolResource {
     KnoraConstants = KnoraConstants;
     navigationSubscription: Subscription;
 
-    propIris;
+    propIris: PropIriToNameMapping = {
+        'pagenum': this.apiUrl + '/ontology/0801/beol/v2#pagenum',
+        'seqnum': this.apiUrl + '/ontology/0801/beol/v2#seqnum',
+    };
+
+    props: PageProps;
 
     transcription: ReadTextValueAsHtml;
     transcriptionBelongsToRegion: ReadLinkValue;
@@ -56,6 +72,12 @@ export class PageComponent extends BeolResource {
     }
 
     initProps() {
+
+        const props = new PageProps();
+
+        this.mapper(props);
+
+        this.props = props;
 
         // check if there is an active region (submitted as a parameter)
         const activeRegionIri = this.params.get('region');

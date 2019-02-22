@@ -12,6 +12,16 @@
     <div style="height: 200px;">
     </div>
 
+    <div *ngIf="props?.pagenum[0]">
+        <span class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.pagenum[0].propIri)}}: </span>
+        <read-text-value [valueObject]="props?.pagenum[0]" [bindEvents]="false" [ontologyInfo]="ontologyInfo"></read-text-value>
+    </div>
+
+    <div *ngIf="props?.seqnum[0]">
+        <span class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.seqnum[0].propIri)}}: </span>
+        <kui-integer-value [valueObject]="props?.seqnum[0]"></kui-integer-value>
+    </div>
+
     <div *ngIf="!isLoading && transcription !== undefined">
         <h3>{{transcriptionBelongsToRegion.referredResource.label}}</h3>
         <read-text-value-as-html
