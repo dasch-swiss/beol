@@ -19,11 +19,11 @@ import { Location } from '@angular/common';
 import { BeolService } from '../../services/beol.service';
 
 @Component({
-    selector: 'app-meditatio',
-    templateUrl: './meditatio.component.html',
-    styleUrls: ['./meditatio.component.scss']
+    selector: 'app-page',
+    templateUrl: './page.component.html',
+    styleUrls: ['./page.component.scss']
 })
-export class MeditatioComponent extends BeolResource {
+export class PageComponent extends BeolResource {
 
     iri: string;
     resource: ReadResource;

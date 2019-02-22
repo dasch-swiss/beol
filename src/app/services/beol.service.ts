@@ -348,7 +348,7 @@ export class BeolService {
                         const page = regionOfVal.referredResource.type;
 
                         // refer directly to page template, indicating the active region
-                        this._router.navigateByUrl('meditatio/' + encodeURIComponent(pageIri) + '/' + encodeURIComponent(regionRes.resources[0].id));
+                        this._router.navigateByUrl('page/' + encodeURIComponent(pageIri) + '/' + encodeURIComponent(regionRes.resources[0].id));
                     } else {
                         console.error(`Could not route region ${regionIri} to page`);
                     }
@@ -429,7 +429,7 @@ export class BeolService {
             // route to biblio-items template
             this._router.navigateByUrl('biblio/' + encodeURIComponent(referredResourceIri));
         } else if (referredResourceType === this.externalApiURL + '/ontology/0801/beol/v2#page') {
-            this._router.navigateByUrl('meditatio/' + encodeURIComponent(referredResourceIri));
+            this._router.navigateByUrl('page/' + encodeURIComponent(referredResourceIri));
         } else if (referredResourceType === 'http://api.knora.org/ontology/knora-api/v2#Region') {
             // route region to page it belongs to
             this.routeToPageWithActiveRegion(referredResourceIri);

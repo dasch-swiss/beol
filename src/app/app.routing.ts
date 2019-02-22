@@ -14,7 +14,7 @@ import { EndnoteComponent } from './resource/endnote/endnote.component';
 import { LeooRouteComponent } from './leoo-route/leoo-route.component';
 import { FigureComponent } from './resource/figure/figure.component';
 import { BiblioItemsComponent } from './resource/biblio-items/biblio-items.component';
-import { MeditatioComponent } from './resource/meditatio/meditatio.component';
+import { PageComponent } from './resource/page/page.component';
 import { BebbRouteComponent } from './bebb-route/bebb-route.component';
 
 
@@ -56,12 +56,12 @@ const appRoutes: Routes = [
         component: LetterComponent
     },
     {
-        path: 'meditatio/:id',
-        component: MeditatioComponent
+        path: 'page/:id',
+        component: PageComponent
     },
     {
-        path: 'meditatio/:id/:region',
-        component: MeditatioComponent
+        path: 'page/:id/:region',
+        component: PageComponent
     },
     {
         path: 'endnote/:id',

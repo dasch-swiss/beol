@@ -40,7 +40,7 @@ import { APP_BASE_HREF } from '@angular/common';
 // import { RECAPTCHA_SETTINGS, RecaptchaSettings } from 'ng-recaptcha';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
-import { MeditatioComponent } from './resource/meditatio/meditatio.component';
+import { PageComponent } from './resource/page/page.component';
 import { ReadTextValueComponent } from './properties/read-text-value/read-text-value.component';
 import { HanCatalogueDirective } from './directives/han-catalogue.directive';
 import { BebbRouteComponent } from './bebb-route/bebb-route.component';
@@ -73,7 +73,7 @@ export function initializeApp(appConfig: AppConfig) {
         BiblioItemsComponent,
         EndnoteComponent,
         FigureComponent,
-        MeditatioComponent,
+        PageComponent,
         ReadTextValueComponent,
         HanCatalogueDirective,
         BebbRouteComponent
