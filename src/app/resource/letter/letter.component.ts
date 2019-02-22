@@ -102,4 +102,8 @@ export class LetterComponent extends BeolResource {
 
     }
 
+    showIncomingRes(resIri, resType) {
+        this._beolService.routeByResourceType(resType, resIri);
+    }
+
 }
