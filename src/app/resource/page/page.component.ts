@@ -37,6 +37,8 @@ export class PageComponent extends BeolResource {
     propIris;
 
     transcription: ReadTextValueAsHtml;
+    transcriptionBelongsToRegion: ReadLinkValue;
+    manuscriptEntry: ReadLinkValue;
     transcriptionsForManuscriptEntry: ReadResource[] = [];
 
     activeRegion: string;
@@ -73,17 +75,19 @@ export class PageComponent extends BeolResource {
                 if (transcriptions.numberOfResources === 1) {
                     // get transcription associated to region
                     this._resourceService.getReadResource(transcriptions.resources[0].id).subscribe(
-                        (result: ReadResourcesSequence) => {
+                        (transcr: ReadResourcesSequence) => {
 
                             // initialize ontology information
-                            this.ontologyInfo.updateOntologyInformation(result.ontologyInformation);
+                            this.ontologyInfo.updateOntologyInformation(transcr.ontologyInformation);
+
+                            this.transcriptionBelongsToRegion = transcr.resources[0].properties[this.apiUrl + '/ontology/0801/beol/v2#belongsToRegionValue'][0] as ReadLinkValue;
+
+                            this.manuscriptEntry = transcr.resources[0].properties[this.apiUrl + '/ontology/0801/beol/v2#transcriptionOfValue'][0] as ReadLinkValue;
 
                             this.transcription =
-                               result.resources[0].properties[this.apiUrl + '/ontology/0801/beol/v2#hasText'][0] as ReadTextValueAsHtml;
+                                transcr.resources[0].properties[this.apiUrl + '/ontology/0801/beol/v2#hasText'][0] as ReadTextValueAsHtml;
 
-                            const manuscriptEntryLinkValue = result.resources[0].properties[this.apiUrl + '/ontology/0801/beol/v2#transcriptionOfValue'][0] as ReadLinkValue;
-
-                            const transcriptionsFormManuscriptEntry = this._beolService.getTranscriptionsForManuscriptEntry(manuscriptEntryLinkValue.referredResourceIri, 0);
+                            const transcriptionsFormManuscriptEntry = this._beolService.getTranscriptionsForManuscriptEntry(this.manuscriptEntry.referredResourceIri, 0);
 
                             this._searchService.doExtendedSearchReadResourceSequence(transcriptionsFormManuscriptEntry).subscribe(
                                 (manEntries: ReadResourcesSequence) => {

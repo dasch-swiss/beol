@@ -320,6 +320,7 @@ export class BeolService {
 
         }
 
+        ORDER BY ?layer 
         OFFSET ${offset}
         `;
 

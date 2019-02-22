@@ -13,9 +13,16 @@
     </div>
 
     <div *ngIf="!isLoading && transcription !== undefined">
+        <h3>{{transcriptionBelongsToRegion.referredResource.label}}</h3>
         <read-text-value-as-html
             [valueObject]="transcription" [ontologyInfo]="ontologyInfo"
-            [bindEvents]="true"></read-text-value-as-html>
+            [bindEvents]="true">
+        </read-text-value-as-html>
+        <br>
+        <br>
+        <div *ngIf="manuscriptEntry !== undefined && manuscriptEntry?.referredResource !== undefined">
+            Transcription of <a class="salsah-link" (click)="goToResource(manuscriptEntry.referredResource.type, manuscriptEntry.referredResource.id)">{{manuscriptEntry.referredResource.label}}</a>
+        </div>
     </div>
 
     <br/>
@@ -23,7 +30,7 @@
         <div>Transcriptions for this manuscript entry:</div>
         <mat-list>
             <mat-list-item *ngFor="let entry of transcriptionsForManuscriptEntry">
-                <span (click)="goToResource(entry.type, entry.id)">{{entry.label}}</span>
+                <a class="salsah-link" (click)="goToResource(entry.type, entry.id)">{{entry.label}}</a>
             </mat-list-item>
         </mat-list>
     </div>
