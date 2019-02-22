@@ -21,7 +21,7 @@
 .main-content {
   margin: 0 auto 0 $sidenav-width;
   max-width: 900px;
-  padding: 0 48px 24px 48px;
+  padding: 0 0 24px 0;
   width: calc(100vw - #{$sidenav-width} - 48px - 96px);
 
   &.without-sidebar {
