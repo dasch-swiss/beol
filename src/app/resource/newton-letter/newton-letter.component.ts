@@ -34,6 +34,7 @@ class LetterProps implements PropertyValues {
     location: ReadTextValue[] = [];
     title: ReadTextValue[] = [];
     npID: ReadTextValue[] = [];
+    language: ReadTextValue[] = [];
 
     [index: string]: ReadPropertyItem[];
 }
@@ -65,10 +66,11 @@ export class NewtonLetterComponent extends BeolResource {
         'subject': this.apiUrl + '/ontology/0801/beol/v2#hasSubject',
         'text': this.apiUrl + '/ontology/0801/beol/v2#hasText',
         'mentionedPerson': this.apiUrl + '/ontology/0801/beol/v2#mentionsPersonValue',
-        'replyTo': this.apiUrl + '/ontology/0801/beol/v2#letterIsReplyToValue',
+        'replyTo': this.apiUrl + '/ontology/0801/newton/v2#isReplyToValue',
         'location': this.apiUrl + '/ontology/0801/beol/v2#location',
         'title': this.apiUrl + '/ontology/0801/beol/v2#title',
         'npID': this.apiUrl + '/ontology/0801/newton/v2#newtonProjectID',
+        'language': this.apiUrl + '/ontology/0801/beol/v2#letterHasLanguage',
     };
 
     props: LetterProps;
