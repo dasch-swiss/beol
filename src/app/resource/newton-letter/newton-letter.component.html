@@ -109,19 +109,20 @@
             <div *ngIf="!isLoading && letter"  class="main-content without-sidebar">
                 <div [mathJax]="letter" [bindEvents]="false" [renderMath]="true"></div>
             </div>
+            <section class="links">
+                <div *ngIf="resource?.incomingLinks?.length > 0" class="incoming-link-position">
+                    <p>
+                        <strong>Referenced In:</strong>
+                    </p>
+                    <mat-list *ngFor="let incomingLinkSourceRes of resource.incomingLinks">
+                        <mat-list-item>
+                            <span class="link" (click)="showIncomingRes(incomingLinkSourceRes.id, incomingLinkSourceRes.type)">{{incomingLinkSourceRes.label}}</span>
+                        </mat-list-item>
+                    </mat-list>
+                </div>
+            </section>
         </div>
-
-            <!--<section class="images">-->
-                <!--&lt;!&ndash; Check for incoming images &ndash;&gt;-->
-                <!--<kui-still-image #OSDViewer class="osd-viewer"-->
-                                 <!--(getImages)="changeOffsetForStillImageRepresentations($event)"-->
-                                 <!--[images]="resource?.stillImageRepresentationsToDisplay" [imageRangeStart]="0"-->
-                                 <!--[imageRangeEnd]="4" [imageChangeInterval]="5">-->
-                <!--</kui-still-image>-->
-            <!--</section>-->
-
-
-
+        
     </div>
 
 

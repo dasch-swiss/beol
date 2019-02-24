@@ -146,4 +146,7 @@ export class NewtonLetterComponent extends BeolResource {
         }
         return element;
     }
+    showIncomingRes(resIri, resType) {
+        this._beolService.routeByResourceType(resType, resIri);
+    }
 }
