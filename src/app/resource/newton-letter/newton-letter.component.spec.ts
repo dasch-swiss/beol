@@ -7,7 +7,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
 import { NewtonLetterComponent } from './newton-letter.component';
 import { KuiActionModule } from '@knora/action';
-import { KuiCoreConfig, OntologyCacheService } from '@knora/core';
+import { KuiCoreConfig, KuiCoreConfigToken, OntologyCacheService } from '@knora/core';
 import { ReadTextValueAsHtmlComponent } from '../../properties/read-text-value-as-html/read-text-value-as-html.component';
 import { ReadListValueComponent } from '../../properties/read-list-value/read-list-value.component';
 import { MathJaxDirective } from '../../directives/mathjax.directive';
@@ -51,7 +51,7 @@ describe('NewtonLetterComponent', () => {
                             }
                         })}
                 },
-                {provide: 'config', useValue: KuiCoreConfig}
+                {provide: KuiCoreConfigToken, useValue: KuiCoreConfig}
             ]
         })
             .compileComponents();
