@@ -15,7 +15,7 @@ import {
     OntologyCacheService, OntologyInformation, Properties, ResourceClasses,
     SearchParamsService,
     SearchService,
-    CountQueryResult,
+    CountQueryResult, KuiCoreConfigToken,
 } from '@knora/core';
 import { KuiViewerModule } from '@knora/viewer';
 
@@ -67,7 +67,7 @@ describe('SearchResultsComponent', () => {
                             }
                         })}
                 },
-                { provide: 'config', useValue: KuiCoreConfig },
+                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig },
                 { provide: SearchParamsService, useValue: mockSearchParamService},
                 { provide: SearchService, useValue: spySearchService },
             ]

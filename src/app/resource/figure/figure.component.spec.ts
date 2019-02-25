@@ -12,6 +12,7 @@ import { MathJaxDirective } from '../../directives/mathjax.directive';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReadTextValueComponent } from '../../properties/read-text-value/read-text-value.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { KuiCoreConfig, KuiCoreConfigToken } from '@knora/core';
 
 describe('FigureComponent', () => {
     let component: FigureComponent;
@@ -37,7 +38,8 @@ describe('FigureComponent', () => {
                         })
                     }
                 },
-                {provide: Location, useValue: locationStub}
+                { provide: Location, useValue: locationStub },
+                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig }
             ]
         })
             .compileComponents();

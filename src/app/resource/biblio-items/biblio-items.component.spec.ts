@@ -7,7 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { KuiActionModule } from '@knora/action';
-import { KuiCoreConfig } from '@knora/core';
+import { KuiCoreConfig, KuiCoreConfigToken } from '@knora/core';
 
 import { BiblioItemsComponent } from './biblio-items.component';
 import { ReadTextValueAsHtmlComponent } from '../../properties/read-text-value-as-html/read-text-value-as-html.component';
@@ -46,7 +46,7 @@ describe('BiblioItemsComponent', () => {
                   }
               })}
         },
-        { provide: 'config', useValue: KuiCoreConfig }
+        { provide: KuiCoreConfigToken, useValue: KuiCoreConfig }
       ]
     })
       .compileComponents();

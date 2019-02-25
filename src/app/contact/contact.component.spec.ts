@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MaterialModule } from '../material-module';
 import { ContactComponent } from './contact.component';
 import { Location } from '@angular/common';
+import { KuiCoreConfig, KuiCoreConfigToken } from '@knora/core';
 
 describe('ContactComponent', () => {
   let component: ContactComponent;
@@ -11,7 +12,10 @@ describe('ContactComponent', () => {
     TestBed.configureTestingModule({
       imports: [MaterialModule],
       declarations: [ContactComponent],
-      providers: [{ provide: Location }]
+      providers: [
+          { provide: Location },
+          { provide: KuiCoreConfigToken, useValue: KuiCoreConfig }
+      ]
     })
       .compileComponents();
   }));

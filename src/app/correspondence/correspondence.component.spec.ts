@@ -5,7 +5,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 
 import { MaterialModule } from '../material-module';
 import { CorrespondenceComponent } from './correspondence.component';
-import { KuiCoreConfig } from '@knora/core';
+import { KuiCoreConfig, KuiCoreConfigToken } from '@knora/core';
 
 describe('CorrespondenceComponent', () => {
   let component: CorrespondenceComponent;
@@ -20,7 +20,7 @@ describe('CorrespondenceComponent', () => {
         HttpClientTestingModule
       ],
       declarations: [CorrespondenceComponent],
-      providers: [{ provide: 'config', useValue: KuiCoreConfig }]
+      providers: [{ provide: KuiCoreConfigToken, useValue: KuiCoreConfig }]
     })
       .compileComponents();
   }));
