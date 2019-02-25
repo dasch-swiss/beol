@@ -1,12 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MaterialModule } from '../material-module';
-import { environment } from '../../environments/environment';
 import { KuiActionModule } from '@knora/action';
 import {
-    ApiServiceResult, ConvertJSONLD,
-    KuiCoreModule,
-    OntologyCacheService, OntologyInformation,
+    ConvertJSONLD,
+    KuiCoreConfig, KuiCoreConfigToken,
+    OntologyInformation,
     Properties,
     ResourceClasses,
     ResourceService,
@@ -19,7 +18,6 @@ import { ReadListValueComponent } from '../properties/read-list-value/read-list-
 import { of } from 'rxjs';
 import { BeolService } from '../services/beol.service';
 import { ActivatedRoute } from '@angular/router';
-import { AppConfig } from '../app.config';
 import { MathJaxDirective } from '../directives/mathjax.directive';
 
 describe('IntroductionComponent', () => {
@@ -40,12 +38,6 @@ describe('IntroductionComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 KuiActionModule,
-                KuiCoreModule.forRoot({
-                    name: environment.appName,
-                    api: environment.api,
-                    media: environment.media,
-                    app: environment.app,
-                }),
                 KuiSearchModule,
                 MaterialModule,
                 RouterTestingModule
@@ -69,6 +61,7 @@ describe('IntroductionComponent', () => {
                                 }}
                         )}
                 },
+                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig },
                 { provide: BeolService, useValue: spyBeolService },
                 { provide: SearchService, useValue: spySearchService },
                 { provide: ResourceService, useValue: spyResourceService }

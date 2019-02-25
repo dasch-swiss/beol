@@ -8,7 +8,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { PublisherComponent } from './publisher.component';
 import { KuiActionModule } from '@knora/action';
 import { of } from 'rxjs';
-import { KuiCoreConfig } from '@knora/core';
+import { KuiCoreConfig, KuiCoreConfigToken } from '@knora/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReadTextValueAsHtmlComponent } from '../../properties/read-text-value-as-html/read-text-value-as-html.component';
 import { MathJaxDirective } from '../../directives/mathjax.directive';
@@ -46,7 +46,7 @@ describe('PublisherComponent', () => {
                             }
                         })}
                 },
-                {provide: 'config', useValue: KuiCoreConfig}
+                {provide: KuiCoreConfigToken, useValue: KuiCoreConfig}
             ]
         })
             .compileComponents();
