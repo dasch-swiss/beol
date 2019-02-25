@@ -4,7 +4,7 @@ import { ReadTextValueAsHtmlComponent } from './read-text-value-as-html.componen
 import { MathJaxDirective } from '../../directives/mathjax.directive';
 import { Component, DebugElement, OnInit, ViewChild } from '@angular/core';
 import {
-    KuiCoreConfig,
+    KuiCoreConfig, KuiCoreConfigToken,
     OntologyInformation,
     ReadTextValue,
     ReadTextValueAsHtml,
@@ -30,7 +30,7 @@ describe('ReadTextValueAsHtmlComponent', () => {
                 HttpClientModule
             ],
             providers: [
-                { provide: 'config', useValue: KuiCoreConfig }
+                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig }
             ],
             declarations: [
                 ReadTextValueAsHtmlComponent,

@@ -4,7 +4,7 @@ import { BeolService } from './beol.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { KuiCoreConfig } from '../../../node_modules/@knora/core';
+import { KuiCoreConfig, KuiCoreConfigToken } from '@knora/core';
 
 describe('BeolService', () => {
   beforeEach(() => {
@@ -15,7 +15,7 @@ describe('BeolService', () => {
           HttpClientTestingModule],
       providers: [
           BeolService,
-          { provide: 'config', useValue: KuiCoreConfig }
+          { provide: KuiCoreConfigToken, useValue: KuiCoreConfig }
       ]
     });
   });

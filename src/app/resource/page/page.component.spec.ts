@@ -7,7 +7,7 @@ import { MathJaxDirective } from '../../directives/mathjax.directive';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
-import { KuiCoreConfig, OntologyCacheService } from '@knora/core';
+import { KuiCoreConfig, KuiCoreConfigToken, OntologyCacheService } from '@knora/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { HttpTestingController } from '@angular/common/http/testing';
 import { MatListModule } from '@angular/material';
@@ -39,7 +39,7 @@ describe('PageComponent', () => {
                         })
                     }
                 },
-                {provide: 'config', useValue: KuiCoreConfig}
+                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig }
             ]
         })
             .compileComponents();

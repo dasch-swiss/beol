@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MathJaxDirective } from './mathjax.directive';
 import { Component, DebugElement, OnInit } from '@angular/core';
-import { KuiCoreModule } from '@knora/core';
+import { KuiCoreConfig, KuiCoreConfigToken, KuiCoreModule } from '@knora/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatSnackBarModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
@@ -42,7 +42,9 @@ describe('MathJaxDirective', () => {
                 TestComponent,
                 MathJaxDirective
             ],
-            providers: []
+            providers: [
+                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig }
+            ]
         })
             .compileComponents();
     });

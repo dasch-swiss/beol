@@ -4,10 +4,9 @@ import { MathJaxDirective } from '../../directives/mathjax.directive';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatSnackBarModule } from '@angular/material';
 import { Component, DebugElement, OnInit, ViewChild } from '@angular/core';
-import { KuiCoreConfig, ReadListValue } from '@knora/core';
+import { KuiCoreConfig, KuiCoreConfigToken, ReadListValue } from '@knora/core';
 import { By } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('ReadListValueComponent', () => {
     let testHostComponent: TestHostComponent;
@@ -21,7 +20,7 @@ describe('ReadListValueComponent', () => {
                 HttpClientModule
             ],
             providers: [
-                { provide: 'config', useValue: KuiCoreConfig }
+                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig }
             ],
             declarations: [
                 ReadListValueComponent,
