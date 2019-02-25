@@ -434,6 +434,8 @@ export class BeolService {
         } else if (referredResourceType === 'http://api.knora.org/ontology/knora-api/v2#Region') {
             // route region to page it belongs to
             this.routeToPageWithActiveRegion(referredResourceIri);
+        } else if (referredResourceType === this.externalApiURL + '/ontology/0801/beol/v2#transcription') {
+            this._router.navigateByUrl('transcription/' + encodeURIComponent(referredResourceIri));
         } else {
             // route to generic template
             this._router.navigateByUrl('resource/' + encodeURIComponent(referredResourceIri));

@@ -44,6 +44,7 @@ import { PageComponent } from './resource/page/page.component';
 import { ReadTextValueComponent } from './properties/read-text-value/read-text-value.component';
 import { HanCatalogueDirective } from './directives/han-catalogue.directive';
 import { BebbRouteComponent } from './bebb-route/bebb-route.component';
+import { TranscriptionComponent } from './resource/transcription/transcription.component';
 
 
 /*
@@ -76,7 +77,8 @@ export function initializeApp(appConfig: AppConfig) {
         PageComponent,
         ReadTextValueComponent,
         HanCatalogueDirective,
-        BebbRouteComponent
+        BebbRouteComponent,
+        TranscriptionComponent
     ],
     imports: [
         //        AngularFireModule.initializeApp(environment.firebase),

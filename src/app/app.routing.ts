@@ -16,6 +16,7 @@ import { FigureComponent } from './resource/figure/figure.component';
 import { BiblioItemsComponent } from './resource/biblio-items/biblio-items.component';
 import { PageComponent } from './resource/page/page.component';
 import { BebbRouteComponent } from './bebb-route/bebb-route.component';
+import { TranscriptionComponent } from './resource/transcription/transcription.component';
 
 
 const appRoutes: Routes = [
@@ -66,6 +67,10 @@ const appRoutes: Routes = [
     {
         path: 'endnote/:id',
         component: EndnoteComponent
+    },
+    {
+        path: 'transcription/:id',
+        component: TranscriptionComponent
     },
     {
         path: 'search',
