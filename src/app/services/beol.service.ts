@@ -1,5 +1,12 @@
 import { Injectable } from '@angular/core';
-import { ExtendedSearchParams, KnoraConstants, ReadLinkValue, ReadResourcesSequence, ResourceService, SearchParamsService } from '@knora/core';
+import {
+    ExtendedSearchParams,
+    KnoraConstants,
+    ReadLinkValue,
+    ReadResourcesSequence,
+    ResourceService,
+    SearchParamsService
+} from '@knora/core';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 
@@ -292,13 +299,21 @@ export class BeolService {
     }
 
     /**
-     * Given a region Iri, get the manuscript entries that point to this region via standoff link.
+     * Given a manuscript entry Iri, get the transcriptions that point to this manuscript entry.
      *
-     * @param manuscriptEntryIri Iri of the region.
+     * @param manuscriptEntryIri Iri of the manuscript entry.
+     * @param excludeLayer layer to be excluded.
+     * @param excludeLayer0 if set to true, layer 0 is ignored.
      * @param offset offset to be used.
      * @returns the Gravsearch query to get the manuscript entries.
      */
-    getTranscriptionsForManuscriptEntry(manuscriptEntryIri: string, excludeLayer: number, offset: number = 0) {
+    getTranscriptionsForManuscriptEntry(manuscriptEntryIri: string, excludeLayer: number, excludeLayer0 = false, offset: number = 0) {
+
+        let excludeLayer0filter = '';
+
+        if (excludeLayer0) {
+            excludeLayer0filter = `FILTER(?layer > 0)`;
+        }
 
         const transcriptionsForManuscriptEntry = `
         PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
@@ -318,6 +333,7 @@ export class BeolService {
             
             FILTER(?layer != ${excludeLayer})
 
+            ${excludeLayer0filter}    
         }
 
         ORDER BY ?layer 
@@ -408,7 +424,7 @@ export class BeolService {
         if (referredResourceType === this.externalApiURL + '/ontology/0801/beol/v2#person') {
             // route to person template
             this._router.navigateByUrl('person/' + encodeURIComponent(referredResourceIri));
-        } else if (referredResourceType === this.externalApiURL + '/ontology/0801/biblio/v2#Publisher')  {
+        } else if (referredResourceType === this.externalApiURL + '/ontology/0801/biblio/v2#Publisher') {
             // route to publisher template
             this._router.navigateByUrl('publisher/' + encodeURIComponent(referredResourceIri));
         } else if (referredResourceType === this.externalApiURL + '/ontology/0801/beol/v2#letter') {

@@ -9,8 +9,10 @@ import {
     ReadLinkValue,
     ReadPropertyItem,
     ReadResource,
+    ReadResourcesSequence,
     ReadTextValue,
-    ResourceService
+    ResourceService,
+    SearchService
 } from '@knora/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
@@ -41,6 +43,8 @@ export class TranscriptionComponent extends BeolResource {
     navigationSubscription: Subscription;
     KnoraConstants = KnoraConstants;
 
+    otherLayers: ReadResource[] = [];
+
     propIris: PropIriToNameMapping = {
         'text': this.apiUrl + '/ontology/0801/beol/v2#hasText',
         'layer': this.apiUrl + '/ontology/0801/beol/v2#layer',
@@ -54,6 +58,7 @@ export class TranscriptionComponent extends BeolResource {
                 protected _resourceService: ResourceService,
                 protected _cacheService: OntologyCacheService,
                 protected _incomingService: IncomingService,
+                private _searchService: SearchService,
                 public location: Location,
                 protected _beolService: BeolService) {
 
@@ -68,10 +73,33 @@ export class TranscriptionComponent extends BeolResource {
 
         this.props = props;
 
-        console.log(this.props);
+        this.getOtherLayersForManuscriptEntry();
+
+    }
+
+    getOtherLayersForManuscriptEntry() {
+
+        if (this.props.transcriptionOf.length !== 1 || this.props.layer.length !== 1) {
+            return;
+        }
+
+        const otherLayersForManEntry =
+            this._beolService.getTranscriptionsForManuscriptEntry(this.props.transcriptionOf[0].referredResourceIri, this.props.layer[0].integer, true);
+
+        this._searchService.doExtendedSearchReadResourceSequence(otherLayersForManEntry).subscribe(
+            (otherLayers: ReadResourcesSequence) => {
+                if (otherLayers.numberOfResources > 0) {
+                    this.otherLayers = otherLayers.resources;
+                }
+            }
+        );
     }
 
     showIncomingRes(resIri, resType) {
+        this._beolService.routeByResourceType(resType, resIri);
+    }
+
+    goToResource(resType: string, resIri: string) {
         this._beolService.routeByResourceType(resType, resIri);
     }
 }
