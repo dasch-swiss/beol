@@ -3,6 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { KuiSearchModule } from '@knora/search';
 import { MaterialModule } from './material-module';
+import { KuiCoreConfig, KuiCoreConfigToken } from '@knora/core';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -15,6 +16,7 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent
       ],
+      providers: [{ provide: KuiCoreConfigToken, useValue: KuiCoreConfig }]
     }).compileComponents();
   }));
   it('should create the app', async(() => {

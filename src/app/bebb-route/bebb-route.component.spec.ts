@@ -4,7 +4,7 @@ import { BebbRouteComponent } from './bebb-route.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { KuiCoreConfig, ReadResource, ReadResourcesSequence, SearchService } from '@knora/core';
+import { KuiCoreConfig, KuiCoreConfigToken, ReadResource, ReadResourcesSequence, SearchService } from '@knora/core';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { BeolService } from '../services/beol.service';
@@ -40,7 +40,7 @@ describe('BebbRouteComponent', () => {
                         })
                     }
                 },
-                { provide: 'config', useValue: KuiCoreConfig },
+                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig },
                 { provide: BeolService, useValue: beolServiceSpy },
                 { provide: SearchService, useValue: searchServiceSpy }
             ]

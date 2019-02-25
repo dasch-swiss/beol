@@ -7,7 +7,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { CorrespondenceComponent } from '../correspondence/correspondence.component';
-import { KuiCoreConfig } from '@knora/core';
+import { KuiCoreConfig, KuiCoreConfigToken } from '@knora/core';
 
 describe('LandingPageComponent', () => {
   let component: LandingPageComponent;
@@ -22,7 +22,7 @@ describe('LandingPageComponent', () => {
         HttpClientTestingModule,
         BrowserAnimationsModule],
       declarations: [LandingPageComponent, CorrespondenceComponent],
-      providers: [{ provide: 'config', useValue: KuiCoreConfig }]
+      providers: [{ provide: KuiCoreConfigToken, useValue: KuiCoreConfig }]
     })
       .compileComponents();
   }));
