@@ -96,10 +96,7 @@ export class NewtonLetterComponent extends BeolResource {
         this.mapper(props);
         this.props = props;
         // get the id from the route newtonletter/:id e.g. NATP00120
-        this.navigationSubscription = this._route.paramMap.subscribe((params: ParamMap) => {
-            // and get the letter from newton page by this id
-            this.getNewtonLetterText(this.props.npID[0].getContent());
-        });
+        this.getNewtonLetterText(this.props.npID[0].getContent());
     }
 
 
