@@ -107,7 +107,7 @@
             </section>
             <kui-progress-indicator *ngIf="isLoadingText" [color]="'#D88958'"></kui-progress-indicator>
 
-            <div *ngIf="!isLoading && letter"  class="main-content without-sidebar">
+            <div *ngIf="!isLoadingText && letter"  class="main-content without-sidebar">
                 <div [mathJax]="letter" [bindEvents]="false" [renderMath]="true"></div>
             </div>
             <section class="links">
