@@ -229,8 +229,50 @@ export class BeolService {
         return correspondenceTemplate + offsetTemplate;
     }
 
-
     /**
+     * Creates the Gravsearch needed for the search for the newton correspodence.
+     */
+    searchForNewtonCorrespondence(offset: number = 0): string {
+
+        const correspondenceTemplate = `
+            PREFIX newton: <${this.externalApiURL}/ontology/0801/newton/simple/v2#>
+            PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
+
+            CONSTRUCT {
+                ?letter knora-api:isMainResource true .
+
+            } WHERE {
+
+                ?letter a knora-api:Resource .
+                ?letter a newton:letter .
+
+            }
+        `;
+
+
+        // offset component of the Gravsearch query
+        const offsetTemplate = `
+        OFFSET ${offset}
+        `;
+
+        // function that generates the same Gravsearch query with the given offset
+        const generateGravsearchWithCustomOffset = (localOffset: number): string => {
+            const offsetCustomTemplate = `
+            OFFSET ${localOffset}
+            `;
+
+            return correspondenceTemplate + offsetCustomTemplate;
+        };
+
+        if (offset === 0) {
+            // store the function so another Gravsearch query can be created with an increased offset
+            this._searchParamsService.changeSearchParamsMsg(new ExtendedSearchParams(generateGravsearchWithCustomOffset));
+        }
+        return correspondenceTemplate + offsetTemplate;
+    }
+
+
+        /**
      * Given the repertorium number of a letter from LEOO, searches for that letter.
      *
      * @param repertoriumNumber the repertorium number to search for.
@@ -321,6 +363,8 @@ export class BeolService {
         } else if (referredResourceType === this.externalApiURL + '/ontology/0801/beol/v2#letter') {
             // route to letter template
             this._router.navigateByUrl('letter/' + encodeURIComponent(referredResourceIri));
+        } else if (referredResourceType === this.externalApiURL + '/ontology/0801/newton/v2#letter') {
+            this._router.navigateByUrl('newtonLetter/' + encodeURIComponent(referredResourceIri));
         } else if (referredResourceType === this.externalApiURL + '/ontology/0801/beol/v2#endnote') {
             // route to letter template
             this._router.navigateByUrl('endnote/' + encodeURIComponent(referredResourceIri));

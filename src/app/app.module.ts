@@ -12,6 +12,7 @@ import { MaterialModule } from './material-module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 // router module and app routing with all the path definitions
 // import { RouterModule } from '@angular/router';
+
 import { AppRouting } from './app.routing';
 // app components
 import { AppComponent } from './app.component';
@@ -23,6 +24,7 @@ import { ResourceComponent } from './resource/resource.component';
 import { PersonComponent } from './resource/person/person.component';
 import { PublisherComponent } from './resource/publisher/publisher.component';
 import { LetterComponent } from './resource/letter/letter.component';
+import { NewtonLetterComponent } from './resource/newton-letter/newton-letter.component';
 import { ReadListValueComponent } from './properties/read-list-value/read-list-value.component';
 import { ReadTextValueAsHtmlComponent } from './properties/read-text-value-as-html/read-text-value-as-html.component';
 import { LeooRouteComponent } from './leoo-route/leoo-route.component';
@@ -40,10 +42,16 @@ import { APP_BASE_HREF } from '@angular/common';
 // import { RECAPTCHA_SETTINGS, RecaptchaSettings } from 'ng-recaptcha';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ReadTextValueComponent } from './properties/read-text-value/read-text-value.component';
+
+import {SanitizeHtmlPipe} from './pipes/sanitize-html.pipe';
+import {SanitizeUrlPipe} from './pipes/sanitize-url.pipe';
+import { NewtonProjectDirective } from './directives/newton-project.directive';
+
 import { HanCatalogueDirective } from './directives/han-catalogue.directive';
 import { BebbRouteComponent } from './bebb-route/bebb-route.component';
 import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
 import { AppInitService } from './app-init.service';
+
 
 export function initializeApp(appInitService: AppInitService) {
     return (): Promise<any> => {
@@ -62,6 +70,7 @@ export function initializeApp(appInitService: AppInitService) {
         PersonComponent,
         PublisherComponent,
         LetterComponent,
+        NewtonLetterComponent,
         ReadListValueComponent,
         ReadTextValueAsHtmlComponent,
         CorrespondenceComponent,
@@ -73,6 +82,9 @@ export function initializeApp(appInitService: AppInitService) {
         FigureComponent,
         ReadTextValueComponent,
         HanCatalogueDirective,
+        NewtonProjectDirective,
+        SanitizeHtmlPipe,
+        SanitizeUrlPipe,
         BebbRouteComponent
     ],
     imports: [
