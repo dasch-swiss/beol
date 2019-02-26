@@ -101,8 +101,6 @@ export class NewtonLetterComponent extends BeolResource {
 
 
     private getNewtonLetterText(filename) {
-
-        this.isLoading = true;
         // use a proxy url as described here:
         // https://stackoverflow.com/questions/43871637/no-access-control-allow-origin-header-is-present-on-the-requested-resource-whe
         const proxyurl = 'https://cors-anywhere.herokuapp.com/';
