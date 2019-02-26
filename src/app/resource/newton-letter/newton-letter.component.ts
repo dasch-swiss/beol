@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, ParamMap} from '@angular/router';
 import {Location} from '@angular/common';
 import {environment} from '../../../environments/environment';
+
 import {
     IncomingService,
     KnoraConstants,
@@ -50,6 +51,7 @@ export class NewtonLetterComponent extends BeolResource {
     ontologyInfo: OntologyInformation;
     incomingStillImageRepresentationCurrentOffset: number; // last offset requested for `this.resource.incomingStillImageRepresentations`
     isLoading = true;
+    isLoadingText = true;
     errorMessage: any;
     navigationSubscription: Subscription;
     KnoraConstants = KnoraConstants;
@@ -115,7 +117,7 @@ export class NewtonLetterComponent extends BeolResource {
             .then(response => response.text())
             .then(contents => {
                 this.getNewtonLetterBody(contents);
-                this.isLoading = false;
+                this.isLoadingText = false;
             })
             .catch(() => console.log('Can’t access ' + url + ' response. Blocked by browser?'));
     }
