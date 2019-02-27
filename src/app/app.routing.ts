@@ -15,9 +15,9 @@ import { LeooRouteComponent } from './leoo-route/leoo-route.component';
 import { FigureComponent } from './resource/figure/figure.component';
 import { BiblioItemsComponent } from './resource/biblio-items/biblio-items.component';
 import { PageComponent } from './resource/page/page.component';
+import { NewtonLetterComponent } from './resource/newton-letter/newton-letter.component';
 import { BebbRouteComponent } from './bebb-route/bebb-route.component';
 import { TranscriptionComponent } from './resource/transcription/transcription.component';
-
 
 const appRoutes: Routes = [
     {
@@ -63,6 +63,10 @@ const appRoutes: Routes = [
     {
         path: 'page/:id/:region',
         component: PageComponent
+    },
+    {
+        path: 'newtonLetter/:id',
+        component: NewtonLetterComponent
     },
     {
         path: 'endnote/:id',

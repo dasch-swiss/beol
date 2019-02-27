@@ -5,7 +5,7 @@ import { MaterialModule } from '../../material-module';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
-import { LetterComponent } from './letter.component';
+import { NewtonLetterComponent } from './newton-letter.component';
 import { KuiActionModule } from '@knora/action';
 import { KuiCoreConfig, KuiCoreConfigToken, OntologyCacheService } from '@knora/core';
 import { ReadTextValueAsHtmlComponent } from '../../properties/read-text-value-as-html/read-text-value-as-html.component';
@@ -14,10 +14,12 @@ import { MathJaxDirective } from '../../directives/mathjax.directive';
 import { KuiViewerModule } from '@knora/viewer';
 import { ReadTextValueComponent } from '../../properties/read-text-value/read-text-value.component';
 import { HanCatalogueDirective } from '../../directives/han-catalogue.directive';
+import { NewtonProjectDirective } from '../../directives/newton-project.directive';
+import {SanitizeHtmlPipe} from '../../pipes/sanitize-html.pipe';
 
-describe('LetterComponent', () => {
-    let component: LetterComponent;
-    let fixture: ComponentFixture<LetterComponent>;
+describe('NewtonLetterComponent', () => {
+    let component: NewtonLetterComponent;
+    let fixture: ComponentFixture<NewtonLetterComponent>;
     const id = 'http://rdfh.ch/0801/7ZvL2A5PQ9C4eAmr-n26gw';
 
     beforeEach(async(() => {
@@ -31,12 +33,13 @@ describe('LetterComponent', () => {
                 HttpClientTestingModule
             ],
             declarations: [
-                LetterComponent,
+                NewtonLetterComponent,
                 MathJaxDirective,
                 ReadTextValueAsHtmlComponent,
                 ReadListValueComponent,
                 ReadTextValueComponent,
-                HanCatalogueDirective
+                NewtonProjectDirective,
+                SanitizeHtmlPipe
             ],
             providers: [
                 OntologyCacheService,
@@ -55,7 +58,7 @@ describe('LetterComponent', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(LetterComponent);
+        fixture = TestBed.createComponent(NewtonLetterComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

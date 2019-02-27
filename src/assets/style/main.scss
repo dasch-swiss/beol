@@ -257,4 +257,29 @@ td.center {
   font-weight: bold;
 }
 
+p.cent {
+  text-align: center;
+}
+p.right{
+  text-align: right;
+}
+p.i25 {
+  text-indent: 25px;
+}
+p.i30 {
+  text-indent: 30px;
+}
+p.i35 {
+  text-indent: 35px;
+}
+.pagenumber {
+  margin: 0;
+  width: 100%;
+  text-align: center;
+  color: #000078;
+  display: block;
+}
+.pagenumber-embed {
+  color: #000078;
+}
 
