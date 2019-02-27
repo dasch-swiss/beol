@@ -452,28 +452,31 @@
   resolved "https://registry.yarnpkg.com/@firebase/webchannel-wrapper/-/webchannel-wrapper-0.2.13.tgz#3af94cbac855e81d0e7796d0c6c68df7a2165e0d"
   integrity sha512-wsw8PBkojAfdz3ROMmO6Kk8BbzVsDO4Mhrh2EHJMxSzzKjd7NyXMKpGh9YOA1BY5gfMGQn/M+IVNR0KMryc5Xg==
 
-"@knora/action@6.0.1":
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/@knora/action/-/action-6.0.1.tgz#bf04df58ba29c7711adc254b313feeca6b4be001"
-  integrity sha512-d9L+0Tv6V5a416YKp8aeJ4HUHC8ppsoUkLEaa56h4UU9t0NF4XmCY62o6sEt4uAEvnVAZYF5IK6QeAzaKxlTyg==
+"@knora/action@6.5.0":
+  version "6.5.0"
+  resolved "https://registry.yarnpkg.com/@knora/action/-/action-6.5.0.tgz#6551e944c0e629e488b331659de2b01caa63c31a"
+  integrity sha512-a1r3TUznhhdPEPTbDgxs7nrS/8K9Cdi/OAhdhcXn6G0M1yOBXGK8KAVM2BWg0WySaVbQ25VlYU2tI5fkYKc2ow==
   dependencies:
     tslib "^1.9.0"
 
-"@knora/core@github:dhlab-basel/Knora-ui-core-builds#v6.3.2-beta":
-  version "6.3.0"
-  resolved "https://codeload.github.com/dhlab-basel/Knora-ui-core-builds/tar.gz/ee866d1cbccdd25a08fb2731fbe54908879c592c"
+"@knora/core@6.5.0":
+  version "6.5.0"
+  resolved "https://registry.yarnpkg.com/@knora/core/-/core-6.5.0.tgz#6b9c3fb8a7ae2d1c6231877acf6ef514883f44f6"
+  integrity sha512-VpaiE8kZKhkcDa5gAPsRSGv3tGBCIqVg+00jdHGPG3FUPmPbatakOwbgnC0gNOO9C3RRrrhuhtWIkASaqTPuTg==
   dependencies:
     tslib "^1.9.0"
 
-"@knora/search@github:dhlab-basel/Knora-ui-search-builds#v6.1.2":
-  version "6.1.2"
-  resolved "https://codeload.github.com/dhlab-basel/Knora-ui-search-builds/tar.gz/73f79d51e03c3dbeb0e8dc2f3b01121b59bea591"
+"@knora/search@6.5.0":
+  version "6.5.0"
+  resolved "https://registry.yarnpkg.com/@knora/search/-/search-6.5.0.tgz#34497054297db599678b284de28780c2bdab121e"
+  integrity sha512-J7kFWBlH+k8ToyMoDqBIck+fXCldMEAU9MwdJAqRc0LrTW+6I2m6641eFK7/FVKE6KiSgzj0Y4noYXWRoelYDQ==
   dependencies:
     tslib "^1.9.0"
 
-"@knora/viewer@github:dhlab-basel/Knora-ui-viewer-builds#v6.1.0-beta":
-  version "6.0.0-alpha"
-  resolved "https://codeload.github.com/dhlab-basel/Knora-ui-viewer-builds/tar.gz/ecf8fc934c134a6c03a2bb896c1c3e876af337cc"
+"@knora/viewer@6.5.0":
+  version "6.5.0"
+  resolved "https://registry.yarnpkg.com/@knora/viewer/-/viewer-6.5.0.tgz#2ba14d39bf1c0a25cd8fa970baf882d6862ec86a"
+  integrity sha512-aV5+cKZWyEj8AoPH68d2OAqc8ieLy+c6CLXg4Aztjq2q0DZXLJ94+N+Cl6NOD9ebdlL65TluNp+KjjvmCOqBeQ==
   dependencies:
     tslib "^1.9.0"
 
