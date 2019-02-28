@@ -1,5 +1,4 @@
 import {
-    ApiServiceError,
     ImageRegion,
     IncomingService,
     KnoraConstants,
@@ -15,7 +14,6 @@ import {
     Utils
 } from '@knora/core';
 import { Subscription } from 'rxjs';
-import { environment } from '../../environments/environment';
 import { BeolService } from '../services/beol.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { OnDestroy, OnInit } from '@angular/core';
@@ -39,7 +37,6 @@ export abstract class BeolResource implements OnInit, OnDestroy {
     abstract navigationSubscription: Subscription;
 
     abstract KnoraConstants: KnoraConstants;
-    apiUrl: string = environment.externalApiURL;
 
     abstract propIris: PropIriToNameMapping;
 

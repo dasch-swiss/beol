@@ -15,6 +15,7 @@ import {
 import { BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
 import { Subscription } from 'rxjs';
 import { BeolService } from '../../services/beol.service';
+import { AppInitService } from '../../app-init.service';
 
 class PublisherProps implements PropertyValues {
     comment: ReadTextValue[] = [];
@@ -42,12 +43,12 @@ export class PublisherComponent extends BeolResource {
     KnoraConstants = KnoraConstants;
 
     propIris: PropIriToNameMapping = {
-        'id': this.apiUrl + '/ontology/0801/beol/v2#beolIDs',
-        'comment': this.apiUrl + '/ontology/0801/beol/v2#comment',
-        'mentioned': this.apiUrl + '/ontology/0801/beol/v2#mentionedIn',
-        'name': this.apiUrl + '/ontology/0801/biblio/v2#hasName',
-        'publisherLocation': this.apiUrl + '/ontology/0801/biblio/v2#publisherHasLocation',
-        'publishingPerson': this.apiUrl + '/ontology/0801/biblio/v2#publishingPersonValue'
+        'id': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#beolIDs',
+        'comment': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#comment',
+        'mentioned': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#mentionedIn',
+        'name': AppInitService.settings.ontologyIRI + '/ontology/0801/biblio/v2#hasName',
+        'publisherLocation': AppInitService.settings.ontologyIRI + '/ontology/0801/biblio/v2#publisherHasLocation',
+        'publishingPerson': AppInitService.settings.ontologyIRI + '/ontology/0801/biblio/v2#publishingPersonValue'
     };
 
     props: PublisherProps;

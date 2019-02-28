@@ -14,6 +14,7 @@ import {
 import { BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
 import { Subscription } from 'rxjs';
 import { BeolService } from '../../services/beol.service';
+import { AppInitService } from '../../app-init.service';
 
 class EndnoteProps implements PropertyValues {
     number: ReadTextValue[] = [];
@@ -40,9 +41,9 @@ export class EndnoteComponent extends BeolResource {
     KnoraConstants = KnoraConstants;
 
     propIris: PropIriToNameMapping = {
-        'number': this.apiUrl + '/ontology/0801/beol/v2#endnoteHasNumber',
-        'text': this.apiUrl + '/ontology/0801/beol/v2#hasText',
-        'figure': this.apiUrl + '/ontology/0801/beol/v2#hasFigureValue'
+        'number': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#endnoteHasNumber',
+        'text': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#hasText',
+        'figure': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#hasFigureValue'
     };
 
     props: EndnoteProps;

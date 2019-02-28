@@ -15,6 +15,7 @@ import {
 import { BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
 import { Subscription } from 'rxjs';
 import { BeolService } from '../../services/beol.service';
+import { AppInitService } from '../../app-init.service';
 
 class PersonProps implements PropertyValues {
     comment: ReadTextValue[] = [];
@@ -49,19 +50,19 @@ export class PersonComponent extends BeolResource {
     KnoraConstants = KnoraConstants;
 
     propIris: PropIriToNameMapping = {
-        'id': this.apiUrl + '/ontology/0801/beol/v2#beolIDs',
-        'comment': this.apiUrl + '/ontology/0801/beol/v2#comment',
-        'alternative': this.apiUrl + '/ontology/0801/beol/v2#hasAlternativeName',
-        'birthDate': this.apiUrl + '/ontology/0801/beol/v2#hasBirthDate',
-        'birthPlace': this.apiUrl + '/ontology/0801/beol/v2#hasBirthPlace',
-        'deathDate': this.apiUrl + '/ontology/0801/beol/v2#hasDeathDate',
-        'deathPlace': this.apiUrl + '/ontology/0801/beol/v2#hasDeathPlace',
-        'dictionary': this.apiUrl + '/ontology/0801/beol/v2#hasDictionaryEntries',
-        'familyName': this.apiUrl + '/ontology/0801/beol/v2#hasFamilyName',
-        'givenName': this.apiUrl + '/ontology/0801/beol/v2#hasGivenName',
-        'title': this.apiUrl + '/ontology/0801/beol/v2#personHasTitle',
-        'IAF': this.apiUrl + '/ontology/0801/beol/v2#hasIAFIdentifier',
-        'mentioned': this.apiUrl + '/ontology/0801/beol/v2#mentionedIn',
+        'id': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#beolIDs',
+        'comment': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#comment',
+        'alternative': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#hasAlternativeName',
+        'birthDate': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#hasBirthDate',
+        'birthPlace': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#hasBirthPlace',
+        'deathDate': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#hasDeathDate',
+        'deathPlace': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#hasDeathPlace',
+        'dictionary': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#hasDictionaryEntries',
+        'familyName': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#hasFamilyName',
+        'givenName': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#hasGivenName',
+        'title': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#personHasTitle',
+        'IAF': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#hasIAFIdentifier',
+        'mentioned': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#mentionedIn',
     };
 
     props: PersonProps;

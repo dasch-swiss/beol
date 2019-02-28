@@ -1,7 +1,6 @@
 // angular modules
 import { BrowserModule } from '@angular/platform-browser';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
-import { environment } from '../environments/environment';
 // @knora modules
 import { KuiCoreModule, KuiCoreConfigToken } from '@knora/core';
 import { KuiActionModule } from '@knora/action';

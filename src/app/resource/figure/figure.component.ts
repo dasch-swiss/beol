@@ -14,6 +14,7 @@ import {
 import { BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
 import { Subscription } from 'rxjs';
 import { BeolService } from '../../services/beol.service';
+import { AppInitService } from '../../app-init.service';
 
 class FigureProps implements PropertyValues {
     caption: ReadTextValue[] = [];
@@ -38,8 +39,8 @@ export class FigureComponent extends BeolResource {
     KnoraConstants = KnoraConstants;
 
     propIris: PropIriToNameMapping = {
-        'id': this.apiUrl + '/ontology/0801/beol/v2#beolIDs',
-        'caption': this.apiUrl + '/ontology/0801/beol/v2#hasCaption'
+        'id': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#beolIDs',
+        'caption': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#hasCaption'
     };
 
     props: FigureProps;

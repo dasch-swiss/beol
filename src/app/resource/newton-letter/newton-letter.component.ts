@@ -1,7 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {ActivatedRoute, ParamMap} from '@angular/router';
-import {Location} from '@angular/common';
-import {environment} from '../../../environments/environment';
+import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 import {
     IncomingService,
@@ -18,9 +17,10 @@ import {
     ReadUriValue,
     ResourceService
 } from '@knora/core';
-import {BeolResource, PropertyValues, PropIriToNameMapping} from '../beol-resource';
-import {Subscription} from 'rxjs';
-import {BeolService} from '../../services/beol.service';
+import { BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
+import { Subscription } from 'rxjs';
+import { BeolService } from '../../services/beol.service';
+import { AppInitService } from '../../app-init.service';
 
 class LetterProps implements PropertyValues {
     id: ReadTextValue[] = [];
@@ -60,19 +60,19 @@ export class NewtonLetterComponent extends BeolResource {
     test: string;
 
     propIris: PropIriToNameMapping = {
-        'id': this.apiUrl + '/ontology/0801/beol/v2#beolIDs',
-        'date': this.apiUrl + '/ontology/0801/beol/v2#creationDate',
-        'author': this.apiUrl + '/ontology/0801/beol/v2#hasAuthorValue',
-        'recipient': this.apiUrl + '/ontology/0801/beol/v2#hasRecipientValue',
-        'facsimiles': this.apiUrl + '/ontology/0801/newton/v2#hasFacsimiles',
-        'subject': this.apiUrl + '/ontology/0801/beol/v2#hasSubject',
-        'text': this.apiUrl + '/ontology/0801/beol/v2#hasText',
-        'mentionedPerson': this.apiUrl + '/ontology/0801/beol/v2#mentionsPersonValue',
-        'replyTo': this.apiUrl + '/ontology/0801/newton/v2#isReplyToValue',
-        'location': this.apiUrl + '/ontology/0801/beol/v2#location',
-        'title': this.apiUrl + '/ontology/0801/beol/v2#title',
-        'npID': this.apiUrl + '/ontology/0801/newton/v2#newtonProjectID',
-        'language': this.apiUrl + '/ontology/0801/beol/v2#letterHasLanguage',
+        'id': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#beolIDs',
+        'date': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#creationDate',
+        'author': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#hasAuthorValue',
+        'recipient': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#hasRecipientValue',
+        'facsimiles': AppInitService.settings.ontologyIRI + '/ontology/0801/newton/v2#hasFacsimiles',
+        'subject': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#hasSubject',
+        'text': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#hasText',
+        'mentionedPerson': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#mentionsPersonValue',
+        'replyTo': AppInitService.settings.ontologyIRI + '/ontology/0801/newton/v2#isReplyToValue',
+        'location': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#location',
+        'title': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#title',
+        'npID': AppInitService.settings.ontologyIRI + '/ontology/0801/newton/v2#newtonProjectID',
+        'language': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#letterHasLanguage',
     };
 
     props: LetterProps;
@@ -137,8 +137,8 @@ export class NewtonLetterComponent extends BeolResource {
         for (let imgIt = 0; imgIt < imgs.length; imgIt++) {
             const image = imgs[imgIt];
             if (image.src) {
-                image.src = image.src.replace(environment.app, 'http://www.newtonproject.ox.ac.uk');
-                console.log(environment.app);
+                image.src = image.src.replace(AppInitService.settings.appURL, 'http://www.newtonproject.ox.ac.uk');
+                console.log(AppInitService.settings.appURL);
             }
         }
         return element;

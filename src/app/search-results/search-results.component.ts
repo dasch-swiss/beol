@@ -2,9 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
-    ApiServiceError,
     ApiServiceResult,
-    ConvertJSONLD, CountQueryResult,
+    CountQueryResult,
     ExtendedSearchParams,
     KnoraConstants,
     OntologyCacheService,
@@ -15,8 +14,8 @@ import {
     SearchService
 } from '@knora/core';
 import { BeolService } from '../services/beol.service';
-import { environment } from '../../environments/environment';
 import { Subscription } from 'rxjs';
+import { AppInitService } from '../app-init.service';
 
 @Component({
     selector: 'app-search-results',
@@ -173,7 +172,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         if (this.numberOfAllResults > 0) {
             // offset is 0-based
             // if numberOfAllResults equals the pagingLimit, the max. offset is 0
-            this.maxOffset = Math.floor((this.numberOfAllResults - 1) / environment.pagingLimit);
+            this.maxOffset = Math.floor((this.numberOfAllResults - 1) / AppInitService.settings.pagingLimit);
         } else {
             this.maxOffset = 0;
         }

@@ -8,8 +8,9 @@ import { KuiCoreConfig, KuiCoreConfigToken, ReadResource, ReadResourcesSequence,
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { BeolService } from '../services/beol.service';
+import { AppInitService } from '../app-init.service';
 
-describe('BebbRouteComponent', () => {
+fdescribe('BebbRouteComponent', () => {
     let component: BebbRouteComponent;
     let fixture: ComponentFixture<BebbRouteComponent>;
     const lt = '1706-03-17_Hermann_Jacob-Scheuchzer_Johannes';
@@ -17,16 +18,21 @@ describe('BebbRouteComponent', () => {
     let beolService: BeolService;
     let searchService: SearchService;
 
+
+
     beforeEach(async(() => {
 
         const beolServiceSpy = jasmine.createSpyObj('BeolService', ['searchForLetterFromBEBB', 'routeByResourceType']); // see https://angular.io/guide/testing#angular-testbed
         const searchServiceSpy = jasmine.createSpyObj('SearchService', ['doExtendedSearchReadResourceSequence']);
 
+
+
         TestBed.configureTestingModule({
             imports: [
                 HttpClientModule,
                 HttpClientTestingModule,
-                RouterTestingModule
+                RouterTestingModule,
+                AppInitService
             ],
             declarations: [BebbRouteComponent],
             providers: [
