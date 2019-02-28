@@ -18,8 +18,7 @@ export class BebbRouteComponent implements OnInit {
         private _route: ActivatedRoute,
         private _router: Router,
         private _beolService: BeolService,
-        private _searchService: SearchService,
-        private _appInitService: AppInitService) {
+        private _searchService: SearchService) {
     }
 
     ngOnInit() {
