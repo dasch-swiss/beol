@@ -31,8 +31,7 @@ describe('BebbRouteComponent', () => {
             imports: [
                 HttpClientModule,
                 HttpClientTestingModule,
-                RouterTestingModule,
-                AppInitService
+                RouterTestingModule
             ],
             declarations: [BebbRouteComponent],
             providers: [
