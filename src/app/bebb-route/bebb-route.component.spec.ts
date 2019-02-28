@@ -10,7 +10,7 @@ import { of } from 'rxjs';
 import { BeolService } from '../services/beol.service';
 import { AppInitService } from '../app-init.service';
 
-fdescribe('BebbRouteComponent', () => {
+describe('BebbRouteComponent', () => {
     let component: BebbRouteComponent;
     let fixture: ComponentFixture<BebbRouteComponent>;
     const lt = '1706-03-17_Hermann_Jacob-Scheuchzer_Johannes';
