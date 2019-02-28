@@ -8,7 +8,6 @@ import { KuiCoreConfig, KuiCoreConfigToken, ReadResource, ReadResourcesSequence,
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { BeolService } from '../services/beol.service';
-import { AppInitService } from '../app-init.service';
 
 describe('BebbRouteComponent', () => {
     let component: BebbRouteComponent;
