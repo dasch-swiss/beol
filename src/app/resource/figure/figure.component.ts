@@ -39,8 +39,8 @@ export class FigureComponent extends BeolResource {
     KnoraConstants = KnoraConstants;
 
     propIris: PropIriToNameMapping = {
-        'id': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#beolIDs',
-        'caption': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#hasCaption'
+        'id': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#beolIDs',
+        'caption': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasCaption'
     };
 
     props: FigureProps;
@@ -50,7 +50,9 @@ export class FigureComponent extends BeolResource {
                 protected _cacheService: OntologyCacheService,
                 protected _incomingService: IncomingService,
                 public location: Location,
-                protected _beolService: BeolService) {
+                protected _beolService: BeolService,
+                private _appInitService: AppInitService
+    ) {
 
         super(_route, _resourceService, _cacheService, _incomingService, _beolService);
 

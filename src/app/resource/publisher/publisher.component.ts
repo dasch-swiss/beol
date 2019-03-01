@@ -43,12 +43,12 @@ export class PublisherComponent extends BeolResource {
     KnoraConstants = KnoraConstants;
 
     propIris: PropIriToNameMapping = {
-        'id': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#beolIDs',
-        'comment': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#comment',
-        'mentioned': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#mentionedIn',
-        'name': AppInitService.settings.ontologyIRI + '/ontology/0801/biblio/v2#hasName',
-        'publisherLocation': AppInitService.settings.ontologyIRI + '/ontology/0801/biblio/v2#publisherHasLocation',
-        'publishingPerson': AppInitService.settings.ontologyIRI + '/ontology/0801/biblio/v2#publishingPersonValue'
+        'id': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#beolIDs',
+        'comment': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#comment',
+        'mentioned': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#mentionedIn',
+        'name': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#hasName',
+        'publisherLocation': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#publisherHasLocation',
+        'publishingPerson': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#publishingPersonValue'
     };
 
     props: PublisherProps;
@@ -58,7 +58,9 @@ export class PublisherComponent extends BeolResource {
                 protected _cacheService: OntologyCacheService,
                 protected _incomingService: IncomingService,
                 public location: Location,
-                protected _beolService: BeolService) {
+                protected _beolService: BeolService,
+                private _appInitService: AppInitService
+    ) {
 
         super(_route, _resourceService, _cacheService, _incomingService, _beolService);
 

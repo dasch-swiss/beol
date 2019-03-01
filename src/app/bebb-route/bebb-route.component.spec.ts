@@ -8,6 +8,7 @@ import { KuiCoreConfig, KuiCoreConfigToken, ReadResource, ReadResourcesSequence,
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { BeolService } from '../services/beol.service';
+import {AppInitService} from '../app-init.service';
 
 describe('BebbRouteComponent', () => {
     let component: BebbRouteComponent;
@@ -16,15 +17,13 @@ describe('BebbRouteComponent', () => {
 
     let beolService: BeolService;
     let searchService: SearchService;
-
-
+    let appInitService: AppInitService;
 
     beforeEach(async(() => {
 
         const beolServiceSpy = jasmine.createSpyObj('BeolService', ['searchForLetterFromBEBB', 'routeByResourceType']); // see https://angular.io/guide/testing#angular-testbed
         const searchServiceSpy = jasmine.createSpyObj('SearchService', ['doExtendedSearchReadResourceSequence']);
-
-
+        const appInitServiceSpy = jasmine.createSpyObj('AppInitService', ['getSettings']);
 
         TestBed.configureTestingModule({
             imports: [
@@ -46,7 +45,8 @@ describe('BebbRouteComponent', () => {
                 },
                 { provide: KuiCoreConfigToken, useValue: KuiCoreConfig },
                 { provide: BeolService, useValue: beolServiceSpy },
-                { provide: SearchService, useValue: searchServiceSpy }
+                { provide: SearchService, useValue: searchServiceSpy },
+                { provide: AppInitService, useValue: appInitServiceSpy }
             ]
         })
             .compileComponents();
@@ -65,6 +65,10 @@ describe('BebbRouteComponent', () => {
         searchServiceSpy.doExtendedSearchReadResourceSequence.and.returnValue(mockRes);
 
         searchService = TestBed.get(SearchService);
+
+        appInitServiceSpy.getSettings.and.returnValue({ontologyIRI: 'http://0.0.0.0:3333'});
+
+        appInitService = TestBed.get(AppInitService);
 
     }));
 

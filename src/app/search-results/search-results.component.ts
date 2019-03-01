@@ -56,7 +56,8 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         private _searchParamsService: SearchParamsService,
         private _router: Router,
         public location: Location,
-        private _beol: BeolService) {
+        private _beol: BeolService,
+        private _appInitService: AppInitService) {
 
     }
 
@@ -172,7 +173,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         if (this.numberOfAllResults > 0) {
             // offset is 0-based
             // if numberOfAllResults equals the pagingLimit, the max. offset is 0
-            this.maxOffset = Math.floor((this.numberOfAllResults - 1) / AppInitService.settings.pagingLimit);
+            this.maxOffset = Math.floor((this.numberOfAllResults - 1) / this._appInitService.getSettings().pagingLimit);
         } else {
             this.maxOffset = 0;
         }

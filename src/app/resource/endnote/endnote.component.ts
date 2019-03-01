@@ -41,9 +41,9 @@ export class EndnoteComponent extends BeolResource {
     KnoraConstants = KnoraConstants;
 
     propIris: PropIriToNameMapping = {
-        'number': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#endnoteHasNumber',
-        'text': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#hasText',
-        'figure': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#hasFigureValue'
+        'number': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#endnoteHasNumber',
+        'text': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasText',
+        'figure': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasFigureValue'
     };
 
     props: EndnoteProps;
@@ -53,7 +53,9 @@ export class EndnoteComponent extends BeolResource {
                 protected _incomingService: IncomingService,
                 protected _cacheService: OntologyCacheService,
                 public location: Location,
-                protected _beolService: BeolService) {
+                protected _beolService: BeolService,
+                private _appInitService: AppInitService
+    ) {
 
         super(_route, _resourceService, _cacheService, _incomingService, _beolService);
 

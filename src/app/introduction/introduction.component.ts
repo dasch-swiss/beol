@@ -62,8 +62,8 @@ export class IntroductionComponent implements OnInit, OnDestroy {
     paramsSubscription: Subscription;
 
     propIris: any = {
-        'title': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#sectionHasTitle',
-        'text': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#hasText',
+        'title': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#sectionHasTitle',
+        'text': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasText',
     };
 
     constructor(private _route: ActivatedRoute,
@@ -73,8 +73,8 @@ export class IntroductionComponent implements OnInit, OnDestroy {
                 private _beol: BeolService,
                 private _resourceService: ResourceService,
                 private _cacheService: OntologyCacheService,
-                public location: Location) {
-
+                public location: Location,
+                private _appInitService: AppInitService) {
     }
 
     ngOnInit() {

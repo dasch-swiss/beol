@@ -60,19 +60,19 @@ export class NewtonLetterComponent extends BeolResource {
     test: string;
 
     propIris: PropIriToNameMapping = {
-        'id': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#beolIDs',
-        'date': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#creationDate',
-        'author': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#hasAuthorValue',
-        'recipient': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#hasRecipientValue',
-        'facsimiles': AppInitService.settings.ontologyIRI + '/ontology/0801/newton/v2#hasFacsimiles',
-        'subject': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#hasSubject',
-        'text': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#hasText',
-        'mentionedPerson': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#mentionsPersonValue',
-        'replyTo': AppInitService.settings.ontologyIRI + '/ontology/0801/newton/v2#isReplyToValue',
-        'location': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#location',
-        'title': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#title',
-        'npID': AppInitService.settings.ontologyIRI + '/ontology/0801/newton/v2#newtonProjectID',
-        'language': AppInitService.settings.ontologyIRI + '/ontology/0801/beol/v2#letterHasLanguage',
+        'id': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#beolIDs',
+        'date': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#creationDate',
+        'author': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasAuthorValue',
+        'recipient': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasRecipientValue',
+        'facsimiles': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/newton/v2#hasFacsimiles',
+        'subject': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasSubject',
+        'text': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasText',
+        'mentionedPerson': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#mentionsPersonValue',
+        'replyTo': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/newton/v2#isReplyToValue',
+        'location': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#location',
+        'title': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#title',
+        'npID': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/newton/v2#newtonProjectID',
+        'language': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#letterHasLanguage',
     };
 
     props: LetterProps;
@@ -82,7 +82,9 @@ export class NewtonLetterComponent extends BeolResource {
                 protected _cacheService: OntologyCacheService,
                 protected _incomingService: IncomingService,
                 public location: Location,
-                protected _beolService: BeolService) {
+                protected _beolService: BeolService,
+                private _appInitService: AppInitService
+    ) {
 
         super(_route, _resourceService, _cacheService, _incomingService, _beolService);
 
@@ -137,8 +139,8 @@ export class NewtonLetterComponent extends BeolResource {
         for (let imgIt = 0; imgIt < imgs.length; imgIt++) {
             const image = imgs[imgIt];
             if (image.src) {
-                image.src = image.src.replace(AppInitService.settings.appURL, 'http://www.newtonproject.ox.ac.uk');
-                console.log(AppInitService.settings.appURL);
+                image.src = image.src.replace(this._appInitService.getSettings().appURL, 'http://www.newtonproject.ox.ac.uk');
+                console.log(this._appInitService.getSettings().appURL);
             }
         }
         return element;
