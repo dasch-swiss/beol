@@ -4,7 +4,8 @@ import { ReadTextValueAsHtmlComponent } from './read-text-value-as-html.componen
 import { MathJaxDirective } from '../../directives/mathjax.directive';
 import { Component, DebugElement, OnInit, ViewChild } from '@angular/core';
 import {
-    KuiCoreConfig, KuiCoreConfigToken,
+    KuiCoreConfig,
+    KuiCoreConfigToken,
     OntologyInformation,
     ReadTextValue,
     ReadTextValueAsHtml,
@@ -15,30 +16,42 @@ import {
 import { MatSnackBarModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
+
 import { HttpClientModule } from '@angular/common/http';
+
+import { AppInitService } from '../../app-init.service';
 
 
 describe('ReadTextValueAsHtmlComponent', () => {
     let testHostComponent: TestHostComponent;
     let testHostFixture: ComponentFixture<TestHostComponent>;
 
+    let appInitService: AppInitService;
+
     beforeEach(async(() => {
+        const appInitServiceSpy = jasmine.createSpyObj('AppInitService', ['getSettings']);
+
         TestBed.configureTestingModule({
             imports: [
                 MatSnackBarModule,
                 RouterTestingModule,
                 HttpClientModule
             ],
-            providers: [
-                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig }
-            ],
             declarations: [
                 ReadTextValueAsHtmlComponent,
                 MathJaxDirective,
                 TestHostComponent
+            ],
+            providers: [
+                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig },
+                { provide: AppInitService, useValue: appInitServiceSpy }
             ]
         })
             .compileComponents();
+
+        appInitServiceSpy.getSettings.and.returnValue({ontologyIRI: 'http://0.0.0.0:3333'});
+
+        appInitService = TestBed.get(AppInitService);
     }));
 
     beforeEach(() => {

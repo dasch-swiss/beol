@@ -11,13 +11,19 @@ import { KuiCoreConfig, KuiCoreConfigToken, OntologyCacheService } from '@knora/
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
+import { AppInitService } from '../../app-init.service';
 
 describe('TranscriptionComponent', () => {
     let component: TranscriptionComponent;
     let fixture: ComponentFixture<TranscriptionComponent>;
+
+    let appInitService: AppInitService;
+
     const id = 'http://rdfh.ch/0801/7ZvL2A5PQ9C4eAmr-n26gw';
 
     beforeEach(async(() => {
+        const appInitServiceSpy = jasmine.createSpyObj('AppInitService', ['getSettings']);
+
         TestBed.configureTestingModule({
             imports: [
                 KuiActionModule,
@@ -43,10 +49,15 @@ describe('TranscriptionComponent', () => {
                         })
                     }
                 },
-                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig }
+                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig },
+                { provide: AppInitService, useValue: appInitServiceSpy }
             ]
         })
             .compileComponents();
+
+        appInitServiceSpy.getSettings.and.returnValue({ontologyIRI: 'http://0.0.0.0:3333'});
+
+        appInitService = TestBed.get(AppInitService);
     }));
 
     beforeEach(() => {
@@ -57,5 +68,7 @@ describe('TranscriptionComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
+
+        expect(appInitService.getSettings).toHaveBeenCalled();
     });
 });

@@ -17,7 +17,6 @@ import {
 import { StillImageComponent } from '@knora/viewer';
 
 import { Subscription } from 'rxjs';
-import { environment } from '../../environments/environment';
 
 import { OnDestroy, OnInit, ViewChild } from '@angular/core';
 
@@ -46,7 +45,6 @@ export abstract class BeolResource implements OnInit, OnDestroy {
     @ViewChild('OSDViewer') osdViewer: StillImageComponent;
 
     abstract KnoraConstants: KnoraConstants;
-    apiUrl: string = environment.externalApiURL;
 
     abstract propIris: PropIriToNameMapping;
 

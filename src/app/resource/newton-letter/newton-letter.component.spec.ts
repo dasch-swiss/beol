@@ -13,16 +13,21 @@ import { ReadListValueComponent } from '../../properties/read-list-value/read-li
 import { MathJaxDirective } from '../../directives/mathjax.directive';
 import { KuiViewerModule } from '@knora/viewer';
 import { ReadTextValueComponent } from '../../properties/read-text-value/read-text-value.component';
-import { HanCatalogueDirective } from '../../directives/han-catalogue.directive';
 import { NewtonProjectDirective } from '../../directives/newton-project.directive';
-import {SanitizeHtmlPipe} from '../../pipes/sanitize-html.pipe';
+import { SanitizeHtmlPipe } from '../../pipes/sanitize-html.pipe';
+import { AppInitService } from '../../app-init.service';
 
 describe('NewtonLetterComponent', () => {
     let component: NewtonLetterComponent;
     let fixture: ComponentFixture<NewtonLetterComponent>;
+
+    let appInitService: AppInitService;
+
     const id = 'http://rdfh.ch/0801/7ZvL2A5PQ9C4eAmr-n26gw';
 
     beforeEach(async(() => {
+        const appInitServiceSpy = jasmine.createSpyObj('AppInitService', ['getSettings']);
+
         TestBed.configureTestingModule({
             imports: [
                 KuiActionModule,
@@ -51,10 +56,16 @@ describe('NewtonLetterComponent', () => {
                             }
                         })}
                 },
-                {provide: KuiCoreConfigToken, useValue: KuiCoreConfig}
+                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig },
+                { provide: AppInitService, useValue: appInitServiceSpy }
             ]
         })
             .compileComponents();
+
+        appInitServiceSpy.getSettings.and.returnValue({ontologyIRI: 'http://0.0.0.0:3333'});
+
+        appInitService = TestBed.get(AppInitService);
+
     }));
 
     beforeEach(() => {
@@ -65,5 +76,7 @@ describe('NewtonLetterComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
+
+        expect(appInitService.getSettings).toHaveBeenCalled();
     });
 });

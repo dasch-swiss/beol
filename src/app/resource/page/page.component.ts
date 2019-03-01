@@ -20,6 +20,7 @@ import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { BeolService } from '../../services/beol.service';
+import { AppInitService } from '../../app-init.service';
 
 class PageProps implements PropertyValues {
 
@@ -46,8 +47,8 @@ export class PageComponent extends BeolResource {
     navigationSubscription: Subscription;
 
     propIris: PropIriToNameMapping = {
-        'pagenum': this.apiUrl + '/ontology/0801/beol/v2#pagenum',
-        'seqnum': this.apiUrl + '/ontology/0801/beol/v2#seqnum',
+        'pagenum': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#pagenum',
+        'seqnum': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#seqnum',
     };
 
     props: PageProps;
@@ -66,7 +67,8 @@ export class PageComponent extends BeolResource {
                 protected _incomingService: IncomingService,
                 protected _beolService: BeolService,
                 private _searchService: SearchService,
-                public location: Location) {
+                public location: Location,
+                private _appInitService: AppInitService) {
 
         super(_route, _resourceService, _cacheService, _incomingService, _beolService);
     }
@@ -102,12 +104,12 @@ export class PageComponent extends BeolResource {
                             // initialize ontology information
                             this.ontologyInfo.updateOntologyInformation(transcr.ontologyInformation);
 
-                            this.transcriptionBelongsToRegion = transcr.resources[0].properties[this.apiUrl + '/ontology/0801/beol/v2#belongsToRegionValue'][0] as ReadLinkValue;
+                            this.transcriptionBelongsToRegion = transcr.resources[0].properties[this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#belongsToRegionValue'][0] as ReadLinkValue;
 
-                            this.manuscriptEntry = transcr.resources[0].properties[this.apiUrl + '/ontology/0801/beol/v2#transcriptionOfValue'][0] as ReadLinkValue;
+                            this.manuscriptEntry = transcr.resources[0].properties[this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#transcriptionOfValue'][0] as ReadLinkValue;
 
                             this.transcription =
-                                transcr.resources[0].properties[this.apiUrl + '/ontology/0801/beol/v2#hasText'][0] as ReadTextValueAsHtml;
+                                transcr.resources[0].properties[this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasText'][0] as ReadTextValueAsHtml;
 
                             const transcriptionsFormManuscriptEntry = this._beolService.getTranscriptionsForManuscriptEntry(this.manuscriptEntry.referredResourceIri, 0);
 

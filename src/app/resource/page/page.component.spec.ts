@@ -12,13 +12,19 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { HttpTestingController } from '@angular/common/http/testing';
 import { MatListModule } from '@angular/material';
 import { ReadTextValueComponent } from '../../properties/read-text-value/read-text-value.component';
+import { AppInitService } from '../../app-init.service';
 
 describe('PageComponent', () => {
     let component: PageComponent;
     let fixture: ComponentFixture<PageComponent>;
+
+    let appInitService: AppInitService;
+
     const id = 'http://rdfh.ch/0801/gggg';
 
     beforeEach(async(() => {
+        const appInitServiceSpy = jasmine.createSpyObj('AppInitService', ['getSettings']);
+
         TestBed.configureTestingModule({
             declarations: [
                 PageComponent,
@@ -39,10 +45,16 @@ describe('PageComponent', () => {
                         })
                     }
                 },
-                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig }
+                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig },
+                { provide: AppInitService, useValue: appInitServiceSpy }
             ]
         })
             .compileComponents();
+
+        appInitServiceSpy.getSettings.and.returnValue({ontologyIRI: 'http://0.0.0.0:3333'});
+
+        appInitService = TestBed.get(AppInitService);
+
     }));
 
     beforeEach(() => {
@@ -53,5 +65,7 @@ describe('PageComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
+
+        expect(appInitService.getSettings).toHaveBeenCalled();
     });
 });

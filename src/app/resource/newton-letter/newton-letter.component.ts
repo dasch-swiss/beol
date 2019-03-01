@@ -1,7 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {ActivatedRoute, ParamMap} from '@angular/router';
-import {Location} from '@angular/common';
-import {environment} from '../../../environments/environment';
+import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 import {
     IncomingService,
@@ -18,9 +17,10 @@ import {
     ReadUriValue,
     ResourceService
 } from '@knora/core';
-import {BeolResource, PropertyValues, PropIriToNameMapping} from '../beol-resource';
-import {Subscription} from 'rxjs';
-import {BeolService} from '../../services/beol.service';
+import { BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
+import { Subscription } from 'rxjs';
+import { BeolService } from '../../services/beol.service';
+import { AppInitService } from '../../app-init.service';
 
 class LetterProps implements PropertyValues {
     id: ReadTextValue[] = [];
@@ -60,19 +60,19 @@ export class NewtonLetterComponent extends BeolResource {
     test: string;
 
     propIris: PropIriToNameMapping = {
-        'id': this.apiUrl + '/ontology/0801/beol/v2#beolIDs',
-        'date': this.apiUrl + '/ontology/0801/beol/v2#creationDate',
-        'author': this.apiUrl + '/ontology/0801/beol/v2#hasAuthorValue',
-        'recipient': this.apiUrl + '/ontology/0801/beol/v2#hasRecipientValue',
-        'facsimiles': this.apiUrl + '/ontology/0801/newton/v2#hasFacsimiles',
-        'subject': this.apiUrl + '/ontology/0801/beol/v2#hasSubject',
-        'text': this.apiUrl + '/ontology/0801/beol/v2#hasText',
-        'mentionedPerson': this.apiUrl + '/ontology/0801/beol/v2#mentionsPersonValue',
-        'replyTo': this.apiUrl + '/ontology/0801/newton/v2#isReplyToValue',
-        'location': this.apiUrl + '/ontology/0801/beol/v2#location',
-        'title': this.apiUrl + '/ontology/0801/beol/v2#title',
-        'npID': this.apiUrl + '/ontology/0801/newton/v2#newtonProjectID',
-        'language': this.apiUrl + '/ontology/0801/beol/v2#letterHasLanguage',
+        'id': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#beolIDs',
+        'date': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#creationDate',
+        'author': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasAuthorValue',
+        'recipient': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasRecipientValue',
+        'facsimiles': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/newton/v2#hasFacsimiles',
+        'subject': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasSubject',
+        'text': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasText',
+        'mentionedPerson': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#mentionsPersonValue',
+        'replyTo': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/newton/v2#isReplyToValue',
+        'location': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#location',
+        'title': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#title',
+        'npID': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/newton/v2#newtonProjectID',
+        'language': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#letterHasLanguage',
     };
 
     props: LetterProps;
@@ -82,7 +82,9 @@ export class NewtonLetterComponent extends BeolResource {
                 protected _cacheService: OntologyCacheService,
                 protected _incomingService: IncomingService,
                 public location: Location,
-                protected _beolService: BeolService) {
+                protected _beolService: BeolService,
+                private _appInitService: AppInitService
+    ) {
 
         super(_route, _resourceService, _cacheService, _incomingService, _beolService);
 
@@ -137,8 +139,8 @@ export class NewtonLetterComponent extends BeolResource {
         for (let imgIt = 0; imgIt < imgs.length; imgIt++) {
             const image = imgs[imgIt];
             if (image.src) {
-                image.src = image.src.replace(environment.app, 'http://www.newtonproject.ox.ac.uk');
-                console.log(environment.app);
+                image.src = image.src.replace(this._appInitService.getSettings().appURL, 'http://www.newtonproject.ox.ac.uk');
+                console.log(this._appInitService.getSettings().appURL);
             }
         }
         return element;

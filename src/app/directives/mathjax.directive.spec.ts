@@ -5,11 +5,14 @@ import { KuiCoreConfig, KuiCoreConfigToken, KuiCoreModule } from '@knora/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatSnackBarModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
+import { AppInitService } from '../app-init.service';
 
 describe('MathJaxDirective', () => {
 
     // element to be rendered by MathJax
     let mathJaxQueueCalledWith: Element;
+
+    let appInitService: AppInitService;
 
     // mock MathJax (declared in component)
     const MathJax = {
@@ -32,6 +35,9 @@ describe('MathJaxDirective', () => {
     let fixture: ComponentFixture<TestComponent>;
 
     beforeEach(() => {
+
+        const appInitServiceSpy = jasmine.createSpyObj('AppInitService', ['getSettings']);
+
         TestBed.configureTestingModule({
             imports: [
                 RouterTestingModule,
@@ -43,10 +49,13 @@ describe('MathJaxDirective', () => {
                 MathJaxDirective
             ],
             providers: [
-                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig }
+                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig },
+                { provide: AppInitService, useValue: appInitServiceSpy }
             ]
         })
             .compileComponents();
+
+        appInitServiceSpy.getSettings.and.returnValue({ontologyIRI: 'http://0.0.0.0:3333'});
     });
 
     beforeEach(() => {

@@ -8,7 +8,8 @@ import {
     ReadTextValue,
     ReadTextValueAsHtml,
     ReadTextValueAsString,
-    ReadTextValueAsXml, ResourceClass,
+    ReadTextValueAsXml,
+    ResourceClass,
     ResourceClasses,
     ResourceClassIrisForOntology
 } from '@knora/core';
@@ -18,12 +19,17 @@ import { MathJaxDirective } from '../../directives/mathjax.directive';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatSnackBarModule } from '@angular/material';
+import { AppInitService } from '../../app-init.service';
 
 describe('ReadTextValueComponent', () => {
     let testHostComponent: TestHostComponent;
     let testHostFixture: ComponentFixture<TestHostComponent>;
 
+    let appInitService: AppInitService;
+
     beforeEach(async(() => {
+        const appInitServiceSpy = jasmine.createSpyObj('AppInitService', ['getSettings']);
+
         TestBed.configureTestingModule({
             imports: [
                 KuiViewerModule,
@@ -37,10 +43,15 @@ describe('ReadTextValueComponent', () => {
                 TestHostComponent
             ],
             providers: [
-                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig }
+                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig },
+                { provide: AppInitService, useValue: appInitServiceSpy }
             ]
         })
             .compileComponents();
+
+        appInitServiceSpy.getSettings.and.returnValue({ontologyIRI: 'http://0.0.0.0:3333'});
+
+        appInitService = TestBed.get(AppInitService);
     }));
 
     beforeEach(() => {

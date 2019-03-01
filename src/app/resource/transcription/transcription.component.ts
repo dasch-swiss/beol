@@ -18,6 +18,7 @@ import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { BeolService } from '../../services/beol.service';
 import { Subscription } from 'rxjs';
+import { AppInitService } from '../../app-init.service';
 
 class TranscriptionProps implements PropertyValues {
     text: ReadTextValue[] = [];
@@ -46,9 +47,9 @@ export class TranscriptionComponent extends BeolResource {
     otherLayers: ReadResource[] = [];
 
     propIris: PropIriToNameMapping = {
-        'text': this.apiUrl + '/ontology/0801/beol/v2#hasText',
-        'layer': this.apiUrl + '/ontology/0801/beol/v2#layer',
-        'transcriptionOf': this.apiUrl + '/ontology/0801/beol/v2#transcriptionOfValue'
+        'text': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasText',
+        'layer': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#layer',
+        'transcriptionOf': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#transcriptionOfValue'
 
     };
 
@@ -60,7 +61,8 @@ export class TranscriptionComponent extends BeolResource {
                 protected _incomingService: IncomingService,
                 private _searchService: SearchService,
                 public location: Location,
-                protected _beolService: BeolService) {
+                protected _beolService: BeolService,
+                private _appInitService: AppInitService) {
 
         super(_route, _resourceService, _cacheService, _incomingService, _beolService);
     }

@@ -14,13 +14,19 @@ import { ReadTextValueAsHtmlComponent } from '../../properties/read-text-value-a
 import { MathJaxDirective } from '../../directives/mathjax.directive';
 import { KuiViewerModule } from '@knora/viewer';
 import { ReadTextValueComponent } from '../../properties/read-text-value/read-text-value.component';
+import { AppInitService } from '../../app-init.service';
 
 describe('PersonComponent', () => {
     let component: PersonComponent;
     let fixture: ComponentFixture<PersonComponent>;
+
+    let appInitService: AppInitService;
+
     const id = 'http://rdfh.ch/0802/shubb5TjTnu84MqkM6uHlA'; // Christian Goldbach id
 
     beforeEach(async(() => {
+        const appInitServiceSpy = jasmine.createSpyObj('AppInitService', ['getSettings']);
+
         TestBed.configureTestingModule({
             imports: [
                 KuiActionModule,
@@ -46,10 +52,15 @@ describe('PersonComponent', () => {
                             }
                         })}
                 },
-                {provide: KuiCoreConfigToken, useValue: KuiCoreConfig}
+                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig },
+                { provide: AppInitService, useValue: appInitServiceSpy }
             ]
         })
             .compileComponents();
+
+        appInitServiceSpy.getSettings.and.returnValue({ontologyIRI: 'http://0.0.0.0:3333'});
+
+        appInitService = TestBed.get(AppInitService);
     }));
 
     beforeEach(() => {
@@ -60,5 +71,7 @@ describe('PersonComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
+
+        expect(appInitService.getSettings).toHaveBeenCalled();
     });
 });

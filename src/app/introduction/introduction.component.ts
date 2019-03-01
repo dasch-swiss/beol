@@ -1,11 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { ActivatedRoute, NavigationEnd, ParamMap, Params, Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import {
     ApiServiceError,
-    ApiServiceResult,
-    ConvertJSONLD,
-    IncomingService,
     KnoraConstants,
     OntologyCacheService,
     OntologyInformation,
@@ -16,10 +13,9 @@ import {
     SearchService
 } from '@knora/core';
 import { BeolService } from '../services/beol.service';
-import { JsonObject, JsonProperty } from 'json2typescript';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
 import { Subscription } from 'rxjs';
+import { AppInitService } from '../app-init.service';
 
 declare let require: any;
 
@@ -66,8 +62,8 @@ export class IntroductionComponent implements OnInit, OnDestroy {
     paramsSubscription: Subscription;
 
     propIris: any = {
-        'title': environment.externalApiURL + '/ontology/0801/beol/v2#sectionHasTitle',
-        'text': environment.externalApiURL + '/ontology/0801/beol/v2#hasText',
+        'title': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#sectionHasTitle',
+        'text': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasText',
     };
 
     constructor(private _route: ActivatedRoute,
@@ -77,8 +73,8 @@ export class IntroductionComponent implements OnInit, OnDestroy {
                 private _beol: BeolService,
                 private _resourceService: ResourceService,
                 private _cacheService: OntologyCacheService,
-                public location: Location) {
-
+                public location: Location,
+                private _appInitService: AppInitService) {
     }
 
     ngOnInit() {

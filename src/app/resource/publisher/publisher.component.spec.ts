@@ -14,13 +14,19 @@ import { ReadTextValueAsHtmlComponent } from '../../properties/read-text-value-a
 import { MathJaxDirective } from '../../directives/mathjax.directive';
 import { KuiViewerModule } from '@knora/viewer';
 import { ReadTextValueComponent } from '../../properties/read-text-value/read-text-value.component';
+import { AppInitService } from '../../app-init.service';
 
 describe('PublisherComponent', () => {
     let component: PublisherComponent;
     let fixture: ComponentFixture<PublisherComponent>;
+
+    let appInitService: AppInitService;
+
     const id = 'http://rdfh.ch/0802/o2zZYlxUTnqPSx3pW0h7nQ'; // Olms Hildesheim id
 
     beforeEach(async(() => {
+        const appInitServiceSpy = jasmine.createSpyObj('AppInitService', ['getSettings']);
+
         TestBed.configureTestingModule({
             imports: [
                 KuiActionModule,
@@ -40,16 +46,23 @@ describe('PublisherComponent', () => {
                 {provide: Location},
                 {
                     provide: ActivatedRoute,
-                    useValue: { paramMap: of({
+                    useValue: {
+                        paramMap: of({
                             get: () => {
                                 return id;
                             }
-                        })}
+                        })
+                    }
                 },
-                {provide: KuiCoreConfigToken, useValue: KuiCoreConfig}
+                {provide: KuiCoreConfigToken, useValue: KuiCoreConfig},
+                {provide: AppInitService, useValue: appInitServiceSpy}
             ]
         })
             .compileComponents();
+
+        appInitServiceSpy.getSettings.and.returnValue({ontologyIRI: 'http://0.0.0.0:3333'});
+
+        appInitService = TestBed.get(AppInitService);
     }));
 
     beforeEach(() => {
@@ -60,5 +73,7 @@ describe('PublisherComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
+
+        expect(appInitService.getSettings).toHaveBeenCalled();
     });
 });
