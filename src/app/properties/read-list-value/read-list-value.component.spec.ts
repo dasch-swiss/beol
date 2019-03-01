@@ -6,12 +6,17 @@ import { MatSnackBarModule } from '@angular/material';
 import { Component, DebugElement, OnInit, ViewChild } from '@angular/core';
 import { ReadListValue } from '@knora/core';
 import { By } from '@angular/platform-browser';
+import { AppInitService } from '../../app-init.service';
 
 describe('ReadListValueComponent', () => {
     let testHostComponent: TestHostComponent;
     let testHostFixture: ComponentFixture<TestHostComponent>;
 
+    let appInitService: AppInitService;
+
     beforeEach(async(() => {
+        const appInitServiceSpy = jasmine.createSpyObj('AppInitService', ['getSettings']);
+
         TestBed.configureTestingModule({
             imports: [
                 RouterTestingModule,
@@ -22,9 +27,16 @@ describe('ReadListValueComponent', () => {
                 TestHostComponent,
                 TestHostComponent2,
                 MathJaxDirective // idea for mock: https://stackoverflow.com/questions/44495114/is-it-possible-to-mock-an-attribute-directive-in-angular
+            ],
+            providers: [
+                {provide: AppInitService, useValue: appInitServiceSpy}
             ]
         })
             .compileComponents();
+
+        appInitServiceSpy.getSettings.and.returnValue({ontologyIRI: 'http://0.0.0.0:3333'});
+
+        appInitService = TestBed.get(AppInitService);
     }));
 
     beforeEach(() => {

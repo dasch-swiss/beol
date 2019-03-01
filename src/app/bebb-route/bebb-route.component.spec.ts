@@ -8,7 +8,7 @@ import { KuiCoreConfig, KuiCoreConfigToken, ReadResource, ReadResourcesSequence,
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { BeolService } from '../services/beol.service';
-import {AppInitService} from '../app-init.service';
+import { AppInitService } from '../app-init.service';
 
 describe('BebbRouteComponent', () => {
     let component: BebbRouteComponent;
@@ -89,5 +89,7 @@ describe('BebbRouteComponent', () => {
         expect(searchService.doExtendedSearchReadResourceSequence).toHaveBeenCalledWith('gravsearchQuery');
 
         expect(beolService.routeByResourceType).toHaveBeenCalledWith('http://0.0.0.0:3333/ontology/0801/beol/v2#letter', 'letterIri');
+
+        expect(appInitService.getSettings).toHaveBeenCalledTimes(1);
     });
 });

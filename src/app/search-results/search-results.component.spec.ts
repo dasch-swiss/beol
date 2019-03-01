@@ -22,11 +22,15 @@ import { KuiViewerModule } from '@knora/viewer';
 import { MathJaxDirective } from '../directives/mathjax.directive';
 import { MatExpansionModule, MatIconModule } from '@angular/material';
 import { ReadListValueComponent } from '../properties/read-list-value/read-list-value.component';
+import { AppInitService } from '../app-init.service';
 
 
 describe('SearchResultsComponent', () => {
     let component: SearchResultsComponent;
     let fixture: ComponentFixture<SearchResultsComponent>;
+
+    let appInitService: AppInitService;
+
     const mode = 'extended';
     const q = 'test';
 
@@ -38,6 +42,8 @@ describe('SearchResultsComponent', () => {
         mockSearchParamService = new MockSearchParamsService();
         const spySearchService =
             jasmine.createSpyObj('SearchService', ['doExtendedSearchCountQueryCountQueryResult', 'doExtendedSearchReadResourceSequence']);
+
+        const appInitServiceSpy = jasmine.createSpyObj('AppInitService', ['getSettings']);
 
         TestBed.configureTestingModule({
             imports: [
@@ -70,6 +76,7 @@ describe('SearchResultsComponent', () => {
                 { provide: KuiCoreConfigToken, useValue: KuiCoreConfig },
                 { provide: SearchParamsService, useValue: mockSearchParamService},
                 { provide: SearchService, useValue: spySearchService },
+                { provide: AppInitService, useValue: appInitServiceSpy }
             ]
         })
             .compileComponents();
@@ -104,6 +111,10 @@ describe('SearchResultsComponent', () => {
             );
         });
 
+        appInitServiceSpy.getSettings.and.returnValue({ontologyIRI: 'http://0.0.0.0:3333', pagingLimit: 25});
+
+        appInitService = TestBed.get(AppInitService);
+
     }));
 
     beforeEach(() => {
@@ -114,6 +125,8 @@ describe('SearchResultsComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
+
+        expect(appInitService.getSettings).toHaveBeenCalled();
     });
 
     it('should perform a count query', () => {

@@ -13,6 +13,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ReadTextValueComponent } from '../../properties/read-text-value/read-text-value.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { KuiCoreConfig, KuiCoreConfigToken } from '@knora/core';
+import { AppInitService } from '../../app-init.service';
 
 describe('FigureComponent', () => {
     let component: FigureComponent;
@@ -21,9 +22,13 @@ describe('FigureComponent', () => {
         back: jasmine.createSpy('back')
     };
 
+    let appInitService: AppInitService;
+
     const id = 'http://rdfh.ch/0801/mmZSMsgqQH6XwE7bI30DJw';
 
     beforeEach(async(() => {
+        const appInitServiceSpy = jasmine.createSpyObj('AppInitService', ['getSettings']);
+
         TestBed.configureTestingModule({
             imports: [KuiActionModule, KuiViewerModule, MaterialModule, RouterTestingModule, HttpClientTestingModule],
             declarations: [FigureComponent, ReadTextValueAsHtmlComponent, MathJaxDirective, ReadTextValueComponent],
@@ -38,11 +43,16 @@ describe('FigureComponent', () => {
                         })
                     }
                 },
-                { provide: Location, useValue: locationStub },
-                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig }
+                {provide: Location, useValue: locationStub},
+                {provide: KuiCoreConfigToken, useValue: KuiCoreConfig},
+                {provide: AppInitService, useValue: appInitServiceSpy}
             ]
         })
             .compileComponents();
+
+        appInitServiceSpy.getSettings.and.returnValue({ontologyIRI: 'http://0.0.0.0:3333'});
+
+        appInitService = TestBed.get(AppInitService);
     }));
 
     beforeEach(() => {
@@ -53,5 +63,7 @@ describe('FigureComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
+
+        expect(appInitService.getSettings).toHaveBeenCalled();
     });
 });

@@ -15,11 +15,14 @@ import { MathJaxDirective } from '../../directives/mathjax.directive';
 import { RouterTestingModule } from '@angular/router/testing';
 import { KuiViewerModule } from '@knora/viewer';
 import { ReadTextValueComponent } from '../../properties/read-text-value/read-text-value.component';
+import { AppInitService } from '../../app-init.service';
 
 
 describe('EndnoteComponent', () => {
     let component: EndnoteComponent;
     let fixture: ComponentFixture<EndnoteComponent>;
+
+    let appInitService: AppInitService;
 
     const locationStub = {
         back: jasmine.createSpy('back')
@@ -28,6 +31,8 @@ describe('EndnoteComponent', () => {
     const id = 'http://rdfh.ch/0801/-cPynqayQI2hJZ1K7aRWMA';
 
     beforeEach(async(() => {
+        const appInitServiceSpy = jasmine.createSpyObj('AppInitService', ['getSettings']);
+
         TestBed.configureTestingModule({
             imports: [
                 KuiActionModule,
@@ -52,11 +57,16 @@ describe('EndnoteComponent', () => {
                             }
                         })}
                 },
-                {provide: KuiCoreConfigToken, useValue: KuiCoreConfig},
-                {provide: Location, useValue: locationStub}
+                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig },
+                { provide: Location, useValue: locationStub },
+                { provide: AppInitService, useValue: appInitServiceSpy }
             ]
         })
             .compileComponents();
+
+        appInitServiceSpy.getSettings.and.returnValue({ontologyIRI: 'http://0.0.0.0:3333'});
+
+        appInitService = TestBed.get(AppInitService);
     }));
 
     beforeEach(() => {
@@ -67,5 +77,7 @@ describe('EndnoteComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
+
+        expect(appInitService.getSettings).toHaveBeenCalled();
     });
 });
