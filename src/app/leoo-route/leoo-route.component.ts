@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { BeolService } from '../services/beol.service';
 import { ReadResourcesSequence, SearchService } from '@knora/core';
-import { environment } from '../../environments/environment';
+import { AppInitService } from '../app-init.service';
 
 @Component({
     selector: 'app-leoo-route',
@@ -14,13 +14,12 @@ export class LeooRouteComponent implements OnInit {
     repertoriumNumber: string;
     notFound: boolean;
 
-    apiUrl = environment.externalApiURL;
-
     constructor(
         private _route: ActivatedRoute,
         private _router: Router,
         private _beolService: BeolService,
-        private _searchService: SearchService) {
+        private _searchService: SearchService,
+        private _appInitService: AppInitService) {
     }
 
     ngOnInit() {
@@ -41,7 +40,7 @@ export class LeooRouteComponent implements OnInit {
                             const letterIri: string = resourceSeq.resources[0].id;
 
                             // given the Iri of the letter, display the whole resource
-                            this._beolService.routeByResourceType(this.apiUrl + '/ontology/0801/beol/v2#letter', letterIri);
+                            this._beolService.routeByResourceType(this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#letter', letterIri);
                         } else {
                             // letter not found
                             console.log(`letter with repertorium number ${this.repertoriumNumber} not found`);

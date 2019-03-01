@@ -14,51 +14,65 @@ import { ReadTextValueAsHtmlComponent } from '../../properties/read-text-value-a
 import { MathJaxDirective } from '../../directives/mathjax.directive';
 import { KuiViewerModule } from '@knora/viewer';
 import { ReadTextValueComponent } from '../../properties/read-text-value/read-text-value.component';
+import { AppInitService } from '../../app-init.service';
 
 describe('BiblioItemsComponent', () => {
-  let component: BiblioItemsComponent;
-  let fixture: ComponentFixture<BiblioItemsComponent>;
+    let component: BiblioItemsComponent;
+    let fixture: ComponentFixture<BiblioItemsComponent>;
 
-  const id = 'http://rdfh.ch/0802/eJ-JOOfoS4yvACkcTgZDfw';
+    let appInitService: AppInitService;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        KuiActionModule,
-        KuiViewerModule,
-        MaterialModule,
-        RouterTestingModule,
-        HttpClientModule,
-        HttpClientTestingModule
-      ],
-      declarations: [
-        BiblioItemsComponent,
-        ReadTextValueAsHtmlComponent,
-        MathJaxDirective,
-        ReadTextValueComponent
-      ],
-      providers: [
-        {
-          provide: ActivatedRoute,
-          useValue: { paramMap: of({
-                  get: () => {
-                      return id;
-                  }
-              })}
-        },
-        { provide: KuiCoreConfigToken, useValue: KuiCoreConfig }
-      ]
-    })
-      .compileComponents();
-  }));
+    const id = 'http://rdfh.ch/0802/eJ-JOOfoS4yvACkcTgZDfw';
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(BiblioItemsComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(async(() => {
+        const appInitServiceSpy = jasmine.createSpyObj('AppInitService', ['getSettings']);
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+        TestBed.configureTestingModule({
+            imports: [
+                KuiActionModule,
+                KuiViewerModule,
+                MaterialModule,
+                RouterTestingModule,
+                HttpClientModule,
+                HttpClientTestingModule
+            ],
+            declarations: [
+                BiblioItemsComponent,
+                ReadTextValueAsHtmlComponent,
+                MathJaxDirective,
+                ReadTextValueComponent
+            ],
+            providers: [
+                {
+                    provide: ActivatedRoute,
+                    useValue: {
+                        paramMap: of({
+                            get: () => {
+                                return id;
+                            }
+                        })
+                    }
+                },
+                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig },
+                { provide: AppInitService, useValue: appInitServiceSpy }
+            ]
+        })
+            .compileComponents();
+
+        appInitServiceSpy.getSettings.and.returnValue({ontologyIRI: 'http://0.0.0.0:3333'});
+
+        appInitService = TestBed.get(AppInitService);
+    }));
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(BiblioItemsComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
+
+    it('should create', () => {
+        expect(component).toBeTruthy();
+
+        expect(appInitService.getSettings).toHaveBeenCalled();
+    });
 });

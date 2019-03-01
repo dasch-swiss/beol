@@ -19,6 +19,7 @@ import { of } from 'rxjs';
 import { BeolService } from '../services/beol.service';
 import { ActivatedRoute } from '@angular/router';
 import { MathJaxDirective } from '../directives/mathjax.directive';
+import { AppInitService } from '../app-init.service';
 
 describe('IntroductionComponent', () => {
     let component: IntroductionComponent;
@@ -29,10 +30,12 @@ describe('IntroductionComponent', () => {
     let beolServiceSpy: jasmine.SpyObj<BeolService>; // see https://angular.io/guide/testing#angular-testbed
     let searchServiceSpy: jasmine.SpyObj<SearchService>;
     let resourceServiceSpy: jasmine.SpyObj<ResourceService>;
+    let appInitService: AppInitService;
 
     const spyBeolService = jasmine.createSpyObj('BeolService', ['searchForIntroductionById']);
     const spySearchService = jasmine.createSpyObj('SearchService', ['doExtendedSearchReadResourceSequence']);
     const spyResourceService = jasmine.createSpyObj('ResourceService', ['getReadResource']);
+    const appInitServiceSpy = jasmine.createSpyObj('AppInitService', ['getSettings']);
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -64,7 +67,8 @@ describe('IntroductionComponent', () => {
                 { provide: KuiCoreConfigToken, useValue: KuiCoreConfig },
                 { provide: BeolService, useValue: spyBeolService },
                 { provide: SearchService, useValue: spySearchService },
-                { provide: ResourceService, useValue: spyResourceService }
+                { provide: ResourceService, useValue: spyResourceService },
+                { provide: AppInitService, useValue: appInitServiceSpy }
             ]
         })
             .compileComponents();
@@ -141,6 +145,10 @@ describe('IntroductionComponent', () => {
 
         });
 
+        appInitServiceSpy.getSettings.and.returnValue({ontologyIRI: 'http://0.0.0.0:3333'});
+
+        appInitService = TestBed.get(AppInitService);
+
     }));
 
     beforeEach(() => {
@@ -163,6 +171,8 @@ describe('IntroductionComponent', () => {
         expect(resourceServiceSpy.getReadResource).toHaveBeenCalledWith('http://rdfh.ch/0801/jTAU22HmTJWplGJgO6uVIw');
 
         expect(component.ontologyInfo).not.toBeUndefined();
+
+        expect(appInitService.getSettings).toHaveBeenCalledTimes(2);
     });
 
 });

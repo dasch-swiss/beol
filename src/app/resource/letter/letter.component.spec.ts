@@ -14,13 +14,19 @@ import { MathJaxDirective } from '../../directives/mathjax.directive';
 import { KuiViewerModule } from '@knora/viewer';
 import { ReadTextValueComponent } from '../../properties/read-text-value/read-text-value.component';
 import { HanCatalogueDirective } from '../../directives/han-catalogue.directive';
+import { AppInitService } from '../../app-init.service';
 
 describe('LetterComponent', () => {
     let component: LetterComponent;
     let fixture: ComponentFixture<LetterComponent>;
+
+    let appInitService: AppInitService;
+
     const id = 'http://rdfh.ch/0801/7ZvL2A5PQ9C4eAmr-n26gw';
 
     beforeEach(async(() => {
+        const appInitServiceSpy = jasmine.createSpyObj('AppInitService', ['getSettings']);
+
         TestBed.configureTestingModule({
             imports: [
                 KuiActionModule,
@@ -48,10 +54,15 @@ describe('LetterComponent', () => {
                             }
                         })}
                 },
-                {provide: KuiCoreConfigToken, useValue: KuiCoreConfig}
+                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig },
+                { provide: AppInitService, useValue: appInitServiceSpy }
             ]
         })
             .compileComponents();
+
+        appInitServiceSpy.getSettings.and.returnValue({ontologyIRI: 'http://0.0.0.0:3333'});
+
+        appInitService = TestBed.get(AppInitService);
     }));
 
     beforeEach(() => {
@@ -62,5 +73,7 @@ describe('LetterComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
+
+        expect(appInitService.getSettings).toHaveBeenCalled();
     });
 });

@@ -49,4 +49,12 @@ export class AppInitService {
             resolve();
         });
     }
+
+    public getSettings(): IAppConfig {
+        return AppInitService.settings;
+    }
+
+    public getCoreConfig(): KuiCoreConfig {
+        return AppInitService.coreConfig;
+    }
 }

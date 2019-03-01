@@ -15,6 +15,7 @@ import {
 import { BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
 import { Subscription } from 'rxjs';
 import { BeolService } from '../../services/beol.service';
+import { AppInitService } from '../../app-init.service';
 
 class PublisherProps implements PropertyValues {
     comment: ReadTextValue[] = [];
@@ -42,12 +43,12 @@ export class PublisherComponent extends BeolResource {
     KnoraConstants = KnoraConstants;
 
     propIris: PropIriToNameMapping = {
-        'id': this.apiUrl + '/ontology/0801/beol/v2#beolIDs',
-        'comment': this.apiUrl + '/ontology/0801/beol/v2#comment',
-        'mentioned': this.apiUrl + '/ontology/0801/beol/v2#mentionedIn',
-        'name': this.apiUrl + '/ontology/0801/biblio/v2#hasName',
-        'publisherLocation': this.apiUrl + '/ontology/0801/biblio/v2#publisherHasLocation',
-        'publishingPerson': this.apiUrl + '/ontology/0801/biblio/v2#publishingPersonValue'
+        'id': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#beolIDs',
+        'comment': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#comment',
+        'mentioned': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#mentionedIn',
+        'name': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#hasName',
+        'publisherLocation': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#publisherHasLocation',
+        'publishingPerson': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#publishingPersonValue'
     };
 
     props: PublisherProps;
@@ -57,7 +58,9 @@ export class PublisherComponent extends BeolResource {
                 protected _cacheService: OntologyCacheService,
                 protected _incomingService: IncomingService,
                 public location: Location,
-                protected _beolService: BeolService) {
+                protected _beolService: BeolService,
+                private _appInitService: AppInitService
+    ) {
 
         super(_route, _resourceService, _cacheService, _incomingService, _beolService);
 

@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
 import { ExtendedSearchParams, SearchParamsService } from '@knora/core';
 import { Router } from '@angular/router';
-import { environment } from '../../environments/environment';
+import { AppInitService } from '../app-init.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class BeolService {
 
-    apiUrl = environment.api;
-    externalApiURL = environment.externalApiURL;
-
-    constructor(private _searchParamsService: SearchParamsService, private _router: Router) {
-    }
+    constructor(
+        private _searchParamsService: SearchParamsService,
+        private _router: Router,
+        private _appInitService: AppInitService
+    ) {}
 
     /**
      * Given the ISBN, returns the Gravsearch to search for the book.
@@ -25,8 +25,8 @@ export class BeolService {
 
         const bookTemplate = `
     PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
-    PREFIX biblio: <${this.externalApiURL}/ontology/0801/biblio/simple/v2#>
-    PREFIX beol: <${this.externalApiURL}/ontology/0801/beol/simple/v2#>
+    PREFIX biblio: <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/biblio/simple/v2#>
+    PREFIX beol: <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/beol/simple/v2#>
 
     CONSTRUCT {
 
@@ -85,7 +85,7 @@ export class BeolService {
 
         const introTemplate = `
     PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
-    PREFIX beol: <${this.externalApiURL}/ontology/0801/beol/simple/v2#>
+    PREFIX beol: <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/beol/simple/v2#>
 
     CONSTRUCT {
 
@@ -151,7 +151,7 @@ export class BeolService {
         }
 
         const correspondenceTemplate = `
-    PREFIX beol: <${this.externalApiURL}/ontology/0801/beol/simple/v2#>
+    PREFIX beol: <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/beol/simple/v2#>
     PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
 
     CONSTRUCT {
@@ -235,7 +235,7 @@ export class BeolService {
     searchForNewtonCorrespondence(offset: number = 0): string {
 
         const correspondenceTemplate = `
-            PREFIX newton: <${this.externalApiURL}/ontology/0801/newton/simple/v2#>
+            PREFIX newton: <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/newton/simple/v2#>
             PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
 
             CONSTRUCT {
@@ -281,7 +281,7 @@ export class BeolService {
     searchForLetterFromLEOO(repertoriumNumber: string): string {
 
         const letterByNumberTemplate = `
-        PREFIX beol: <${this.externalApiURL}/ontology/0801/beol/simple/v2#>
+        PREFIX beol: <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/beol/simple/v2#>
         PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>  
         CONSTRUCT {
 
@@ -318,7 +318,7 @@ export class BeolService {
     searchForLetterFromBEBB(title: string): string {
 
         const letterByTitleTemplate = `
-        PREFIX beol: <${this.externalApiURL}/ontology/0801/beol/simple/v2#>
+        PREFIX beol: <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/beol/simple/v2#>
         PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>  
         CONSTRUCT {
 
@@ -354,30 +354,30 @@ export class BeolService {
      */
     routeByResourceType(referredResourceType: string, referredResourceIri: string): void {
 
-        if (referredResourceType === this.externalApiURL + '/ontology/0801/beol/v2#person') {
+        if (referredResourceType === this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#person') {
             // route to person template
             this._router.navigateByUrl('person/' + encodeURIComponent(referredResourceIri));
-        } else if (referredResourceType === this.externalApiURL + '/ontology/0801/biblio/v2#Publisher')  {
+        } else if (referredResourceType === this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#Publisher')  {
             // route to publisher template
             this._router.navigateByUrl('publisher/' + encodeURIComponent(referredResourceIri));
-        } else if (referredResourceType === this.externalApiURL + '/ontology/0801/beol/v2#letter') {
+        } else if (referredResourceType === this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#letter') {
             // route to letter template
             this._router.navigateByUrl('letter/' + encodeURIComponent(referredResourceIri));
-        } else if (referredResourceType === this.externalApiURL + '/ontology/0801/newton/v2#letter') {
+        } else if (referredResourceType === this._appInitService.getSettings().ontologyIRI + '/ontology/0801/newton/v2#letter') {
             this._router.navigateByUrl('newtonLetter/' + encodeURIComponent(referredResourceIri));
-        } else if (referredResourceType === this.externalApiURL + '/ontology/0801/beol/v2#endnote') {
+        } else if (referredResourceType === this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#endnote') {
             // route to letter template
             this._router.navigateByUrl('endnote/' + encodeURIComponent(referredResourceIri));
-        } else if (referredResourceType === this.externalApiURL + '/ontology/0801/beol/v2#figure') {
+        } else if (referredResourceType === this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#figure') {
             // route to letter template
             this._router.navigateByUrl('figure/' + encodeURIComponent(referredResourceIri));
         } else if (
-            referredResourceType === this.externalApiURL + '/ontology/0801/biblio/v2#Book' ||
-            referredResourceType === this.externalApiURL + '/ontology/0801/biblio/v2#EditedBook' ||
-            referredResourceType === this.externalApiURL + '/ontology/0801/biblio/v2#CollectionArticle' ||
-            referredResourceType === this.externalApiURL + '/ontology/0801/biblio/v2#Collection' ||
-            referredResourceType === this.externalApiURL + '/ontology/0801/biblio/v2#Journal' ||
-            referredResourceType === this.externalApiURL + '/ontology/0801/biblio/v2#JournalArticle') {
+            referredResourceType === this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#Book' ||
+            referredResourceType === this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#EditedBook' ||
+            referredResourceType === this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#CollectionArticle' ||
+            referredResourceType === this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#Collection' ||
+            referredResourceType === this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#Journal' ||
+            referredResourceType === this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#JournalArticle') {
             // route to biblio-items template
             this._router.navigateByUrl('biblio/' + encodeURIComponent(referredResourceIri));
         } else {
