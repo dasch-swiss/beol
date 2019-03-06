@@ -49,8 +49,6 @@ import { BebbRouteComponent } from './bebb-route/bebb-route.component';
 import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
 import { AppInitService } from './app-init.service';
 import { TranscriptionComponent } from './resource/transcription/transcription.component';
-// router module and app routing with all the path definitions
-// import { RouterModule } from '@angular/router';
 
 export function initializeApp(appInitService: AppInitService) {
     return (): Promise<any> => {
