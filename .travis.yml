@@ -1,10 +1,13 @@
-dist: trusty
+dist: xenial
 sudo: required
+
+services:
+    - docker
 
 language: node_js
 
 node_js:
-  - "8"
+  - "11"
 
 cache:
   yarn: true
@@ -13,21 +16,9 @@ cache:
 
 addons:
   chrome: stable
-  apt:
-    sources:
-    - ubuntu-toolchain-r-test
-    packages:
-    - g++-4.9
 
-env:
-  global:
-  - CXX=g++-4.9
-
-install: export CXX="g++-4.9"
-
-before_script:
-  - yarn install --prod=false
+install: yarn install --prod=false
 
 script:
   - yarn test-ci
-  - yarn build-prod
+  - docker build .
