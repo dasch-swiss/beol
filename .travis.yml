@@ -21,5 +21,4 @@ install: yarn install --prod=false
 
 script:
   - yarn test-ci
-  - yarn build-prod
   - docker build .
