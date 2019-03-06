@@ -1,6 +1,9 @@
 dist: xenial
 sudo: required
 
+services:
+    - docker
+
 language: node_js
 
 node_js:
@@ -19,3 +22,4 @@ install: yarn install --prod=false
 script:
   - yarn test-ci
   - yarn build-prod
+  - docker build .
