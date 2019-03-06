@@ -31,9 +31,8 @@ RUN yarn build-prod
 
 ### STAGE 2: Setup ###
 
-FROM dhlabbasel/http-server:v1.1.2
+FROM dhlabbasel/http-server:v1.2.1
 
 LABEL maintainer="ivan.subotic@unibas.ch"
 
-ENV PUBLIC_FOLDER_PATH "/public"
 COPY --from=builder /usr/app/dist/beol /public
