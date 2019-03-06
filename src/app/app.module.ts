@@ -89,7 +89,6 @@ export function initializeApp(appInitService: AppInitService) {
         BebbRouteComponent
     ],
     imports: [
-        //        AngularFireModule.initializeApp(environment.firebase),
         AppRouting,
         BrowserModule,
         FlexLayoutModule,

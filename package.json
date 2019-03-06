@@ -25,8 +25,6 @@
     "@angular/platform-browser": "^6.1.7",
     "@angular/platform-browser-dynamic": "^6.1.7",
     "@angular/router": "^6.1.7",
-    "@firebase/app": "^0.3.4",
-    "@firebase/app-types": "^0.3.2",
     "@knora/action": "6.7.0",
     "@knora/core": "6.7.0",
     "@knora/search": "6.7.0",
