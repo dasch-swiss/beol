@@ -24,6 +24,7 @@ class TranscriptionProps implements PropertyValues {
     text: ReadTextValue[] = [];
     layer: ReadIntegerValue[] = [];
     transcriptionOf: ReadLinkValue[] = [];
+    belongsToRegion: ReadLinkValue[] = [];
 
     [index: string]: ReadPropertyItem[];
 }
@@ -49,7 +50,8 @@ export class TranscriptionComponent extends BeolResource {
     propIris: PropIriToNameMapping = {
         'text': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasText',
         'layer': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#layer',
-        'transcriptionOf': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#transcriptionOfValue'
+        'transcriptionOf': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#transcriptionOfValue',
+        'belongsToRegion': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#belongsToRegionValue'
 
     };
 
