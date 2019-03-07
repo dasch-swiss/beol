@@ -31,7 +31,7 @@ RUN yarn build-prod
 
 ### STAGE 2: Setup ###
 
-FROM dhlabbasel/nginx-server
+FROM dhlabbasel/nginx-server:v1.0.0
 
 LABEL maintainer="ivan.subotic@unibas.ch"
 
