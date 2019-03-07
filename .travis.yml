@@ -27,5 +27,4 @@ script:
   - yalc remove --all && yarn yalc-add-modules
   - yarn install --prod=false
   - yarn test-ci
-  - ls -la .yalc
   - docker build .
