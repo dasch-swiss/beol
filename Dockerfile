@@ -31,7 +31,7 @@ RUN yarn build-prod
 
 ### STAGE 2: Setup ###
 
-FROM dhlabbasel/http-server:v1.2.1
+FROM dhlabbasel/http-server:v1.3.0
 
 LABEL maintainer="ivan.subotic@unibas.ch"
 
