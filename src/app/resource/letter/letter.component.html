@@ -65,8 +65,7 @@
                 <div *ngIf="props?.translation[0]">
                     <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.translation[0].propIri)}}</h4>
                     <p class="margin-left">
-                        <kui-link-value *ngFor="let trans of props?.translation" [valueObject]="trans"
-                                         [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
+                        <kui-link-value *ngFor="let trans of props?.translation" [valueObject]="trans" [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
                     </p>
                 </div>
 
@@ -124,19 +123,23 @@
         <div class="main-content">
 
             <section class="title center">
-                <p *ngIf="props?.number[0]"><read-text-value [valueObject]="props?.number[0]" [bindEvents]="true" [ontologyInfo]="ontologyInfo"></read-text-value></p>
+                <p *ngIf="props?.number[0]">
+                    <read-text-value [valueObject]="props?.number[0]" [bindEvents]="true" [ontologyInfo]="ontologyInfo"></read-text-value>
+                </p>
                 <p class="names">
-                <span *ngFor="let author of props?.author; let last = last">
-                    <kui-link-value [valueObject]="author" [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
-                    <span *ngIf="!last"> &amp; </span>
-                </span>
+                    <span *ngFor="let author of props?.author; let last = last">
+                        <kui-link-value [valueObject]="author" [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
+                        <span *ngIf="!last"> &amp; </span>
+                    </span>
                     to
                     <span *ngFor="let recipient of props?.recipient; let last = last">
-                    <kui-link-value [valueObject]="recipient" [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
-                    <span *ngIf="!last"> &amp; </span>
-                </span>
+                        <kui-link-value [valueObject]="recipient" [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
+                        <span *ngIf="!last"> &amp; </span>
+                    </span>
                 </p>
-                    <span *ngIf="props?.date[0]"><kui-date-value [valueObject]="props?.date[0]" [calendar]="true" [era]="true"></kui-date-value></span>
+                <span *ngIf="props?.date[0]">
+                    <kui-date-value [valueObject]="props?.date[0]" [calendar]="true" [era]="true"></kui-date-value>
+                </span>
                 <p>
 
             </section>
@@ -145,25 +148,21 @@
                 <read-text-value [valueObject]="props?.text[0]" [bindEvents]="true" [ontologyInfo]="ontologyInfo"></read-text-value>
             </section>
 
-            <section class="images">
-                <!-- Check for incoming images -->
-                <kui-still-image #OSDViewer class="osd-viewer"
-                                 *ngIf="resource?.incomingStillImageRepresentations?.length > 0;"
-                                 [images]="resource?.stillImageRepresentationsToDisplay">
-                </kui-still-image>
-            </section>
-            <section class="links">
-                <div *ngIf="resource?.incomingLinks?.length > 0" class="incoming-link-position">
-                    <p>
-                        <strong>Referenced In:</strong>
-                    </p>
-                    <mat-list *ngFor="let incomingLinkSourceRes of resource.incomingLinks">
-                        <mat-list-item>
-                            <span class="link" (click)="showIncomingRes(incomingLinkSourceRes.id, incomingLinkSourceRes.type)">{{incomingLinkSourceRes.label}}</span>
-                        </mat-list-item>
-                    </mat-list>
-                </div>
-            </section>
+            <!-- OSD viewer -->
+            <kui-still-image #OSDViewer class="osd-viewer" *ngIf="resource?.incomingStillImageRepresentations?.length > 0;" [images]="resource?.stillImageRepresentationsToDisplay">
+            </kui-still-image>
+
+            <!-- Check for incoming images -->
+            <div *ngIf="resource?.incomingLinks?.length > 0" class="incoming-link-position-letter">
+                <p>
+                    <strong>Referenced In:</strong>
+                </p>
+                <mat-list *ngFor="let incomingLinkSourceRes of resource.incomingLinks">
+                    <mat-list-item>
+                        <span class="link" (click)="showIncomingRes(incomingLinkSourceRes.id, incomingLinkSourceRes.type)">{{incomingLinkSourceRes.label}}</span>
+                    </mat-list-item>
+                </mat-list>
+            </div>
 
         </div>
     </div>
