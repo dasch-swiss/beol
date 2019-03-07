@@ -1,0 +1,8 @@
+/*
+ * Public API Surface of authentication
+ */
+export * from './lib/guard/auth.guard';
+export * from './lib/login-form/login-form.component';
+export * from './lib/authentication.service';
+export * from './lib/authentication.module';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHVibGljX2FwaS5qcyIsInNvdXJjZVJvb3QiOiJuZzovL0Brbm9yYS9hdXRoZW50aWNhdGlvbi8iLCJzb3VyY2VzIjpbInB1YmxpY19hcGkudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7O0dBRUc7QUFFSCxjQUFjLHdCQUF3QixDQUFDO0FBQ3ZDLGNBQWMsdUNBQXVDLENBQUM7QUFDdEQsY0FBYyw4QkFBOEIsQ0FBQztBQUM3QyxjQUFjLDZCQUE2QixDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiLypcbiAqIFB1YmxpYyBBUEkgU3VyZmFjZSBvZiBhdXRoZW50aWNhdGlvblxuICovXG5cbmV4cG9ydCAqIGZyb20gJy4vbGliL2d1YXJkL2F1dGguZ3VhcmQnO1xuZXhwb3J0ICogZnJvbSAnLi9saWIvbG9naW4tZm9ybS9sb2dpbi1mb3JtLmNvbXBvbmVudCc7XG5leHBvcnQgKiBmcm9tICcuL2xpYi9hdXRoZW50aWNhdGlvbi5zZXJ2aWNlJztcbmV4cG9ydCAqIGZyb20gJy4vbGliL2F1dGhlbnRpY2F0aW9uLm1vZHVsZSc7XG4iXX0=
