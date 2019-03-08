@@ -31,8 +31,10 @@ RUN yarn build-prod
 
 ### STAGE 2: Setup ###
 
-FROM dhlabbasel/http-server:v1.3.0
+FROM dhlabbasel/nginx-server:v1.0.1
 
 LABEL maintainer="ivan.subotic@unibas.ch"
+
+RUN rm -rf /public/*
 
 COPY --from=builder /usr/app/dist/beol /public
