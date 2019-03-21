@@ -16,6 +16,21 @@ export interface IAppConfig {
     localData: string;
     pagingLimit: number;
     startComponent: string;
+    tei: TeiConfig;
+}
+
+export interface TeiConfig {
+
+    [index: string]: TeiConfigElement;
+
+}
+
+export interface TeiConfigElement {
+
+    gravsearchTemplateIri: string;
+    mappingIRI: string;
+    teiHeaderXSLTIri: string;
+    textProperty: string;
 }
 
 @Injectable()
