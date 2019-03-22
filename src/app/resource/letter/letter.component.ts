@@ -107,10 +107,15 @@ export class LetterComponent extends BeolResource {
 
         const settings = this._appInitService.getSettings();
 
-        this.teiLink = settings.externalApiURL + '/v2/tei/' + encodeURIComponent(this.iri) + '?' + 'textProperty=' + encodeURIComponent(settings.tei['letter'].textProperty)
-            + '&mappingIri=' + encodeURIComponent(settings.tei['letter'].mappingIRI)
-            + '&gravsearchTemplateIri=' + encodeURIComponent(settings.tei['letter'].gravsearchTemplateIri)
-            + '&teiHeaderXSLTIri=' + encodeURIComponent(settings.tei['letter'].teiHeaderXSLTIri);
+        const letterTeiConfig: TeiConfigElement = settings.tei['letter'];
+
+        if (letterTeiConfig !== undefined) {
+            this.teiLink = settings.externalApiURL + '/v2/tei/' + encodeURIComponent(this.iri)
+                + '?textProperty=' + encodeURIComponent(letterTeiConfig.textProperty)
+                + '&mappingIri=' + encodeURIComponent(letterTeiConfig.mappingIRI)
+                + '&gravsearchTemplateIri=' + encodeURIComponent(letterTeiConfig.gravsearchTemplateIri)
+                + '&teiHeaderXSLTIri=' + encodeURIComponent(letterTeiConfig.teiHeaderXSLTIri);
+        }
 
     }
 
