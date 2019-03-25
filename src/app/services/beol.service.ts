@@ -457,6 +457,41 @@ export class BeolService {
     }
 
     /**
+     * Given the Iri of a manuscript and the sequence number of the current page, returns the previous and next page.
+     *
+     * @param manuscriptIri the Iri of the manuscript the current page belongs to.
+     * @param currentSeqnum the sequence number of the current page.
+     */
+    getPreviousAndNextPage(manuscriptIri: string, currentSeqnum: number): string {
+
+        const pageTemplate = `
+        PREFIX beol: <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/beol/simple/v2#>
+        PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>  
+        CONSTRUCT {
+
+            ?page knora-api:isMainResource true .
+
+
+        } WHERE {
+
+            ?page knora-api:isPartOf <${manuscriptIri}> .
+
+            ?page knora-api:seqnum ?seqnum .
+
+            FILTER(?seqnum = ${currentSeqnum -1} || ?seqnum = ${currentSeqnum +1})
+
+        }
+
+        ORDER BY ?seqnum
+        OFFSET 0
+        
+        `;
+
+
+        return pageTemplate;
+    }
+
+    /**
      * Chooses the apt route to display a resource, depending on its type.
      *
      * @param referredResourceType the type of the referred resource.

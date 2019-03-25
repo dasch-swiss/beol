@@ -1,5 +1,10 @@
 <div class="full-size scroll-y-only">
 
+    <div>
+        <a *ngIf="previousPage" class="salsah-link" (click)="goToResource(previousPage?.type, previousPage?.id)">{{previousPage.label}} <<</a>
+        <a *ngIf="nextPage" class="salsah-link" (click)="goToResource(nextPage?.type, nextPage?.id)">>> {{nextPage.label}}</a>
+    </div>
+
     <div *ngIf="!isLoading && resource?.stillImageRepresentationsToDisplay.length > 0">
         <kui-still-image #OSDViewer
                          class="osd-viewer"

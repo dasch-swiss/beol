@@ -1,20 +1,19 @@
 import { Component } from '@angular/core';
 import { BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
 import {
-    ApiServiceError,
     IncomingService,
     KnoraConstants,
     OntologyCacheService,
     OntologyInformation,
+    ReadIntegerValue,
     ReadLinkValue,
+    ReadPropertyItem,
     ReadResource,
     ReadResourcesSequence,
+    ReadTextValue,
     ReadTextValueAsHtml,
     ResourceService,
-    SearchService,
-    ReadTextValue,
-    ReadPropertyItem,
-    ReadIntegerValue
+    SearchService
 } from '@knora/core';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -26,6 +25,7 @@ class PageProps implements PropertyValues {
 
     pagenum: ReadTextValue[] = [];
     seqnum: ReadIntegerValue[] = [];
+    partOf: ReadLinkValue[] = [];
 
     [index: string]: ReadPropertyItem[];
 }
@@ -49,6 +49,7 @@ export class PageComponent extends BeolResource {
     propIris: PropIriToNameMapping = {
         'pagenum': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#pagenum',
         'seqnum': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#seqnum',
+        'partOf': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#partOfValue'
     };
 
     props: PageProps;
@@ -59,6 +60,9 @@ export class PageComponent extends BeolResource {
     transcriptionsForManuscriptEntry: ReadResource[] = [];
 
     activeRegion: string;
+
+    previousPage: ReadResource;
+    nextPage: ReadResource;
 
     constructor(protected _route: ActivatedRoute,
                 private _router: Router,
@@ -80,6 +84,8 @@ export class PageComponent extends BeolResource {
         this.mapper(props);
 
         this.props = props;
+
+        this.getPreviousAndNextPage();
 
         // check if there is an active region (submitted as a parameter)
         const activeRegionIri = this.params.get('region');
@@ -132,6 +138,34 @@ export class PageComponent extends BeolResource {
                 console.log('Could not load transcription for active region');
             }
         );
+    }
+
+    private getPreviousAndNextPage() {
+
+        const manuscriptIri = this.props.partOf[0].referredResourceIri;
+
+        const gravsearchQuery = this._beolService.getPreviousAndNextPage(manuscriptIri, this.props.seqnum[0].integer);
+
+        this._searchService.doExtendedSearchReadResourceSequence(gravsearchQuery).subscribe(
+            (pages: ReadResourcesSequence) => {
+
+                // initialize ontology information
+                this.ontologyInfo.updateOntologyInformation(pages.ontologyInformation);
+
+                if (pages.resources.length === 2) {
+                    this.previousPage = pages.resources[0];
+                    this.nextPage = pages.resources[1];
+                } else if (pages.resources.length === 1) {
+                    if (this.props.seqnum[0].integer === 1) {
+                        // first page
+                        this.nextPage = pages.resources[0];
+                    } else {
+                        // last page
+                        this.previousPage = pages.resources[0];
+                    }
+                }
+
+            });
     }
 
     regionActive(regionIri: string) {
