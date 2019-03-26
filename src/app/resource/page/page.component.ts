@@ -144,7 +144,7 @@ export class PageComponent extends BeolResource {
 
         const manuscriptIri = this.props.partOf[0].referredResourceIri;
 
-        const gravsearchQuery = this._beolService.getPreviousAndNextPage(manuscriptIri, this.props.seqnum[0].integer);
+        const gravsearchQuery = this._beolService.getPreviousAndNextPartOfCompound(manuscriptIri, this.props.seqnum[0].integer);
 
         this._searchService.doExtendedSearchReadResourceSequence(gravsearchQuery).subscribe(
             (pages: ReadResourcesSequence) => {

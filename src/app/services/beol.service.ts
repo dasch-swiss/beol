@@ -457,12 +457,12 @@ export class BeolService {
     }
 
     /**
-     * Given the Iri of a manuscript and the sequence number of the current page, returns the previous and next page.
+     * Given the Iri of a compound object and the sequence number of the current part, returns the previous and next part.
      *
-     * @param manuscriptIri the Iri of the manuscript the current page belongs to.
-     * @param currentSeqnum the sequence number of the current page.
+     * @param compoundIri the Iri of the compound object the current part belongs to.
+     * @param currentSeqnum the sequence number of the current part.
      */
-    getPreviousAndNextPage(manuscriptIri: string, currentSeqnum: number): string {
+    getPreviousAndNextPartOfCompound(compoundIri: string, currentSeqnum: number): string {
 
         const pageTemplate = `
         PREFIX beol: <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/beol/simple/v2#>
@@ -474,11 +474,11 @@ export class BeolService {
 
         } WHERE {
 
-            ?page knora-api:isPartOf <${manuscriptIri}> .
+            ?page knora-api:isPartOf <${compoundIri}> .
 
             ?page knora-api:seqnum ?seqnum .
 
-            FILTER(?seqnum = ${currentSeqnum -1} || ?seqnum = ${currentSeqnum +1})
+            FILTER(?seqnum = ${currentSeqnum - 1} || ?seqnum = ${currentSeqnum + 1})
 
         }
 
