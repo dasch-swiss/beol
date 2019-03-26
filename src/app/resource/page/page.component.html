@@ -1,53 +1,72 @@
 <div class="full-size scroll-y-only">
 
-    <div style="text-align: center;">
-        <a *ngIf="previousPage" class="salsah-link" (click)="goToResource(previousPage?.type, previousPage?.id)">{{previousPage.label}} <<</a>
-        <a *ngIf="nextPage" class="salsah-link" (click)="goToResource(nextPage?.type, nextPage?.id)">>> {{nextPage.label}}</a>
-    </div>
+    <div *ngIf="!isLoading && props">
 
-    <div *ngIf="!isLoading && resource?.stillImageRepresentationsToDisplay.length > 0">
-        <kui-still-image #OSDViewer
-                         class="osd-viewer"
-                         [images]="resource?.stillImageRepresentationsToDisplay"
-                         [activateRegion]="activeRegion"
-                         (regionHovered)="regionActive($event)">
-        </kui-still-image>
-    </div>
+        <div class="sidebar">
 
-    <div style="height: 200px;">
-    </div>
-
-    <div *ngIf="props?.pagenum[0]">
-        <span class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.pagenum[0].propIri)}}: </span>
-        <read-text-value [valueObject]="props?.pagenum[0]" [bindEvents]="false" [ontologyInfo]="ontologyInfo"></read-text-value>
-    </div>
-
-    <div *ngIf="props?.seqnum[0]">
-        <span class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.seqnum[0].propIri)}}: </span>
-        <kui-integer-value [valueObject]="props?.seqnum[0]"></kui-integer-value>
-    </div>
-
-    <div *ngIf="!isLoading && transcription !== undefined">
-        <h3>{{transcriptionBelongsToRegion.referredResource.label}}</h3>
-        <read-text-value-as-html
-            [valueObject]="transcription" [ontologyInfo]="ontologyInfo"
-            [bindEvents]="true">
-        </read-text-value-as-html>
-        <br>
-        <br>
-        <div *ngIf="manuscriptEntry !== undefined && manuscriptEntry?.referredResource !== undefined">
-            Transcription of <a class="salsah-link" (click)="goToResource(manuscriptEntry.referredResource.type, manuscriptEntry.referredResource.id)">{{manuscriptEntry.referredResource.label}}</a>
+            <button mat-stroked-button class="previousBtn" (click)="location.back()">
+                <mat-icon>arrow_back</mat-icon>
+                Previous
+            </button>
         </div>
     </div>
 
-    <br/>
-    <div *ngIf="!isLoading && transcriptionsForManuscriptEntry.length > 0">
-        <div>Transcriptions for this manuscript entry:</div>
-        <mat-list>
-            <mat-list-item *ngFor="let entry of transcriptionsForManuscriptEntry">
-                <a class="salsah-link" (click)="goToResource(entry.type, entry.id)">{{entry.label}}</a>
-            </mat-list-item>
-        </mat-list>
+    <div class="main-content">
+
+        <div style="text-align: center;">
+            <a *ngIf="previousPage" class="salsah-link"
+               (click)="goToResource(previousPage?.type, previousPage?.id)">{{previousPage.label}} <<</a>
+            <a *ngIf="nextPage" class="salsah-link"
+               (click)="goToResource(nextPage?.type, nextPage?.id)">>> {{nextPage.label}}</a>
+        </div>
+
+        <div *ngIf="!isLoading && resource?.stillImageRepresentationsToDisplay.length > 0">
+            <kui-still-image #OSDViewer
+                             class="osd-viewer"
+                             [images]="resource?.stillImageRepresentationsToDisplay"
+                             [activateRegion]="activeRegion"
+                             (regionHovered)="regionActive($event)">
+            </kui-still-image>
+        </div>
+
+        <div style="height: 200px;">
+        </div>
+
+        <div *ngIf="props?.pagenum[0]">
+            <span class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.pagenum[0].propIri)}}: </span>
+            <read-text-value [valueObject]="props?.pagenum[0]" [bindEvents]="false"
+                             [ontologyInfo]="ontologyInfo"></read-text-value>
+        </div>
+
+        <div *ngIf="props?.seqnum[0]">
+            <span class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.seqnum[0].propIri)}}: </span>
+            <kui-integer-value [valueObject]="props?.seqnum[0]"></kui-integer-value>
+        </div>
+
+        <div *ngIf="!isLoading && transcription !== undefined">
+            <h3>{{transcriptionBelongsToRegion.referredResource.label}}</h3>
+            <read-text-value-as-html
+                [valueObject]="transcription" [ontologyInfo]="ontologyInfo"
+                [bindEvents]="true">
+            </read-text-value-as-html>
+            <br>
+            <br>
+            <div *ngIf="manuscriptEntry !== undefined && manuscriptEntry?.referredResource !== undefined">
+                Transcription of <a class="salsah-link"
+                                    (click)="goToResource(manuscriptEntry.referredResource.type, manuscriptEntry.referredResource.id)">{{manuscriptEntry.referredResource.label}}</a>
+            </div>
+        </div>
+
+        <br/>
+        <div *ngIf="!isLoading && transcriptionsForManuscriptEntry.length > 0">
+            <div>Transcriptions for this manuscript entry:</div>
+            <mat-list>
+                <mat-list-item *ngFor="let entry of transcriptionsForManuscriptEntry">
+                    <a class="salsah-link" (click)="goToResource(entry.type, entry.id)">{{entry.label}}</a>
+                </mat-list-item>
+            </mat-list>
+        </div>
+
     </div>
 
 </div>
