@@ -386,6 +386,39 @@ export class BeolService {
         return transcriptionsForManuscriptEntry;
     }
 
+    getTitleRegionTranscriptionForManuscriptEntry(manuscriptEntryIri: string, offset: number = 0) {
+
+        const titleRegionTranscriptionsForManuscriptEntry = `
+        PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
+        CONSTRUCT {
+
+            ?trans knora-api:isMainResource true .
+
+        } WHERE {
+
+            ?trans a knora-api:Resource .
+
+            ?trans a <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/beol/simple/v2#transcription> .
+            
+            ?trans <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/beol/simple/v2#transcriptionOf> <${manuscriptEntryIri}> .
+            
+            ?trans <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/beol/simple/v2#belongsToRegion> ?region .
+            
+            ?region knora-api:hasComment ?title .
+            
+            FILTER(regex(?title, 'TT'))
+
+           
+        }
+
+        
+        OFFSET ${offset}
+        `;
+
+        return titleRegionTranscriptionsForManuscriptEntry;
+
+    }
+
     /**
      * Routes to the page a region belongs to, submitting the Iri of the region.
      *
@@ -532,6 +565,8 @@ export class BeolService {
             this.routeToPageWithActiveRegion(referredResourceIri);
         } else if (referredResourceType === this._appInitService.getSettings().ontologyIRI  + '/ontology/0801/beol/v2#transcription') {
             this._router.navigateByUrl('transcription/' + encodeURIComponent(referredResourceIri));
+        } else if (referredResourceType === this._appInitService.getSettings().ontologyIRI  + '/ontology/0801/beol/v2#manuscriptEntry') {
+            this._router.navigateByUrl('manuscriptEntry/' + encodeURIComponent(referredResourceIri));
         } else {
             // route to generic template
             this._router.navigateByUrl('resource/' + encodeURIComponent(referredResourceIri));

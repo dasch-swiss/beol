@@ -18,6 +18,7 @@ import { PageComponent } from './resource/page/page.component';
 import { NewtonLetterComponent } from './resource/newton-letter/newton-letter.component';
 import { BebbRouteComponent } from './bebb-route/bebb-route.component';
 import { TranscriptionComponent } from './resource/transcription/transcription.component';
+import { ManuscriptEntryComponent } from './resource/manuscript-entry/manuscript-entry.component';
 
 const appRoutes: Routes = [
     {
@@ -75,6 +76,9 @@ const appRoutes: Routes = [
     {
         path: 'transcription/:id',
         component: TranscriptionComponent
+    },{
+        path: 'manuscriptEntry/:id',
+        component: ManuscriptEntryComponent
     },
     {
         path: 'search',
