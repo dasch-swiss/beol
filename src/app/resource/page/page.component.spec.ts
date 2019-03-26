@@ -10,7 +10,7 @@ import { of } from 'rxjs';
 import { KuiCoreConfig, KuiCoreConfigToken, OntologyCacheService } from '@knora/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { HttpTestingController } from '@angular/common/http/testing';
-import { MatListModule } from '@angular/material';
+import { MatIconModule, MatListModule } from '@angular/material';
 import { ReadTextValueComponent } from '../../properties/read-text-value/read-text-value.component';
 import { AppInitService } from '../../app-init.service';
 
@@ -32,7 +32,7 @@ describe('PageComponent', () => {
                 ReadTextValueComponent,
                 MathJaxDirective
             ],
-            imports: [KuiViewerModule, RouterTestingModule, HttpClientModule, MatListModule],
+            imports: [KuiViewerModule, RouterTestingModule, HttpClientModule, MatListModule, MatIconModule],
             providers: [
                 OntologyCacheService,
                 {
