@@ -406,7 +406,7 @@ export class BeolService {
             
             ?region knora-api:hasComment ?title .
             
-            FILTER(regex(?title, 'TT'))
+            FILTER(regex(?title, '01-TT'))
 
            
         }
