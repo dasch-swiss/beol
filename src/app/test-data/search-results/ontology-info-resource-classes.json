@@ -205,7 +205,8 @@
         "value": 1,
         "property": "http://0.0.0.0:3333/ontology/0801/beol/v2#hasSystemNumber"
       }
-    ]
+    ],
+    "guiOrder": []
   },
   "http://0.0.0.0:3333/ontology/0801/beol/v2#person": {
     "id": "http://0.0.0.0:3333/ontology/0801/beol/v2#person",
@@ -368,6 +369,7 @@
         "value": 0,
         "property": "http://0.0.0.0:3333/ontology/0801/beol/v2#mentionedIn"
       }
-    ]
+    ],
+    "guiOrder": []
   }
 }
