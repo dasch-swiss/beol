@@ -200,6 +200,7 @@ const resClasses: ResourceClasses = {
             'book.png',
             'A book.',
             'book',
+            [],
             []
         )
 };
