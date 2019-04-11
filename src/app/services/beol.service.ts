@@ -525,6 +525,55 @@ export class BeolService {
     }
 
     /**
+     * Given the Iri of a manuscript, generates a Gravsearch query to get all its entries sortedby sequence number.
+     *
+     * @param manuscriptIri the Iri of the manuscript.
+     * @param offset the offset to be used.
+     */
+    getEntriesForManuscript(manuscriptIri: string, offset: number = 0): string {
+
+        const manuscriptEntriesTemplate = `
+        PREFIX beol: <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/beol/simple/v2#>
+        PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>  
+        CONSTRUCT {
+
+            ?entry knora-api:isMainResource true .
+
+        } WHERE {
+
+            ?entry beol:manuscriptEntryOf <${manuscriptIri}> .
+
+            ?entry beol:seqnum ?seqnum .
+
+        }
+
+        ORDER BY ?seqnum
+        
+        `;
+
+        // offset component of the Gravsearch query
+        const offsetTemplate = `
+        OFFSET ${offset}
+        `;
+
+        // function that generates the same Gravsearch query with the given offset
+        const generateGravsearchWithCustomOffset = (localOffset: number): string => {
+            const offsetCustomTemplate = `
+            OFFSET ${localOffset}
+            `;
+
+            return manuscriptEntriesTemplate + offsetCustomTemplate;
+        };
+
+        if (offset === 0) {
+            // store the function so another Gravsearch query can be created with an increased offset
+            this._searchParamsService.changeSearchParamsMsg(new ExtendedSearchParams(generateGravsearchWithCustomOffset));
+        }
+        return manuscriptEntriesTemplate + offsetTemplate;
+
+    }
+
+    /**
      * Chooses the apt route to display a resource, depending on its type.
      *
      * @param referredResourceType the type of the referred resource.
