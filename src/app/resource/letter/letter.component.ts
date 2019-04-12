@@ -58,8 +58,6 @@ export class LetterComponent extends BeolResource {
     navigationSubscription: Subscription;
     KnoraConstants = KnoraConstants;
 
-    teiLink: string;
-
     propIris: PropIriToNameMapping = {
         'id': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#beolIDs',
         'date': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#creationDate',
@@ -104,18 +102,6 @@ export class LetterComponent extends BeolResource {
         this.mapper(props);
 
         this.props = props;
-
-        const settings = this._appInitService.getSettings();
-
-        const letterTeiConfig: TeiConfigElement = settings.tei['letter'];
-
-        if (letterTeiConfig !== undefined) {
-            this.teiLink = settings.externalApiURL + '/v2/tei/' + encodeURIComponent(this.iri)
-                + '?textProperty=' + encodeURIComponent(letterTeiConfig.textProperty)
-                + '&mappingIri=' + encodeURIComponent(letterTeiConfig.mappingIRI)
-                + '&gravsearchTemplateIri=' + encodeURIComponent(letterTeiConfig.gravsearchTemplateIri)
-                + '&teiHeaderXSLTIri=' + encodeURIComponent(letterTeiConfig.teiHeaderXSLTIri);
-        }
 
     }
 

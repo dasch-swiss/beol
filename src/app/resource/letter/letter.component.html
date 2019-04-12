@@ -148,10 +148,8 @@
                 <read-text-value [valueObject]="props?.text[0]" [bindEvents]="true" [ontologyInfo]="ontologyInfo"></read-text-value>
             </section>
 
-            <section *ngIf="teiLink !== undefined">
-                <p class="margin-left">
-                    <a href="{{teiLink}}" target="_blank">TEI/XML</a>
-                </p>
+            <section>
+                <span appTeiLink [resourceIri]="iri" [resourceType]="'http://0.0.0.0:3333/ontology/0801/beol/v2#letter'"></span>
             </section>
 
             <!-- OSD viewer -->
