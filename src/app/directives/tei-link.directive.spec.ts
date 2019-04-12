@@ -52,7 +52,7 @@ describe('TeiLinkDirective', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should create a TEI link', () => {
+    it('should create a TEI link for letter', () => {
 
         const compDe = fixture.debugElement;
 
@@ -60,6 +60,20 @@ describe('TeiLinkDirective', () => {
 
         expect(spanDe.nativeElement.innerHTML)
             .toEqual('<a href="http://0.0.0.0:3333/v2/tei/http%3A%2F%2Frdfh.ch%2F0801%2FmqHSOB0xR-mzdUleQiwZ5Q?textProperty=http%3A%2F%2F0.0.0.0%3A3333%2Fontology%2F0801%2Fbeol%2Fv2%23hasText&amp;mappingIri=http%3A%2F%2Frdfh.ch%2Fprojects%2FyTerZGyxjZVqFMNNKXCDPF%2Fmappings%2FBEOLTEIMapping&amp;gravsearchTemplateIri=http%3A%2F%2Frdfh.ch%2F0801%2FtemplateIri&amp;teiHeaderXSLTIri=http%3A%2F%2Frdfh.ch%2F0801%2FheaderIri" target="_blank">TEI/XML</a>');
+    });
+
+    it('should not create a TEI link for a resource type without a configuration', () => {
+
+        component.resType = 'http://0.0.0.0:3333/ontology/0801/beol/v2#person';
+
+        fixture.detectChanges();
+
+        const compDe = fixture.debugElement;
+
+        const spanDe: DebugElement = compDe.query(By.css('span'));
+
+        expect(spanDe.nativeElement.innerHTML).toEqual('');
+
     });
 });
 

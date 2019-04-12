@@ -6,6 +6,14 @@ import { AppInitService } from '../app-init.service';
 })
 export class TeiLinkDirective implements OnChanges {
 
+    private readonly textProperty = 'textProperty';
+
+    private readonly mappingIri = 'mappingIri';
+
+    private readonly gravsearchTemplateIri = 'gravsearchTemplateIri';
+
+    private readonly teiHeaderXSLTIri = 'teiHeaderXSLTIri';
+
     private _resourceType: string; // the type of the resource to be converted to TEI
 
     @Input()
@@ -41,10 +49,10 @@ export class TeiLinkDirective implements OnChanges {
         if (teiConfig !== undefined) {
 
             const teiLink = settings.externalApiURL + '/v2/tei/' + encodeURIComponent(this._resourceIri)
-                + '?textProperty=' + encodeURIComponent(teiConfig.textProperty)
-                + '&mappingIri=' + encodeURIComponent(teiConfig.mappingIRI)
-                + '&gravsearchTemplateIri=' + encodeURIComponent(teiConfig.gravsearchTemplateIri)
-                + '&teiHeaderXSLTIri=' + encodeURIComponent(teiConfig.teiHeaderXSLTIri);
+                + `?${this.textProperty}=` + encodeURIComponent(teiConfig.textProperty)
+                + `&${this.mappingIri}=` + encodeURIComponent(teiConfig.mappingIRI)
+                + `&${this.gravsearchTemplateIri}=` + encodeURIComponent(teiConfig.gravsearchTemplateIri)
+                + `&${this.teiHeaderXSLTIri}=` + encodeURIComponent(teiConfig.teiHeaderXSLTIri);
 
             return teiLink;
         } else {
@@ -59,6 +67,9 @@ export class TeiLinkDirective implements OnChanges {
 
         if (teiLink !== false) {
             this.el.nativeElement.innerHTML = `<a href="${teiLink}" target="_blank">TEI/XML</a>`;
+        } else {
+            // no link could be generated
+            this.el.nativeElement.innerHTML = '';
         }
 
     }
