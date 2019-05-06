@@ -144,12 +144,12 @@
 
             </section>
 
-            <section *ngIf="props?.text[0]" class="text">
-                <read-text-value [valueObject]="props?.text[0]" [bindEvents]="true" [ontologyInfo]="ontologyInfo"></read-text-value>
+            <section>
+                <span appTeiLink [resourceIri]="iri" [resourceType]="ontologyIri + '/ontology/0801/beol/v2#letter'"></span>
             </section>
 
-            <section>
-                <span appTeiLink [resourceIri]="iri" [resourceType]="'http://0.0.0.0:3333/ontology/0801/beol/v2#letter'"></span>
+            <section *ngIf="props?.text[0]" class="text">
+                <read-text-value [valueObject]="props?.text[0]" [bindEvents]="true" [ontologyInfo]="ontologyInfo"></read-text-value>
             </section>
 
             <!-- OSD viewer -->

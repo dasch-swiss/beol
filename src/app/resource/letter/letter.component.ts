@@ -58,6 +58,8 @@ export class LetterComponent extends BeolResource {
     navigationSubscription: Subscription;
     KnoraConstants = KnoraConstants;
 
+    ontologyIri = this._appInitService.getSettings().ontologyIRI;
+
     propIris: PropIriToNameMapping = {
         'id': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#beolIDs',
         'date': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#creationDate',
