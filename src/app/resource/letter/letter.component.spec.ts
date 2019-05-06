@@ -15,6 +15,7 @@ import { KuiViewerModule } from '@knora/viewer';
 import { ReadTextValueComponent } from '../../properties/read-text-value/read-text-value.component';
 import { HanCatalogueDirective } from '../../directives/han-catalogue.directive';
 import { AppInitService } from '../../app-init.service';
+import { TeiLinkDirective } from '../../directives/tei-link.directive';
 
 describe('LetterComponent', () => {
     let component: LetterComponent;
@@ -42,7 +43,8 @@ describe('LetterComponent', () => {
                 ReadTextValueAsHtmlComponent,
                 ReadListValueComponent,
                 ReadTextValueComponent,
-                HanCatalogueDirective
+                HanCatalogueDirective,
+                TeiLinkDirective
             ],
             providers: [
                 OntologyCacheService,

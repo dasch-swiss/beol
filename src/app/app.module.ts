@@ -50,6 +50,7 @@ import { HanCatalogueDirective } from './directives/han-catalogue.directive';
 import { BebbRouteComponent } from './bebb-route/bebb-route.component';
 import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
 import { AppInitService } from './app-init.service';
+import { TeiLinkDirective } from './directives/tei-link.directive';
 
 
 export function initializeApp(appInitService: AppInitService) {
@@ -84,7 +85,8 @@ export function initializeApp(appInitService: AppInitService) {
         NewtonProjectDirective,
         SanitizeHtmlPipe,
         SanitizeUrlPipe,
-        BebbRouteComponent
+        BebbRouteComponent,
+        TeiLinkDirective
     ],
     imports: [
         AppRouting,
