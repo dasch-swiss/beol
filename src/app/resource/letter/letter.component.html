@@ -122,6 +122,10 @@
 
         <div class="main-content">
 
+            <section class="tei-link">
+                <span appTeiLink [resourceIri]="iri" [resourceType]="ontologyIri + '/ontology/0801/beol/v2#letter'"></span>
+            </section>
+
             <section class="title center">
                 <p *ngIf="props?.number[0]">
                     <read-text-value [valueObject]="props?.number[0]" [bindEvents]="true" [ontologyInfo]="ontologyInfo"></read-text-value>
@@ -142,10 +146,6 @@
                 </span>
                 <p>
 
-            </section>
-
-            <section class="tei-link">
-                <span appTeiLink [resourceIri]="iri" [resourceType]="ontologyIri + '/ontology/0801/beol/v2#letter'"></span>
             </section>
 
             <section *ngIf="props?.text[0]" class="text">
