@@ -10,5 +10,6 @@
   "appName": "BEOL | Bernoulli-Euler OnLine",
   "localData": "data",
   "pagingLimit": 25,
-  "startComponent": "dasch"
+  "startComponent": "dasch",
+  "tei": {}
 }
