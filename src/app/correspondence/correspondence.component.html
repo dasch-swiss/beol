@@ -72,6 +72,19 @@
             </div>
 
     </div>
+    <div *ngSwitchCase="'leibniz'">
+        <div *ngFor="let thirdPartyProject of leibniz">
+            <div class="container">
+                <div class="flex-container" fxFlex fxLayout="row wrap" fxLayout.sm="column" fxlayout.xs="column" fxFlexFill>
+                    <mat-card class="intro-card" fxFlex
+                              (click)="searchForLeibnizCorrespondence()">
+                        {{thirdPartyProject.description}}
+                    </mat-card>
+                </div>
+            </div>
+        </div>
+
+    </div>
     <!-- in case the project name does not exist -->
     <div *ngSwitchDefault>
         <p><strong>The project you are looking for does not exist!</strong></p>
