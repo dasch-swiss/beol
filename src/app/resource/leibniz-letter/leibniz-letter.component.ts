@@ -14,13 +14,13 @@ import {
     ReadResource,
     ReadTextValue,
     ReadTextValueAsString,
-    ReadUriValue,
     ResourceService
 } from '@knora/core';
 import { BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
 import { Subscription } from 'rxjs';
 import { BeolService } from '../../services/beol.service';
 import { AppInitService } from '../../app-init.service';
+import {el} from '@angular/platform-browser/testing/src/browser_util';
 
 class LetterProps implements PropertyValues {
     id: ReadTextValue[] = [];
@@ -105,32 +105,59 @@ export class LeibnizLetterComponent extends BeolResource {
         // https://stackoverflow.com/questions/43871637/no-access-control-allow-origin-header-is-present-on-the-requested-resource-whe
         const proxyurl = 'https://cors-anywhere.herokuapp.com/';
         const basePath = 'http://leibniz-briefportal.adw-goe.de/letter/';
-
         const url = basePath + filename; // site that doesn’t send Access-Control-*
 
         fetch(proxyurl + url) // https://cors-anywhere.herokuapp.com/https://example.com
             .then(response => response.text())
             .then(contents => {
+
                 this.getLeibnizLetterBody(contents);
                 this.isLoadingText = false;
             })
-            .catch(() => console.log('Can’t access ' + url + ' response. Blocked by browser?'));
+            .catch(e => console.log('Can’t access ' + url + ' response. Blocked by browser?', e));
+    }
+
+
+    private scriptSrcAttribute(element) {
+        if (element.src) {
+           const src = element.src.replace(this._appInitService.getSettings().appURL, 'http://leibniz-briefportal.adw-goe.de');
+           return src;
+        } else {
+            return element.src;
+        }
     }
 
     private getLeibnizLetterBody(contents) {
-        let text = '';
-        const html = new DOMParser().parseFromString(contents, 'text/html');
-        const divs = html.getElementsByTagName('div');
-        for (let divIt = 0; divIt < divs.length; divIt++) {
-            const divEl = divs[divIt];
-            if (divEl.id === 'tei') {
-                for (let child = 0; child < divEl.children.length; child++) {
-                    const divelement = divEl.children[child];
-                    text = text.concat(divelement.innerHTML);
-                }
-                this.letter = text;
+        // create a DOMParser to parse the HTML content
+        const parser = new DOMParser();
+        const parsedDocument = parser.parseFromString(contents, 'text/html');
+
+
+// get a list of all <script> tags in the new page
+        const tmpScripts = parsedDocument.getElementsByTagName('script');
+        if (tmpScripts.length > 0) {
+            // push all of the document's script tags into an array
+            // (to prevent dom manipulation while iterating over dom nodes)
+            const scripts = [];
+            for (let i = 0; i < tmpScripts.length; i++) {
+                scripts.push(tmpScripts[i]);
+            }
+
+            // iterate over all script tags and create a duplicate tags for each
+            for (let i = 0; i < scripts.length; i++) {
+                const s = document.createElement('script');
+                s.innerHTML = scripts[i].innerHTML;
+                s.src = this.scriptSrcAttribute(scripts[i]);
+                console.log('innnerhtml=')
+                console.log(s.innerHTML)
+                // add the new node to the page
+                scripts[i].parentNode.appendChild(s);
+
+                // remove the original (non-executing) node from the page
+                scripts[i].parentNode.removeChild(scripts[i]);
             }
         }
+        console.log(parsedDocument.getElementsByTagName('body')[0].innerHTML);
     }
     showIncomingRes(resIri, resType) {
         this._beolService.routeByResourceType(resType, resIri);
