@@ -104,21 +104,23 @@ export class LeibnizLetterComponent extends BeolResource {
         // use a proxy url as described here:
         // https://stackoverflow.com/questions/43871637/no-access-control-allow-origin-header-is-present-on-the-requested-resource-whe
         const proxyurl = 'https://cors-anywhere.herokuapp.com/';
-        const basePath = 'http://leibniz-briefportal.adw-goe.de/letter/';
-        const url = basePath + filename; // site that doesn’t send Access-Control-*
+        const basePath = 'http://leibniz.sub.uni-goettingen.de/solr/leibniz/select?sort=type+asc&q=id%3A';
+        const basePathOR =  '+OR+(doc_id%3A';
+        const basePathAnd = '+AND+type%3Avariante)&rows=9999&wt=json';
+        const apiUrl = basePath + filename + basePathOR + filename + basePathAnd; // site that doesn’t send Access-Control-*
 
-        fetch(proxyurl + url) // https://cors-anywhere.herokuapp.com/https://example.com
-            .then(response => response.text())
+        fetch(proxyurl + apiUrl) // https://cors-anywhere.herokuapp.com/https://example.com
+            .then(response => response.json())
             .then(contents => {
 
                 this.getLeibnizLetterBody(contents);
                 this.isLoadingText = false;
             })
-            .catch(e => console.log('Can’t access ' + url + ' response. Blocked by browser?', e));
+            .catch(e => console.log('Can’t access ' + apiUrl + ' response. Blocked by browser?', e));
     }
 
 
-    private scriptSrcAttribute(element) {
+    private imgSrcAttribute(element) {
         if (element.src) {
            const src = element.src.replace(this._appInitService.getSettings().appURL, 'http://leibniz-briefportal.adw-goe.de');
            return src;
@@ -128,36 +130,15 @@ export class LeibnizLetterComponent extends BeolResource {
     }
 
     private getLeibnizLetterBody(contents) {
-        // create a DOMParser to parse the HTML content
-        const parser = new DOMParser();
-        const parsedDocument = parser.parseFromString(contents, 'text/html');
-
-
-// get a list of all <script> tags in the new page
-        const tmpScripts = parsedDocument.getElementsByTagName('script');
-        if (tmpScripts.length > 0) {
-            // push all of the document's script tags into an array
-            // (to prevent dom manipulation while iterating over dom nodes)
-            const scripts = [];
-            for (let i = 0; i < tmpScripts.length; i++) {
-                scripts.push(tmpScripts[i]);
-            }
-
-            // iterate over all script tags and create a duplicate tags for each
-            for (let i = 0; i < scripts.length; i++) {
-                const s = document.createElement('script');
-                s.innerHTML = scripts[i].innerHTML;
-                s.src = this.scriptSrcAttribute(scripts[i]);
-                console.log('innnerhtml=')
-                console.log(s.innerHTML)
-                // add the new node to the page
-                scripts[i].parentNode.appendChild(s);
-
-                // remove the original (non-executing) node from the page
-                scripts[i].parentNode.removeChild(scripts[i]);
-            }
-        }
-        console.log(parsedDocument.getElementsByTagName('body')[0].innerHTML);
+      let text = '';
+      const html = new DOMParser().parseFromString(contents.response.docs[0].volltext, 'text/html');
+      const divs = html.getElementsByTagName('body');
+      for (let divIt = 0; divIt < divs.length; divIt++) {
+          const divEl = divs[divIt];
+          text = text.concat(divEl.innerHTML);
+      }
+      this.letter = text;
+      console.log(html);
     }
     showIncomingRes(resIri, resType) {
         this._beolService.routeByResourceType(resType, resIri);
