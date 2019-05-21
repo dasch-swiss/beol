@@ -4,32 +4,37 @@ import { MathJaxDirective } from '../../directives/mathjax.directive';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatSnackBarModule } from '@angular/material';
 import { Component, DebugElement, OnInit, ViewChild } from '@angular/core';
-import { ReadListValue } from '@knora/core';
+import { ListCacheService, ListNodeV2, ReadListValue } from '@knora/core';
 import { By } from '@angular/platform-browser';
 import { AppInitService } from '../../app-init.service';
+import { of } from 'rxjs';
 
 describe('ReadListValueComponent', () => {
     let testHostComponent: TestHostComponent;
     let testHostFixture: ComponentFixture<TestHostComponent>;
 
     let appInitService: AppInitService;
+    let listCacheService: ListCacheService;
 
     beforeEach(async(() => {
         const appInitServiceSpy = jasmine.createSpyObj('AppInitService', ['getSettings']);
 
+        const spyListCacheService = jasmine.createSpyObj('ListCacheService', ['getListNode']);
+
         TestBed.configureTestingModule({
-            imports: [
-                RouterTestingModule,
-                MatSnackBarModule
-            ],
             declarations: [
                 ReadListValueComponent,
                 TestHostComponent,
                 TestHostComponent2,
                 MathJaxDirective // idea for mock: https://stackoverflow.com/questions/44495114/is-it-possible-to-mock-an-attribute-directive-in-angular
             ],
+            imports: [
+                RouterTestingModule,
+                MatSnackBarModule
+            ],
             providers: [
-                {provide: AppInitService, useValue: appInitServiceSpy}
+                { provide: ListCacheService, useValue: spyListCacheService },
+                { provide: AppInitService, useValue: appInitServiceSpy }
             ]
         })
             .compileComponents();
@@ -37,6 +42,12 @@ describe('ReadListValueComponent', () => {
         appInitServiceSpy.getSettings.and.returnValue({ontologyIRI: 'http://0.0.0.0:3333'});
 
         appInitService = TestBed.get(AppInitService);
+
+        spyListCacheService.getListNode.and.callFake((nodeIri) => {
+            return of(new ListNodeV2(nodeIri, 'test' + nodeIri, 1, ''));
+        });
+
+        listCacheService = TestBed.get(ListCacheService);
     }));
 
     beforeEach(() => {
@@ -56,7 +67,7 @@ describe('ReadListValueComponent', () => {
     });
 
     it('should be equal to the list node label value "ListNodeLabel1"', () => {
-        expect(testHostComponent.listValueComponent.valueObject.listNodeLabel).toEqual('ListNodeLabel1');
+        expect(testHostComponent.listValueComponent.valueObject.listNodeIri).toEqual('http://rdfh.ch/8be1b7cf7103');
 
         const hostCompDe = testHostFixture.debugElement;
 
@@ -66,7 +77,10 @@ describe('ReadListValueComponent', () => {
 
         const spanNativeElement: HTMLElement = spanDebugElement.nativeElement;
 
-        expect(spanNativeElement.innerText).toEqual('ListNodeLabel1');
+        expect(spanNativeElement.innerText).toEqual('testhttp://rdfh.ch/8be1b7cf7103');
+
+        expect(listCacheService.getListNode).toHaveBeenCalledTimes(1);
+        expect(listCacheService.getListNode).toHaveBeenCalledWith('http://rdfh.ch/8be1b7cf7103');
 
         const mathJaxDirDe: DebugElement = hostCompDe.query(By.directive(MathJaxDirective));
 
@@ -75,7 +89,7 @@ describe('ReadListValueComponent', () => {
     });
 
     it('should be equal to the list node label value "ListNodeLabel2"', () => {
-        testHostComponent.listValue = new ReadListValue('id', 'propIri', 'http://rdfh.ch/9sdf8sfd2jf9', 'ListNodeLabel2');
+        testHostComponent.listValue = new ReadListValue('id', 'propIri', 'http://rdfh.ch/9sdf8sfd2jf9');
 
         testHostFixture.detectChanges();
 
@@ -87,7 +101,11 @@ describe('ReadListValueComponent', () => {
 
         const spanNativeElement: HTMLElement = spanDebugElement.nativeElement;
 
-        expect(spanNativeElement.innerText).toEqual('ListNodeLabel2');
+        expect(spanNativeElement.innerText).toEqual('testhttp://rdfh.ch/9sdf8sfd2jf9');
+
+        expect(listCacheService.getListNode).toHaveBeenCalledTimes(2);
+        expect(listCacheService.getListNode).toHaveBeenCalledWith('http://rdfh.ch/8be1b7cf7103');
+        expect(listCacheService.getListNode).toHaveBeenCalledWith('http://rdfh.ch/9sdf8sfd2jf9');
 
         const mathJaxDirDe: DebugElement = hostCompDe.query(By.directive(MathJaxDirective));
 
@@ -127,7 +145,7 @@ class TestHostComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.listValue = new ReadListValue('id', 'propIri', 'http://rdfh.ch/8be1b7cf7103', 'ListNodeLabel1');
+        this.listValue = new ReadListValue('id', 'propIri', 'http://rdfh.ch/8be1b7cf7103');
     }
 }
 
@@ -150,6 +168,6 @@ class TestHostComponent2 implements OnInit {
     }
 
     ngOnInit() {
-        this.listValue = new ReadListValue('id', 'propIri', 'http://rdfh.ch/8be1b7cf7103', 'ListNodeLabel1');
+        this.listValue = new ReadListValue('id', 'propIri', 'http://rdfh.ch/8be1b7cf7103');
     }
 }

@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import {
     IncomingService,
-    KnoraConstants,
+    KnoraConstants, ListCacheService, ListNodeV2,
     OntologyCacheService,
     OntologyInformation,
     ReadDateValue,
@@ -90,6 +90,7 @@ export class LetterComponent extends BeolResource {
                 protected _incomingService: IncomingService,
                 public location: Location,
                 protected _beolService: BeolService,
+                private _listCacheService: ListCacheService,
                 private _appInitService: AppInitService
     ) {
 
@@ -99,11 +100,15 @@ export class LetterComponent extends BeolResource {
 
     initProps() {
 
-        const props = new LetterProps();
+        // request subject index so it is cached
+        this._listCacheService.getList('http://rdfh.ch/lists/0801/subject_index').subscribe((list: ListNodeV2) => {
 
-        this.mapper(props);
+            const props = new LetterProps();
 
-        this.props = props;
+            this.mapper(props);
+
+            this.props = props;
+        });
 
     }
 
