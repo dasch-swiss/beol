@@ -13,7 +13,7 @@ import {
     ReadPropertyItem,
     ReadResource,
     ReadTextValue,
-    ReadTextValueAsString,
+    ReadTextValueAsString, ReadUriValue,
     ResourceService
 } from '@knora/core';
 import { BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
@@ -32,7 +32,9 @@ class LetterProps implements PropertyValues {
     mentionedPerson: ReadLinkValue[] = [];
     replyTo: ReadLinkValue[] = [];
     location: ReadTextValue[] = [];
+    number: ReadTextValue[] = [];
     title: ReadTextValue[] = [];
+    letterURI: ReadUriValue[] = [];
     letterID: ReadTextValue[] = [];
     language: ReadTextValue[] = [];
 
@@ -70,7 +72,9 @@ export class LeibnizLetterComponent extends BeolResource {
         'location': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#location',
         'title': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#title',
         'letterID': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/leibniz/v2#letterID',
+        'letterURI': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/leibniz/v2#letterHasURI',
         'language': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#letterHasLanguage',
+        'number': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#letterHasNumber',
     };
 
     props: LetterProps;
