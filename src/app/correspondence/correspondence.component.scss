@@ -23,7 +23,7 @@
   box-shadow: none !important;
   border: 1px solid #dfdfdf;
   border-radius: 3px;
-  cursor: pointer; 
+  cursor: pointer;
 }
 
 .newton-photo {
@@ -42,7 +42,45 @@
 }
 
 .newton-project-title {
-  font-weight: 300;
-  font-size: 1.4em;
+  font-weight: 500;
+  font-size: 1.1em;
+  margin-top: 60px;
+}
+
+
+.newton-container {
+  margin: 12px 0 12px 0;
+}
+
+.leibniz-intro-card {
+  margin: 0 auto;
+  padding: 0 !important;
+  display: flex;
+  height: 150px;
+  width: 40%;
+  box-shadow: none !important;
+  border: 1px solid #dfdfdf;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.leibniz-photo {
+  background-image: url('/assets/images/leibniz.jpeg');
+  background-size: 100% 100%;
+  float: left;
+  height: 100%;
+  min-width: 130px;
+}
+
+.leibniz-project-link {
+  background-color: #F1F1F1;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+}
+
+.leibniz-project-title {
+  font-weight: 500;
+  font-size: 1.1em;
   margin-top: 60px;
 }

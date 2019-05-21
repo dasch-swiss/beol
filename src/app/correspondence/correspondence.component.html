@@ -66,7 +66,7 @@
                 <mat-card class="newton-intro-card" (click)="searchForNewtonCorrespondence()">
                     <div class="newton-photo"></div>
                     <div class="newton-project-link">
-                        <p class="newton-project-title">Newton project</p>
+                        <p class="newton-project-title">{{thirdPartyProject.description}}</p>
                     </div>
                 </mat-card>
             </div>
@@ -75,16 +75,18 @@
     </div>
     <div *ngSwitchCase="'leibniz'">
         <div *ngFor="let thirdPartyProject of leibniz">
-            <div class="container">
-                <div class="flex-container" fxFlex fxLayout="row wrap" fxLayout.sm="column" fxlayout.xs="column" fxFlexFill>
-                    <mat-card class="intro-card" fxFlex (click)="searchForLeibnizCorrespondence()">
-                        {{thirdPartyProject.description}}
-                    </mat-card>
-                </div>
+            <div class="leibniz-container">
+                <mat-card class="leibniz-intro-card" (click)="searchForLeibnizCorrespondence()">
+                    <div class="leibniz-photo"></div>
+                    <div class="leibniz-project-link">
+                        <p class="leibniz-project-title">{{thirdPartyProject.description}}</p>
+                    </div>
+                </mat-card>
             </div>
         </div>
 
     </div>
+
     <!-- in case the project name does not exist -->
     <div *ngSwitchDefault>
         <p>
