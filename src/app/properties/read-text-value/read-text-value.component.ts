@@ -41,6 +41,8 @@ export class ReadTextValueComponent implements OnInit {
         return this._bindEvents;
     }
 
+    @Input() renderFigureRegions = false;
+
     constructor() {
     }
 
