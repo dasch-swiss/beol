@@ -149,7 +149,7 @@ export class MathJaxDirective implements OnChanges {
 
     /**
      * Requests figure regions from Knora and renders them in the HTML.
-     * 
+     *
      * @param figureRegionIris Iris of figure regions.
      */
     private getAndRenderFigureRegions(figureRegionIris: string[]) {
@@ -168,17 +168,21 @@ export class MathJaxDirective implements OnChanges {
 
             result.forEach(
                 (figReg: ReadResourcesSequence) => {
-                    for (let i = 0; i < html.length; i++) {
-                        if (html[i].getAttribute('href') === figReg.resources[0].id) {
-                            const iiifUrl = this.createIIIFURLFromRegion(figReg.resources[0]);
 
-                            const img = document.createElement('img');
-                            img.src = iiifUrl;
+                    // check that figReg contains one resource
+                    if (figReg.resources.length === 1) {
+                        for (let i = 0; i < html.length; i++) {
+                            if (html[i].getAttribute('href') === figReg.resources[0].id) {
+                                const iiifUrl = this.createIIIFURLFromRegion(figReg.resources[0]);
 
-                            html[i].appendChild(img);
+                                const img = document.createElement('img');
+                                img.src = iiifUrl;
 
-                            // clix tags have two elements, only process first
-                            break;
+                                html[i].appendChild(img);
+
+                                // clix tags have two elements, only process first
+                                break;
+                            }
                         }
                     }
                 }
