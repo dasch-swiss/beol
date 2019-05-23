@@ -1,5 +1,13 @@
 import {Directive, ElementRef, HostListener, Input, OnChanges, OnInit} from '@angular/core';
-import {KnoraConstants, OntologyInformation, ReadTextValueAsHtml} from '@knora/core';
+import {
+    KnoraConstants,
+    OntologyInformation,
+    ReadGeomValue,
+    ReadLinkValue,
+    ReadResource,
+    ReadResourcesSequence, ReadStillImageFileValue,
+    ReadTextValueAsHtml
+} from '@knora/core';
 import {BeolService} from '../services/beol.service';
 import {MatSnackBar, MatSnackBarConfig} from '@angular/material';
 
@@ -78,6 +86,39 @@ export class MathJaxDirective implements OnChanges {
     }
 
     /**
+     * Given a region resources that links to the related file value, creates a IIIF URL for the image region.
+     * @param regionRes the region resource.
+     */
+    private createIIIFURLFromRegion(regionRes: ReadResource) {
+
+        const hasGeometryProp = 'http://api.knora.org/ontology/knora-api/v2#hasGeometry';
+
+        const geomValue = regionRes.properties[hasGeometryProp][0] as ReadGeomValue;
+
+        const hasRegionValue = 'http://api.knora.org/ontology/knora-api/v2#isRegionOfValue';
+
+        const hasFileValue = 'http://api.knora.org/ontology/knora-api/v2#hasStillImageFileValue';
+
+        const fileValue = (regionRes.properties[hasRegionValue][0] as ReadLinkValue).referredResource.properties[hasFileValue][0] as ReadStillImageFileValue;
+
+        // build Sipi URL
+        const x1 = Math.min(geomValue.geometry.points[0].x, geomValue.geometry.points[1].x);
+        const x2 = Math.max(geomValue.geometry.points[0].x, geomValue.geometry.points[1].x);
+
+        const y1 = Math.min(geomValue.geometry.points[0].y, geomValue.geometry.points[1].y);
+        const y2 = Math.max(geomValue.geometry.points[0].y, geomValue.geometry.points[1].y);
+
+        const regionWidth = (x2 - x1) * 100;
+        const regionHeight = (y2 - y1) * 100;
+
+        const pct = x1 * 100 + ',' + y1 * 100 + ',' + regionWidth + ',' + regionHeight;
+
+        const sipiURL = fileValue.imageServerIIIFBaseURL + '/' + fileValue.imageFilename + '/pct:' + pct + '/pct:20/0/default.jpg';
+
+        return sipiURL;
+    }
+
+    /**
      * Binds a click event to standoff links that showing the referred resource using the apt template (route).
      *
      * Events only fire if bindEvents is set to true.
@@ -96,12 +137,13 @@ export class MathJaxDirective implements OnChanges {
             const referredResourceIri = targetElement.href;
 
             // TODO: the value object should handle this and check for the existence of the given referred resource
-            const referredResourceType = this._valueObject.referredResources[referredResourceIri].type;
+            const referred_res = this._valueObject.referredResources[referredResourceIri];
 
-            this._beol.routeByResourceType(referredResourceType, referredResourceIri);
+            this._beol.routeByResourceType(referred_res.type, referredResourceIri);
 
             // preventDefault (propagation)
             return false;
+
         } else if (this._bindEvents && targetElement.parentElement.nodeName.toLowerCase() === 'a'
             && targetElement.parentElement.className.toLowerCase().indexOf(KnoraConstants.SalsahLink) >= 0) {
 
@@ -180,7 +222,25 @@ export class MathJaxDirective implements OnChanges {
 
             const referredResourceIri = targetElement.href;
 
-            const resInfo = this.valueObject.getReferredResourceInfo(referredResourceIri, this.ontologyInfo);
+            const resInfo: string = this.valueObject.getReferredResourceInfo(referredResourceIri, this.ontologyInfo);
+
+            // TODO: the value object should handle this and check for the existence of the given referred resource
+            // const referred_res = this._valueObject.referredResources[referredResourceIri];
+
+            // check if it links to a figure region
+            /*if (referred_res.type === KnoraConstants.Region && referred_res.label.trim().includes('-F') && targetElement.getAttribute('start')) {
+
+                // it is a figure: create IIIF URL
+
+                this._beol.getRegionDimsAndFile(referred_res.id).subscribe(
+                    (reg: ReadResourcesSequence) => {
+                        if (reg.resources.length === 1) {
+                            const iiifUrl = this.createIIIFURLFromRegion(reg.resources[0]);
+                            targetElement.innerHTML = `<img src="${iiifUrl}"/>`;
+                        }
+                    }
+                );
+            }*/
 
             const config = new MatSnackBarConfig();
             config.duration = 2500;

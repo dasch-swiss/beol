@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import {
     ExtendedSearchParams,
     KnoraConstants,
-    ReadLinkValue,
+    ReadLinkValue, ReadResource,
     ReadResourcesSequence,
     ResourceService,
-    SearchParamsService
+    SearchParamsService, SearchService
 } from '@knora/core';
 import { Router } from '@angular/router';
 import { AppInitService } from '../app-init.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -19,6 +20,7 @@ export class BeolService {
         private _searchParamsService: SearchParamsService,
         private _router: Router,
         private _resourceService: ResourceService,
+        private _searchSerice: SearchService,
         private _appInitService: AppInitService
     ) {}
 
@@ -452,7 +454,57 @@ export class BeolService {
         );
     }
 
-    /*
+    /**
+     * Generates a Gravsearch query that gets the given region's geometry value and the file value of the image it points to.
+     *
+     * @param regionIri the Iri of the region whose geometry and related file value should be retrieved.
+     * @return Gravsearch string.
+     */
+    private getRegionDimensionsAndPageQuery(regionIri: string): string {
+
+        const regionDimsTemplate = `
+    PREFIX beol: <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/beol/simple/v2#>
+    PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>  
+
+    CONSTRUCT {
+       ?region knora-api:isMainResource true .
+		
+       ?region knora-api:hasGeometry ?geometry .  
+
+       ?region knora-api:isRegionOf ?page .
+       
+       ?page knora-api:hasStillImageFile ?file .
+
+    } WHERE {
+       BIND(<${regionIri}> AS ?region)
+ 
+ 	   ?region knora-api:hasGeometry ?geometry . 
+ 
+       ?region knora-api:isRegionOf ?page .
+        
+       ?page knora-api:hasStillImageFile ?file .
+       
+    } OFFSET 0
+        `;
+
+        return regionDimsTemplate;
+    }
+
+    /**
+     * Searches for the given region's geometry value and related file value.
+     *
+     * @param regionIri the Iri of the region whose geometry and related file value should be retrieved.
+     * @return the region resource with the geometry value and the related file value.
+     */
+    getRegionDimsAndFile(regionIri: string): Observable<ReadResourcesSequence> {
+
+        const gravsearch = this.getRegionDimensionsAndPageQuery(regionIri);
+
+        return this._searchSerice.doExtendedSearchReadResourceSequence(gravsearch);
+
+    }
+
+    /**
      * Given the title of a letter from BEBB, searches for that letter.
      *
      * @param title the title of the BEBB letter to search for.
