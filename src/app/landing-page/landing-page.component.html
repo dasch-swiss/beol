@@ -112,10 +112,19 @@
         <mat-divider></mat-divider>
         <section>
             <h2 mat-card-title>Third Party Projects</h2>
-            <span class="container-third-party-tiles">
+            <span
+                fxLayout="row"
+                fxLayout.lt-md="column"
+                fxLayoutWrap
+                fxLayoutGap="0.5%"
+                fxLayoutAlign="center">
 
-                <app-correspondence [project]="'newton'"></app-correspondence>
-                <app-correspondence [project]="'leibniz'"></app-correspondence>
+                <app-correspondence [project]="'newton'"
+                    fxFlex="35%"></app-correspondence>
+
+                <app-correspondence [project]="'leibniz'"
+                    fxFlex="35%"></app-correspondence>
+
             </span>
         </section>
         <section>
