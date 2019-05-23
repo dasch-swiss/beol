@@ -112,8 +112,11 @@
         <mat-divider></mat-divider>
         <section>
             <h2 mat-card-title>Third Party Projects</h2>
-            <app-correspondence [project]="'newton'"></app-correspondence>
-            <app-correspondence [project]="'leibniz'"></app-correspondence>
+            <span class="container-third-party-tiles">
+
+                <app-correspondence [project]="'newton'"></app-correspondence>
+                <app-correspondence [project]="'leibniz'"></app-correspondence>
+            </span>
         </section>
         <section>
             <h3 mat-card-subtitle>Technical background</h3>

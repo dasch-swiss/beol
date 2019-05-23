@@ -15,11 +15,12 @@
 }
 
 .newton-intro-card {
-  margin: 0 auto;
+  margin-right: 10px;
+  margin-left: 10px;
   padding: 0 !important;
   display: flex;
-  height: 150px;
-  width: 40%;
+  height: 160px;
+  width: 300px;
   box-shadow: none !important;
   border: 1px solid #dfdfdf;
   border-radius: 3px;
@@ -44,7 +45,7 @@
 .newton-project-title {
   font-weight: 500;
   font-size: 1.1em;
-  margin-top: 60px;
+  margin-top: 70px;
 }
 
 
@@ -53,11 +54,12 @@
 }
 
 .leibniz-intro-card {
-  margin: 0 auto;
+  margin-right: 10px;
+  margin-left: 10px;
   padding: 0 !important;
   display: flex;
-  height: 150px;
-  width: 40%;
+  height: 160px;
+  width: 300px;
   box-shadow: none !important;
   border: 1px solid #dfdfdf;
   border-radius: 3px;
@@ -82,5 +84,9 @@
 .leibniz-project-title {
   font-weight: 500;
   font-size: 1.1em;
-  margin-top: 60px;
+  margin-top: 70px;
+
+}
+.leibniz-container {
+  margin: 12px 0 12px 0;
 }
