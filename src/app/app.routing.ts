@@ -19,6 +19,7 @@ import { NewtonLetterComponent } from './resource/newton-letter/newton-letter.co
 import { BebbRouteComponent } from './bebb-route/bebb-route.component';
 import { TranscriptionComponent } from './resource/transcription/transcription.component';
 import { ManuscriptEntryComponent } from './resource/manuscript-entry/manuscript-entry.component';
+import { CommentComponent } from './resource/comment/comment.component';
 
 const appRoutes: Routes = [
     {
@@ -76,9 +77,14 @@ const appRoutes: Routes = [
     {
         path: 'transcription/:id',
         component: TranscriptionComponent
-    },{
+    },
+    {
         path: 'manuscriptEntry/:id',
         component: ManuscriptEntryComponent
+    },
+    {
+        path: 'entryComment/:id',
+        component: CommentComponent
     },
     {
         path: 'search',

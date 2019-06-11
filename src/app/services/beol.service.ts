@@ -666,6 +666,8 @@ export class BeolService {
             this.routeToPageWithActiveRegion(referredResourceIri);
         } else if (referredResourceType === this._appInitService.getSettings().ontologyIRI  + '/ontology/0801/beol/v2#transcription') {
             this._router.navigateByUrl('transcription/' + encodeURIComponent(referredResourceIri));
+        } else if (referredResourceType === this._appInitService.getSettings().ontologyIRI  + '/ontology/0801/beol/v2#entryComment') {
+            this._router.navigateByUrl('entryComment/' + encodeURIComponent(referredResourceIri));
         } else if (referredResourceType === this._appInitService.getSettings().ontologyIRI  + '/ontology/0801/beol/v2#manuscriptEntry') {
             this._router.navigateByUrl('manuscriptEntry/' + encodeURIComponent(referredResourceIri));
         } else {

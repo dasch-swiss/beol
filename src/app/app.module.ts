@@ -52,6 +52,7 @@ import { AppInitService } from './app-init.service';
 import { TranscriptionComponent } from './resource/transcription/transcription.component';
 import { ManuscriptEntryComponent } from './resource/manuscript-entry/manuscript-entry.component';
 import { TeiLinkDirective } from './directives/tei-link.directive';
+import { CommentComponent } from './resource/comment/comment.component';
 
 
 export function initializeApp(appInitService: AppInitService) {
@@ -90,7 +91,8 @@ export function initializeApp(appInitService: AppInitService) {
         SanitizeUrlPipe,
         BebbRouteComponent,
         ManuscriptEntryComponent,
-        TeiLinkDirective
+        TeiLinkDirective,
+        CommentComponent
     ],
     imports: [
         AppRouting,
