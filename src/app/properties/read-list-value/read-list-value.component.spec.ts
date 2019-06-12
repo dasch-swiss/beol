@@ -9,6 +9,7 @@ import { By } from '@angular/platform-browser';
 
 import { AppInitService } from '../../app-init.service';
 import { of } from 'rxjs';
+import { HttpClientModule } from '@angular/common/http';
 
 
 describe('ReadListValueComponent', () => {
@@ -32,7 +33,8 @@ describe('ReadListValueComponent', () => {
             ],
             imports: [
                 RouterTestingModule,
-                MatSnackBarModule
+                MatSnackBarModule,
+                HttpClientModule
             ],
             providers: [
                 {provide: ListCacheService, useValue: spyListCacheService},
