@@ -3,6 +3,8 @@ import { inject, TestBed } from '@angular/core/testing';
 import { BeolService } from './beol.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppInitService } from '../app-init.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { KuiCoreConfig, KuiCoreConfigToken } from '@knora/core';
 
 describe('BeolService', () => {
     let appInitService: AppInitService;
@@ -11,10 +13,11 @@ describe('BeolService', () => {
         const appInitServiceSpy = jasmine.createSpyObj('AppInitService', ['getSettings']);
 
         TestBed.configureTestingModule({
-            imports: [RouterTestingModule],
+            imports: [RouterTestingModule, HttpClientTestingModule],
             providers: [
                 BeolService,
-                {provide: AppInitService, useValue: appInitServiceSpy}
+                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig },
+                { provide: AppInitService, useValue: appInitServiceSpy }
             ]
         })
             .compileComponents();

@@ -4,10 +4,12 @@ import { MathJaxDirective } from '../../directives/mathjax.directive';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatSnackBarModule } from '@angular/material';
 import { Component, DebugElement, OnInit, ViewChild } from '@angular/core';
-import { ListCacheService, ListNodeV2, ReadListValue } from '@knora/core';
+import { KuiCoreConfig, KuiCoreConfigToken, ListCacheService, ListNodeV2, ReadListValue } from '@knora/core';
 import { By } from '@angular/platform-browser';
+
 import { AppInitService } from '../../app-init.service';
 import { of } from 'rxjs';
+
 
 describe('ReadListValueComponent', () => {
     let testHostComponent: TestHostComponent;
@@ -33,8 +35,9 @@ describe('ReadListValueComponent', () => {
                 MatSnackBarModule
             ],
             providers: [
-                { provide: ListCacheService, useValue: spyListCacheService },
-                { provide: AppInitService, useValue: appInitServiceSpy }
+                {provide: ListCacheService, useValue: spyListCacheService},
+                {provide: KuiCoreConfigToken, useValue: KuiCoreConfig},
+                {provide: AppInitService, useValue: appInitServiceSpy}
             ]
         })
             .compileComponents();

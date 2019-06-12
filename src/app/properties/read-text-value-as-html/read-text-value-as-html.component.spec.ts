@@ -4,6 +4,8 @@ import { ReadTextValueAsHtmlComponent } from './read-text-value-as-html.componen
 import { MathJaxDirective } from '../../directives/mathjax.directive';
 import { Component, DebugElement, OnInit, ViewChild } from '@angular/core';
 import {
+    KuiCoreConfig,
+    KuiCoreConfigToken,
     OntologyInformation,
     ReadTextValue,
     ReadTextValueAsHtml,
@@ -14,6 +16,9 @@ import {
 import { MatSnackBarModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
+
+import { HttpClientModule } from '@angular/common/http';
+
 import { AppInitService } from '../../app-init.service';
 
 
@@ -30,7 +35,7 @@ describe('ReadTextValueAsHtmlComponent', () => {
             imports: [
                 MatSnackBarModule,
                 RouterTestingModule,
-                RouterTestingModule
+                HttpClientModule
             ],
             declarations: [
                 ReadTextValueAsHtmlComponent,
@@ -38,7 +43,8 @@ describe('ReadTextValueAsHtmlComponent', () => {
                 TestHostComponent
             ],
             providers: [
-                {provide: AppInitService, useValue: appInitServiceSpy}
+                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig },
+                { provide: AppInitService, useValue: appInitServiceSpy }
             ]
         })
             .compileComponents();
