@@ -496,8 +496,8 @@ export class CorrespondenceComponent implements OnInit {
   /**
     * Generate Gravsearch query to search for the correspondence between two persons.
     *
-    * @param author GND of the first correspondent.
-    * @param recipient GND of the second correspondent.
+    * @param gnd1 GND of the first correspondent.
+    * @param gnd2 GND of the second correspondent.
     * @param noTranslations indicates if translations should be excluded.
     */
   searchForCorrespondence(gnd1: string, gnd2: string, noTranslations: boolean = false) {
