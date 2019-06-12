@@ -60,7 +60,7 @@
 
         <div class="main-content">
 
-            <section *ngIf="props?.text[0]" class="text">
+            <section *ngIf="props?.text[0]" [ngClass]="{text: true, layer1: (props?.layer[0] && props?.layer[0].integer === 1)}">
                 <read-text-value [valueObject]="props?.text[0]" [bindEvents]="true"
                                  [ontologyInfo]="ontologyInfo" [renderFigureRegions]="true"></read-text-value>
             </section>
