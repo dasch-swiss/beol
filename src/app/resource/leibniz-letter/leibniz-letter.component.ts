@@ -124,25 +124,43 @@ export class LeibnizLetterComponent extends BeolResource {
     }
 
 
-    private imgSrcAttribute(element) {
-        if (element.src) {
-           const src = element.src.replace(this._appInitService.getSettings().appURL, 'http://leibniz-briefportal.adw-goe.de');
-           return src;
-        } else {
-            return element.src;
+    private getLeibnizImages(element) {
+        const proxyurl = 'https://cors-anywhere.herokuapp.com/';
+        const basePath = 'http://leibniz.sub.uni-goettingen.de/solr/leibniz/select?q=id%3A';
+        const basePathTail = '&rows=9999&wt=json';
+
+        const imgs = element.getElementsByTagName('span');
+        for (let imgIt = 0; imgIt < imgs.length; imgIt++) {
+            const image = imgs[imgIt];
+            if (image.getAttribute('class') === 'reference -image') {
+                const filename = image.getAttribute('data-id');
+                const apiUrl = basePath + filename + basePathTail; // get the svg element
+                fetch(proxyurl + apiUrl) // https://cors-anywhere.herokuapp.com/https://example.com
+                    .then(response => response.json())
+                    .then(contents => {
+                        const svgElement = this.getLeibnizImageSVG(contents);
+                        image.replaceWith(svgElement);
+                    });
+
+                console.log(this._appInitService.getSettings().appURL);
+            }
+
         }
+        return element;
+    }
+
+    private getLeibnizImageSVG(contents) {
+        const svg = new DOMParser().parseFromString(contents.response.docs[0].svg_code, 'text/html');
+        return svg.getElementsByTagName('svg')[0];
     }
 
     private getLeibnizLetterBody(contents) {
-      let text = '';
       const html = new DOMParser().parseFromString(contents.response.docs[0].volltext, 'text/html');
-      const divs = html.getElementsByTagName('body');
-      for (let divIt = 0; divIt < divs.length; divIt++) {
-          const divEl = divs[divIt];
-          text = text.concat(divEl.innerHTML);
-      }
-      this.letter = text;
-      console.log(html);
+      this.getLeibnizImages(html.body);
+      console.log(html.body);
+      this.letter = html.body.innerHTML;
+      console.log('innerHTML')
+      console.log(this.letter);
     }
     showIncomingRes(resIri, resType) {
         this._beolService.routeByResourceType(resType, resIri);
