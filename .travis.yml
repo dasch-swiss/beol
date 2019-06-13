@@ -20,7 +20,7 @@ addons:
 install:
     - yarn global add @angular/cli
     - yarn global add yalc
-    - cd ~ && git clone -b wip/upgrade-to-angular7 https://github.com/dhlab-basel/Knora-ui.git && cd Knora-ui && yarn install --prod=false && yarn build-lib-prod && yarn yalc-publish
+    - cd ~ && git clone https://github.com/dhlab-basel/Knora-ui.git && cd Knora-ui && yarn install --prod=false && yarn build-lib-prod && yarn yalc-publish
     - cd $TRAVIS_BUILD_DIR
 
 script:
