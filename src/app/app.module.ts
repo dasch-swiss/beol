@@ -2,16 +2,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 // @knora modules
-import { KuiCoreModule, KuiCoreConfigToken } from '@knora/core';
+import { KuiCoreConfigToken, KuiCoreModule } from '@knora/core';
 import { KuiActionModule } from '@knora/action';
 import { KuiSearchModule } from '@knora/search';
 import { KuiViewerModule } from '@knora/viewer';
 // modules from @angular/material and @angular/flex-layout
 import { MaterialModule } from './material-module';
 import { FlexLayoutModule } from '@angular/flex-layout';
-// router module and app routing with all the path definitions
-// import { RouterModule } from '@angular/router';
-
 import { AppRouting } from './app.routing';
 // app components
 import { AppComponent } from './app.component';
@@ -38,13 +35,14 @@ import { CorrespondenceComponent } from './correspondence/correspondence.compone
 import { ContactComponent } from './contact/contact.component';
 
 import { ReactiveFormsModule } from '@angular/forms';
-import { APP_BASE_HREF } from '@angular/common';
 // import { RECAPTCHA_SETTINGS, RecaptchaSettings } from 'ng-recaptcha';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+
+import { PageComponent } from './resource/page/page.component';
 import { ReadTextValueComponent } from './properties/read-text-value/read-text-value.component';
 
-import {SanitizeHtmlPipe} from './pipes/sanitize-html.pipe';
-import {SanitizeUrlPipe} from './pipes/sanitize-url.pipe';
+import { SanitizeHtmlPipe } from './pipes/sanitize-html.pipe';
+import { SanitizeUrlPipe } from './pipes/sanitize-url.pipe';
 import { NewtonProjectDirective } from './directives/newton-project.directive';
 import { LeibnizPortalDirective } from './directives/leibniz-portal.directive';
 
@@ -52,7 +50,11 @@ import { HanCatalogueDirective } from './directives/han-catalogue.directive';
 import { BebbRouteComponent } from './bebb-route/bebb-route.component';
 import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
 import { AppInitService } from './app-init.service';
+
+import { TranscriptionComponent } from './resource/transcription/transcription.component';
+import { ManuscriptEntryComponent } from './resource/manuscript-entry/manuscript-entry.component';
 import { TeiLinkDirective } from './directives/tei-link.directive';
+import { CommentComponent } from './resource/comment/comment.component';
 
 
 export function initializeApp(appInitService: AppInitService) {
@@ -83,14 +85,18 @@ export function initializeApp(appInitService: AppInitService) {
         BiblioItemsComponent,
         EndnoteComponent,
         FigureComponent,
+        PageComponent,
         ReadTextValueComponent,
         HanCatalogueDirective,
+        TranscriptionComponent,
         NewtonProjectDirective,
         LeibnizPortalDirective,
         SanitizeHtmlPipe,
         SanitizeUrlPipe,
         BebbRouteComponent,
-        TeiLinkDirective
+        ManuscriptEntryComponent,
+        TeiLinkDirective,
+        CommentComponent
     ],
     imports: [
         AppRouting,

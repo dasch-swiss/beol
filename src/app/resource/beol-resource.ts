@@ -13,10 +13,15 @@ import {
     StillImageRepresentation,
     Utils
 } from '@knora/core';
+
+import { StillImageComponent } from '@knora/viewer';
+
 import { Subscription } from 'rxjs';
+
+import { OnDestroy, OnInit, ViewChild } from '@angular/core';
+
 import { BeolService } from '../services/beol.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { OnDestroy, OnInit } from '@angular/core';
 
 export interface PropIriToNameMapping {
     [index: string]: string;
@@ -35,6 +40,9 @@ export abstract class BeolResource implements OnInit, OnDestroy {
     abstract errorMessage: any;
     abstract incomingStillImageRepresentationCurrentOffset: number;
     abstract navigationSubscription: Subscription;
+    protected params;
+
+    @ViewChild('OSDViewer') osdViewer: StillImageComponent;
 
     abstract KnoraConstants: KnoraConstants;
 
@@ -121,7 +129,6 @@ export abstract class BeolResource implements OnInit, OnDestroy {
         }
 
         resource.stillImageRepresentationsToDisplay = imgRepresentations;
-
     }
 
     /**
@@ -142,6 +149,7 @@ export abstract class BeolResource implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.navigationSubscription = this._route.paramMap.subscribe((params: ParamMap) => {
+            this.params = params;
             this.iri = params.get('id');
             this.getResource(this.iri);
         });
@@ -287,12 +295,9 @@ export abstract class BeolResource implements OnInit, OnDestroy {
                 Array.prototype.push.apply(this.resource.incomingRegions, regions.resources);
 
                 // prepare regions to be displayed
+                // triggers ngOnChanges of StillImageComponent
                 BeolResource.collectImagesAndRegionsForResource(this.resource);
 
-                // TODO: implement osdViewer
-                /* if (this.osdViewer) {
-                  this.osdViewer.updateRegions();
-                } */
             },
             (error: any) => {
                 this.errorMessage = <any>error;

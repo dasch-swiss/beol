@@ -25,16 +25,17 @@ export class ResourceComponent extends BeolResource {
     propIris;
 
     constructor(protected _route: ActivatedRoute,
-        protected _resourceService: ResourceService,
-        protected _cacheService: OntologyCacheService,
-        protected _incomingService: IncomingService,
-        public location: Location,
-        protected _beolService: BeolService) {
+                protected _resourceService: ResourceService,
+                protected _cacheService: OntologyCacheService,
+                protected _incomingService: IncomingService,
+                public location: Location,
+                protected _beolService: BeolService) {
 
         super(_route, _resourceService, _cacheService, _incomingService, _beolService);
     }
 
     initProps() {
+
     }
 
     /**

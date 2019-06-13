@@ -1,7 +1,15 @@
 import { Injectable } from '@angular/core';
-import { ExtendedSearchParams, SearchParamsService } from '@knora/core';
+import {
+    ExtendedSearchParams,
+    KnoraConstants,
+    ReadLinkValue, ReadResource,
+    ReadResourcesSequence,
+    ResourceService,
+    SearchParamsService, SearchService
+} from '@knora/core';
 import { Router } from '@angular/router';
 import { AppInitService } from '../app-init.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -11,6 +19,8 @@ export class BeolService {
     constructor(
         private _searchParamsService: SearchParamsService,
         private _router: Router,
+        private _resourceService: ResourceService,
+        private _searchSerice: SearchService,
         private _appInitService: AppInitService
     ) {}
 
@@ -350,6 +360,191 @@ export class BeolService {
     }
 
     /**
+     * Given a region Iri, returns the Gravsearch query to obtain the associated transcription Iri.
+     *
+     * @param regionIri Iri of the region.
+     * @param offset offset to be used.
+     * @returns the Gravsearch query to get the transcription Iris.
+     */
+    getTranscriptionIriForRegion(regionIri: string, offset: number = 0) {
+
+        const transcriptionIriForPage = `
+        PREFIX beol: <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/beol/simple/v2#>
+        PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>  
+        CONSTRUCT {
+            ?transcription knora-api:isMainResource true .
+        } WHERE {
+            ?transcription beol:belongsToRegion <${regionIri}> .
+        }
+
+        OFFSET ${offset}
+        `;
+
+        return transcriptionIriForPage;
+    }
+
+    /**
+     * Given a manuscript entry Iri, get the transcriptions that point to this manuscript entry.
+     *
+     * @param manuscriptEntryIri Iri of the manuscript entry.
+     * @param excludeLayer layer to be excluded.
+     * @param excludeLayer0 if set to true, layer 0 is ignored.
+     * @param offset offset to be used.
+     * @returns the Gravsearch query to get the manuscript entries.
+     */
+    getTranscriptionsForManuscriptEntry(manuscriptEntryIri: string, excludeLayer: number, excludeLayer0 = false, offset: number = 0) {
+
+        let excludeLayer0filter = '';
+
+        if (excludeLayer0) {
+            excludeLayer0filter = `FILTER(?layer > 0)`;
+        }
+
+        const transcriptionsForManuscriptEntry = `
+        PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
+        CONSTRUCT {
+
+            ?trans knora-api:isMainResource true .
+
+        } WHERE {
+
+            ?trans a knora-api:Resource .
+
+            ?trans a <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/beol/simple/v2#transcription> .
+            
+            ?trans <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/beol/simple/v2#transcriptionOf> <${manuscriptEntryIri}> .
+            
+            ?trans <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/beol/simple/v2#layer> ?layer .
+            
+            FILTER(?layer != ${excludeLayer})
+
+            ${excludeLayer0filter}    
+        }
+
+        ORDER BY ?layer 
+        OFFSET ${offset}
+        `;
+
+        return transcriptionsForManuscriptEntry;
+    }
+
+    getTitleRegionTranscriptionForManuscriptEntry(manuscriptEntryIri: string, offset: number = 0) {
+
+        const titleRegionTranscriptionsForManuscriptEntry = `
+        PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
+        CONSTRUCT {
+
+            ?trans knora-api:isMainResource true .
+
+        } WHERE {
+
+            ?trans a knora-api:Resource .
+
+            ?trans a <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/beol/simple/v2#transcription> .
+            
+            ?trans <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/beol/simple/v2#transcriptionOf> <${manuscriptEntryIri}> .
+            
+            ?trans <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/beol/simple/v2#belongsToRegion> ?region .
+            
+            ?region knora-api:hasComment ?title .
+            
+            FILTER(regex(?title, '01-TT'))
+
+           
+        }
+
+        
+        OFFSET ${offset}
+        `;
+
+        return titleRegionTranscriptionsForManuscriptEntry;
+
+    }
+
+    /**
+     * Routes to the page a region belongs to, submitting the Iri of the region.
+     *
+     * @param regionIri the region to be displayed on the page it belongs to.
+     */
+    routeToPageWithActiveRegion(regionIri: string) {
+        const isRegionOfValueProp = 'http://api.knora.org/ontology/knora-api/v2#isRegionOfValue';
+
+        this._resourceService.getReadResource(regionIri).subscribe(
+            (regionRes: ReadResourcesSequence) => {
+
+                if (regionRes.numberOfResources === 1 && regionRes.resources[0].type === KnoraConstants.Region
+                    && Array.isArray(regionRes.resources[0].properties[isRegionOfValueProp])
+                    && regionRes.resources[0].properties[isRegionOfValueProp].length === 1) {
+
+                    const regionOfVal: ReadLinkValue = <ReadLinkValue> regionRes.resources[0].properties[isRegionOfValueProp][0];
+
+                    if (regionOfVal.referredResource !== undefined) {
+                        const pageIri = regionOfVal.referredResource.id;
+                        const page = regionOfVal.referredResource.type;
+
+                        // refer directly to page template, indicating the active region
+                        this._router.navigateByUrl('page/' + encodeURIComponent(pageIri) + '/' + encodeURIComponent(regionRes.resources[0].id));
+                    } else {
+                        console.error(`Could not route region ${regionIri} to page`);
+                    }
+                } else {
+                    console.error(`Could not route region ${regionIri} to page`);
+                }
+            }
+        );
+    }
+
+    /**
+     * Generates a Gravsearch query that gets the given region's geometry value and the file value of the image it points to.
+     *
+     * @param regionIri the Iri of the region whose geometry and related file value should be retrieved.
+     * @return Gravsearch string.
+     */
+    private getRegionDimensionsAndPageQuery(regionIri: string): string {
+
+        const regionDimsTemplate = `
+    PREFIX beol: <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/beol/simple/v2#>
+    PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>  
+
+    CONSTRUCT {
+       ?region knora-api:isMainResource true .
+		
+       ?region knora-api:hasGeometry ?geometry .  
+
+       ?region knora-api:isRegionOf ?page .
+       
+       ?page knora-api:hasStillImageFile ?file .
+
+    } WHERE {
+       BIND(<${regionIri}> AS ?region)
+ 
+ 	   ?region knora-api:hasGeometry ?geometry . 
+ 
+       ?region knora-api:isRegionOf ?page .
+        
+       ?page knora-api:hasStillImageFile ?file .
+       
+    } OFFSET 0
+        `;
+
+        return regionDimsTemplate;
+    }
+
+    /**
+     * Searches for the given region's geometry value and related file value.
+     *
+     * @param regionIri the Iri of the region whose geometry and related file value should be retrieved.
+     * @return the region resource with the geometry value and the related file value.
+     */
+    getRegionDimsAndFile(regionIri: string): Observable<ReadResourcesSequence> {
+
+        const gravsearch = this.getRegionDimensionsAndPageQuery(regionIri);
+
+        return this._searchSerice.doExtendedSearchReadResourceSequence(gravsearch);
+
+    }
+
+    /**
      * Given the title of a letter from BEBB, searches for that letter.
      *
      * @param title the title of the BEBB letter to search for.
@@ -383,6 +578,90 @@ export class BeolService {
         `;
 
         return letterByTitleTemplate;
+
+    }
+
+    /**
+     * Given the Iri of a compound object and the sequence number of the current part, returns the previous and next part.
+     *
+     * @param compoundIri the Iri of the compound object the current part belongs to.
+     * @param currentSeqnum the sequence number of the current part.
+     */
+    getPreviousAndNextPartOfCompound(compoundIri: string, currentSeqnum: number): string {
+
+        const pageTemplate = `
+        PREFIX beol: <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/beol/simple/v2#>
+        PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>  
+        CONSTRUCT {
+
+            ?page knora-api:isMainResource true .
+
+
+        } WHERE {
+
+            ?page knora-api:isPartOf <${compoundIri}> .
+
+            ?page knora-api:seqnum ?seqnum .
+
+            FILTER(?seqnum = ${currentSeqnum - 1} || ?seqnum = ${currentSeqnum + 1})
+
+        }
+
+        ORDER BY ?seqnum
+        OFFSET 0
+        
+        `;
+
+
+        return pageTemplate;
+    }
+
+    /**
+     * Given the Iri of a manuscript, generates a Gravsearch query to get all its entries sortedby sequence number.
+     *
+     * @param manuscriptIri the Iri of the manuscript.
+     * @param offset the offset to be used.
+     */
+    getEntriesForManuscript(manuscriptIri: string, offset: number = 0): string {
+
+        const manuscriptEntriesTemplate = `
+        PREFIX beol: <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/beol/simple/v2#>
+        PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>  
+        CONSTRUCT {
+
+            ?entry knora-api:isMainResource true .
+
+        } WHERE {
+
+            ?entry beol:manuscriptEntryOf <${manuscriptIri}> .
+
+            ?entry beol:seqnum ?seqnum .
+
+        }
+
+        ORDER BY ?seqnum
+        
+        `;
+
+        // offset component of the Gravsearch query
+        const offsetTemplate = `
+        OFFSET ${offset}
+        `;
+
+        // function that generates the same Gravsearch query with the given offset
+        const generateGravsearchWithCustomOffset = (localOffset: number): string => {
+            const offsetCustomTemplate = `
+            OFFSET ${localOffset}
+            `;
+
+            return manuscriptEntriesTemplate + offsetCustomTemplate;
+        };
+
+        if (offset === 0) {
+            // store the function so another Gravsearch query can be created with an increased offset
+            this._searchParamsService.changeSearchParamsMsg(new ExtendedSearchParams(generateGravsearchWithCustomOffset));
+        }
+        return manuscriptEntriesTemplate + offsetTemplate;
 
     }
 
@@ -422,6 +701,17 @@ export class BeolService {
             referredResourceType === this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#JournalArticle') {
             // route to biblio-items template
             this._router.navigateByUrl('biblio/' + encodeURIComponent(referredResourceIri));
+        } else if (referredResourceType === this._appInitService.getSettings().ontologyIRI  + '/ontology/0801/beol/v2#page') {
+            this._router.navigateByUrl('page/' + encodeURIComponent(referredResourceIri));
+        } else if (referredResourceType === 'http://api.knora.org/ontology/knora-api/v2#Region') {
+            // route region to page it belongs to
+            this.routeToPageWithActiveRegion(referredResourceIri);
+        } else if (referredResourceType === this._appInitService.getSettings().ontologyIRI  + '/ontology/0801/beol/v2#transcription') {
+            this._router.navigateByUrl('transcription/' + encodeURIComponent(referredResourceIri));
+        } else if (referredResourceType === this._appInitService.getSettings().ontologyIRI  + '/ontology/0801/beol/v2#entryComment') {
+            this._router.navigateByUrl('entryComment/' + encodeURIComponent(referredResourceIri));
+        } else if (referredResourceType === this._appInitService.getSettings().ontologyIRI  + '/ontology/0801/beol/v2#manuscriptEntry') {
+            this._router.navigateByUrl('manuscriptEntry/' + encodeURIComponent(referredResourceIri));
         } else {
             // route to generic template
             this._router.navigateByUrl('resource/' + encodeURIComponent(referredResourceIri));

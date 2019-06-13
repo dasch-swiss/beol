@@ -14,11 +14,13 @@ import { EndnoteComponent } from './resource/endnote/endnote.component';
 import { LeooRouteComponent } from './leoo-route/leoo-route.component';
 import { FigureComponent } from './resource/figure/figure.component';
 import { BiblioItemsComponent } from './resource/biblio-items/biblio-items.component';
+import { PageComponent } from './resource/page/page.component';
 import { NewtonLetterComponent } from './resource/newton-letter/newton-letter.component';
 import { LeibnizLetterComponent } from './resource/leibniz-letter/leibniz-letter.component';
 import { BebbRouteComponent } from './bebb-route/bebb-route.component';
-
-
+import { TranscriptionComponent } from './resource/transcription/transcription.component';
+import { ManuscriptEntryComponent } from './resource/manuscript-entry/manuscript-entry.component';
+import { CommentComponent } from './resource/comment/comment.component';
 
 const appRoutes: Routes = [
     {
@@ -58,6 +60,14 @@ const appRoutes: Routes = [
         component: LetterComponent
     },
     {
+        path: 'page/:id',
+        component: PageComponent
+    },
+    {
+        path: 'page/:id/:region',
+        component: PageComponent
+    },
+    {
         path: 'newtonLetter/:id',
         component: NewtonLetterComponent
     },
@@ -68,6 +78,18 @@ const appRoutes: Routes = [
     {
         path: 'endnote/:id',
         component: EndnoteComponent
+    },
+    {
+        path: 'transcription/:id',
+        component: TranscriptionComponent
+    },
+    {
+        path: 'manuscriptEntry/:id',
+        component: ManuscriptEntryComponent
+    },
+    {
+        path: 'entryComment/:id',
+        component: CommentComponent
     },
     {
         path: 'search',

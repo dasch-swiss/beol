@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReadTextValueComponent } from './read-text-value.component';
 import { Component, DebugElement, OnInit, ViewChild } from '@angular/core';
 import {
+    KuiCoreConfig, KuiCoreConfigToken,
     OntologyInformation,
     ReadTextValue,
     ReadTextValueAsHtml,
@@ -42,6 +43,7 @@ describe('ReadTextValueComponent', () => {
                 TestHostComponent
             ],
             providers: [
+                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig },
                 { provide: AppInitService, useValue: appInitServiceSpy }
             ]
         })

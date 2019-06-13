@@ -4,9 +4,13 @@ import { MathJaxDirective } from '../../directives/mathjax.directive';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatSnackBarModule } from '@angular/material';
 import { Component, DebugElement, OnInit, ViewChild } from '@angular/core';
-import { ReadListValue } from '@knora/core';
+import { KuiCoreConfig, KuiCoreConfigToken, ReadListValue } from '@knora/core';
 import { By } from '@angular/platform-browser';
+
+import { HttpClientModule } from '@angular/common/http';
+
 import { AppInitService } from '../../app-init.service';
+
 
 describe('ReadListValueComponent', () => {
     let testHostComponent: TestHostComponent;
@@ -20,7 +24,8 @@ describe('ReadListValueComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 RouterTestingModule,
-                MatSnackBarModule
+                MatSnackBarModule,
+                HttpClientModule
             ],
             declarations: [
                 ReadListValueComponent,
@@ -29,7 +34,8 @@ describe('ReadListValueComponent', () => {
                 MathJaxDirective // idea for mock: https://stackoverflow.com/questions/44495114/is-it-possible-to-mock-an-attribute-directive-in-angular
             ],
             providers: [
-                {provide: AppInitService, useValue: appInitServiceSpy}
+                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig },
+                { provide: AppInitService, useValue: appInitServiceSpy }
             ]
         })
             .compileComponents();

@@ -53,6 +53,8 @@ export class ReadTextValueAsHtmlComponent implements OnInit {
         return this._bindEvents;
     }
 
+    @Input() renderFigureRegions = false;
+
     constructor() {
     }
 

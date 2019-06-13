@@ -54,7 +54,7 @@
             </div>
 
             <!-- Check for incoming images pointing to this resource -->
-            <kui-still-image #OSDViewer class="osd-viewer" *ngIf="resource?.incomingStillImageRepresentations?.length > 0;" [images]="resource?.stillImageRepresentationsToDisplay">
+            <kui-still-image #OSDViewer class="osd-viewer" *ngIf="!isLoading && resource?.incomingStillImageRepresentations?.length > 0 && resource.stillImageRepresentationsToDisplay.length > 0" [images]="resource?.stillImageRepresentationsToDisplay">
             </kui-still-image>
 
             <br>
