@@ -7,24 +7,24 @@ services:
 language: node_js
 
 node_js:
-  - "11"
+    - "11"
 
 cache:
-  yarn: true
-  directories:
-  - node_modules
+    yarn: true
+    directories:
+        - node_modules
 
 addons:
-  chrome: stable
+    chrome: stable
 
 install:
-  - yarn global add @angular/cli
-  - yarn global add yalc
-  - cd ~ && git clone https://github.com/dhlab-basel/Knora-ui.git && cd Knora-ui && yarn install --prod=false && yarn build-lib-prod && yarn yalc-publish
-  - cd $TRAVIS_BUILD_DIR
+    - yarn global add @angular/cli
+    - yarn global add yalc
+    - cd ~ && git clone -b wip/upgrade-to-angular7 https://github.com/dhlab-basel/Knora-ui.git && cd Knora-ui && yarn install --prod=false && yarn build-lib-prod && yarn yalc-publish
+    - cd $TRAVIS_BUILD_DIR
 
 script:
-  - yalc remove --all && yarn yalc-add-modules
-  - yarn install --prod=false
-  - yarn test-ci
-  - docker build .
+    - yalc remove --all && yarn yalc-add-modules
+    - yarn install --prod=false
+    - yarn test-ci
+    - docker build .
