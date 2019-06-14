@@ -1,12 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ReadListValue } from '@knora/core';
+import { Component, Input, OnChanges } from '@angular/core';
+import { ListCacheService, ListNodeV2, ReadListValue } from '@knora/core';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'read-list-value',
     templateUrl: './read-list-value.component.html',
     styleUrls: ['./read-list-value.component.scss']
 })
-export class ReadListValueComponent implements OnInit {
+export class ReadListValueComponent implements OnChanges {
 
     @Input() valueObject: ReadListValue;
 
@@ -21,10 +22,15 @@ export class ReadListValueComponent implements OnInit {
         return this._renderMath;
     }
 
-    constructor() {
+    node: Observable<ListNodeV2>;
+
+    constructor(private _listCacheService: ListCacheService) {
     }
 
-    ngOnInit() {
+    ngOnChanges() {
+        // given the node's Iri, ask the list cache service
+        this.node = this._listCacheService.getListNode(this.valueObject.listNodeIri);
+
     }
 
 }
