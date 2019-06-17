@@ -155,10 +155,7 @@ export class LeibnizLetterComponent extends BeolResource {
     private getLeibnizLetterBody(contents) {
       const html = new DOMParser().parseFromString(contents.response.docs[0].volltext, 'text/html');
       this.getLeibnizImages(html.body);
-      console.log(html.body);
       this.letter = html.body;
-      console.log('innerHTML')
-      console.log(this.letter);
     }
     showIncomingRes(resIri, resType) {
         this._beolService.routeByResourceType(resType, resIri);
