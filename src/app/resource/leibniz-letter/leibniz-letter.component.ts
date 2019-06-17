@@ -56,9 +56,7 @@ export class LeibnizLetterComponent extends BeolResource {
     errorMessage: any;
     navigationSubscription: Subscription;
     KnoraConstants = KnoraConstants;
-
-    letter: string;
-    test: string;
+    letter;
 
     propIris: PropIriToNameMapping = {
         'id': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#beolIDs',
@@ -158,7 +156,7 @@ export class LeibnizLetterComponent extends BeolResource {
       const html = new DOMParser().parseFromString(contents.response.docs[0].volltext, 'text/html');
       this.getLeibnizImages(html.body);
       console.log(html.body);
-      this.letter = html.body.innerHTML;
+      this.letter = html.body;
       console.log('innerHTML')
       console.log(this.letter);
     }
