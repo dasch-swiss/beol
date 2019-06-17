@@ -246,6 +246,31 @@ td.center {
   position: relative;
 }
 
+.icon-cart_gleichheitszeichen:before {
+  content: "\1f300";
+}
+.icon-grosser-als:before {
+  content: "\1f301";
+}
+.icon-kleiner-als:before {
+  content: "\1f302";
+}
+.icon-minus_plus_cart:before {
+  content: "\1f303";
+}
+.icon-proportio-continua1:before {
+  content: "\1f304";
+}
+.icon-plus_minus_cart:before {
+  content: "\1f305";
+}
+.icon-proportio-continua:before {
+  content: "\1f308";
+}
+.icon-trapez:before {
+  content: "\1f30c";
+}
+
 @font-face {
   font-family: LeipzigFraktur;
   src: url(../fonts/Leipzig/LeipzigFrakturNormal.ttf);
