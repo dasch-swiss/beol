@@ -12,14 +12,27 @@
         MathJax.Hub.Config({
             showProcessingMessages: true,
             extensions: ["tex2jax.js", "mml2jax.js"],
-            tex2jax: {inlineMath: [['\\(','\\)']]},
-            jax: ["input/TeX","input/MathML","output/HTML-CSS"],
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+            jax: ["input/TeX","input/MathML","output/HTML-CSS","output/SVG"],
             MathML: {
                 extensions: ["mml3.js", "content-mathml.js"]
                 },
+            SVG: {
+                //font: "STIX-Web",
+                mtextFontInherit: true,
+                blacker: 1,
+                linebreaks: { automatic: true }
+            },
             "HTML-CSS": {
                 mtextFontInherit: true,
                 preferredFont: "TeX"
+            },
+            MatchWebFonts: {
+                matchFor: {
+                SVG: true
+                },
+                fontCheckDelay: 500,
+                fontCheckTimeout: 15 * 1000
             },
             TeX: {
                 extensions: [ 'cancel.js', 'enclose.js', 'AMSmath.js', 'AMSsymbols.js' ]

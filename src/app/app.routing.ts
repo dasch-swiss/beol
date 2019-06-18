@@ -16,6 +16,7 @@ import { FigureComponent } from './resource/figure/figure.component';
 import { BiblioItemsComponent } from './resource/biblio-items/biblio-items.component';
 import { PageComponent } from './resource/page/page.component';
 import { NewtonLetterComponent } from './resource/newton-letter/newton-letter.component';
+import { LeibnizLetterComponent } from './resource/leibniz-letter/leibniz-letter.component';
 import { BebbRouteComponent } from './bebb-route/bebb-route.component';
 import { TranscriptionComponent } from './resource/transcription/transcription.component';
 import { ManuscriptEntryComponent } from './resource/manuscript-entry/manuscript-entry.component';
@@ -69,6 +70,10 @@ const appRoutes: Routes = [
     {
         path: 'newtonLetter/:id',
         component: NewtonLetterComponent
+    },
+    {
+        path: 'leibnizLetter/:id',
+        component: LeibnizLetterComponent
     },
     {
         path: 'endnote/:id',
