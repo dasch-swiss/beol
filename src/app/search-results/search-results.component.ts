@@ -29,12 +29,13 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     KnoraConstants = KnoraConstants;
 
     result: ReadResource[] = []; // the results of a search query
+    externalResults: ReadResourcesSequence;
     ontologyInfo: OntologyInformation; // ontology information about resource classes and properties present in `result`
     numberOfAllResults: number; // total number of results (count query)
     rerender = false;
 
     // with the http get request, we need also a variable for error messages;
-    // just in the case if something's going wrong
+    // just in case something goes wrong
     errorMessage: any = undefined;
 
     offset = 0;
@@ -105,6 +106,42 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
             this.searchQuery = <string> gravsearch;
         }
     }
+    /**
+     * Get text search results from The Newton Project
+     */
+    getResultNewton() {
+        const searchOpticsCategory = '&nt1=1&name_text=&cat=Optics&loc=&idno=&sort=relevance&order=desc';
+        const proxyurl = 'https://cors-anywhere.herokuapp.com/';
+        const basePath = 'http://www.newtonproject.ox.ac.uk/search/results?keyword=';
+
+        const url = basePath + this.searchQuery + searchOpticsCategory; // site that doesn’t send Access-Control-*
+
+        fetch(proxyurl + url) // https://cors-anywhere.herokuapp.com/https://example.com
+            .then(response => response.text())
+            .then(contents => {
+               console.log(contents);
+            })
+            .catch(() => console.log('Can’t access ' + url + ' response. Blocked by browser?'));
+    }
+
+    /**
+     * Get text search results from The Newton Project
+     */
+    getResultLeibniz() {
+        const searchOpticsCategory = '&nt1=1&name_text=&cat=Optics&loc=&idno=&sort=relevance&order=desc';
+        const proxyurl = 'https://cors-anywhere.herokuapp.com/';
+        const basePath = 'http://www.newtonproject.ox.ac.uk/search/results?keyword=';
+
+        const url = basePath + this.searchQuery + searchOpticsCategory; // site that doesn’t send Access-Control-*
+
+        fetch(proxyurl + url) // https://cors-anywhere.herokuapp.com/https://example.com
+            .then(response => response.text())
+            .then(contents => {
+                console.log(contents);
+            })
+            .catch(() => console.log('Can’t access ' + url + ' response. Blocked by browser?'));
+    }
+
 
     /**
      * Get search result from Knora - 2 cases: simple search and extended search
@@ -135,7 +172,12 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
                         this.errorMessage = <any>error;
                     },
                 );
+            // here get the search results from the other projects
+            this.getResultNewton();
+            if (this.externalResults !== undefined) {
 
+                this.result = this.result.concat(this.externalResults.resources);
+            }
             // EXTENDED SEARCH
         } else if (this.searchMode === 'extended') {
             // perform count query
@@ -177,7 +219,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         } else {
             this.maxOffset = 0;
         }
-    };
+    }
 
     /**
      *
@@ -205,7 +247,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
         this.isLoading = false;
         this.rerender = false;
-    };
+    }
 
     /* the following methods will be moved to @knora/viewer views */
 
