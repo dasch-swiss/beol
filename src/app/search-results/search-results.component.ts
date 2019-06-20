@@ -29,7 +29,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     KnoraConstants = KnoraConstants;
 
     result: ReadResource[] = []; // the results of a search query
-    externalResults: ReadResourcesSequence;
+    externalResults = [];
     ontologyInfo: OntologyInformation; // ontology information about resource classes and properties present in `result`
     numberOfAllResults: number; // total number of results (count query)
     rerender = false;
@@ -66,7 +66,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
         this.navigationSubscription = this._route.paramMap.subscribe((params: Params) => {
             this.searchMode = params.get('mode');
-
             // init offset to 0
             this.offset = 0;
             this.result = [];
@@ -123,25 +122,91 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
             })
             .catch(() => console.log('Can’t access ' + url + ' response. Blocked by browser?'));
     }
-
     /**
-     * Get text search results from The Newton Project
+     * make search expersion to be sent to search route of Briefportal Leibniz
      */
-    getResultLeibniz() {
-        const searchOpticsCategory = '&nt1=1&name_text=&cat=Optics&loc=&idno=&sort=relevance&order=desc';
-        const proxyurl = 'https://cors-anywhere.herokuapp.com/';
-        const basePath = 'http://www.newtonproject.ox.ac.uk/search/results?keyword=';
+    makeLeibnizSearchExpressions(searchTerm, expressions) {
+        for (let it = 0; it < expressions.length; it++) {
+            searchTerm += '*' + this.searchQuery + '*+OR+' + expressions[it] + '%3A';
+        }
 
-        const url = basePath + this.searchQuery + searchOpticsCategory; // site that doesn’t send Access-Control-*
-
-        fetch(proxyurl + url) // https://cors-anywhere.herokuapp.com/https://example.com
-            .then(response => response.text())
-            .then(contents => {
-                console.log(contents);
-            })
-            .catch(() => console.log('Can’t access ' + url + ' response. Blocked by browser?'));
+        return searchTerm + '*' + this.searchQuery + '*';
     }
 
+    /**
+     * Given the letterID of a letter from Briefportal Leibniz, searches for that letter.
+     *
+     * @param letterID the letterID to search for.
+     * @returns the Gravsearch query.
+     */
+    searchForLeibnizLetter(letterID: string): string {
+
+        const letterByNumberTemplate = `
+            PREFIX leibniz: <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/leibniz/simple/v2#>
+            PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
+
+            CONSTRUCT {
+                ?letter knora-api:isMainResource true .
+
+            } WHERE {
+
+                ?letter a knora-api:Resource .
+                ?letter a leibniz:letter .
+                ?letter leibniz:letterID ?letterNumber .
+                leibniz:letterID knora-api:objectType <http://www.w3.org/2001/XMLSchema#string> .
+                ?letterNumber a <http://www.w3.org/2001/XMLSchema#string> .
+                FILTER(?letterNumber = "${letterID}"^^<http://www.w3.org/2001/XMLSchema#string>)
+
+        }
+
+        OFFSET 0
+        `;
+
+        return letterByNumberTemplate;
+
+    }
+
+    /**
+     * Get the search result letters by ID (for both newton and leibniz)
+     */
+    getLeibnizLetters(retrunedSearchResults) {
+        this.numberOfAllResults +=  retrunedSearchResults.length;
+        for (let it = 0; it < retrunedSearchResults.length; it++) {
+            const letterID = retrunedSearchResults[it].id;
+            // create a query that gets the Iri of the LEOO letter
+            const query = this.searchForLeibnizLetter(letterID);
+            console.log(query)
+            this._searchService.doExtendedSearchReadResourceSequence(query).subscribe(
+                (resourceSeq: ReadResourcesSequence) => {
+                    if (resourceSeq.numberOfResources === 1) {
+
+                        this.externalResults = this.externalResults.concat(resourceSeq[0].resources);
+                    } else {
+                        console.log(resourceSeq.numberOfResources);
+                    }
+                }
+            );
+
+        }
+    }
+
+    /**
+     * Get text search results from Briefportal Leibniz
+     */
+    getResultsLeibniz() {
+        const searchRoute = 'http://leibniz.sub.uni-goettingen.de/solr/leibniz/select?q=type%3Abrief+AND+(+volltext%3A';
+        const proxyurl = 'https://cors-anywhere.herokuapp.com/';
+        const experssions = ['id', 'reihe', 'band', 'brief_nummer', 'all_suggest', 'ort_anzeige',
+                            'datum_anzeige', 'datum_gregorianisch', 'datum_julianisch', 'kontext']
+        const format = ')&rows=9999&wt=json';
+        const searchExpression = this.makeLeibnizSearchExpressions(searchRoute, experssions) + format;
+        fetch(proxyurl + searchExpression) // https://cors-anywhere.herokuapp.com/https://example.com
+            .then(response => response.json())
+            .then(contents => {
+                this.getLeibnizLetters(contents.response.docs)
+            })
+            .catch(() => console.log('Can’t access ' + searchExpression + ' response. Blocked by browser?'));
+    }
 
     /**
      * Get search result from Knora - 2 cases: simple search and extended search
@@ -173,10 +238,10 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
                     },
                 );
             // here get the search results from the other projects
-            this.getResultNewton();
+            this.getResultsLeibniz();
             if (this.externalResults !== undefined) {
 
-                this.result = this.result.concat(this.externalResults.resources);
+                this.result = this.result.concat(this.externalResults);
             }
             // EXTENDED SEARCH
         } else if (this.searchMode === 'extended') {
