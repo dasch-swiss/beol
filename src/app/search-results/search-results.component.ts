@@ -165,7 +165,22 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         return letterByNumberTemplate;
 
     }
+    /**
+     * Extended search for letters by ID
+     */
+    extendedSearchForExternalLetters(query) {
+        this._searchService.doExtendedSearchReadResourceSequence(query).subscribe(
+            (resourceSeq: ReadResourcesSequence) => {
+                if (resourceSeq.numberOfResources === 1) {
 
+                    this.externalResults = this.externalResults.concat(resourceSeq[0].resources);
+                } else {
+                    console.log(resourceSeq.numberOfResources);
+                }
+            }
+        );
+
+    }
     /**
      * Get the search result leibniz letters by ID
      */
@@ -175,18 +190,8 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
             const letterID = retrunedSearchResults[it].id;
             // create a query that gets the Iri of the LEOO letter
             const query = this.searchForLeibnizLetter(letterID);
-            console.log(query)
-            this._searchService.doExtendedSearchReadResourceSequence(query).subscribe(
-                (resourceSeq: ReadResourcesSequence) => {
-                    if (resourceSeq.numberOfResources === 1) {
-
-                        this.externalResults = this.externalResults.concat(resourceSeq[0].resources);
-                    } else {
-                        console.log(resourceSeq.numberOfResources);
-                    }
-                }
-            );
-
+            console.log(query);
+            this.extendedSearchForExternalLetters(query);
         }
     }
 
