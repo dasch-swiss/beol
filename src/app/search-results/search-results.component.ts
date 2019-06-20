@@ -167,7 +167,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * Get the search result letters by ID (for both newton and leibniz)
+     * Get the search result leibniz letters by ID
      */
     getLeibnizLetters(retrunedSearchResults) {
         this.numberOfAllResults +=  retrunedSearchResults.length;
@@ -203,7 +203,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         fetch(proxyurl + searchExpression) // https://cors-anywhere.herokuapp.com/https://example.com
             .then(response => response.json())
             .then(contents => {
-                this.getLeibnizLetters(contents.response.docs)
+                this.getLeibnizLetters(contents.response.docs);
             })
             .catch(() => console.log('Can’t access ' + searchExpression + ' response. Blocked by browser?'));
     }
