@@ -139,7 +139,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
      * @param letterID the letterID to search for.
      * @returns the Gravsearch query.
      */
-    searchForLeibnizLetter(letterID: string): string {
+    searchForLeibnizLetter(letterIdentifier: string): string {
 
         const letterByNumberTemplate = `
             PREFIX leibniz: <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/leibniz/simple/v2#>
@@ -152,11 +152,10 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
                 ?letter a knora-api:Resource .
                 ?letter a leibniz:letter .
-                ?letter leibniz:letterID ?letterNumber .
+                ?letter leibniz:letterID ?letterNumber.
                 leibniz:letterID knora-api:objectType <http://www.w3.org/2001/XMLSchema#string> .
                 ?letterNumber a <http://www.w3.org/2001/XMLSchema#string> .
-                FILTER(?letterNumber = "${letterID}"^^<http://www.w3.org/2001/XMLSchema#string>)
-
+                FILTER(?letterNumber = "${letterIdentifier}"^^<http://www.w3.org/2001/XMLSchema#string>)
         }
 
         OFFSET 0
@@ -172,10 +171,8 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         this._searchService.doExtendedSearchReadResourceSequence(query).subscribe(
             (resourceSeq: ReadResourcesSequence) => {
                 if (resourceSeq.numberOfResources === 1) {
-
-                    this.externalResults = this.externalResults.concat(resourceSeq[0].resources);
-                } else {
-                    console.log(resourceSeq.numberOfResources);
+                    this.processSearchResults(resourceSeq);
+                    this.numberOfAllResults += 1 ;
                 }
             }
         );
@@ -185,7 +182,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
      * Get the search result leibniz letters by ID
      */
     getLeibnizLetters(retrunedSearchResults) {
-        this.numberOfAllResults +=  retrunedSearchResults.length;
         for (let it = 0; it < retrunedSearchResults.length; it++) {
             const letterID = retrunedSearchResults[it].id;
             // create a query that gets the Iri of the LEOO letter
