@@ -76,7 +76,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
             if (this.searchMode === 'fulltext') {
                 // filter by project
                 this.searchQuery = params.get('q');
-                this.searchQuery += '?limitToProject=' + this.beolIri;
             } else if (this.searchMode === 'extended') {
                 this.gravsearchGenerator = this._searchParamsService.getSearchParams();
                 this.generateGravsearchQuery();
@@ -118,10 +117,12 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
         // FULLTEXT SEARCH
         if (this.searchMode === 'fulltext') {
+
+            const searchParams = { limitToProject: this.beolIri };
             // perform count query
             if (this.offset === 0) {
 
-                this._searchService.doFullTextSearchCountQueryCountQueryResult(this.searchQuery)
+                this._searchService.doFullTextSearchCountQueryCountQueryResult(this.searchQuery, searchParams)
                     .subscribe(
                         this.showNumberOfAllResults,
                         (error: any) => {
@@ -132,7 +133,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
             }
 
             // perform full text search
-            this._searchService.doFullTextSearchReadResourceSequence(this.searchQuery, this.offset)
+            this._searchService.doFullTextSearchReadResourceSequence(this.searchQuery, this.offset, searchParams)
                 .subscribe(
                     this.processSearchResults, // function pointer
                     (error: any) => {
