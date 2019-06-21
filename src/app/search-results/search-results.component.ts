@@ -143,12 +143,11 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     /**
      * Extended search for letters by ID
      */
-    extendedSearchForExternalLetters(query) {
+    extendedSearchForExternalLetters(query: string) {
         this._searchService.doExtendedSearchReadResourceSequence(query).subscribe(
             (resourceSeq: ReadResourcesSequence) => {
                 if (resourceSeq.numberOfResources === 1) {
                     this.processSearchResults(resourceSeq);
-                    console.log(resourceSeq);
                     this.numberOfAllResults += 1 ;
                 }
             }
@@ -158,7 +157,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     /**
      * make search expersion to be sent to search route of Briefportal Leibniz
      */
-    makeLeibnizSearchExpressions(searchTerm, expressions) {
+    makeLeibnizSearchExpressions(searchTerm: string, expressions: string[]) {
         for (let it = 0; it < expressions.length; it++) {
             searchTerm += '*' + this.searchQuery + '*+OR+' + expressions[it] + '%3A';
         }
@@ -168,7 +167,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     /**
      * Get the search result leibniz letters by ID
      */
-    getLeibnizLetters(retrunedSearchResults) {
+    getLeibnizLetters(retrunedSearchResults: HTMLObjectElement[]) {
         for (let it = 0; it < retrunedSearchResults.length; it++) {
             const letterID = retrunedSearchResults[it].id;
             // create a query that gets the Iri of the LEOO letter
@@ -193,7 +192,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
             })
             .catch(() => console.log('Can’t access ' + searchExpression + ' response. Blocked by browser?'));
     }
-    getNewtonLetters(content) {
+    getNewtonLetters(content: string) {
        /*todo just parses the first page of the results due to hard coded pagination*/
         const html = new DOMParser().parseFromString(content, 'text/html');
         const retrunedSearchResults = html.getElementsByTagName('tr');
@@ -289,7 +288,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
             this.errorMessage = `search mode invalid: ${this.searchMode}`;
         }
     }
-
 
     /**
      * Shows total number of results returned by a count query.
