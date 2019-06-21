@@ -49,7 +49,9 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
     navigationSubscription: Subscription;
 
-    constructor(
+    beolIri: string = 'http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF';
+
+    constructor (
         private _route: ActivatedRoute,
         private _searchService: SearchService,
         private _cacheService: OntologyCacheService,
@@ -72,7 +74,9 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
             this.resetStep();
 
             if (this.searchMode === 'fulltext') {
+                // filter by project
                 this.searchQuery = params.get('q');
+                this.searchQuery += '?limitToProject=' + this.beolIri;
             } else if (this.searchMode === 'extended') {
                 this.gravsearchGenerator = this._searchParamsService.getSearchParams();
                 this.generateGravsearchQuery();
@@ -99,10 +103,10 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         if (gravsearch === false) {
             // no valid search params (application has been reloaded)
             // go to root
-            this._router.navigate([''], {relativeTo: this._route});
+            this._router.navigate([''], { relativeTo: this._route });
             return;
         } else {
-            this.searchQuery = <string> gravsearch;
+            this.searchQuery = <string>gravsearch;
         }
     }
 
