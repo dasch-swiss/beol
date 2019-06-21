@@ -204,9 +204,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
             if (links.length) {
                 const hrefSegmented = links[0].children[0].getAttribute('href').split('/');
                 const letterID = hrefSegmented[hrefSegmented.length - 1];
-                console.log(letterID);
                 const query = this.queryExpressionWithLetterID(letterID, 'newton', 'newtonProjectID');
-                console.log(query)
                 this.extendedSearchForExternalLetters(query);
             }
 
@@ -227,7 +225,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
             fetch(proxyurl + searchExpressions[it]) // https://cors-anywhere.herokuapp.com/https://example.com
                 .then(response => response.text())
                 .then(contents => {
-                    console.log(searchExpressions[it]);
                     this.getNewtonLetters(contents);
                 })
                 .catch(() => console.log('Can’t access ' + searchExpressions[it] + ' response. Blocked by browser?'));
