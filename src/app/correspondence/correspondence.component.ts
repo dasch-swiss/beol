@@ -101,6 +101,7 @@ export class CorrespondenceComponent implements OnInit {
   lece: CorrespondenceGroupWithSection[];
   wiki: CorrespondenceGroupWithSection[];
   newton: ThirdPartyProject[];
+  leibniz: ThirdPartyProject[];
 
   constructor(
     private _router: Router,
@@ -335,9 +336,13 @@ export class CorrespondenceComponent implements OnInit {
               ])])
         ];
     this.newton = [
-        new ThirdPartyProject('The Newton Project')
+          new ThirdPartyProject('The Newton Project')
 
-    ];
+      ];
+    this.leibniz = [
+          new ThirdPartyProject('Briefportal Leibniz')
+
+      ];
     /**
      * Collection of correspondences the user can select from.
      */
@@ -515,6 +520,16 @@ export class CorrespondenceComponent implements OnInit {
       const gravsearch: string = this._beol.searchForNewtonCorrespondence(0);
 
       this.submitQuery(gravsearch);
+  }
+  /**
+   * * Generate Gravsearch query to search for Leibniz Correspondence.
+
+   */
+  searchForLeibnizCorrespondence() {
+
+        const gravsearch: string = this._beol.searchForLeibnizCorrespondence(0);
+
+        this.submitQuery(gravsearch);
   }
   /**
    * Show a correspondence between two persons.

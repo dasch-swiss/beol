@@ -21,6 +21,7 @@ import { PersonComponent } from './resource/person/person.component';
 import { PublisherComponent } from './resource/publisher/publisher.component';
 import { LetterComponent } from './resource/letter/letter.component';
 import { NewtonLetterComponent } from './resource/newton-letter/newton-letter.component';
+import { LeibnizLetterComponent } from './resource/leibniz-letter/leibniz-letter.component';
 import { ReadListValueComponent } from './properties/read-list-value/read-list-value.component';
 import { ReadTextValueAsHtmlComponent } from './properties/read-text-value-as-html/read-text-value-as-html.component';
 import { LeooRouteComponent } from './leoo-route/leoo-route.component';
@@ -43,6 +44,7 @@ import { ReadTextValueComponent } from './properties/read-text-value/read-text-v
 import { SanitizeHtmlPipe } from './pipes/sanitize-html.pipe';
 import { SanitizeUrlPipe } from './pipes/sanitize-url.pipe';
 import { NewtonProjectDirective } from './directives/newton-project.directive';
+import { LeibnizPortalDirective } from './directives/leibniz-portal.directive';
 
 import { HanCatalogueDirective } from './directives/han-catalogue.directive';
 import { BebbRouteComponent } from './bebb-route/bebb-route.component';
@@ -73,6 +75,7 @@ export function initializeApp(appInitService: AppInitService) {
         PublisherComponent,
         LetterComponent,
         NewtonLetterComponent,
+        LeibnizLetterComponent,
         ReadListValueComponent,
         ReadTextValueAsHtmlComponent,
         CorrespondenceComponent,
@@ -87,6 +90,7 @@ export function initializeApp(appInitService: AppInitService) {
         HanCatalogueDirective,
         TranscriptionComponent,
         NewtonProjectDirective,
+        LeibnizPortalDirective,
         SanitizeHtmlPipe,
         SanitizeUrlPipe,
         BebbRouteComponent,

@@ -281,7 +281,47 @@ export class BeolService {
         return correspondenceTemplate + offsetTemplate;
     }
 
+    /**
+     * Creates the Gravsearch needed for the search for the newton correspodence.
+     */
+    searchForLeibnizCorrespondence(offset: number = 0): string {
 
+        const correspondenceTemplate = `
+            PREFIX leibniz: <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/leibniz/simple/v2#>
+            PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
+
+            CONSTRUCT {
+                ?letter knora-api:isMainResource true .
+
+            } WHERE {
+
+                ?letter a knora-api:Resource .
+                ?letter a leibniz:letter .
+
+            }
+        `;
+
+
+        // offset component of the Gravsearch query
+        const offsetTemplate = `
+        OFFSET ${offset}
+        `;
+
+        // function that generates the same Gravsearch query with the given offset
+        const generateGravsearchWithCustomOffset = (localOffset: number): string => {
+            const offsetCustomTemplate = `
+            OFFSET ${localOffset}
+            `;
+
+            return correspondenceTemplate + offsetCustomTemplate;
+        };
+
+        if (offset === 0) {
+            // store the function so another Gravsearch query can be created with an increased offset
+            this._searchParamsService.changeSearchParamsMsg(new ExtendedSearchParams(generateGravsearchWithCustomOffset));
+        }
+        return correspondenceTemplate + offsetTemplate;
+    }
         /**
      * Given the repertorium number of a letter from LEOO, searches for that letter.
      *
@@ -633,10 +673,10 @@ export class BeolService {
      */
     routeByResourceType(referredResourceType: string, referredResourceIri: string): void {
 
-        if (referredResourceType === this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#person') {
+       if (referredResourceType === this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#person') {
             // route to person template
             this._router.navigateByUrl('person/' + encodeURIComponent(referredResourceIri));
-        } else if (referredResourceType === this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#Publisher')  {
+        } else if (referredResourceType === this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#Publisher') {
             // route to publisher template
             this._router.navigateByUrl('publisher/' + encodeURIComponent(referredResourceIri));
         } else if (referredResourceType === this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#letter') {
@@ -644,6 +684,8 @@ export class BeolService {
             this._router.navigateByUrl('letter/' + encodeURIComponent(referredResourceIri));
         } else if (referredResourceType === this._appInitService.getSettings().ontologyIRI + '/ontology/0801/newton/v2#letter') {
             this._router.navigateByUrl('newtonLetter/' + encodeURIComponent(referredResourceIri));
+        } else if  (referredResourceType === this._appInitService.getSettings().ontologyIRI + '/ontology/0801/leibniz/v2#letter') {
+            this._router.navigateByUrl('leibnizLetter/' + encodeURIComponent(referredResourceIri));
         } else if (referredResourceType === this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#endnote') {
             // route to letter template
             this._router.navigateByUrl('endnote/' + encodeURIComponent(referredResourceIri));
