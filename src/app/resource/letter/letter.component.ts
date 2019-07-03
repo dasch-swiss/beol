@@ -11,7 +11,7 @@ import {
     ReadListValue,
     ReadPropertyItem,
     ReadResource,
-    ReadTextValue,
+    ReadTextValue, ReadUriValue,
     ResourceService
 } from '@knora/core';
 import { BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
@@ -39,6 +39,7 @@ class LetterProps implements PropertyValues {
     title: ReadTextValue[] = [];
     sysnum: ReadTextValue[] = [];
     comment: ReadTextValue[] = [];
+    letterURI: ReadUriValue[] = [];
 
     [index: string]: ReadPropertyItem[];
 }
@@ -81,7 +82,8 @@ export class LetterComponent extends BeolResource {
         'title': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#title',
         'sysnum': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasSystemNumber',
         'standoff': this._appInitService.getSettings().ontologyIRI + '/ontology/knora-api/v2#hasStandoffLinkToValue',
-        'comment': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#comment'
+        'comment': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#comment',
+        'letterURI': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#letterHasURI',
     };
 
     props: LetterProps;
