@@ -70,7 +70,7 @@ export class LeibnizLetterComponent extends BeolResource {
         'location': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#location',
         'title': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#title',
         'letterID': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/leibniz/v2#letterID',
-        'letterURI': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/leibniz/v2#letterHasURI',
+        'letterURI': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#letterHasURI',
         'language': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#letterHasLanguage',
         'number': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#letterHasNumber',
     };
