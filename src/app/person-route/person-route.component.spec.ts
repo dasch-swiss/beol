@@ -13,7 +13,7 @@ import { AppInitService } from '../app-init.service';
 describe('PersonRouteComponent', () => {
     let component: PersonRouteComponent;
     let fixture: ComponentFixture<PersonRouteComponent>;
-    const rn = '721';
+    const gnd = '(DE-588)118531379';
 
     let beolService: BeolService;
     let searchService: SearchService;
@@ -38,7 +38,7 @@ describe('PersonRouteComponent', () => {
                     useValue: {
                         paramMap: of({
                             get: () => {
-                                return rn;
+                                return gnd;
                             }
                         })
                     }
@@ -57,7 +57,7 @@ describe('PersonRouteComponent', () => {
 
         const mockRes = of(
             new ReadResourcesSequence(
-                [new ReadResource('letterIri', 'http://0.0.0.0:3333/ontology/0801/beol/v2#person', 'label', [], [], [], [], {})],
+                [new ReadResource('personIri', 'http://0.0.0.0:3333/ontology/0801/beol/v2#person', 'label', [], [], [], [], {})],
                 1
             )
         );
@@ -81,9 +81,9 @@ describe('PersonRouteComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should perform a query to get the letter\'s actual Iri', () => {
+    it('should perform a query to get the person\'s actual Iri', () => {
 
-        expect(beolService.searchForPerson).toHaveBeenCalledWith(rn);
+        expect(beolService.searchForPerson).toHaveBeenCalledWith(gnd);
 
         expect(searchService.doExtendedSearchReadResourceSequence).toHaveBeenCalledWith('gravsearchQuery');
 

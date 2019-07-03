@@ -5,7 +5,7 @@ import { ReadResourcesSequence, SearchService } from '@knora/core';
 import { AppInitService } from '../app-init.service';
 
 @Component({
-    selector: 'app-leoo-route',
+    selector: 'app-person-route',
     templateUrl: './person-route.component.html',
     styleUrls: ['./person-route.component.scss']
 })
@@ -25,22 +25,20 @@ export class PersonRouteComponent implements OnInit {
     ngOnInit() {
         this._route.paramMap.subscribe((params: ParamMap) => {
 
-            this.gndNumber = params.get('rn');
-
+            this.gndNumber = '(DE-588)' + params.get('gnd');
             if (this.gndNumber !== null) {
 
                 // create a query that gets the Iri of the person
                 const query = this._beolService.searchForPerson(this.gndNumber);
-
                 this._searchService.doExtendedSearchReadResourceSequence(query).subscribe(
                     (resourceSeq: ReadResourcesSequence) => {
 
                         if (resourceSeq.numberOfResources === 1) {
 
                             const personIri: string = resourceSeq.resources[0].id;
-
                             // given the Iri of the letter, display the whole resource
-                            this._beolService.routeByResourceType(this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#person', personIri);
+                            this._beolService.routeByResourceType(this._appInitService.getSettings().ontologyIRI +
+                                                                    '/ontology/0801/beol/v2#person', personIri);
                         } else {
                             // letter not found
                             console.log(`person with gnd number ${this.gndNumber} not found`);

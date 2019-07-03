@@ -21,6 +21,7 @@ import { BebbRouteComponent } from './bebb-route/bebb-route.component';
 import { TranscriptionComponent } from './resource/transcription/transcription.component';
 import { ManuscriptEntryComponent } from './resource/manuscript-entry/manuscript-entry.component';
 import { CommentComponent } from './resource/comment/comment.component';
+import { PersonRouteComponent } from './person-route/person-route.component';
 
 const appRoutes: Routes = [
     {
@@ -103,6 +104,10 @@ const appRoutes: Routes = [
     {
         path: 'leoo/:rn',
         component: LeooRouteComponent
+    },
+    {
+        path: 'personGND/:gnd',
+        component: PersonRouteComponent
     },
     {
         path: 'bebb/:lt',

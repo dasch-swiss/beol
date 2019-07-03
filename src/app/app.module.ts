@@ -25,6 +25,7 @@ import { LeibnizLetterComponent } from './resource/leibniz-letter/leibniz-letter
 import { ReadListValueComponent } from './properties/read-list-value/read-list-value.component';
 import { ReadTextValueAsHtmlComponent } from './properties/read-text-value-as-html/read-text-value-as-html.component';
 import { LeooRouteComponent } from './leoo-route/leoo-route.component';
+import { PersonRouteComponent } from './person-route/person-route.component';
 import { EndnoteComponent } from './resource/endnote/endnote.component';
 import { FigureComponent } from './resource/figure/figure.component';
 import { BiblioItemsComponent } from './resource/biblio-items/biblio-items.component';
@@ -82,6 +83,7 @@ export function initializeApp(appInitService: AppInitService) {
         ContactComponent,
         MathJaxDirective,
         LeooRouteComponent,
+        PersonRouteComponent,
         BiblioItemsComponent,
         EndnoteComponent,
         FigureComponent,
