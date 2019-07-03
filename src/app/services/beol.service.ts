@@ -360,6 +360,43 @@ export class BeolService {
     }
 
     /**
+     * Given the GND number of a person, searches for that person.
+     *
+     * @param gndNumber the GND number to search for.
+     * @returns the Gravsearch query.
+     */
+    searchForPerson(gndNumber: string): string {
+
+        const personByNumberTemplate = `
+        PREFIX beol: <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/beol/simple/v2#>
+        PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>  
+        CONSTRUCT {
+
+            ?person knora-api:isMainResource true .
+
+
+        } WHERE {
+
+            ?person a knora-api:Resource .
+
+            ?person a beol:person .
+
+            ?person beol:hasIAFIdentifier ?personGndNumber .
+            beol:hasIAFIdentifier knora-api:objectType <http://www.w3.org/2001/XMLSchema#string> .
+            ?personGndNumber a <http://www.w3.org/2001/XMLSchema#string> .
+
+            FILTER(?personGndNumber = "${gndNumber}"^^<http://www.w3.org/2001/XMLSchema#string>)
+
+        }
+
+        OFFSET 0
+        `;
+
+        return personByNumberTemplate;
+
+    }
+
+    /**
      * Given a region Iri, returns the Gravsearch query to obtain the associated transcription Iri.
      *
      * @param regionIri Iri of the region.
