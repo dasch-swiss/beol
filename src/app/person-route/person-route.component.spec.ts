@@ -13,7 +13,7 @@ import { AppInitService } from '../app-init.service';
 describe('PersonRouteComponent', () => {
     let component: PersonRouteComponent;
     let fixture: ComponentFixture<PersonRouteComponent>;
-    const gnd = '(DE-588)118531379';
+    const gnd = '118531379';
 
     let beolService: BeolService;
     let searchService: SearchService;
@@ -83,7 +83,7 @@ describe('PersonRouteComponent', () => {
 
     it('should perform a query to get the person\'s actual Iri', () => {
 
-        expect(beolService.searchForPerson).toHaveBeenCalledWith(gnd);
+        expect(beolService.searchForPerson).toHaveBeenCalledWith('(DE-588)' + gnd);
 
         expect(searchService.doExtendedSearchReadResourceSequence).toHaveBeenCalledWith('gravsearchQuery');
 
