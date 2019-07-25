@@ -29,7 +29,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     KnoraConstants = KnoraConstants;
 
     result: ReadResource[] = []; // the results of a search query
-    externalResults = [];
     ontologyInfo: OntologyInformation; // ontology information about resource classes and properties present in `result`
     numberOfAllResults: number; // total number of results (count query)
     rerender = false;
@@ -179,7 +178,10 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
      * Get text search results from Briefportal Leibniz
      */
     getResultsLeibniz() {
-        this._cacheService.getEntityDefinitionsForOntologies([this._appInitService.getSettings().ontologyIRI + '/ontology/0801/leibniz/v2']).subscribe((info2: OntologyInformation) => {
+        // cache the leibniz ontology before starting the text search to prevent unnecessary loading of ontology during the process
+        this._cacheService.getEntityDefinitionsForOntologies(
+            [this._appInitService.getSettings().ontologyIRI + '/ontology/0801/leibniz/v2']).subscribe(
+                (info2: OntologyInformation) => {
             const searchRoute = 'http://leibniz.sub.uni-goettingen.de/solr/leibniz/select?q=type%3Abrief+AND+(+volltext%3A';
             const proxyurl = 'https://cors-anywhere.herokuapp.com/';
             const experssions = ['id', 'reihe', 'band', 'brief_nummer', 'all_suggest', 'ort_anzeige',
@@ -215,7 +217,10 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
      * Get text search results from the Newton Project
      */
     getResultsNewton() {
-        this._cacheService.getEntityDefinitionsForOntologies([this._appInitService.getSettings().ontologyIRI + '/ontology/0801/newton/v2']).subscribe((info2: OntologyInformation) => {
+        // cache the newton ontology before starting the text search to prevent unnecessary loading of ontology during the process
+        this._cacheService.getEntityDefinitionsForOntologies(
+            [this._appInitService.getSettings().ontologyIRI + '/ontology/0801/newton/v2']).subscribe(
+                (info2: OntologyInformation) => {
             const searchRoute = 'http://www.newtonproject.ox.ac.uk/search/results?n=25&cat=';
             const proxyurl = 'https://cors-anywhere.herokuapp.com/';
             const mathCategory = 'Mathematics&ce=0&keyword=';
@@ -242,7 +247,11 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
         // FULLTEXT SEARCH
         if (this.searchMode === 'fulltext') {
-            this._cacheService.getEntityDefinitionsForOntologies([this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2']).subscribe((info2: OntologyInformation) => {
+            // cache the beol ontology and its dependencies before starting the text search to
+            // prevent unnecessary loading of ontology during the process
+            this._cacheService.getEntityDefinitionsForOntologies(
+                [this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2']).subscribe(
+                    (info2: OntologyInformation) => {
 
             const searchParams = { limitToProject: this.beolIri };
             // perform count query
