@@ -31,6 +31,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     result: ReadResource[] = []; // the results of a search query
     ontologyInfo: OntologyInformation; // ontology information about resource classes and properties present in `result`
     numberOfAllResults: number; // total number of results (count query)
+    numberOfExternalResults: number = 0; // total number of results of text search on 3rd party repos
     rerender = false;
 
     // with the http get request, we need also a variable for error messages;
@@ -107,13 +108,24 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
             this.searchQuery = <string>gravsearch;
         }
     }
+    filterExpression(results: string[]): string {
+        let filter = '';
+
+        for (let it = 0; it < results.length; it++) {
+            filter += '?letterNumber = "' + results[it] + '"';
+            if (it !== results.length - 1) {
+                filter += " || "; // or operation should be in double quote otherwise it is skipped
+            }
+        }
+        return filter;
+    }
     /**
      * Given the letterID of a letter from The Newton Project, searches for that letter.
      *
      * @param letterID the letterID to search for.
      * @returns the Gravsearch query.
      */
-    queryExpressionWithLetterID(letterIdentifier: string, ontology: string, property: string): string {
+    queryExpressionWithLetterID(filter: string, ontology: string, property: string): string {
 
         const letterByNumberTemplate = `
             PREFIX ${ontology}: <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/${ontology}/simple/v2#>
@@ -129,12 +141,11 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
                 ?letter ${ontology}:${property} ?letterNumber.
                 ${ontology}:${property} knora-api:objectType <http://www.w3.org/2001/XMLSchema#string> .
                 ?letterNumber a <http://www.w3.org/2001/XMLSchema#string> .
-                FILTER(?letterNumber = "${letterIdentifier}"^^<http://www.w3.org/2001/XMLSchema#string>)
+                FILTER(${filter}^^<http://www.w3.org/2001/XMLSchema#string>)
         }
 
         OFFSET 0
         `;
-
         return letterByNumberTemplate;
 
     }
@@ -145,13 +156,10 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     extendedSearchForExternalLetters(query: string) {
         this._searchService.doExtendedSearchReadResourceSequence(query).subscribe(
             (resourceSeq: ReadResourcesSequence) => {
-                if (resourceSeq.numberOfResources === 1) {
-                    this.processSearchResults(resourceSeq);
-                    this.numberOfAllResults += 1 ;
-                }
+                this.processSearchResults(resourceSeq);
+                this.numberOfExternalResults += resourceSeq.resources.length;
             }
         );
-
     }
     /**
      * make search expersion to be sent to search route of Briefportal Leibniz
@@ -167,10 +175,13 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
      * Get the search result leibniz letters by ID
      */
     getLeibnizLetters(retrunedSearchResults: HTMLObjectElement[]) {
+        const results: string[] = [];
         for (let it = 0; it < retrunedSearchResults.length; it++) {
-            const letterID = retrunedSearchResults[it].id;
-            // create a query that gets the Iri of the LEOO letter
-            const query = this.queryExpressionWithLetterID(letterID, 'leibniz', 'letterID');
+            results.push(retrunedSearchResults[it].id);
+        }
+        if (results.length) {
+            const filter = this.filterExpression(results);
+            const query = this.queryExpressionWithLetterID(filter, 'leibniz', 'letterID');
             this.extendedSearchForExternalLetters(query);
         }
     }
@@ -181,37 +192,41 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         // cache the leibniz ontology before starting the text search to prevent unnecessary loading of ontology during the process
         this._cacheService.getEntityDefinitionsForOntologies(
             [this._appInitService.getSettings().ontologyIRI + '/ontology/0801/leibniz/v2']).subscribe(
-                (info2: OntologyInformation) => {
-            const searchRoute = 'http://leibniz.sub.uni-goettingen.de/solr/leibniz/select?q=type%3Abrief+AND+(+volltext%3A';
-            const proxyurl = 'https://cors-anywhere.herokuapp.com/';
-            const experssions = ['id', 'reihe', 'band', 'brief_nummer', 'all_suggest', 'ort_anzeige',
-                'datum_anzeige', 'datum_gregorianisch', 'datum_julianisch', 'kontext'];
-            const format = ')&rows=9999&wt=json';
-            const searchExpression = this.makeLeibnizSearchExpressions(searchRoute, experssions) + format;
-            fetch(proxyurl + searchExpression) // https://cors-anywhere.herokuapp.com/https://example.com
-                .then(response => response.json())
-                .then(contents => {
-                    this.getLeibnizLetters(contents.response.docs);
-                })
-                .catch(() => console.log('Can’t access ' + searchExpression + ' response. Blocked by browser?'));
-        });
+            (info2: OntologyInformation) => {
+                const searchRoute = 'http://leibniz.sub.uni-goettingen.de/solr/leibniz/select?q=type%3Abrief+AND+(+volltext%3A';
+                const proxyurl = 'https://cors-anywhere.herokuapp.com/';
+                const experssions = ['id', 'reihe', 'band', 'brief_nummer', 'all_suggest', 'ort_anzeige',
+                    'datum_anzeige', 'datum_gregorianisch', 'datum_julianisch', 'kontext'];
+                const format = ')&rows=9999&wt=json';
+                const searchExpression = this.makeLeibnizSearchExpressions(searchRoute, experssions) + format;
+                fetch(proxyurl + searchExpression) // https://cors-anywhere.herokuapp.com/https://example.com
+                    .then(response => response.json())
+                    .then(contents => {
+                        this.getLeibnizLetters(contents.response.docs);
+                    })
+                    .catch(() => console.log('Can’t access ' + searchExpression + ' response. Blocked by browser?'));
+            });
     }
     getNewtonLetters(content: string) {
-       /*todo just parses the first page of the results due to hard coded pagination*/
-            const html = new DOMParser().parseFromString(content, 'text/html');
-            const returnedSearchResults = html.getElementsByTagName('tr');
-            for (let it = 0; it < returnedSearchResults.length; it++) {
+        /*todo just parses the first page of the results due to hard coded pagination*/
+        const results: string[] = [];
+        const html = new DOMParser().parseFromString(content, 'text/html');
+        const returnedSearchResults = html.getElementsByTagName('tr');
+        for (let it = 0; it < returnedSearchResults.length; it++) {
 
-                // every row of the result table has two cells 0: key 1:content
-                const links = returnedSearchResults[it].children[1].getElementsByClassName('link_wrapper');
-                if (links.length) {
-                    const hrefSegmented = links[0].children[0].getAttribute('href').split('/');
-                    const letterID = hrefSegmented[hrefSegmented.length - 1];
-                    const query = this.queryExpressionWithLetterID(letterID, 'newton', 'newtonProjectID');
-                    this.extendedSearchForExternalLetters(query);
-                }
-
+            // every row of the result table has two cells 0: key 1:content
+            const links = returnedSearchResults[it].children[1].getElementsByClassName('link_wrapper');
+            if (links.length) {
+                const hrefSegmented = links[0].children[0].getAttribute('href').split('/');
+                const letterID = hrefSegmented[hrefSegmented.length - 1];
+                results.push(letterID);
             }
+        }
+        if (results.length) {
+            const filter = this.filterExpression(results);
+            const query = this.queryExpressionWithLetterID(filter, 'newton', 'newtonProjectID');
+            this.extendedSearchForExternalLetters(query);
+        }
     }
     /**
      * Get text search results from the Newton Project
@@ -220,23 +235,23 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         // cache the newton ontology before starting the text search to prevent unnecessary loading of ontology during the process
         this._cacheService.getEntityDefinitionsForOntologies(
             [this._appInitService.getSettings().ontologyIRI + '/ontology/0801/newton/v2']).subscribe(
-                (info2: OntologyInformation) => {
-            const searchRoute = 'http://www.newtonproject.ox.ac.uk/search/results?n=25&cat=';
-            const proxyurl = 'https://cors-anywhere.herokuapp.com/';
-            const mathCategory = 'Mathematics&ce=0&keyword=';
-            const opticsCategory = 'Optics&ce=0&keyword=';
-            const queryTail = '&sort=relevance';
-            const searchExpressions = [searchRoute + mathCategory + this.searchQuery + queryTail,
-                searchRoute + opticsCategory + this.searchQuery + queryTail];
-            for (let it = 0; it < searchExpressions.length; it++) {
-                fetch(proxyurl + searchExpressions[it]) // https://cors-anywhere.herokuapp.com/https://example.com
-                    .then(response => response.text())
-                    .then(contents => {
-                        this.getNewtonLetters(contents);
-                    })
-                    .catch(() => console.log('Can’t access ' + searchExpressions[it] + ' response. Blocked by browser?'));
-            }
-        });
+            (info2: OntologyInformation) => {
+                const searchRoute = 'http://www.newtonproject.ox.ac.uk/search/results?n=25&cat=';
+                const proxyurl = 'https://cors-anywhere.herokuapp.com/';
+                const mathCategory = 'Mathematics&ce=0&keyword=';
+                const opticsCategory = 'Optics&ce=0&keyword=';
+                const queryTail = '&sort=relevance';
+                const searchExpressions = [searchRoute + mathCategory + this.searchQuery + queryTail,
+                    searchRoute + opticsCategory + this.searchQuery + queryTail];
+                for (let it = 0; it < searchExpressions.length; it++) {
+                    fetch(proxyurl + searchExpressions[it]) // https://cors-anywhere.herokuapp.com/https://example.com
+                        .then(response => response.text())
+                        .then(contents => {
+                            this.getNewtonLetters(contents);
+                        })
+                        .catch(() => console.log('Can’t access ' + searchExpressions[it] + ' response. Blocked by browser?'));
+                }
+            });
     }
 
     /**
@@ -251,35 +266,37 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
             // prevent unnecessary loading of ontology during the process
             this._cacheService.getEntityDefinitionsForOntologies(
                 [this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2']).subscribe(
-                    (info2: OntologyInformation) => {
+                (info2: OntologyInformation) => {
 
-            const searchParams = { limitToProject: this.beolIri };
-            // perform count query
-            if (this.offset === 0) {
+                    const searchParams = { limitToProject: this.beolIri };
+                    // perform count query
+                    if (this.offset === 0) {
 
-                this._searchService.doFullTextSearchCountQueryCountQueryResult(this.searchQuery, searchParams)
-                    .subscribe(
-                        this.showNumberOfAllResults,
-                        (error: any) => {
-                            this.errorMessage = <any>error;
-                            // console.log('numberOfAllResults', this.numberOfAllResults);
-                        }
-                    );
-                // here get the search results from the other projects
-                this.getResultsLeibniz();
-                this.getResultsNewton();
-            }
+                        this._searchService.doFullTextSearchCountQueryCountQueryResult(this.searchQuery, searchParams)
+                            .subscribe(
+                                this.showNumberOfAllResults,
+                                (error: any) => {
+                                    this.errorMessage = <any>error;
+                                    // console.log('numberOfAllResults', this.numberOfAllResults);
+                                }
+                            );
+                        // here get the search results from the other projects
+                        this.getResultsLeibniz();
+                        this.getResultsNewton();
 
-            // perform full text search
+                    }
 
-                this._searchService.doFullTextSearchReadResourceSequence(this.searchQuery, this.offset, searchParams)
-                    .subscribe(
-                        this.processSearchResults, // function pointer
-                        (error: any) => {
-                            this.errorMessage = <any>error;
-                        },
-                    );
-            });
+                    // perform full text search
+
+                    this._searchService.doFullTextSearchReadResourceSequence(this.searchQuery, this.offset, searchParams)
+                        .subscribe(
+                            this.processSearchResults, // function pointer
+                            (error: any) => {
+                                this.errorMessage = <any>error;
+                            },
+                        );
+                });
+
             // EXTENDED SEARCH
         } else if (this.searchMode === 'extended') {
             // perform count query
