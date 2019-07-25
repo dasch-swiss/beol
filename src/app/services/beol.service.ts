@@ -365,7 +365,7 @@ export class BeolService {
      * @param gndNumber the GND number to search for.
      * @returns the Gravsearch query.
      */
-    searchForPerson(gndNumber: string): string {
+    searchForPerson(param): string {
 
         const personByNumberTemplate = `
         PREFIX beol: <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/beol/simple/v2#>
@@ -385,7 +385,7 @@ export class BeolService {
             beol:hasIAFIdentifier knora-api:objectType <http://www.w3.org/2001/XMLSchema#string> .
             ?personGndNumber a <http://www.w3.org/2001/XMLSchema#string> .
 
-            FILTER(?personGndNumber = "${gndNumber}"^^<http://www.w3.org/2001/XMLSchema#string>)
+            FILTER(?personGndNumber = "(DE-588)${param}" || ?personGndNumber = "(VIAF)${param}"^^<http://www.w3.org/2001/XMLSchema#string>)
 
         }
 

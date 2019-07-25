@@ -1,1 +1,2 @@
-<div *ngIf="notFound">Person with GND number {{gndNumber}} or VIAF Number {{viafNumber}} could not be found</div>
+<div *ngIf="notFound">No person with given {{param}} could be found</div>
+<div *ngIf="multipleFound">more than one person found for the given {{param}}</div>

@@ -10,11 +10,9 @@ import { AppInitService } from '../app-init.service';
     styleUrls: ['./person-route.component.scss']
 })
 export class PersonRouteComponent implements OnInit {
-
-    gndNumber: string;
-    viafNumber: string;
     notFound: boolean;
-
+    multipleFound: boolean;
+    param: string;
     constructor(
         private _route: ActivatedRoute,
         private _router: Router,
@@ -25,14 +23,11 @@ export class PersonRouteComponent implements OnInit {
 
     ngOnInit() {
         this._route.paramMap.subscribe((params: ParamMap) => {
-
-            this.gndNumber = '(DE-588)' + params.get('gnd');
-            this.viafNumber = '(VIAF)' + params.get('gnd');
-            if (this.gndNumber !== null) {
-
+            this.param = params.get('gnd')
+            if (this.param !== null) {
                 // create a query that gets the Iri of the person
-                const query = this._beolService.searchForPerson(this.gndNumber);
-                const query2 = this._beolService.searchForPerson(this.viafNumber);
+                const query = this._beolService.searchForPerson(this.param);
+                console.log(query)
                 this._searchService.doExtendedSearchReadResourceSequence(query).subscribe(
                     (resourceSeq: ReadResourcesSequence) => {
 
@@ -41,26 +36,21 @@ export class PersonRouteComponent implements OnInit {
                             const personIri: string = resourceSeq.resources[0].id;
                             // given the Iri of the person, display the whole resource
                             this._beolService.routeByResourceType(this._appInitService.getSettings().ontologyIRI +
-                                                                    '/ontology/0801/beol/v2#person', personIri);
+                                '/ontology/0801/beol/v2#person', personIri);
+                        } else if (resourceSeq.numberOfResources > 1) {
+                            console.log(`more than one entry found for the given ${this.param}`);
+                            this.multipleFound = true;
+                            for (let it = 0; it < resourceSeq.resources.length; it++ ) {
+                                const personIri: string = resourceSeq.resources[it].id;
+                                // given the Iri of the person, display the whole resource
+                                this._beolService.routeByResourceType(this._appInitService.getSettings().ontologyIRI +
+                                    '/ontology/0801/beol/v2#person', personIri);
+                            }
                         } else {
-                            this._searchService.doExtendedSearchReadResourceSequence(query2).subscribe(
-                                (resourceSeq2: ReadResourcesSequence) => {
-
-                                    if (resourceSeq2.numberOfResources === 1) {
-
-                                        const personIri: string = resourceSeq2.resources[0].id;
-                                        // given the Iri of the person, display the whole resource
-                                        this._beolService.routeByResourceType(this._appInitService.getSettings().ontologyIRI +
-                                            '/ontology/0801/beol/v2#person', personIri);
-                                    } else {
-                                        // person not found
-                                        console.log(`person with ${this.gndNumber} or ${this.viafNumber} not found`);
-
-
-                                        this.notFound = true;
-                                    }
-                                });
-                        }
+                                // person not found
+                                console.log(`person with given ${this.param} not found`);
+                                this.notFound = true;
+                            }
                     }, (err) => {
                         console.log('search failed ' + err);
                         this.notFound = true;
