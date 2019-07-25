@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-import { PublisherComponent } from './publisher.component';
+import { PublishedLetterComponent } from './publishedLetter.component';
 import { KuiActionModule } from '@knora/action';
 import { of } from 'rxjs';
 import { KuiCoreConfig, KuiCoreConfigToken } from '@knora/core';
@@ -17,8 +17,8 @@ import { ReadTextValueComponent } from '../../properties/read-text-value/read-te
 import { AppInitService } from '../../app-init.service';
 
 describe('PublishedLetterComponent', () => {
-    let component: PublisherComponent;
-    let fixture: ComponentFixture<PublisherComponent>;
+    let component: PublishedLetterComponent;
+    let fixture: ComponentFixture<PublishedLetterComponent>;
 
     let appInitService: AppInitService;
 
@@ -37,7 +37,7 @@ describe('PublishedLetterComponent', () => {
                 RouterTestingModule
             ],
             declarations: [
-                PublisherComponent,
+                PublishedLetterComponent,
                 ReadTextValueAsHtmlComponent,
                 ReadTextValueComponent,
                 MathJaxDirective
@@ -66,7 +66,7 @@ describe('PublishedLetterComponent', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(PublisherComponent);
+        fixture = TestBed.createComponent(PublishedLetterComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

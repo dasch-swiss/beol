@@ -712,6 +712,8 @@ export class BeolService {
             this._router.navigateByUrl('entryComment/' + encodeURIComponent(referredResourceIri));
         } else if (referredResourceType === this._appInitService.getSettings().ontologyIRI  + '/ontology/0801/beol/v2#manuscriptEntry') {
             this._router.navigateByUrl('manuscriptEntry/' + encodeURIComponent(referredResourceIri));
+        } else if (referredResourceType === this._appInitService.getSettings().ontologyIRI  + '/ontology/0801/biblio/v2#letter') {
+           this._router.navigateByUrl('publishedLetter/' + encodeURIComponent(referredResourceIri));
         } else {
             // route to generic template
             this._router.navigateByUrl('resource/' + encodeURIComponent(referredResourceIri));

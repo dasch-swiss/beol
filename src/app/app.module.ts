@@ -28,6 +28,7 @@ import { LeooRouteComponent } from './leoo-route/leoo-route.component';
 import { EndnoteComponent } from './resource/endnote/endnote.component';
 import { FigureComponent } from './resource/figure/figure.component';
 import { BiblioItemsComponent } from './resource/biblio-items/biblio-items.component';
+import { PublishedLetterComponent } from './resource/publishedLetter/publishedLetter.component';
 // directives
 import { MathJaxDirective } from './directives/mathjax.directive';
 // Loads the application configuration file during application startup
@@ -96,7 +97,8 @@ export function initializeApp(appInitService: AppInitService) {
         BebbRouteComponent,
         ManuscriptEntryComponent,
         TeiLinkDirective,
-        CommentComponent
+        CommentComponent,
+        PublishedLetterComponent,
     ],
     imports: [
         AppRouting,
