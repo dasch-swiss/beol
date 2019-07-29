@@ -83,7 +83,7 @@ describe('PersonRouteComponent', () => {
 
     it('should perform a query to get the person\'s actual Iri', () => {
 
-        expect(beolService.searchForPerson).toHaveBeenCalledWith('(DE-588)' + gnd);
+        expect(beolService.searchForPerson).toHaveBeenCalledWith(gnd);
 
         expect(searchService.doExtendedSearchReadResourceSequence).toHaveBeenCalledWith('gravsearchQuery');
 

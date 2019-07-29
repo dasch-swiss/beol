@@ -23,11 +23,10 @@ export class PersonRouteComponent implements OnInit {
 
     ngOnInit() {
         this._route.paramMap.subscribe((params: ParamMap) => {
-            this.param = params.get('gnd')
+            this.param = params.get('gnd');
             if (this.param !== null) {
                 // create a query that gets the Iri of the person
                 const query = this._beolService.searchForPerson(this.param);
-                console.log(query)
                 this._searchService.doExtendedSearchReadResourceSequence(query).subscribe(
                     (resourceSeq: ReadResourcesSequence) => {
 
