@@ -162,7 +162,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         );
     }
     /**
-     * make search expersion to be sent to search route of Briefportal Leibniz
+     * make search expression to be sent to search route of Briefportal Leibniz
      */
     makeLeibnizSearchExpressions(searchTerm: string, expressions: string[]) {
         for (let it = 0; it < expressions.length; it++) {
