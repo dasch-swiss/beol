@@ -10,7 +10,7 @@
 
     <!-- show the number of results found in Knora -->
     <div *ngIf="numberOfAllResults !== 0 && result; else noResult">
-        <h4>Number of results: {{numberOfAllResults}}</h4>
+        <h4>Number of results: {{numberOfAllResults + numberOfExternalResults}}</h4>
 
         <kui-progress-indicator *ngIf="isLoading" [color]="'#D88958'"></kui-progress-indicator>
 
