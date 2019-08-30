@@ -31,7 +31,9 @@ export interface PropertyValues {
     [index: string]: ReadPropertyItem[];
 }
 
-@Directive()
+@Directive({
+    selector: 'appBeolResource'
+})
 export abstract class BeolResource implements OnInit, OnDestroy {
 
     abstract iri: string;
@@ -49,7 +51,7 @@ export abstract class BeolResource implements OnInit, OnDestroy {
 
     abstract propIris: PropIriToNameMapping;
 
-    constructor(
+    constructor (
         protected _route: ActivatedRoute,
         protected _resourceService: ResourceService,
         protected _cacheService: OntologyCacheService,

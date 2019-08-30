@@ -20,7 +20,7 @@ import { BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-reso
 import { Subscription } from 'rxjs';
 import { BeolService } from '../../services/beol.service';
 import { AppInitService } from '../../app-init.service';
-import {el} from '@angular/platform-browser/testing/src/browser_util';
+// import {el} from '@angular/platform-browser/testing/src/browser_util';
 
 class LetterProps implements PropertyValues {
     id: ReadTextValue[] = [];
@@ -77,13 +77,13 @@ export class LeibnizLetterComponent extends BeolResource {
 
     props: LetterProps;
 
-    constructor(protected _route: ActivatedRoute,
-                protected _resourceService: ResourceService,
-                protected _cacheService: OntologyCacheService,
-                protected _incomingService: IncomingService,
-                public location: Location,
-                protected _beolService: BeolService,
-                private _appInitService: AppInitService
+    constructor (protected _route: ActivatedRoute,
+        protected _resourceService: ResourceService,
+        protected _cacheService: OntologyCacheService,
+        protected _incomingService: IncomingService,
+        public location: Location,
+        protected _beolService: BeolService,
+        private _appInitService: AppInitService
     ) {
 
         super(_route, _resourceService, _cacheService, _incomingService, _beolService);
@@ -107,7 +107,7 @@ export class LeibnizLetterComponent extends BeolResource {
         // https://stackoverflow.com/questions/43871637/no-access-control-allow-origin-header-is-present-on-the-requested-resource-whe
         const proxyurl = 'https://cors-anywhere.herokuapp.com/';
         const basePath = 'http://leibniz.sub.uni-goettingen.de/solr/leibniz/select?sort=type+asc&q=id%3A';
-        const basePathOR =  '+OR+(doc_id%3A';
+        const basePathOR = '+OR+(doc_id%3A';
         const basePathAnd = '+AND+type%3Avariante)&rows=9999&wt=json';
         const apiUrl = basePath + filename + basePathOR + filename + basePathAnd; // site that doesn’t send Access-Control-*
 
@@ -153,9 +153,9 @@ export class LeibnizLetterComponent extends BeolResource {
     }
 
     private getLeibnizLetterBody(contents) {
-      const html = new DOMParser().parseFromString(contents.response.docs[0].volltext, 'text/html');
-      this.getLeibnizImages(html.body);
-      this.letter = html.body;
+        const html = new DOMParser().parseFromString(contents.response.docs[0].volltext, 'text/html');
+        this.getLeibnizImages(html.body);
+        this.letter = html.body;
     }
     showIncomingRes(resIri, resType) {
         this._beolService.routeByResourceType(resType, resIri);
