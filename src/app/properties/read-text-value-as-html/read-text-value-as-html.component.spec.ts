@@ -13,7 +13,7 @@ import {
     ResourceClasses,
     ResourceClassIrisForOntology
 } from '@knora/core';
-import { MatSnackBarModule } from '@angular/material';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 

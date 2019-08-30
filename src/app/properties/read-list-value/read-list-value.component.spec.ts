@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReadListValueComponent } from './read-list-value.component';
 import { MathJaxDirective } from '../../directives/mathjax.directive';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MatSnackBarModule } from '@angular/material';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { Component, DebugElement, OnInit, ViewChild } from '@angular/core';
 import { KuiCoreConfig, KuiCoreConfigToken, ListCacheService, ListNodeV2, ReadListValue } from '@knora/core';
 import { By } from '@angular/platform-browser';

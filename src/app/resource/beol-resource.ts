@@ -18,7 +18,7 @@ import { StillImageComponent } from '@knora/viewer';
 
 import { Subscription } from 'rxjs';
 
-import { OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { OnDestroy, OnInit, ViewChild, Directive } from '@angular/core';
 
 import { BeolService } from '../services/beol.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
@@ -31,6 +31,7 @@ export interface PropertyValues {
     [index: string]: ReadPropertyItem[];
 }
 
+@Directive()
 export abstract class BeolResource implements OnInit, OnDestroy {
 
     abstract iri: string;
