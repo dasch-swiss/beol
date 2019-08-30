@@ -101,7 +101,7 @@ describe('ReadTextValueAsHtmlComponent', () => {
 })
 class TestHostComponent implements OnInit {
 
-    @ViewChild('htmlValComp') htmlValueComponent: ReadTextValueAsHtmlComponent;
+    @ViewChild('htmlValComp', /* TODO: add static flag */ {}) htmlValueComponent: ReadTextValueAsHtmlComponent;
 
     htmlVal: ReadTextValue;
     bindEvents = true;
