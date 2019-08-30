@@ -49,7 +49,7 @@ describe('ReadTextValueComponent', () => {
         })
             .compileComponents();
 
-        appInitServiceSpy.getSettings.and.returnValue({ontologyIRI: 'http://0.0.0.0:3333'});
+        appInitServiceSpy.getSettings.and.returnValue({ ontologyIRI: 'http://0.0.0.0:3333' });
 
         appInitService = TestBed.get(AppInitService);
     }));
@@ -167,13 +167,13 @@ describe('ReadTextValueComponent', () => {
 })
 class TestHostComponent implements OnInit {
 
-    @ViewChild('textValComp', /* TODO: add static flag */ {}) textValueComponent: ReadTextValueComponent;
+    @ViewChild('textValComp', { static: false }) textValueComponent: ReadTextValueComponent;
 
     textVal: ReadTextValue;
     bindEvents = false;
     ontologyInfo;
 
-    constructor() {
+    constructor () {
     }
 
     ngOnInit() {
