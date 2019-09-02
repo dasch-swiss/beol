@@ -18,7 +18,7 @@ import { BeolService } from '../../services/beol.service';
 import { AppInitService } from '../../app-init.service';
 
 class PublishedLetterProps implements PropertyValues {
-    letterNumber: ReadTextValue[] = [];
+    publishedLetterNumber: ReadTextValue[] = [];
     startPage: ReadTextValue[] = [];
     endPage: ReadTextValue[] = [];
     isPublishedIn: ReadLinkValue[] = [];
@@ -44,7 +44,7 @@ export class PublishedLetterComponent extends BeolResource {
     propIris: PropIriToNameMapping = {
         'id': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#beolIDs',
         'isPublishedIn': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#isPublishedInValue',
-        'letterNumber': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#publishedLetterNumber"',
+        'publishedLetterNumber': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#publishedLetterNumber',
         'startPage': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#publishedLetterStartPage',
         'endPage': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#publishedLetterEndPage'
     };
@@ -71,7 +71,6 @@ export class PublishedLetterComponent extends BeolResource {
         this.mapper(props);
 
         this.props = props;
-        console.log(this.props.letterNumber[0].getContent());
     }
     showIncomingRes(resIri, resType) {
         this._beolService.routeByResourceType(resType, resIri);
