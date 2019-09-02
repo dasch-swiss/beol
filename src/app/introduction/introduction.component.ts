@@ -66,23 +66,23 @@ export class IntroductionComponent implements OnInit, OnDestroy {
         'text': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasText',
     };
 
-    constructor(private _route: ActivatedRoute,
-                private _http: HttpClient,
-                private _router: Router,
-                private _searchService: SearchService,
-                private _beol: BeolService,
-                private _resourceService: ResourceService,
-                private _cacheService: OntologyCacheService,
-                public location: Location,
-                private _appInitService: AppInitService) {
+    constructor (private _route: ActivatedRoute,
+        private _http: HttpClient,
+        private _router: Router,
+        private _searchService: SearchService,
+        private _beol: BeolService,
+        private _resourceService: ResourceService,
+        private _cacheService: OntologyCacheService,
+        public location: Location,
+        private _appInitService: AppInitService) {
     }
 
     ngOnInit() {
 
         const introleoo = require('../../assets/data/introductionLeoo.json');
         const introLece = require('../../assets/data/introductionLece.json');
-        this.listLeoo = <Introduction[]> introleoo.Introductions;
-        this.listLece = <Introduction[]> introLece.Introductions;
+        this.listLeoo = <Introduction[]>introleoo.Introductions;
+        this.listLece = <Introduction[]>introLece.Introductions;
 
         this.paramsSubscription = this._route.paramMap.subscribe((params: ParamMap) => {
             this.project = params.get('project');
@@ -99,7 +99,6 @@ export class IntroductionComponent implements OnInit, OnDestroy {
     }
 
     searchForIntro(id: string): void {
-
         const gravsearch: string = this._beol.searchForIntroductionById(id);
 
         this._searchService.doExtendedSearchReadResourceSequence(gravsearch).subscribe(
