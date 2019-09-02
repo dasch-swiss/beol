@@ -19,7 +19,8 @@
                 <span *ngIf="resource.label"><b>{{resource?.label}}</b></span>, in:
 
                 <div *ngIf="props?.isPublishedIn[0]">
-                    <kui-link-value [valueObject]="props?.isPublishedIn[0]" [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value><span *ngIf="props?.publishedLetterNumber[0]">, N. <read-text-value [valueObject]="props?.publishedLetterNumber[0]" [ontologyInfo]="ontologyInfo" [bindEvents]="true"></read-text-value></span>
+                    <kui-link-value [valueObject]="props?.isPublishedIn[0]" [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
+                    <span *ngIf="props?.publishedLetterNumber[0]">, N. <read-text-value [valueObject]="props?.publishedLetterNumber[0]" [ontologyInfo]="ontologyInfo" [bindEvents]="true"></read-text-value></span>
 
                 </div>
 
