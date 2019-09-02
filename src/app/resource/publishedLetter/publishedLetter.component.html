@@ -28,7 +28,7 @@
                 <span *ngIf="props?.endPage[0]"> -- <read-text-value [valueObject]="props?.endPage[0]" [ontologyInfo]="ontologyInfo" [bindEvents]="true"></read-text-value>.</span>
 
 
-            <section class="links">
+
                 <div *ngIf="resource?.incomingLinks?.length > 0" class="incoming-link-position">
                     <p>
                         <strong>Referenced In:</strong>
@@ -39,7 +39,6 @@
                         </mat-list-item>
                     </mat-list>
                 </div>
-            </section>
 
         </div>
     </div>
