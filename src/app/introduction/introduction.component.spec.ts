@@ -54,15 +54,18 @@ describe('IntroductionComponent', () => {
             providers: [
                 {
                     provide: ActivatedRoute,
-                    useValue: { paramMap: of({
-                                get: (param) => {
-                                    if (param === 'project') {
-                                        return project;
-                                    } else {
-                                        return id;
-                                    }
-                                }}
-                        )}
+                    useValue: {
+                        paramMap: of({
+                            get: (param) => {
+                                if (param === 'project') {
+                                    return project;
+                                } else {
+                                    return id;
+                                }
+                            }
+                        }
+                        )
+                    }
                 },
                 { provide: KuiCoreConfigToken, useValue: KuiCoreConfig },
                 { provide: BeolService, useValue: spyBeolService },
@@ -79,7 +82,7 @@ describe('IntroductionComponent', () => {
 
             const introTemplate = `
     PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
-    PREFIX beol: <${this.externalApiURL}/ontology/0801/beol/simple/v2#>
+    PREFIX beol: <http://0.0.0.0:3333/ontology/0801/beol/simple/v2#>
 
     CONSTRUCT {
 
@@ -145,7 +148,7 @@ describe('IntroductionComponent', () => {
 
         });
 
-        appInitServiceSpy.getSettings.and.returnValue({ontologyIRI: 'http://0.0.0.0:3333'});
+        appInitServiceSpy.getSettings.and.returnValue({ ontologyIRI: 'http://0.0.0.0:3333' });
 
         appInitService = TestBed.get(AppInitService);
 

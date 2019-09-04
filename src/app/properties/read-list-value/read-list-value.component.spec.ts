@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReadListValueComponent } from './read-list-value.component';
 import { MathJaxDirective } from '../../directives/mathjax.directive';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MatSnackBarModule } from '@angular/material';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { Component, DebugElement, OnInit, ViewChild } from '@angular/core';
 import { KuiCoreConfig, KuiCoreConfigToken, ListCacheService, ListNodeV2, ReadListValue } from '@knora/core';
 import { By } from '@angular/platform-browser';
@@ -37,14 +37,14 @@ describe('ReadListValueComponent', () => {
                 HttpClientModule
             ],
             providers: [
-                {provide: ListCacheService, useValue: spyListCacheService},
-                {provide: KuiCoreConfigToken, useValue: KuiCoreConfig},
-                {provide: AppInitService, useValue: appInitServiceSpy}
+                { provide: ListCacheService, useValue: spyListCacheService },
+                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig },
+                { provide: AppInitService, useValue: appInitServiceSpy }
             ]
         })
             .compileComponents();
 
-        appInitServiceSpy.getSettings.and.returnValue({ontologyIRI: 'http://0.0.0.0:3333'});
+        appInitServiceSpy.getSettings.and.returnValue({ ontologyIRI: 'http://0.0.0.0:3333' });
 
         appInitService = TestBed.get(AppInitService);
 
@@ -142,11 +142,11 @@ describe('ReadListValueComponent', () => {
 })
 class TestHostComponent implements OnInit {
 
-    @ViewChild('listVal') listValueComponent: ReadListValueComponent;
+    @ViewChild('listVal', { static: false }) listValueComponent: ReadListValueComponent;
 
     listValue;
 
-    constructor() {
+    constructor () {
     }
 
     ngOnInit() {
@@ -163,13 +163,13 @@ class TestHostComponent implements OnInit {
 })
 class TestHostComponent2 implements OnInit {
 
-    @ViewChild('listVal') listValueComponent: ReadListValueComponent;
+    @ViewChild('listVal', { static: false }) listValueComponent: ReadListValueComponent;
 
     listValue;
 
     renderMathInput = false;
 
-    constructor() {
+    constructor () {
     }
 
     ngOnInit() {

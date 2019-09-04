@@ -10,7 +10,8 @@ import { of } from 'rxjs';
 import { KuiCoreConfig, KuiCoreConfigToken, OntologyCacheService } from '@knora/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { HttpTestingController } from '@angular/common/http/testing';
-import { MatIconModule, MatListModule } from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 import { ReadTextValueComponent } from '../../properties/read-text-value/read-text-value.component';
 import { AppInitService } from '../../app-init.service';
 

@@ -20,7 +20,8 @@ import {
 import { KuiViewerModule } from '@knora/viewer';
 
 import { MathJaxDirective } from '../directives/mathjax.directive';
-import { MatExpansionModule, MatIconModule } from '@angular/material';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatIconModule } from '@angular/material/icon';
 import { ReadListValueComponent } from '../properties/read-list-value/read-list-value.component';
 import { AppInitService } from '../app-init.service';
 
