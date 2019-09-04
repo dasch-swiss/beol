@@ -20,7 +20,6 @@ import { BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-reso
 import { Subscription } from 'rxjs';
 import { BeolService } from '../../services/beol.service';
 import { AppInitService } from '../../app-init.service';
-// import {el} from '@angular/platform-browser/testing/src/browser_util';
 
 class LetterProps implements PropertyValues {
     id: ReadTextValue[] = [];
