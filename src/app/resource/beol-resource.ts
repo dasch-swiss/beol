@@ -42,13 +42,13 @@ export abstract class BeolResource implements OnInit, OnDestroy {
     abstract navigationSubscription: Subscription;
     protected params;
 
-    @ViewChild('OSDViewer') osdViewer: StillImageComponent;
+    @ViewChild('OSDViewer', { static: false }) osdViewer: StillImageComponent;
 
     abstract KnoraConstants: KnoraConstants;
 
     abstract propIris: PropIriToNameMapping;
 
-    constructor(
+    constructor (
         protected _route: ActivatedRoute,
         protected _resourceService: ResourceService,
         protected _cacheService: OntologyCacheService,

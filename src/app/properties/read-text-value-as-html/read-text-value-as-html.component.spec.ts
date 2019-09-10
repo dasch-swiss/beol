@@ -13,7 +13,7 @@ import {
     ResourceClasses,
     ResourceClassIrisForOntology
 } from '@knora/core';
-import { MatSnackBarModule } from '@angular/material';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 
@@ -49,7 +49,7 @@ describe('ReadTextValueAsHtmlComponent', () => {
         })
             .compileComponents();
 
-        appInitServiceSpy.getSettings.and.returnValue({ontologyIRI: 'http://0.0.0.0:3333'});
+        appInitServiceSpy.getSettings.and.returnValue({ ontologyIRI: 'http://0.0.0.0:3333' });
 
         appInitService = TestBed.get(AppInitService);
     }));
@@ -101,13 +101,13 @@ describe('ReadTextValueAsHtmlComponent', () => {
 })
 class TestHostComponent implements OnInit {
 
-    @ViewChild('htmlValComp') htmlValueComponent: ReadTextValueAsHtmlComponent;
+    @ViewChild('htmlValComp', { static: false }) htmlValueComponent: ReadTextValueAsHtmlComponent;
 
     htmlVal: ReadTextValue;
     bindEvents = true;
     ontologyInfo;
 
-    constructor() {
+    constructor () {
     }
 
     ngOnInit() {

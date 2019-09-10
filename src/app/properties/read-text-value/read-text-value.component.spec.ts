@@ -18,7 +18,7 @@ import { ReadTextValueAsHtmlComponent } from '../read-text-value-as-html/read-te
 import { MathJaxDirective } from '../../directives/mathjax.directive';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MatSnackBarModule } from '@angular/material';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AppInitService } from '../../app-init.service';
 
 describe('ReadTextValueComponent', () => {
@@ -49,7 +49,7 @@ describe('ReadTextValueComponent', () => {
         })
             .compileComponents();
 
-        appInitServiceSpy.getSettings.and.returnValue({ontologyIRI: 'http://0.0.0.0:3333'});
+        appInitServiceSpy.getSettings.and.returnValue({ ontologyIRI: 'http://0.0.0.0:3333' });
 
         appInitService = TestBed.get(AppInitService);
     }));
@@ -167,13 +167,13 @@ describe('ReadTextValueComponent', () => {
 })
 class TestHostComponent implements OnInit {
 
-    @ViewChild('textValComp') textValueComponent: ReadTextValueComponent;
+    @ViewChild('textValComp', { static: false }) textValueComponent: ReadTextValueComponent;
 
     textVal: ReadTextValue;
     bindEvents = false;
     ontologyInfo;
 
-    constructor() {
+    constructor () {
     }
 
     ngOnInit() {

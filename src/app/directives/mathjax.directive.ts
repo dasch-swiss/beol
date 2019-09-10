@@ -9,7 +9,7 @@ import {
     ReadTextValueAsHtml
 } from '@knora/core';
 import { BeolService } from '../services/beol.service';
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { forkJoin } from 'rxjs';
 
 declare var MathJax: {

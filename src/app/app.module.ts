@@ -49,7 +49,7 @@ import { LeibnizPortalDirective } from './directives/leibniz-portal.directive';
 
 import { HanCatalogueDirective } from './directives/han-catalogue.directive';
 import { BebbRouteComponent } from './bebb-route/bebb-route.component';
-import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
+import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { AppInitService } from './app-init.service';
 
 import { TranscriptionComponent } from './resource/transcription/transcription.component';
