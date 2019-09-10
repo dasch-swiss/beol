@@ -36,8 +36,8 @@ export class TeiLinkDirective implements OnChanges {
         return this._resourceIri;
     }
 
-    constructor(private el: ElementRef,
-                private _appInitService: AppInitService) {
+    constructor (private el: ElementRef,
+        private _appInitService: AppInitService) {
     }
 
     private generateTeiLink() {
@@ -48,7 +48,7 @@ export class TeiLinkDirective implements OnChanges {
 
         if (teiConfig !== undefined) {
 
-            const teiLink = settings.externalApiURL + '/v2/tei/' + encodeURIComponent(this._resourceIri)
+            const teiLink = settings.ontologyIRI + '/v2/tei/' + encodeURIComponent(this._resourceIri)
                 + `?${this.textProperty}=` + encodeURIComponent(teiConfig.textProperty)
                 + `&${this.mappingIri}=` + encodeURIComponent(teiConfig.mappingIRI)
                 + `&${this.gravsearchTemplateIri}=` + encodeURIComponent(teiConfig.gravsearchTemplateIri)

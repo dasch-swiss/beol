@@ -26,7 +26,7 @@ describe('TeiLinkDirective', () => {
             .compileComponents();
 
         const mockConfig = {
-            'externalApiURL': 'http://0.0.0.0:3333',
+            'ontologyIRI': 'http://0.0.0.0:3333',
             'tei': {
                 'http://0.0.0.0:3333/ontology/0801/beol/v2#letter': {
                     'textProperty': 'http://0.0.0.0:3333/ontology/0801/beol/v2#hasText',

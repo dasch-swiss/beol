@@ -3,7 +3,7 @@ import { MathJaxDirective } from './mathjax.directive';
 import { Component, DebugElement, OnInit } from '@angular/core';
 import { KuiCoreConfig, KuiCoreConfigToken, KuiCoreModule } from '@knora/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MatSnackBarModule } from '@angular/material';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { By } from '@angular/platform-browser';
 import { AppInitService } from '../app-init.service';
 
