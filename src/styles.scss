@@ -3,20 +3,25 @@
 /*** Angular Material Datepicker CSS ***/
 
 kui-calendar-header {
-    .mat-select {
-      background: rgba(216, 137, 88, 1);;
-      color: white;
-      padding: 20px;
-      margin-bottom: -20px;
-      box-sizing: border-box;
-    }
-  
-    .mat-select-value,
-    .mat-select-arrow {
-      color: #fff;
-    }
+  .mat-select {
+    background: rgba(216, 137, 88, 1);;
+    color: white;
+    padding: 20px;
+    margin-bottom: -20px;
+    box-sizing: border-box;
   }
-    
+
+  .mat-select-value,
+  .mat-select-arrow {
+    color: #fff;
+  }
+}
+
+.cdk-overlay-pane {
   .mat-datepicker-content {
-    height: 400px;
+    .mat-calendar {
+      height: auto !important;
+    }
   }
+}
+
