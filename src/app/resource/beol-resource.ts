@@ -1,5 +1,4 @@
 import {
-    ImageRegion,
     IncomingService,
     KnoraConstants,
     OntologyCacheService,
@@ -14,7 +13,7 @@ import {
     Utils
 } from '@knora/core';
 
-import { StillImageComponent } from '@knora/viewer';
+import { StillImageComponent,  ImageRegion } from '@knora/viewer';
 
 import { Subscription } from 'rxjs';
 
