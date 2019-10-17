@@ -36,6 +36,7 @@ class LetterProps implements PropertyValues {
     letterURI: ReadUriValue[] = [];
     letterID: ReadTextValue[] = [];
     language: ReadTextValue[] = [];
+    citation: ReadLinkValue[] = [];
 
     [index: string]: ReadPropertyItem[];
 }
@@ -72,6 +73,7 @@ export class LeibnizLetterComponent extends BeolResource {
         'letterURI': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#letterHasURI',
         'language': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#letterHasLanguage',
         'number': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#letterHasNumber',
+        'citation': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/leibniz/v2#citationValue',
     };
 
     props: LetterProps;
@@ -96,6 +98,7 @@ export class LeibnizLetterComponent extends BeolResource {
 
         this.mapper(props);
         this.props = props;
+
         // get the id from the route leibnizLetter/:id e.g. l386
         this.getLeibnizLetterText(this.props.letterID[0].getContent());
     }

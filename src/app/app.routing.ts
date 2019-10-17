@@ -7,6 +7,7 @@ import { IntroductionComponent } from './introduction/introduction.component';
 import { LetterComponent } from './resource/letter/letter.component';
 import { PersonComponent } from './resource/person/person.component';
 import { PublisherComponent } from './resource/publisher/publisher.component';
+import { PublishedLetterComponent } from './resource/publishedLetter/publishedLetter.component';
 import { ResourceComponent } from './resource/resource.component';
 import { CorrespondenceComponent } from './correspondence/correspondence.component';
 import { ContactComponent } from './contact/contact.component';
@@ -111,6 +112,10 @@ const appRoutes: Routes = [
     {
         path: 'contact',
         component: ContactComponent
+    },
+    {
+        path: 'publishedLetter/:id',
+        component: PublishedLetterComponent
     },
     {
         path: '**',
