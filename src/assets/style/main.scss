@@ -109,6 +109,13 @@ td.center {
   font-family: LeipzigFraktur;
 }
 
+// calendar / date picker
+.mat-datepicker-content {
+  .mat-calendar {
+    height: auto !important;
+  }
+}
+
 /*** Beol specific webfonts ***/
 
 @font-face {
