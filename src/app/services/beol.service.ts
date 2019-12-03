@@ -716,7 +716,7 @@ export class BeolService {
            this._router.navigateByUrl('publishedLetter/' + encodeURIComponent(referredResourceIri));
         } else {
             // route to generic template
-            this._router.navigateByUrl('resource/' + encodeURIComponent(referredResourceIri));
+            this._router.navigateByUrl('simpleResource/' + encodeURIComponent(referredResourceIri));
         }
 
     }

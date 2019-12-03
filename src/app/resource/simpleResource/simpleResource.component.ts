@@ -2,16 +2,16 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { IncomingService, KnoraConstants, OntologyCacheService, OntologyInformation, ReadResource, ResourceService } from '@knora/core';
-import { BeolResource } from './beol-resource';
+import { BeolResource } from './../beol-resource';
 import { Subscription } from 'rxjs';
-import { BeolService } from '../services/beol.service';
+import { BeolService } from '../../services/beol.service';
 
 @Component({
     selector: 'app-resource',
-    templateUrl: './resource.component.html',
-    styleUrls: ['./resource.component.scss']
+    templateUrl: './simpleResource.component.html',
+    styleUrls: ['./simpleResource.component.scss']
 })
-export class ResourceComponent extends BeolResource {
+export class SimpleResourceComponent extends BeolResource {
 
     iri: string;
     resource: ReadResource;
@@ -36,12 +36,16 @@ export class ResourceComponent extends BeolResource {
 
     initProps() {
 
-        this.mapToComponent(this.resource.type, this.iri);
-
     }
 
-    mapToComponent(referredResourceType: string, referredResourceIri: string): void {
-        this._beolService.routeByResourceType(referredResourceType, referredResourceIri);
+    /**
+     * Display incoming links as clickable links
+     *
+     * @param resIri
+     * @param resType
+     */
+    showIncomingRes(resIri, resType) {
+        this._beolService.routeByResourceType(resType, resIri);
     }
 
 }
