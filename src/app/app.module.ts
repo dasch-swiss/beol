@@ -17,6 +17,7 @@ import { SearchResultsComponent } from './search-results/search-results.componen
 import { ErrorComponent } from './error/error.component';
 import { IntroductionComponent } from './introduction/introduction.component';
 import { ResourceComponent } from './resource/resource.component';
+import { SimpleResourceComponent } from './resource/simpleResource/simpleResource.component';
 import { PersonComponent } from './resource/person/person.component';
 import { PublisherComponent } from './resource/publisher/publisher.component';
 import { LetterComponent } from './resource/letter/letter.component';
@@ -72,6 +73,7 @@ export function initializeApp(appInitService: AppInitService) {
         ErrorComponent,
         IntroductionComponent,
         ResourceComponent,
+        SimpleResourceComponent,
         PersonComponent,
         PublisherComponent,
         LetterComponent,

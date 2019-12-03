@@ -9,6 +9,7 @@ import { PersonComponent } from './resource/person/person.component';
 import { PublisherComponent } from './resource/publisher/publisher.component';
 import { PublishedLetterComponent } from './resource/publishedLetter/publishedLetter.component';
 import { ResourceComponent } from './resource/resource.component';
+import { SimpleResourceComponent } from './resource/simpleResource/simpleResource.component';
 import { CorrespondenceComponent } from './correspondence/correspondence.component';
 import { ContactComponent } from './contact/contact.component';
 import { EndnoteComponent } from './resource/endnote/endnote.component';
@@ -22,6 +23,7 @@ import { BebbRouteComponent } from './bebb-route/bebb-route.component';
 import { TranscriptionComponent } from './resource/transcription/transcription.component';
 import { ManuscriptEntryComponent } from './resource/manuscript-entry/manuscript-entry.component';
 import { CommentComponent } from './resource/comment/comment.component';
+
 
 const appRoutes: Routes = [
     {
@@ -39,6 +41,10 @@ const appRoutes: Routes = [
     {
         path: 'resource/:id',
         component: ResourceComponent
+    },
+    {
+        path: 'simpleResource/:id',
+        component: SimpleResourceComponent
     },
     {
         path: 'person/:id',

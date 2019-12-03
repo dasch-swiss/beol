@@ -299,6 +299,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
             // EXTENDED SEARCH
         } else if (this.searchMode === 'extended') {
+            console.log(this.searchQuery)
             // perform count query
             if (this.offset === 0) {
                 this._searchService.doExtendedSearchCountQueryCountQueryResult(this.searchQuery)
