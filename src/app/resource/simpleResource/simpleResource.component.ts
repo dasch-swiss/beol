@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
 import { BeolService } from '../../services/beol.service';
 
 @Component({
-    selector: 'app-resource',
+    selector: 'app-simple-resource',
     templateUrl: './simpleResource.component.html',
     styleUrls: ['./simpleResource.component.scss']
 })
