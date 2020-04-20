@@ -108,7 +108,7 @@ export class LeibnizLetterComponent extends BeolResource {
         // use a proxy url as described here:
         // https://stackoverflow.com/questions/43871637/no-access-control-allow-origin-header-is-present-on-the-requested-resource-whe
         // const proxyurl = 'https://cors-anywhere.herokuapp.com//';
-        const basePath = 'https://solr.leibniz.sub.uni-goettingen.de/solr/leibniz/select?sort=type+asc&q=id%3A';
+        const basePath = this._appInitService.getSettings().leibnizApi + 'select?sort=type+asc&q=id%3A';
         const basePathOR = '+OR+(doc_id%3A';
         const basePathAnd = '+AND+type%3Avariante)&rows=9999&wt=json';
         const apiUrl = basePath + filename + basePathOR + filename + basePathAnd; // site that doesn’t send Access-Control-*
@@ -126,7 +126,7 @@ export class LeibnizLetterComponent extends BeolResource {
 
     private getLeibnizImages(element) {
         const proxyurl = 'https://cors-anywhere.herokuapp.com/';
-        const basePath = 'https://solr.leibniz.sub.uni-goettingen.de/solr/leibniz/select?q=id%3A';
+        const basePath = this._appInitService.getSettings().leibnizApi + 'select?q=id%3A';
         const basePathTail = '&rows=9999&wt=json';
 
         const imgs = element.getElementsByTagName('span');
