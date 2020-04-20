@@ -193,13 +193,13 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         this._cacheService.getEntityDefinitionsForOntologies(
             [this._appInitService.getSettings().ontologyIRI + '/ontology/0801/leibniz/v2']).subscribe(
             (info2: OntologyInformation) => {
-                const searchRoute = 'http://leibniz.sub.uni-goettingen.de/solr/leibniz/select?q=type%3Abrief+AND+(+volltext%3A';
+                const searchRoute = 'https://solr.leibniz.sub.uni-goettingen.de/solr/leibniz/select?q=type%3Abrief+AND+(+volltext%3A';
                 const proxyurl = 'https://cors-anywhere.herokuapp.com/';
                 const experssions = ['id', 'reihe', 'band', 'brief_nummer', 'all_suggest', 'ort_anzeige',
                     'datum_anzeige', 'datum_gregorianisch', 'datum_julianisch', 'kontext'];
                 const format = ')&rows=9999&wt=json';
                 const searchExpression = this.makeLeibnizSearchExpressions(searchRoute, experssions) + format;
-                fetch(proxyurl + searchExpression) // https://cors-anywhere.herokuapp.com/https://example.com
+                fetch(searchExpression) // https://cors-anywhere.herokuapp.com/https://example.com
                     .then(response => response.json())
                     .then(contents => {
                         this.getLeibnizLetters(contents.response.docs);
