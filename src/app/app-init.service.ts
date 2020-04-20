@@ -16,6 +16,7 @@ export interface IAppConfig {
     localData: string;
     pagingLimit: number;
     startComponent: string;
+    leibnizApi: string;
     tei: TeiConfig;
 }
 
