@@ -53,7 +53,7 @@ describe('LeooRouteComponent', () => {
 
         beolServiceSpy.searchForLetterFromLEOO.and.returnValue('gravsearchQuery');
 
-        beolService = TestBed.get(BeolService);
+        beolService = TestBed.inject(BeolService);
 
         const mockRes = of(
             new ReadResourcesSequence(
@@ -64,11 +64,11 @@ describe('LeooRouteComponent', () => {
 
         searchServiceSpy.doExtendedSearchReadResourceSequence.and.returnValue(mockRes);
 
-        searchService = TestBed.get(SearchService);
+        searchService = TestBed.inject(SearchService);
 
-        appInitServiceSpy.getSettings.and.returnValue({ontologyIRI: 'http://0.0.0.0:3333'});
+        appInitServiceSpy.getSettings.and.returnValue({ ontologyIRI: 'http://0.0.0.0:3333' });
 
-        appInitService = TestBed.get(AppInitService);
+        appInitService = TestBed.inject(AppInitService);
     }));
 
     beforeEach(() => {

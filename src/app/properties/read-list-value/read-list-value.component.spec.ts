@@ -46,13 +46,13 @@ describe('ReadListValueComponent', () => {
 
         appInitServiceSpy.getSettings.and.returnValue({ ontologyIRI: 'http://0.0.0.0:3333' });
 
-        appInitService = TestBed.get(AppInitService);
+        appInitService = TestBed.inject(AppInitService);
 
         spyListCacheService.getListNode.and.callFake((nodeIri) => {
             return of(new ListNodeV2(nodeIri, 'test' + nodeIri, 1, ''));
         });
 
-        listCacheService = TestBed.get(ListCacheService);
+        listCacheService = TestBed.inject(ListCacheService);
     }));
 
     beforeEach(() => {
@@ -146,7 +146,7 @@ class TestHostComponent implements OnInit {
 
     listValue;
 
-    constructor () {
+    constructor() {
     }
 
     ngOnInit() {
@@ -169,7 +169,7 @@ class TestHostComponent2 implements OnInit {
 
     renderMathInput = false;
 
-    constructor () {
+    constructor() {
     }
 
     ngOnInit() {

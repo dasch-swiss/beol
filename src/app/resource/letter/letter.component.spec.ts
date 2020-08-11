@@ -66,7 +66,7 @@ describe('LetterComponent', () => {
 
         appInitServiceSpy.getSettings.and.returnValue({ ontologyIRI: 'http://0.0.0.0:3333' });
 
-        appInitService = TestBed.get(AppInitService);
+        appInitService = TestBed.inject(AppInitService);
     }));
 
     beforeEach(() => {

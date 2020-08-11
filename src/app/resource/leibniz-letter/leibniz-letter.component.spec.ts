@@ -50,11 +50,13 @@ describe('LeibnizLetterComponent', () => {
                 OntologyCacheService,
                 {
                     provide: ActivatedRoute,
-                    useValue: { paramMap: of({
+                    useValue: {
+                        paramMap: of({
                             get: () => {
                                 return id;
                             }
-                        })}
+                        })
+                    }
                 },
                 { provide: KuiCoreConfigToken, useValue: KuiCoreConfig },
                 { provide: AppInitService, useValue: appInitServiceSpy }
@@ -62,9 +64,9 @@ describe('LeibnizLetterComponent', () => {
         })
             .compileComponents();
 
-        appInitServiceSpy.getSettings.and.returnValue({ontologyIRI: 'http://0.0.0.0:3333'});
+        appInitServiceSpy.getSettings.and.returnValue({ ontologyIRI: 'http://0.0.0.0:3333' });
 
-        appInitService = TestBed.get(AppInitService);
+        appInitService = TestBed.inject(AppInitService);
 
     }));
 

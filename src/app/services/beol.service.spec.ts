@@ -22,13 +22,13 @@ describe('BeolService', () => {
         })
             .compileComponents();
 
-        appInitServiceSpy.getSettings.and.returnValue({ontologyIRI: 'http://0.0.0.0:3333'});
+        appInitServiceSpy.getSettings.and.returnValue({ ontologyIRI: 'http://0.0.0.0:3333' });
 
-        appInitService = TestBed.get(AppInitService);
+        appInitService = TestBed.inject(AppInitService);
     });
 
     it('should be created', inject([BeolService], (service: BeolService) => {
         expect(service).toBeTruthy();
-        
+
     }));
 });

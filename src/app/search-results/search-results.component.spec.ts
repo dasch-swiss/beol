@@ -64,7 +64,8 @@ describe('SearchResultsComponent', () => {
             providers: [
                 {
                     provide: ActivatedRoute,
-                    useValue: { paramMap: of({
+                    useValue: {
+                        paramMap: of({
                             get: (param: string) => {
                                 if (param === 'q') {
                                     return q;
@@ -72,26 +73,27 @@ describe('SearchResultsComponent', () => {
                                     return mode;
                                 }
                             }
-                        })}
+                        })
+                    }
                 },
                 { provide: KuiCoreConfigToken, useValue: KuiCoreConfig },
-                { provide: SearchParamsService, useValue: mockSearchParamService},
+                { provide: SearchParamsService, useValue: mockSearchParamService },
                 { provide: SearchService, useValue: spySearchService },
                 { provide: AppInitService, useValue: appInitServiceSpy }
             ]
         })
             .compileComponents();
 
-        searchServiceSpy = TestBed.get(SearchService);
+        searchServiceSpy = TestBed.inject(SearchService);
 
         searchServiceSpy.doExtendedSearchCountQueryCountQueryResult.and.callFake((gravsearch: string) => {
 
-                const countQueryRes = new CountQueryResult(197);
+            const countQueryRes = new CountQueryResult(197);
 
-                return of(
-                    countQueryRes
-                );
-            }
+            return of(
+                countQueryRes
+            );
+        }
         );
 
         searchServiceSpy.doExtendedSearchReadResourceSequence.and.callFake((gravsearch: string) => {
@@ -112,9 +114,9 @@ describe('SearchResultsComponent', () => {
             );
         });
 
-        appInitServiceSpy.getSettings.and.returnValue({ontologyIRI: 'http://0.0.0.0:3333', pagingLimit: 25});
+        appInitServiceSpy.getSettings.and.returnValue({ ontologyIRI: 'http://0.0.0.0:3333', pagingLimit: 25 });
 
-        appInitService = TestBed.get(AppInitService);
+        appInitService = TestBed.inject(AppInitService);
 
     }));
 

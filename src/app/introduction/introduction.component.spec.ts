@@ -107,7 +107,7 @@ describe('IntroductionComponent', () => {
             return introTemplate;
         });
 
-        searchServiceSpy = TestBed.get(SearchService);
+        searchServiceSpy = TestBed.inject(SearchService);
 
         searchServiceSpy.doExtendedSearchReadResourceSequence.and.callFake((gravsearch: string) => {
 
@@ -127,7 +127,7 @@ describe('IntroductionComponent', () => {
             );
         });
 
-        resourceServiceSpy = TestBed.get(ResourceService);
+        resourceServiceSpy = TestBed.inject(ResourceService);
 
         resourceServiceSpy.getReadResource.and.callFake((resIri) => {
 
@@ -150,7 +150,7 @@ describe('IntroductionComponent', () => {
 
         appInitServiceSpy.getSettings.and.returnValue({ ontologyIRI: 'http://0.0.0.0:3333' });
 
-        appInitService = TestBed.get(AppInitService);
+        appInitService = TestBed.inject(AppInitService);
 
     }));
 

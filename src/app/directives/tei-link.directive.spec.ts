@@ -39,7 +39,7 @@ describe('TeiLinkDirective', () => {
 
         appInitServiceSpy.getSettings.and.returnValue(mockConfig);
 
-        appInitService = TestBed.get(AppInitService);
+        appInitService = TestBed.inject(AppInitService);
     });
 
     beforeEach(() => {
