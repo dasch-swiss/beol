@@ -167,7 +167,7 @@ describe('ReadTextValueComponent', () => {
 })
 class TestHostComponent implements OnInit {
 
-    @ViewChild('textValComp', { static: false }) textValueComponent: ReadTextValueComponent;
+    @ViewChild('textValComp') textValueComponent: ReadTextValueComponent;
 
     textVal: ReadTextValue;
     bindEvents = false;

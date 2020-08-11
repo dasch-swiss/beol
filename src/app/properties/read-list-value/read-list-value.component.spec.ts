@@ -142,7 +142,7 @@ describe('ReadListValueComponent', () => {
 })
 class TestHostComponent implements OnInit {
 
-    @ViewChild('listVal', { static: false }) listValueComponent: ReadListValueComponent;
+    @ViewChild('listVal') listValueComponent: ReadListValueComponent;
 
     listValue;
 
@@ -163,7 +163,7 @@ class TestHostComponent implements OnInit {
 })
 class TestHostComponent2 implements OnInit {
 
-    @ViewChild('listVal', { static: false }) listValueComponent: ReadListValueComponent;
+    @ViewChild('listVal') listValueComponent: ReadListValueComponent;
 
     listValue;
 

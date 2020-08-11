@@ -17,7 +17,7 @@ import { ImageRegion, StillImageComponent } from '@knora/viewer';
 
 import { Subscription } from 'rxjs';
 
-import { OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { OnDestroy, OnInit, ViewChild, Directive } from '@angular/core';
 
 import { BeolService } from '../services/beol.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
@@ -30,6 +30,7 @@ export interface PropertyValues {
     [index: string]: ReadPropertyItem[];
 }
 
+@Directive()
 export abstract class BeolResource implements OnInit, OnDestroy {
 
     abstract iri: string;
@@ -41,7 +42,7 @@ export abstract class BeolResource implements OnInit, OnDestroy {
     abstract navigationSubscription: Subscription;
     protected params;
 
-    @ViewChild('OSDViewer', { static: false }) osdViewer: StillImageComponent;
+    @ViewChild('OSDViewer') osdViewer: StillImageComponent;
 
     abstract KnoraConstants: KnoraConstants;
 
