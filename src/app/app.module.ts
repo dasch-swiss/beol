@@ -1,11 +1,19 @@
 // angular modules
 import { BrowserModule } from '@angular/platform-browser';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
-// @knora modules
-import { KuiCoreConfigToken, KuiCoreModule } from '@knora/core';
-import { KuiActionModule } from '@knora/action';
-import { KuiSearchModule } from '@knora/search';
-import { KuiViewerModule } from '@knora/viewer';
+import { environment } from '../environments/environment';
+// @dsp-js library
+import { KnoraApiConnection } from '@dasch-swiss/dsp-js';
+// @dsp-ui library
+import {
+    AppInitService,
+    DspActionModule,
+    DspApiConfigToken,
+    DspApiConnectionToken,
+    DspCoreModule,
+    DspSearchModule,
+    DspViewerModule
+} from '@dasch-swiss/dsp-ui';
 // modules from @angular/material and @angular/flex-layout
 import { MaterialModule } from './material-module';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -51,19 +59,11 @@ import { LeibnizPortalDirective } from './directives/leibniz-portal.directive';
 import { HanCatalogueDirective } from './directives/han-catalogue.directive';
 import { BebbRouteComponent } from './bebb-route/bebb-route.component';
 import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
-import { AppInitService } from './app-init.service';
 
 import { TranscriptionComponent } from './resource/transcription/transcription.component';
 import { ManuscriptEntryComponent } from './resource/manuscript-entry/manuscript-entry.component';
 import { TeiLinkDirective } from './directives/tei-link.directive';
 import { CommentComponent } from './resource/comment/comment.component';
-
-
-export function initializeApp(appInitService: AppInitService) {
-    return (): Promise<any> => {
-        return appInitService.Init();
-    };
-}
 
 @NgModule({
     declarations: [
@@ -107,20 +107,32 @@ export function initializeApp(appInitService: AppInitService) {
         BrowserModule,
         FlexLayoutModule,
         InfiniteScrollModule,
-        KuiCoreModule,
-        KuiActionModule,
-        KuiSearchModule,
-        KuiViewerModule,
+        DspCoreModule,
+        DspViewerModule,
+        DspActionModule,
+        DspSearchModule,
         MaterialModule,
         ReactiveFormsModule
     ],
     providers: [
-        AppInitService,
         {
-            provide: APP_INITIALIZER, useFactory: initializeApp, deps: [AppInitService], multi: true
+            provide: APP_INITIALIZER,
+            useFactory: (appInitService: AppInitService) =>
+                (): Promise<void> => {
+                    return appInitService.Init('config', environment);
+                },
+            deps: [AppInitService],
+            multi: true
         },
         {
-            provide: KuiCoreConfigToken, useFactory: () => AppInitService.coreConfig
+            provide: DspApiConfigToken,
+            useFactory: (appInitService: AppInitService) => appInitService.dspApiConfig,
+            deps: [AppInitService]
+        },
+        {
+            provide: DspApiConnectionToken,
+            useFactory: (appInitService: AppInitService) => new KnoraApiConnection(appInitService.dspApiConfig),
+            deps: [AppInitService]
         },
         {
             provide: MAT_DIALOG_DEFAULT_OPTIONS,
