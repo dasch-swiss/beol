@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { BeolService } from '../services/beol.service';
-import { ReadResourcesSequence, SearchService } from '@knora/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { KnoraApiConnection, ReadResourceSequence } from '@dasch-swiss/dsp-js';
+import { DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
 import { AppInitService } from '../app-init.service';
+import { BeolService } from '../services/beol.service';
 
 @Component({
     selector: 'app-leoo-route',
@@ -15,10 +16,9 @@ export class BebbRouteComponent implements OnInit {
     notFound: boolean;
 
     constructor(
+        @Inject(DspApiConnectionToken) private _dspApiConnection: KnoraApiConnection,
         private _route: ActivatedRoute,
-        private _router: Router,
         private _beolService: BeolService,
-        private _searchService: SearchService,
         private _appInitService: AppInitService) {
     }
 
@@ -33,10 +33,10 @@ export class BebbRouteComponent implements OnInit {
                 // create a query that gets the Iri of the LEOO letter
                 const query = this._beolService.searchForLetterFromBEBB(this.bebbLettertitle);
 
-                this._searchService.doExtendedSearchReadResourceSequence(query).subscribe(
-                    (resourceSeq: ReadResourcesSequence) => {
+                this._dspApiConnection.v2.search.doExtendedSearch(query).subscribe(
+                    (resourceSeq: ReadResourceSequence) => {
 
-                        if (resourceSeq.numberOfResources === 1) {
+                        if (resourceSeq.resources.length === 1) {
 
                             const letterIri: string = resourceSeq.resources[0].id;
 
