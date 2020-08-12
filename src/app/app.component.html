@@ -15,8 +15,8 @@
             <div class="fill-remaining-space"></div>
 
             <!-- center: search bar -->
-            <kui-search-panel [advanced]="true" [route]="'/search'" [expert]="false">
-            </kui-search-panel>
+            <dsp-search-panel [projectfilter]="false" [advanced]="true" [expert]="false" (search)="doSearch($event)">
+            </dsp-search-panel>
 
             <div class="fill-remaining-space"></div>
 
