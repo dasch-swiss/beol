@@ -1,6 +1,6 @@
 <div class="full-size scroll-y-only">
 
-    <kui-progress-indicator *ngIf="isLoading" [color]="'#D88958'"></kui-progress-indicator>
+    <dsp-progress-indicator *ngIf="isLoading" [color]="'#D88958'"></dsp-progress-indicator>
 
     <div *ngIf="!isLoading && props">
 
@@ -19,15 +19,14 @@
             </section>
 
             <section *ngIf="props?.caption[0]">
-                <read-text-value [valueObject]="props?.caption[0]" [ontologyInfo]="ontologyInfo"
-                                         [bindEvents]="true"></read-text-value>
+                <read-text-value [valueObject]="props?.caption[0]" [ontologyInfo]="ontologyInfo" [bindEvents]="true">
+                </read-text-value>
             </section>
 
             <div mat-line *ngIf="resource?.stillImageRepresentationsToDisplay.length > 0" class="center osdPosition">
-                    <kui-still-image #OSDViewer
-                                     *ngIf="!isLoading && resource.stillImageRepresentationsToDisplay.length > 0"
-                                     class="osd-viewer" [images]="resource?.stillImageRepresentationsToDisplay">
-                    </kui-still-image>
+                <dsp-still-image #OSDViewer *ngIf="!isLoading && resource.stillImageRepresentationsToDisplay.length > 0"
+                    class="osd-viewer" [images]="resource?.stillImageRepresentationsToDisplay">
+                </dsp-still-image>
             </div>
 
         </div>
