@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { KnoraConstants, OntologyInformation, ReadTextValue, ReadTextValueAsHtml } from '@knora/core';
+import { Constants, ReadTextValue, ResourceClassAndPropertyDefinitions } from '@dasch-swiss/dsp-js';
 
 @Component({
     selector: 'read-text-value',
@@ -9,10 +9,10 @@ import { KnoraConstants, OntologyInformation, ReadTextValue, ReadTextValueAsHtml
 export class ReadTextValueComponent implements OnInit {
 
     private _textValue: ReadTextValue; // value object representing text without markup, XML or HTML
-    private _ontoInfo: OntologyInformation; // needed if text has standoff links
+    private _ontoInfo: ResourceClassAndPropertyDefinitions; // needed if text has standoff links
     private _bindEvents: boolean; // indicates if click and mouseover events have to be bound
 
-    KnoraConstants = KnoraConstants;
+    DspConstants = Constants;
 
     @Input()
     set valueObject(value: ReadTextValue) {
@@ -24,9 +24,9 @@ export class ReadTextValueComponent implements OnInit {
     }
 
     @Input()
-    set ontologyInfo(value: OntologyInformation) {
+    set ontologyInfo(value: ResourceClassAndPropertyDefinitions) {
         this._ontoInfo = value;
-    };
+    }
 
     get ontologyInfo() {
         return this._ontoInfo;
@@ -47,6 +47,8 @@ export class ReadTextValueComponent implements OnInit {
     }
 
     ngOnInit() {
+        // TODO: refactor with ValueTypeService from dsp-ui
+        // this.valueTypeOrClass = this._valueTypeService.getValueTypeOrClass(this.displayValue);
     }
 
 }
