@@ -1,23 +1,26 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { Component, Inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import {
-    IncomingService,
-    KnoraConstants, ListCacheService, ListNodeV2,
-    OntologyCacheService,
-    OntologyInformation,
+    Constants,
+    KnoraApiConnection,
+    ListNodeV2,
     ReadDateValue,
     ReadLinkValue,
     ReadListValue,
-    ReadPropertyItem,
     ReadResource,
-    ReadTextValue, ReadUriValue,
-    ResourceService
-} from '@knora/core';
-import { BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
+    ReadTextValue,
+    ReadUriValue,
+    ReadValue,
+    ResourceClassAndPropertyDefinitions
+} from '@dasch-swiss/dsp-js';
+import { DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
+import { OntologyCacheService } from '@knora/core';
 import { Subscription } from 'rxjs';
+import { IncomingService } from 'src/app/services/incoming.service';
+import { AppInitService } from '../../app-init.service';
 import { BeolService } from '../../services/beol.service';
-import { AppInitService, TeiConfigElement } from '../../app-init.service';
+import { BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
 
 class LetterProps implements PropertyValues {
     id: ReadTextValue[] = [];
@@ -41,7 +44,7 @@ class LetterProps implements PropertyValues {
     comment: ReadTextValue[] = [];
     letterURI: ReadUriValue[] = [];
 
-    [index: string]: ReadPropertyItem[];
+    [index: string]: ReadValue[];
 }
 
 @Component({
@@ -53,12 +56,12 @@ export class LetterComponent extends BeolResource {
 
     iri: string;
     resource: ReadResource;
-    ontologyInfo: OntologyInformation;
+    ontologyInfo: ResourceClassAndPropertyDefinitions;
     incomingStillImageRepresentationCurrentOffset: number; // last offset requested for `this.resource.incomingStillImageRepresentations`
     isLoading = true;
     errorMessage: any;
     navigationSubscription: Subscription;
-    KnoraConstants = KnoraConstants;
+    DspConstants = Constants;
 
     ontologyIri = this._appInitService.getSettings().ontologyIRI;
 
@@ -88,24 +91,24 @@ export class LetterComponent extends BeolResource {
 
     props: LetterProps;
 
-    constructor(protected _route: ActivatedRoute,
-                protected _resourceService: ResourceService,
-                protected _cacheService: OntologyCacheService,
-                protected _incomingService: IncomingService,
-                public location: Location,
-                protected _beolService: BeolService,
-                private _listCacheService: ListCacheService,
-                private _appInitService: AppInitService
+    constructor(
+        @Inject(DspApiConnectionToken) protected _dspApiConnection: KnoraApiConnection,
+        protected _route: ActivatedRoute,
+        protected _cacheService: OntologyCacheService,
+        protected _incomingService: IncomingService,
+        public location: Location,
+        protected _beolService: BeolService,
+        private _appInitService: AppInitService
     ) {
 
-        super(_route, _resourceService, _cacheService, _incomingService, _beolService);
+        super(_dspApiConnection, _route, _cacheService, _incomingService, _beolService);
 
     }
 
     initProps() {
 
         // request subject index so it is cached
-        this._listCacheService.getList('http://rdfh.ch/lists/0801/subject_index').subscribe((list: ListNodeV2) => {
+        this._dspApiConnection.v2.list.getList('http://rdfh.ch/lists/0801/subject_index').subscribe((list: ListNodeV2) => {
 
             const props = new LetterProps();
 
