@@ -1,33 +1,31 @@
+import { Directive, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import {
-    IncomingService,
-    KnoraConstants,
-    OntologyCacheService,
-    OntologyInformation,
-    ReadLinkValue,
-    ReadPropertyItem,
+    KnoraApiConnection,
     ReadResource,
-    ReadResourcesSequence,
-    ReadStillImageFileValue,
-    ResourceService,
-    StillImageRepresentation,
+    ReadResourceSequence,
+    ResourceClassAndPropertyDefinitions,
+    Constants,
+    ReadLinkValue,
+    ReadValue,
+    ReadStillImageFileValue
+} from '@dasch-swiss/dsp-js';
+import { DspApiConnectionToken, StillImageComponent, StillImageRepresentation } from '@dasch-swiss/dsp-ui';
+import {
+    OntologyCacheService,
     Utils
 } from '@knora/core';
-
-import { ImageRegion, StillImageComponent } from '@knora/viewer';
-
+import { ImageRegion } from '@knora/viewer';
 import { Subscription } from 'rxjs';
-
-import { OnDestroy, OnInit, ViewChild, Directive } from '@angular/core';
-
 import { BeolService } from '../services/beol.service';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { IncomingService } from '../services/incoming.service';
 
 export interface PropIriToNameMapping {
     [index: string]: string;
 }
 
 export interface PropertyValues {
-    [index: string]: ReadPropertyItem[];
+    [index: string]: ReadValue[];
 }
 
 @Directive()
@@ -35,7 +33,7 @@ export abstract class BeolResource implements OnInit, OnDestroy {
 
     abstract iri: string;
     abstract resource: ReadResource;
-    abstract ontologyInfo: OntologyInformation;
+    abstract ontologyInfo: ResourceClassAndPropertyDefinitions;
     abstract isLoading: boolean;
     abstract errorMessage: any;
     abstract incomingStillImageRepresentationCurrentOffset: number;
@@ -44,13 +42,13 @@ export abstract class BeolResource implements OnInit, OnDestroy {
 
     @ViewChild('OSDViewer') osdViewer: StillImageComponent;
 
-    abstract KnoraConstants: KnoraConstants;
+    abstract KnoraConstants: Constants;
 
     abstract propIris: PropIriToNameMapping;
 
-    constructor (
+    constructor(
+        @Inject(DspApiConnectionToken) protected _dspApiConnection: KnoraApiConnection,
         protected _route: ActivatedRoute,
-        protected _resourceService: ResourceService,
         protected _cacheService: OntologyCacheService,
         protected _incomingService: IncomingService,
         protected _beolService: BeolService) {
@@ -67,11 +65,11 @@ export abstract class BeolResource implements OnInit, OnDestroy {
 
         const imgRepresentations: StillImageRepresentation[] = [];
 
-        if (resource.properties[KnoraConstants.hasStillImageFileValue] !== undefined) {
+        if (resource.properties[Constants.HasStillImageFileValue] !== undefined) {
             // TODO: check if resources is a StillImageRepresentation using the ontology responder (support for subclass relations required)
             // resource has StillImageFileValues that are directly attached to it (properties)
 
-            const fileValues: ReadStillImageFileValue[] = resource.properties[KnoraConstants.hasStillImageFileValue] as ReadStillImageFileValue[];
+            const fileValues: ReadStillImageFileValue[] = resource.properties[Constants.HasStillImageFileValue] as ReadStillImageFileValue[];
             const imagesToDisplay: ReadStillImageFileValue[] = fileValues.filter((image) => {
                 return !image.isPreview;
             });
@@ -93,13 +91,12 @@ export abstract class BeolResource implements OnInit, OnDestroy {
 
             }
 
-
         } else if (resource.incomingStillImageRepresentations.length > 0) {
             // there are StillImageRepresentations pointing to this resource (incoming)
 
             const readStillImageFileValues: ReadStillImageFileValue[] = resource.incomingStillImageRepresentations.map(
                 (stillImageRes: ReadResource) => {
-                    const fileValues = stillImageRes.properties[KnoraConstants.hasStillImageFileValue] as ReadStillImageFileValue[];
+                    const fileValues = stillImageRes.properties[Constants.HasStillImageFileValue] as ReadStillImageFileValue[];
                     // TODO: check if resources is a StillImageRepresentation using the ontology responder (support for subclass relations required)
                     const imagesToDisplay = fileValues.filter((image) => {
                         return !image.isPreview;
@@ -198,9 +195,9 @@ export abstract class BeolResource implements OnInit, OnDestroy {
      */
     protected resLinkClicked(linkVal: ReadLinkValue) {
 
-        const refResType = (linkVal.referredResource !== undefined ? linkVal.referredResource.type : '');
+        const refResType = (linkVal.linkedResource !== undefined ? linkVal.linkedResource.type : '');
 
-        this._beolService.routeByResourceType(refResType, linkVal.referredResourceIri);
+        this._beolService.routeByResourceType(refResType, linkVal.linkedResourceIri);
     }
 
     /**
@@ -210,32 +207,23 @@ export abstract class BeolResource implements OnInit, OnDestroy {
      */
     getResource(iri: string): void {
 
-        this._resourceService.getReadResource(iri)
+        this._dspApiConnection.v2.res.getResource(iri)
             .subscribe(
-                (result: ReadResourcesSequence) => {
+                (result: ReadResource) => {
 
-                    // make sure that exactly one resource is returned
-                    if (result.resources.length === 1) {
+                    // initialize ontology information
+                    this.ontologyInfo = result.entityInfo;
 
-                        // initialize ontology information
-                        this.ontologyInfo = result.ontologyInformation;
+                    // prepare a possibly attached image file to be displayed
+                    BeolResource.collectImagesAndRegionsForResource(result);
 
-                        // prepare a possibly attached image file to be displayed
-                        BeolResource.collectImagesAndRegionsForResource(result.resources[0]);
+                    this.resource = result;
 
-                        this.resource = result.resources[0];
+                    this.initProps();
 
-                        this.initProps();
+                    this.isLoading = false;
 
-                        this.isLoading = false;
-
-                        this.requestIncomingResources();
-
-                    } else {
-                        // exactly one resource was expected, but resourceSeq.resources.length != 1
-                        this.errorMessage = `Exactly one resource was expected, but ${result.resources.length} resource(s) given.`;
-
-                    }
+                    this.requestIncomingResources();
 
                 },
                 (error: any) => {
@@ -258,7 +246,7 @@ export abstract class BeolResource implements OnInit, OnDestroy {
         }
 
         // request incoming regions
-        if (this.resource.properties[KnoraConstants.hasStillImageFileValue]) {
+        if (this.resource.properties[Constants.HasStillImageFileValue]) {
             // TODO: check if resources is a StillImageRepresentation using the ontology responder (support for subclass relations required)
             // the resource is a StillImageRepresentation, check if there are regions pointing to it
 
@@ -287,9 +275,9 @@ export abstract class BeolResource implements OnInit, OnDestroy {
      */
     protected getIncomingRegions(offset: number): void {
         this._incomingService.getIncomingRegions(this.resource.id, offset).subscribe(
-            (regions: ReadResourcesSequence) => {
+            (regions: ReadResourceSequence) => {
                 // update ontology information
-                this.ontologyInfo.updateOntologyInformation(regions.ontologyInformation);
+                this.ontologyInfo.updateOntologyInformation(regions.resources[0].entityInfo);
 
                 // Append elements of regions.resources to resource.incoming
                 Array.prototype.push.apply(this.resource.incomingRegions, regions.resources);
@@ -325,11 +313,11 @@ export abstract class BeolResource implements OnInit, OnDestroy {
         }
 
         this._incomingService.getStillImageRepresentationsForCompoundResource(this.resource.id, offset).subscribe(
-            (incomingImageRepresentations: ReadResourcesSequence) => {
+            (incomingImageRepresentations: ReadResourceSequence) => {
 
                 if (incomingImageRepresentations.resources.length > 0) {
                     // update ontology information
-                    this.ontologyInfo.updateOntologyInformation(incomingImageRepresentations.ontologyInformation);
+                    this.ontologyInfo.updateOntologyInformation(incomingImageRepresentations.resources[0].entityInfo);
 
                     // set current offset
                     this.incomingStillImageRepresentationCurrentOffset = offset;
@@ -339,6 +327,7 @@ export abstract class BeolResource implements OnInit, OnDestroy {
                     // TODO: maybe we have to support non consecutive arrays (sparse arrays)
 
                     // append incomingImageRepresentations.resources to this.resource.incomingStillImageRepresentations
+                    // TODO: would it make sense to replace this.resource.incomingStillImageRepresentations by this.resource.properties[Constants..HasStillImageFileValue]?
                     Array.prototype.push.apply(this.resource.incomingStillImageRepresentations, incomingImageRepresentations.resources);
 
                     // prepare attached image files to be displayed
@@ -362,9 +351,9 @@ export abstract class BeolResource implements OnInit, OnDestroy {
     protected getIncomingLinks(offset: number): void {
 
         this._incomingService.getIncomingLinksForResource(this.resource.id, offset).subscribe(
-            (incomingResources: ReadResourcesSequence) => {
+            (incomingResources: ReadResourceSequence) => {
                 // update ontology information
-                this.ontologyInfo.updateOntologyInformation(incomingResources.ontologyInformation);
+                this.ontologyInfo.updateOntologyInformation(incomingResources.resources[0].entityInfo);
 
                 // Append elements incomingResources to this.resource.incomingLinks
                 Array.prototype.push.apply(this.resource.incomingLinks, incomingResources.resources);
@@ -395,14 +384,14 @@ export abstract class BeolResource implements OnInit, OnDestroy {
             for (const propIri of propIris) {
 
                 // get the values for the current property Iri
-                const propVals: Array<ReadPropertyItem> = incomingResource.properties[propIri];
+                const propVals: Array<ReadValue> = incomingResource.properties[propIri];
 
                 for (const propVal of propVals) {
                     // add the property if it is a link value property pointing to [[this.resource]]
-                    if (propVal.type === KnoraConstants.LinkValue) {
+                    if (propVal.type === Constants.LinkValue) {
                         const linkVal = propVal as ReadLinkValue;
 
-                        if (linkVal.referredResourceIri === this.resource.id) {
+                        if (linkVal.linkedResourceIri === this.resource.id) {
                             incomingProperties.push(propIri);
                         }
 
