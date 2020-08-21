@@ -42,7 +42,7 @@ export abstract class BeolResource implements OnInit, OnDestroy {
 
     @ViewChild('OSDViewer') osdViewer: StillImageComponent;
 
-    abstract KnoraConstants: Constants;
+    abstract DspConstants: Constants;
 
     abstract propIris: PropIriToNameMapping;
 

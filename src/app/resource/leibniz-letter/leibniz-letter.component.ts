@@ -1,25 +1,26 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-
+import { Component, Inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import {
-    IncomingService,
-    KnoraConstants,
-    OntologyCacheService,
-    OntologyInformation,
+    Constants,
+    KnoraApiConnection,
     ReadDateValue,
     ReadLinkValue,
     ReadListValue,
-    ReadPropertyItem,
     ReadResource,
     ReadTextValue,
-    ReadTextValueAsString, ReadUriValue,
-    ResourceService
-} from '@knora/core';
-import { BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
+    ReadTextValueAsString,
+    ReadUriValue,
+    ReadValue,
+    ResourceClassAndPropertyDefinitions
+} from '@dasch-swiss/dsp-js';
+import { DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
+import { OntologyCacheService } from '@knora/core';
 import { Subscription } from 'rxjs';
-import { BeolService } from '../../services/beol.service';
+import { IncomingService } from 'src/app/services/incoming.service';
 import { AppInitService } from '../../app-init.service';
+import { BeolService } from '../../services/beol.service';
+import { BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
 
 class LetterProps implements PropertyValues {
     id: ReadTextValue[] = [];
@@ -38,7 +39,7 @@ class LetterProps implements PropertyValues {
     language: ReadTextValue[] = [];
     citation: ReadLinkValue[] = [];
 
-    [index: string]: ReadPropertyItem[];
+    [index: string]: ReadValue[];
 }
 
 @Component({
@@ -49,13 +50,13 @@ class LetterProps implements PropertyValues {
 export class LeibnizLetterComponent extends BeolResource {
     iri: string;
     resource: ReadResource;
-    ontologyInfo: OntologyInformation;
+    ontologyInfo: ResourceClassAndPropertyDefinitions;
     incomingStillImageRepresentationCurrentOffset: number; // last offset requested for `this.resource.incomingStillImageRepresentations`
     isLoading = true;
     isLoadingText = true;
     errorMessage: any;
     navigationSubscription: Subscription;
-    KnoraConstants = KnoraConstants;
+    DspConstants = Constants;
     letter;
 
     propIris: PropIriToNameMapping = {
@@ -78,8 +79,9 @@ export class LeibnizLetterComponent extends BeolResource {
 
     props: LetterProps;
 
-    constructor (protected _route: ActivatedRoute,
-        protected _resourceService: ResourceService,
+    constructor(
+        @Inject(DspApiConnectionToken) protected _dspApiConnection: KnoraApiConnection,
+        protected _route: ActivatedRoute,
         protected _cacheService: OntologyCacheService,
         protected _incomingService: IncomingService,
         public location: Location,
@@ -87,7 +89,7 @@ export class LeibnizLetterComponent extends BeolResource {
         private _appInitService: AppInitService
     ) {
 
-        super(_route, _resourceService, _cacheService, _incomingService, _beolService);
+        super(_dspApiConnection, _route, _cacheService, _incomingService, _beolService);
 
     }
 
@@ -100,7 +102,7 @@ export class LeibnizLetterComponent extends BeolResource {
         this.props = props;
 
         // get the id from the route leibnizLetter/:id e.g. l386
-        this.getLeibnizLetterText(this.props.letterID[0].getContent());
+        this.getLeibnizLetterText(this.props.letterID[0].strval);
     }
 
 
@@ -113,7 +115,7 @@ export class LeibnizLetterComponent extends BeolResource {
         const basePathAnd = '+AND+type%3Avariante)&rows=9999&wt=json';
         const apiUrl = basePath + filename + basePathOR + filename + basePathAnd; // site that doesn’t send Access-Control-*
 
-        fetch( apiUrl) // could be proxyurl + apiURL as https://cors-anywhere.herokuapp.com/https://example.com
+        fetch(apiUrl) // could be proxyurl + apiURL as https://cors-anywhere.herokuapp.com/https://example.com
             .then(response => response.json())
             .then(contents => {
 
