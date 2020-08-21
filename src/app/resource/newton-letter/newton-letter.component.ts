@@ -1,26 +1,27 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-
+import { Component, Inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import {
-    IncomingService,
-    KnoraConstants,
-    OntologyCacheService,
-    OntologyInformation,
+    Constants,
+    KnoraApiConnection,
     ReadDateValue,
     ReadLinkValue,
     ReadListValue,
-    ReadPropertyItem,
     ReadResource,
     ReadTextValue,
     ReadTextValueAsString,
     ReadUriValue,
-    ResourceService
-} from '@knora/core';
-import { BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
+    ReadValue,
+    ResourceClassAndPropertyDefinitions
+} from '@dasch-swiss/dsp-js';
+import { DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
+import { OntologyCacheService } from '@knora/core';
 import { Subscription } from 'rxjs';
-import { BeolService } from '../../services/beol.service';
+import { IncomingService } from 'src/app/services/incoming.service';
 import { AppInitService } from '../../app-init.service';
+import { BeolService } from '../../services/beol.service';
+import { BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
+
 
 class LetterProps implements PropertyValues {
     id: ReadTextValue[] = [];
@@ -37,7 +38,7 @@ class LetterProps implements PropertyValues {
     npID: ReadTextValue[] = [];
     language: ReadTextValue[] = [];
 
-    [index: string]: ReadPropertyItem[];
+    [index: string]: ReadValue[];
 }
 
 @Component({
@@ -48,13 +49,13 @@ class LetterProps implements PropertyValues {
 export class NewtonLetterComponent extends BeolResource {
     iri: string;
     resource: ReadResource;
-    ontologyInfo: OntologyInformation;
+    ontologyInfo: ResourceClassAndPropertyDefinitions;
     incomingStillImageRepresentationCurrentOffset: number; // last offset requested for `this.resource.incomingStillImageRepresentations`
     isLoading = true;
     isLoadingText = true;
     errorMessage: any;
     navigationSubscription: Subscription;
-    KnoraConstants = KnoraConstants;
+    DspConstants = Constants;
 
     letter: string;
     test: string;
@@ -77,16 +78,17 @@ export class NewtonLetterComponent extends BeolResource {
 
     props: LetterProps;
 
-    constructor(protected _route: ActivatedRoute,
-                protected _resourceService: ResourceService,
-                protected _cacheService: OntologyCacheService,
-                protected _incomingService: IncomingService,
-                public location: Location,
-                protected _beolService: BeolService,
-                private _appInitService: AppInitService
+    constructor(
+        @Inject(DspApiConnectionToken) protected _dspApiConnection: KnoraApiConnection,
+        protected _route: ActivatedRoute,
+        protected _cacheService: OntologyCacheService,
+        protected _incomingService: IncomingService,
+        public location: Location,
+        protected _beolService: BeolService,
+        private _appInitService: AppInitService
     ) {
 
-        super(_route, _resourceService, _cacheService, _incomingService, _beolService);
+        super(_dspApiConnection, _route, _cacheService, _incomingService, _beolService);
 
     }
 
@@ -98,7 +100,7 @@ export class NewtonLetterComponent extends BeolResource {
         this.mapper(props);
         this.props = props;
         // get the id from the route newtonletter/:id e.g. NATP00120
-        this.getNewtonLetterText(this.props.npID[0].getContent());
+        this.getNewtonLetterText(this.props.npID[0].strval);
     }
 
 

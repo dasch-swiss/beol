@@ -1,9 +1,6 @@
 <div class="full-size scroll-y-only">
 
-    <kui-progress-indicator *ngIf="isLoading" [color]="'#D88958'"></kui-progress-indicator>
-
-
-
+    <dsp-progress-indicator *ngIf="isLoading" [color]="'#D88958'"></dsp-progress-indicator>
 
     <div *ngIf="!isLoading && props">
 
@@ -24,7 +21,7 @@
 
                     <mat-list>
                         <mat-list-item *ngFor="let rt of props?.replyTo">
-                            <kui-link-value [valueObject]="rt" [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
+                            <dsp-link-value [displayValue]="rt"></dsp-link-value>
                         </mat-list-item>
                     </mat-list>
 
@@ -32,19 +29,20 @@
 
 
                 <div *ngIf="props?.facsimiles[0]">
-                    <kui-uri-value *ngFor="let facs of props?.facsimiles" [valueObject]="facs" [label]=ontologyInfo?.getLabelForProperty(props?.facsimiles[0].propIri) (referredResourceClicked)="resLinkClicked($event)"></kui-uri-value>
+                    <dsp-uri-value *ngFor="let facs of props?.facsimiles" [displayValue]="facs"></dsp-uri-value>
                 </div>
                 <div *ngIf="props?.npID[0]">
                     <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.npID[0].propIri)}}</h4>
 
-                    <p class="margin-left" appNewtonProject [npID]="props?.npID[0].getContent()"></p>
+                    <p class="margin-left" appNewtonProject [npID]="props?.npID[0].strval"></p>
                 </div>
 
 
                 <div *ngIf="props?.location[0]">
                     <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.location[0].propIri)}}</h4>
                     <p *ngFor="let loc of props?.location" class="margin-left">
-                        <read-text-value [valueObject]="loc" [bindEvents]="false" [ontologyInfo]="ontologyInfo"></read-text-value>
+                        <read-text-value [valueObject]="loc" [bindEvents]="false" [ontologyInfo]="ontologyInfo">
+                        </read-text-value>
                     </p>
 
                 </div>
@@ -52,7 +50,8 @@
                 <div *ngIf="props?.language[0]">
                     <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.language[0].propIri)}}</h4>
                     <p *ngFor="let lang of props?.language" class="margin-left">
-                        <read-text-value [valueObject]="lang" [bindEvents]="false" [ontologyInfo]="ontologyInfo"></read-text-value>
+                        <read-text-value [valueObject]="lang" [bindEvents]="false" [ontologyInfo]="ontologyInfo">
+                        </read-text-value>
                     </p>
                 </div>
 
@@ -72,7 +71,8 @@
 
                     <mat-list>
                         <mat-list-item *ngFor="let mp of props?.mentionedPerson">
-                            <kui-link-value [valueObject]="mp" [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
+                            <dsp-link-value [displayValue]="mp" [parentResource]="resource"
+                                [propIri]="resource.property.id"></dsp-link-value>
                         </mat-list-item>
                     </mat-list>
 
@@ -87,26 +87,33 @@
 
             <section class="title center">
                 <p class="margin-left" *ngFor="let title of props?.title">
-                    <b><read-text-value [valueObject]="title" [bindEvents]="true" [ontologyInfo]="ontologyInfo"></read-text-value></b>
+                    <b>
+                        <read-text-value [valueObject]="title" [bindEvents]="true" [ontologyInfo]="ontologyInfo">
+                        </read-text-value>
+                    </b>
                 </p>
                 <p class="names">
-                <span *ngFor="let author of props?.author; let last = last">
-                    <kui-link-value [valueObject]="author" [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
-                    <span *ngIf="!last"> &amp; </span>
-                </span>
-                <span *ngFor="let recipient of props?.recipient; let last = last">
-                    to
-                    <kui-link-value [valueObject]="recipient" [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
-                    <span *ngIf="!last"> &amp; </span>
-                </span>
+                    <span *ngFor="let author of props?.author; let last = last">
+                        <dsp-link-value [displayValue]="author" [parentResource]="resource"
+                            [propIri]="resource.property.id"></dsp-link-value>
+                        <span *ngIf="!last"> &amp; </span>
+                    </span>
+                    <span *ngFor="let recipient of props?.recipient; let last = last">
+                        to
+                        <dsp-link-value [displayValue]="recipient" [parentResource]="resource"
+                            [propIri]="resource.property.id"></dsp-link-value>
+                        <span *ngIf="!last"> &amp; </span>
+                    </span>
                 </p>
-                    <span *ngIf="props?.date[0]"><kui-date-value [valueObject]="props?.date[0]" [calendar]="true" [era]="true"></kui-date-value></span>
+                <span *ngIf="props?.date[0]">
+                    <dsp-date-value [displayValue]="props?.date[0]"></dsp-date-value>
+                </span>
                 <p>
 
             </section>
-            <kui-progress-indicator *ngIf="isLoadingText" [color]="'#D88958'"></kui-progress-indicator>
+            <dsp-progress-indicator *ngIf="isLoadingText" [color]="'#D88958'"></dsp-progress-indicator>
 
-            <div *ngIf="!isLoadingText && letter"  class="main-content without-sidebar">
+            <div *ngIf="!isLoadingText && letter" class="main-content without-sidebar">
                 <div [mathJax]="letter" [bindEvents]="false" [renderMath]="true"></div>
             </div>
             <section class="links">
@@ -116,7 +123,8 @@
                     </p>
                     <mat-list *ngFor="let incomingLinkSourceRes of resource.incomingLinks">
                         <mat-list-item>
-                            <span class="link" (click)="showIncomingRes(incomingLinkSourceRes.id, incomingLinkSourceRes.type)">{{incomingLinkSourceRes.label}}</span>
+                            <span class="link"
+                                (click)="showIncomingRes(incomingLinkSourceRes.id, incomingLinkSourceRes.type)">{{incomingLinkSourceRes.label}}</span>
                         </mat-list-item>
                     </mat-list>
                 </div>
