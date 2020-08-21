@@ -12,11 +12,12 @@
     <div *ngIf="numberOfAllResults !== 0 && result; else noResult">
         <h4>Number of results: {{numberOfAllResults + numberOfExternalResults}}</h4>
 
-        <kui-progress-indicator *ngIf="isLoading" [color]="'#D88958'"></kui-progress-indicator>
+        <dsp-progress-indicator *ngIf="isLoading" [color]="'#D88958'"></dsp-progress-indicator>
 
         <!-- the following list will be moved to @knora/viewer views -->
         <mat-accordion class="example-headers-align">
-            <mat-expansion-panel *ngFor="let res of result; let i = index; let first = first; let last = last;" [expanded]="step === i" (opened)="setStep(i)" hideToggle>
+            <mat-expansion-panel *ngFor="let res of result; let i = index; let first = first; let last = last;"
+                [expanded]="step === i" (opened)="setStep(i)" hideToggle>
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         {{ontologyInfo?.getLabelForResourceClass(res.type)}}
@@ -34,25 +35,30 @@
 
                 <!-- content of the resource -->
                 <!-- this should be implemented from @knora/viewer object -->
-                <div mat-line *ngFor="let prop of res.properties | kuiKey">
+                <div mat-line *ngFor="let prop of res.properties | keyvalue">
                     <!--<span>{{ontologyInfo?.getLabelForProperty(prop.key)}}</span>-->
                     <ul>
-                        <li *ngFor="let val of prop.value | kuiKey" class="without-bullets">
+                        <li *ngFor="let val of prop.value | keyvalue" class="without-bullets">
                             <div [ngSwitch]="val.value.getClassName()">
 
                                 <!-- only render math if panel is open: step === i-->
-                                <span *ngSwitchCase="KnoraConstants.ReadTextValueAsHtml" [mathJax]="val.value?.getContent()" [renderMath]="step === i" [valueObject]="val.value" [ontologyInfo]="ontologyInfo" [bindEvents]="false"></span>
+                                <span *ngSwitchCase="DspConstants.TextValueAsHtml" [mathJax]="val.value?.getContent()"
+                                    [renderMath]="step === i" [valueObject]="val.value" [ontologyInfo]="ontologyInfo"
+                                    [bindEvents]="false"></span>
 
                                 <span class="bolder">
-                                    <kui-date-value *ngSwitchCase="KnoraConstants.ReadDateValue" [valueObject]="val.value" [calendar]="true" [era]="true"></kui-date-value>
+                                    <dsp-date-value *ngSwitchCase="DspConstants.DateValue" [displayValue]="val.value">
+                                    </dsp-date-value>
 
-                                    <read-list-value *ngSwitchCase="KnoraConstants.ReadListValue" [valueObject]="val.value" [renderMath]="step === i"></read-list-value>
+                                    <read-list-value *ngSwitchCase="DspConstants.ListValue" [valueObject]="val.value"
+                                        [renderMath]="step === i"></read-list-value>
 
                                     <span *ngSwitchDefault="">{{val.value.getContent()}}</span>
                                 </span>
 
                                 <br>
-                                <span class="mat-caption" *ngIf="ontologyInfo?.getLabelForProperty(prop.key) !== 'Text'">
+                                <span class="mat-caption"
+                                    *ngIf="ontologyInfo?.getLabelForProperty(prop.key) !== 'Text'">
                                     {{ontologyInfo?.getLabelForProperty(prop.key)}}
                                 </span>
 
@@ -72,7 +78,9 @@
 
         </mat-accordion>
         <div class="action-panel" *ngIf="result.length > 0">
-            <button mat-button class="link center" (click)="loadMore(offset)" *ngIf="offset < maxOffset">Load more<br><mat-icon>keyboard_arrow_down</mat-icon></button>
+            <button mat-button class="link center" (click)="loadMore(offset)" *ngIf="offset < maxOffset">Load more<br>
+                <mat-icon>keyboard_arrow_down</mat-icon>
+            </button>
         </div>
     </div>
 
