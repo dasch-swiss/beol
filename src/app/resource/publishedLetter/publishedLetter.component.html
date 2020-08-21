@@ -1,6 +1,6 @@
 <div class="full-size scroll-y-only">
 
-    <kui-progress-indicator *ngIf="isLoading" [color]="'#D88958'"></kui-progress-indicator>
+    <dsp-progress-indicator *ngIf="isLoading" [color]="'#D88958'"></dsp-progress-indicator>
 
     <div *ngIf="!isLoading && props">
 
@@ -16,29 +16,35 @@
 
         <div class="main-content">
 
-                <span *ngIf="resource.label"><b>{{resource?.label}}</b></span>, in:
+            <span *ngIf="resource.label"><b>{{resource?.label}}</b></span>, in:
 
-                <div *ngIf="props?.isPublishedIn[0]">
-                    <kui-link-value [valueObject]="props?.isPublishedIn[0]" [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
-                    <span *ngIf="props?.publishedLetterNumber[0]">, N. <read-text-value [valueObject]="props?.publishedLetterNumber[0]" [ontologyInfo]="ontologyInfo" [bindEvents]="true"></read-text-value></span>
+            <div *ngIf="props?.isPublishedIn[0]">
+                <dsp-link-value [displayValue]="props?.isPublishedIn[0]" [parentResource]="resource"
+                    [propIri]="resource.property.id"></dsp-link-value>
+                <span *ngIf="props?.publishedLetterNumber[0]">, N. <read-text-value
+                        [valueObject]="props?.publishedLetterNumber[0]" [ontologyInfo]="ontologyInfo"
+                        [bindEvents]="true"></read-text-value></span>
 
-                </div>
+            </div>
 
-                <span *ngIf="props?.startPage[0]">P. <read-text-value [valueObject]="props?.startPage[0]" [ontologyInfo]="ontologyInfo" [bindEvents]="true"></read-text-value></span>
-                <span *ngIf="props?.endPage[0]"> -- <read-text-value [valueObject]="props?.endPage[0]" [ontologyInfo]="ontologyInfo" [bindEvents]="true"></read-text-value>.</span>
+            <span *ngIf="props?.startPage[0]">P. <read-text-value [valueObject]="props?.startPage[0]"
+                    [ontologyInfo]="ontologyInfo" [bindEvents]="true"></read-text-value></span>
+            <span *ngIf="props?.endPage[0]"> -- <read-text-value [valueObject]="props?.endPage[0]"
+                    [ontologyInfo]="ontologyInfo" [bindEvents]="true"></read-text-value>.</span>
 
 
 
-                <div *ngIf="resource?.incomingLinks?.length > 0" class="incoming-link-position">
-                    <p>
-                        <strong>Referenced In:</strong>
-                    </p>
-                    <mat-list *ngFor="let incomingLinkSourceRes of resource.incomingLinks">
-                        <mat-list-item>
-                            <span class="link" (click)="showIncomingRes(incomingLinkSourceRes.id, incomingLinkSourceRes.type)">{{incomingLinkSourceRes.label}}</span>
-                        </mat-list-item>
-                    </mat-list>
-                </div>
+            <div *ngIf="resource?.incomingLinks?.length > 0" class="incoming-link-position">
+                <p>
+                    <strong>Referenced In:</strong>
+                </p>
+                <mat-list *ngFor="let incomingLinkSourceRes of resource.incomingLinks">
+                    <mat-list-item>
+                        <span class="link"
+                            (click)="showIncomingRes(incomingLinkSourceRes.id, incomingLinkSourceRes.type)">{{incomingLinkSourceRes.label}}</span>
+                    </mat-list-item>
+                </mat-list>
+            </div>
 
         </div>
     </div>
