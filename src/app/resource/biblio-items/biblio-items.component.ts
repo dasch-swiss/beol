@@ -1,23 +1,23 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { Component, Inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import {
-    IncomingService,
-    KnoraConstants,
-    OntologyCacheService,
-    OntologyInformation,
+    Constants,
+    KnoraApiConnection,
     ReadDateValue,
     ReadLinkValue,
-    ReadPropertyItem,
     ReadResource,
     ReadTextValue,
     ReadUriValue,
-    ResourceService
-} from '@knora/core';
+    ReadValue
+} from '@dasch-swiss/dsp-js';
+import { DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
+import { OntologyCacheService } from '@knora/core';
 import { Subscription } from 'rxjs';
-import { BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
-import { BeolService } from '../../services/beol.service';
+import { IncomingService } from 'src/app/services/incoming.service';
 import { AppInitService } from '../../app-init.service';
+import { BeolService } from '../../services/beol.service';
+import { BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
 
 class BiblioItemsProps implements PropertyValues {
     startPage: ReadTextValue[] = [];
@@ -50,7 +50,7 @@ class BiblioItemsProps implements PropertyValues {
     journalIssue: ReadTextValue[] = [];
     externalLink: ReadUriValue[] = [];
 
-    [index: string]: ReadPropertyItem[];
+    [index: string]: ReadValue[];
 }
 
 @Component({
@@ -62,12 +62,11 @@ export class BiblioItemsComponent extends BeolResource {
 
     iri: string;
     resource: ReadResource;
-    ontologyInfo: OntologyInformation;
     incomingStillImageRepresentationCurrentOffset: number; // last offset requested for `this.resource.incomingStillImageRepresentations`
     isLoading = true;
     errorMessage: any;
     navigationSubscription: Subscription;
-    KnoraConstants = KnoraConstants;
+    KnoraConstants = Constants;
 
     propIris: PropIriToNameMapping = {
         'id': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#beolIDs',
@@ -131,8 +130,8 @@ export class BiblioItemsComponent extends BeolResource {
     props: BiblioItemsProps;
 
     constructor(
+        @Inject(DspApiConnectionToken) protected _dspApiConnection: KnoraApiConnection,
         protected _route: ActivatedRoute,
-        protected _resourceService: ResourceService,
         protected _cacheService: OntologyCacheService,
         protected _incomingService: IncomingService,
         public location: Location,
@@ -140,7 +139,7 @@ export class BiblioItemsComponent extends BeolResource {
         private _appInitService: AppInitService
     ) {
 
-        super(_route, _resourceService, _cacheService, _incomingService, _beolService);
+        super(_dspApiConnection, _route, _cacheService, _incomingService, _beolService);
 
     }
 

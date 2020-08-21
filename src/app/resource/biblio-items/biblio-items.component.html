@@ -1,6 +1,6 @@
 <div class="full-size scroll-y-only">
 
-    <kui-progress-indicator *ngIf="isLoading" [color]="'#D88958'"></kui-progress-indicator>
+    <dsp-progress-indicator *ngIf="isLoading" [color]="'#D88958'"></dsp-progress-indicator>
 
     <div *ngIf="!isLoading && props">
 
@@ -22,8 +22,11 @@
                 <p *ngFor="let title of props?.title">
                     <span>
                         <h2>
-                            <read-text-value [valueObject]="title" [ontologyInfo]="ontologyInfo" [bindEvents]="true"></read-text-value>
-                            <span *ngIf="props?.abbreviation[0]"> (<read-text-value [valueObject]="props?.abbreviation[0]" [ontologyInfo]="ontologyInfo" [bindEvents]="false"></read-text-value>)</span>
+                            <read-text-value [valueObject]="title" [ontologyInfo]="ontologyInfo" [bindEvents]="true">
+                            </read-text-value>
+                            <span *ngIf="props?.abbreviation[0]"> (<read-text-value
+                                    [valueObject]="props?.abbreviation[0]" [ontologyInfo]="ontologyInfo"
+                                    [bindEvents]="false"></read-text-value>)</span>
                         </h2>
                     </span>
                 </p>
@@ -31,40 +34,52 @@
                 <p *ngFor="let name of props?.name">
                     <span>
                         <h2>
-                            <read-text-value [valueObject]="name" [ontologyInfo]="ontologyInfo" [bindEvents]="false"></read-text-value>
+                            <read-text-value [valueObject]="name" [ontologyInfo]="ontologyInfo" [bindEvents]="false">
+                            </read-text-value>
                         </h2>
                     </span>
                 </p>
 
                 <p *ngFor="let subtitle of props?.subtitle">
                     <span>
-                        <h4><read-text-value [valueObject]="subtitle" [ontologyInfo]="ontologyInfo" [bindEvents]="false"></read-text-value></h4>
+                        <h4>
+                            <read-text-value [valueObject]="subtitle" [ontologyInfo]="ontologyInfo"
+                                [bindEvents]="false"></read-text-value>
+                        </h4>
                     </span>
                 </p>
 
                 <p *ngIf="props?.author[0]">
                     <span *ngFor="let author of props?.author; let last = last">
-                        <kui-link-value [valueObject]="author" [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
+                        <dsp-link-value [displayValue]="author" [parentResource]="resource"
+                            [propIri]="resource.property.id"></dsp-link-value>
                         <span *ngIf="!last"> &amp; </span>
                     </span>
                 </p>
 
                 <p>
-                    <span *ngFor="let loc of props?.location"><read-text-value [valueObject]="loc" [ontologyInfo]="ontologyInfo" [bindEvents]="false"></read-text-value>, </span>
+                    <span *ngFor="let loc of props?.location">
+                        <read-text-value [valueObject]="loc" [ontologyInfo]="ontologyInfo" [bindEvents]="false">
+                        </read-text-value>,
+                    </span>
                     <span *ngIf="props?.date[0]">
-                        <kui-date-value [valueObject]="props?.date[0]" [calendar]="false" [era]="true"></kui-date-value>
+                        <dsp-date-value [displayValue]="props?.date[0]"></dsp-date-value>
                     </span>
                 </p>
 
             </section>
 
-            <span *ngIf="props?.startPage[0]">From page <read-text-value [valueObject]="props?.startPage[0]" [ontologyInfo]="ontologyInfo" [bindEvents]="false"></read-text-value></span>
-            <span *ngIf="props?.endPage[0]"> to page <read-text-value [valueObject]="props?.endPage[0]" [ontologyInfo]="ontologyInfo" [bindEvents]="false"></read-text-value>.</span>
+            <span *ngIf="props?.startPage[0]">From page <read-text-value [valueObject]="props?.startPage[0]"
+                    [ontologyInfo]="ontologyInfo" [bindEvents]="false"></read-text-value></span>
+            <span *ngIf="props?.endPage[0]"> to page <read-text-value [valueObject]="props?.endPage[0]"
+                    [ontologyInfo]="ontologyInfo" [bindEvents]="false"></read-text-value>.</span>
 
             <div *ngIf="props?.isPartOfJournal[0]">
                 <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.isPartOfJournal[0].propIri)}}</h4>
                 <p class="margin-left">
-                    <kui-link-value *ngFor="let ipoj of props?.isPartOfJournal" [valueObject]="ipoj" [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
+                    <dsp-link-value *ngFor="let ipoj of props?.isPartOfJournal" [displayValue]="ipoj"
+                        [parentResource]="resource" [propIri]="resource.property.id">
+                    </dsp-link-value>
                 </p>
             </div>
 
@@ -72,46 +87,64 @@
                 <h4 class="subheading-2">
                     {{ontologyInfo?.getLabelForProperty(props?.isPartOfCollection[0].propIri)}}</h4>
                 <p class="margin-left">
-                    <kui-link-value *ngFor="let ipoc of props?.isPartOfCollection" [valueObject]="ipoc" [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
+                    <dsp-link-value *ngFor="let ipoc of props?.isPartOfCollection" [displayValue]="ipoc"
+                        [parentResource]="resource" [propIri]="resource.property.id">
+                    </dsp-link-value>
             </div>
 
             <div *ngIf="props?.isPartOfEditedBook[0]">
                 <h4 class="subheading-2">
                     {{ontologyInfo?.getLabelForProperty(props?.isPartOfEditedBook[0].propIri)}}</h4>
                 <p class="margin-left">
-                    <kui-link-value *ngFor="let ipoeb of props?.isPartOfEditedBook" [valueObject]="ipoeb" [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
+                    <dsp-link-value *ngFor="let ipoeb of props?.isPartOfEditedBook" [displayValue]="ipoeb"
+                        [parentResource]="resource" [propIri]="resource.property.id">
+                    </dsp-link-value>
                 </p>
             </div>
 
             <span *ngIf="props?.journalVolume[0]">
                 <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.journalVolume[0].propIri)}}</h4>
-                <p class="margin-left"><read-text-value [valueObject]="props?.journalVolume[0]" [ontologyInfo]="ontologyInfo" [bindEvents]="false"></read-text-value></p>
+                <p class="margin-left">
+                    <read-text-value [valueObject]="props?.journalVolume[0]" [ontologyInfo]="ontologyInfo"
+                        [bindEvents]="false"></read-text-value>
+                </p>
             </span>
 
             <span *ngIf="props?.journalIssue[0]">
                 <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.journalIssue[0].propIri)}}</h4>
-                <p class="margin-left"><read-text-value [valueObject]="props?.journalIssue[0]" [ontologyInfo]="ontologyInfo" [bindEvents]="false"></read-text-value></p>
+                <p class="margin-left">
+                    <read-text-value [valueObject]="props?.journalIssue[0]" [ontologyInfo]="ontologyInfo"
+                        [bindEvents]="false"></read-text-value>
+                </p>
             </span>
 
             <span *ngIf="props?.numVolumes[0]">
                 <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.numVolumes[0].propIri)}}</h4>
-                <p class="margin-left"><read-text-value [valueObject]="props?.numVolumes[0]" [ontologyInfo]="ontologyInfo" [bindEvents]="false"></read-text-value></p>
+                <p class="margin-left">
+                    <read-text-value [valueObject]="props?.numVolumes[0]" [ontologyInfo]="ontologyInfo"
+                        [bindEvents]="false"></read-text-value>
+                </p>
             </span>
 
             <span *ngIf="props?.numPages[0]">
                 <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.numPages[0].propIri)}}</h4>
-                <p class="margin-left"><read-text-value [valueObject]="props?.numPages[0]" [ontologyInfo]="ontologyInfo" [bindEvents]="false"></read-text-value></p>
+                <p class="margin-left">
+                    <read-text-value [valueObject]="props?.numPages[0]" [ontologyInfo]="ontologyInfo"
+                        [bindEvents]="false"></read-text-value>
+                </p>
             </span>
 
             <span *ngIf="props?.isbn[0]">
                 <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.isbn[0].propIri)}}: </h4>
-                <read-text-value [valueObject]="props?.isbn[0]" [ontologyInfo]="ontologyInfo" [bindEvents]="false"></read-text-value>
+                <read-text-value [valueObject]="props?.isbn[0]" [ontologyInfo]="ontologyInfo" [bindEvents]="false">
+                </read-text-value>
             </span>
 
             <span *ngIf="props?.collectionNumber[0]">
                 <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.collectionNumber[0].propIri)}}</h4>
                 <p class="margin-left">
-                    <read-text-value [valueObject]="props?.collectionNumber[0]" [ontologyInfo]="ontologyInfo" [bindEvents]="false"></read-text-value>
+                    <read-text-value [valueObject]="props?.collectionNumber[0]" [ontologyInfo]="ontologyInfo"
+                        [bindEvents]="false"></read-text-value>
                 </p>
             </span>
 
@@ -119,7 +152,8 @@
                 <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.editor[0].propIri)}}</h4>
                 <mat-list>
                     <mat-list-item *ngFor="let editor of props?.editor">
-                        <kui-link-value [valueObject]="editor" [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
+                        <dsp-link-value [displayValue]="editor" [parentResource]="resource"
+                            [propIri]="resource.property.id"></dsp-link-value>
                     </mat-list-item>
                 </mat-list>
             </div>
@@ -127,59 +161,72 @@
             <div *ngIf="props?.editorOrg[0]">
                 <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.editorOrg[0].propIri)}}</h4>
                 <p class="margin-left">
-                    <kui-link-value *ngFor="let eo of props?.editorOrg" [valueObject]="eo" [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
+                    <dsp-link-value *ngFor="let eo of props?.editorOrg" [displayValue]="eo" [parentResource]="resource"
+                        [propIri]="resource.property.id"></dsp-link-value>
                 </p>
             </div>
 
             <div *ngIf="props?.publisher[0]">
                 <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.publisher[0].propIri)}}</h4>
                 <p class="margin-left">
-                    <kui-link-value *ngFor="let p of props?.publisher" [valueObject]="p" [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
+                    <dsp-link-value *ngFor="let p of props?.publisher" [displayValue]="p" [parentResource]="resource"
+                        [propIri]="resource.property.id"></dsp-link-value>
                 </p>
             </div>
 
             <div *ngIf="props?.isReprinted[0]">
                 <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.isReprinted[0].propIri)}}</h4>
                 <p class="margin-left">
-                    <kui-link-value *ngFor="let reprinted of props?.isReprinted" [valueObject]="reprinted" [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
+                    <dsp-link-value *ngFor="let reprinted of props?.isReprinted" [displayValue]="reprinted"
+                        [parentResource]="resource" [propIri]="resource.property.id">
+                    </dsp-link-value>
                 </p>
             </div>
 
             <div *ngIf="props?.translator[0]">
                 <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.translator[0].propIri)}}</h4>
                 <p class="margin-left">
-                    <kui-link-value *ngFor="let trans of props?.translator" [valueObject]="trans" [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
+                    <dsp-link-value *ngFor="let trans of props?.translator" [displayValue]="trans"
+                        [parentResource]="resource" [propIri]="resource.property.id">
+                    </dsp-link-value>
                 </p>
             </div>
 
             <div *ngIf="props?.isTranslationOf[0]">
                 <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.isTranslationOf[0].propIri)}}</h4>
                 <p class="margin-left">
-                    <kui-link-value *ngFor="let transOf of props?.isTranslationOf" [valueObject]="transOf" [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
+                    <dsp-link-value *ngFor="let transOf of props?.isTranslationOf" [displayValue]="transOf"
+                        [parentResource]="resource" [propIri]="resource.property.id">
+                    </dsp-link-value>
                 </p>
             </div>
 
             <div *ngIf="props?.bookContent[0]">
                 <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.bookContent[0].propIri)}}</h4>
                 <p class="margin-left">
-                    <kui-link-value *ngFor="let bc of props?.bookContent" [valueObject]="bc" [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
+                    <dsp-link-value *ngFor="let bc of props?.bookContent" [displayValue]="bc"
+                        [parentResource]="resource" [propIri]="resource.property.id">
+                    </dsp-link-value>
                 </p>
             </div>
 
             <div *ngIf="props?.introduction[0]">
                 <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.introduction[0].propIri)}}</h4>
                 <p class="margin-left">
-                    <kui-link-value *ngFor="let intro of props?.introduction" [valueObject]="intro" [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
+                    <dsp-link-value *ngFor="let intro of props?.introduction" [displayValue]="intro"
+                        [parentResource]="resource" [propIri]="resource.property.id">
+                    </dsp-link-value>
                 </p>
             </div>
 
             <div *ngIf="props?.comment[0]">
                 <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.comment[0].propIri)}}</h4>
-                <read-text-value *ngFor="let com of props?.comment" class="margin-left" [valueObject]="com" [ontologyInfo]="ontologyInfo" [bindEvents]="true">
+                <read-text-value *ngFor="let com of props?.comment" class="margin-left" [valueObject]="com"
+                    [ontologyInfo]="ontologyInfo" [bindEvents]="true">
                 </read-text-value>
             </div>
 
-           <!-- <div *ngIf="props?.mentionedIn[0]">
+            <!-- <div *ngIf="props?.mentionedIn[0]">
                 <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.mentionedIn[0].propIri)}}</h4>
                 <p *ngFor="let mi of props?.mentionedIn" class="margin-left">
                     <read-text-value class="margin-left" [valueObject]="mi" [ontologyInfo]="ontologyInfo" [bindEvents]="false">
@@ -188,7 +235,7 @@
             </div>-->
             <span *ngIf="props?.externalLink[0]">
                 <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.externalLink[0].propIri)}}</h4>
-                <kui-uri-value *ngFor="let ipoeb of props?.externalLink" [valueObject]="ipoeb" (referredResourceClicked)="resLinkClicked($event)"></kui-uri-value>
+                <dsp-uri-value *ngFor="let ipoeb of props?.externalLink" [displayValue]="ipoeb"></dsp-uri-value>
             </span>
 
             <section class="links">
@@ -198,7 +245,8 @@
                     </p>
                     <mat-list *ngFor="let incomingLinkSourceRes of resource.incomingLinks">
                         <mat-list-item>
-                            <span class="link" (click)="showIncomingRes(incomingLinkSourceRes.id, incomingLinkSourceRes.type)">{{incomingLinkSourceRes.label}}</span>
+                            <span class="link"
+                                (click)="showIncomingRes(incomingLinkSourceRes.id, incomingLinkSourceRes.type)">{{incomingLinkSourceRes.label}}</span>
                         </mat-list-item>
                     </mat-list>
                 </div>
