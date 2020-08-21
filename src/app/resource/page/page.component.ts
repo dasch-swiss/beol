@@ -1,33 +1,33 @@
-import { Component } from '@angular/core';
-import { BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
+import { Location } from '@angular/common';
+import { Component, Inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import {
-    IncomingService,
-    KnoraConstants,
-    OntologyCacheService,
-    OntologyInformation,
-    ReadIntegerValue,
+    Constants,
+    KnoraApiConnection,
+    ReadIntValue,
     ReadLinkValue,
-    ReadPropertyItem,
     ReadResource,
-    ReadResourcesSequence,
+    ReadResourceSequence,
     ReadTextValue,
     ReadTextValueAsHtml,
-    ResourceService,
-    SearchService
-} from '@knora/core';
+    ReadValue,
+    ResourceClassAndPropertyDefinitions
+} from '@dasch-swiss/dsp-js';
+import { DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
+import { OntologyCacheService } from '@knora/core';
 import { Subscription } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Location } from '@angular/common';
-import { BeolService } from '../../services/beol.service';
+import { IncomingService } from 'src/app/services/incoming.service';
 import { AppInitService } from '../../app-init.service';
+import { BeolService } from '../../services/beol.service';
+import { BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
 
 class PageProps implements PropertyValues {
 
     pagenum: ReadTextValue[] = [];
-    seqnum: ReadIntegerValue[] = [];
+    seqnum: ReadIntValue[] = [];
     partOf: ReadLinkValue[] = [];
 
-    [index: string]: ReadPropertyItem[];
+    [index: string]: ReadValue[];
 }
 
 @Component({
@@ -39,11 +39,11 @@ export class PageComponent extends BeolResource {
 
     iri: string;
     resource: ReadResource;
-    ontologyInfo: OntologyInformation;
+    ontologyInfo: ResourceClassAndPropertyDefinitions;
     incomingStillImageRepresentationCurrentOffset: number; // last offset requested for `this.resource.incomingStillImageRepresentations`
     isLoading = true;
     errorMessage: any;
-    KnoraConstants = KnoraConstants;
+    DspConstants = Constants;
     navigationSubscription: Subscription;
 
     propIris: PropIriToNameMapping = {
@@ -64,17 +64,16 @@ export class PageComponent extends BeolResource {
     previousPage: ReadResource;
     nextPage: ReadResource;
 
-    constructor(protected _route: ActivatedRoute,
-                private _router: Router,
-                protected _resourceService: ResourceService,
-                protected _cacheService: OntologyCacheService,
-                protected _incomingService: IncomingService,
-                protected _beolService: BeolService,
-                private _searchService: SearchService,
-                public location: Location,
-                private _appInitService: AppInitService) {
+    constructor(
+        @Inject(DspApiConnectionToken) protected _dspApiConnection: KnoraApiConnection,
+        protected _route: ActivatedRoute,
+        protected _cacheService: OntologyCacheService,
+        protected _incomingService: IncomingService,
+        protected _beolService: BeolService,
+        public location: Location,
+        private _appInitService: AppInitService) {
 
-        super(_route, _resourceService, _cacheService, _incomingService, _beolService);
+        super(_dspApiConnection, _route, _cacheService, _incomingService, _beolService);
     }
 
     initProps() {
@@ -100,15 +99,15 @@ export class PageComponent extends BeolResource {
 
         const gravsearchQuery: string = this._beolService.getTranscriptionIriForRegion(regionIri);
 
-        this._searchService.doExtendedSearchReadResourceSequence(gravsearchQuery).subscribe(
-            (transcriptions: ReadResourcesSequence) => {
-                if (transcriptions.numberOfResources === 1) {
+        this._dspApiConnection.v2.search.doExtendedSearch(gravsearchQuery).subscribe(
+            (transcriptions: ReadResourceSequence) => {
+                if (transcriptions.resources.length === 1) {
                     // get transcription associated to region
-                    this._resourceService.getReadResource(transcriptions.resources[0].id).subscribe(
-                        (transcr: ReadResourcesSequence) => {
+                    this._dspApiConnection.v2.res.getResource(transcriptions.resources[0].id).subscribe(
+                        (transcr: ReadResourceSequence) => {
 
                             // initialize ontology information
-                            this.ontologyInfo.updateOntologyInformation(transcr.ontologyInformation);
+                            this.ontologyInfo.updateOntologyInformation(transcr.resources[0].entityInfo);
 
                             this.transcriptionBelongsToRegion = transcr.resources[0].properties[this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#belongsToRegionValue'][0] as ReadLinkValue;
 
@@ -117,11 +116,11 @@ export class PageComponent extends BeolResource {
                             this.transcription =
                                 transcr.resources[0].properties[this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasText'][0] as ReadTextValueAsHtml;
 
-                            const transcriptionsFormManuscriptEntry = this._beolService.getTranscriptionsForManuscriptEntry(this.manuscriptEntry.referredResourceIri, 0);
+                            const transcriptionsFormManuscriptEntry = this._beolService.getTranscriptionsForManuscriptEntry(this.manuscriptEntry.linkedResourceIri, 0);
 
-                            this._searchService.doExtendedSearchReadResourceSequence(transcriptionsFormManuscriptEntry).subscribe(
-                                (manEntries: ReadResourcesSequence) => {
-                                    if (manEntries.numberOfResources > 0) {
+                            this._dspApiConnection.v2.search.doExtendedSearch(transcriptionsFormManuscriptEntry).subscribe(
+                                (manEntries: ReadResourceSequence) => {
+                                    if (manEntries.resources.length > 0) {
                                         this.transcriptionsForManuscriptEntry = manEntries.resources;
                                     }
                                 }
@@ -142,21 +141,21 @@ export class PageComponent extends BeolResource {
 
     private getPreviousAndNextPage() {
 
-        const manuscriptIri = this.props.partOf[0].referredResourceIri;
+        const manuscriptIri = this.props.partOf[0].linkedResourceIri;
 
-        const gravsearchQuery = this._beolService.getPreviousAndNextPartOfCompound(manuscriptIri, this.props.seqnum[0].integer);
+        const gravsearchQuery = this._beolService.getPreviousAndNextPartOfCompound(manuscriptIri, this.props.seqnum[0].int);
 
-        this._searchService.doExtendedSearchReadResourceSequence(gravsearchQuery).subscribe(
-            (pages: ReadResourcesSequence) => {
+        this._dspApiConnection.v2.search.doExtendedSearch(gravsearchQuery).subscribe(
+            (pages: ReadResourceSequence) => {
 
                 // initialize ontology information
-                this.ontologyInfo.updateOntologyInformation(pages.ontologyInformation);
+                this.ontologyInfo.updateOntologyInformation(pages.resources[0].entityInfo);
 
                 if (pages.resources.length === 2) {
                     this.previousPage = pages.resources[0];
                     this.nextPage = pages.resources[1];
                 } else if (pages.resources.length === 1) {
-                    if (this.props.seqnum[0].integer === 1) {
+                    if (this.props.seqnum[0].int === 1) {
                         // first page
                         this.nextPage = pages.resources[0];
                     } else {
