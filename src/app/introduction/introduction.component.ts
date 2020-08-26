@@ -7,8 +7,7 @@ import {
     KnoraApiConnection,
     ReadResource,
     ReadResourceSequence,
-    ReadValue,
-    ResourceClassAndPropertyDefinitions
+    ReadValue
 } from '@dasch-swiss/dsp-js';
 import { AppInitService, DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
 import { Subscription } from 'rxjs';
@@ -41,7 +40,6 @@ export class IntroductionComponent implements OnInit, OnDestroy {
     iri: string;
     project: string;
     resource: ReadResource;
-    ontologyInfo: ResourceClassAndPropertyDefinitions;
     errorMessage;
 
     KnoraConstants = Constants;
@@ -59,8 +57,8 @@ export class IntroductionComponent implements OnInit, OnDestroy {
     paramsSubscription: Subscription;
 
     propIris: any = {
-        'title': this._appInitService.config + '/ontology/0801/beol/v2#sectionHasTitle',
-        'text': this._appInitService.config + '/ontology/0801/beol/v2#hasText',
+        'title': this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#sectionHasTitle',
+        'text': this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#hasText',
     };
 
     constructor(
@@ -120,10 +118,7 @@ export class IntroductionComponent implements OnInit, OnDestroy {
             .subscribe(
                 (result: ReadResource) => {
 
-                    // initialize ontology information
-                    this.ontologyInfo = result.entityInfo;
-
-                    this.resource = result[0];
+                    this.resource = result;
 
                     this.props = {
                         title: [],
@@ -133,7 +128,7 @@ export class IntroductionComponent implements OnInit, OnDestroy {
                     for (const key in this.resource.properties) {
                         if (this.resource.properties.hasOwnProperty(key)) {
                             for (const val of this.resource.properties[key]) {
-                                switch (val.id) {
+                                switch (val.property) {
                                     case this.propIris.title:
                                         this.props.title.push(val);
                                         break;
