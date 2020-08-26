@@ -27,9 +27,7 @@
             "styles": [
               "src/styles.scss",
               "src/assets/style/main.scss",
-              "src/assets/style/material-theme.scss",
-              "node_modules/@knora/action/assets/style/action.scss",
-              "node_modules/@knora/search/assets/style/search.scss"
+              "src/assets/style/material-theme.scss"
             ],
             "scripts": [
               "node_modules/openseadragon/build/openseadragon/openseadragon.min.js",

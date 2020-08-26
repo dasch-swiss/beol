@@ -1,17 +1,17 @@
 import { Injectable, Inject } from '@angular/core';
 import { ReadResourceSequence, KnoraApiConnection } from '@dasch-swiss/dsp-js';
 import { DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
+import { Observable } from 'rxjs';
+import { ApiResponseError } from '@dasch-swiss/dsp-js';
 
 @Injectable({
     providedIn: 'root'
 })
 export class IncomingService {
 
-    response: ReadResourceSequence;
-
     constructor(
         @Inject(DspApiConnectionToken) private _dspApiConnection: KnoraApiConnection
-    ) { }
+    ) {}
 
     // ------------------------------------------------------------------------
     // ------------------------------------------------------------------------
@@ -19,13 +19,13 @@ export class IncomingService {
     // ------------------------------------------------------------------------
 
     /**
-    * Returns all incoming regions for a particular resource.
-    *
-    * @param {string} resourceIRI the Iri of the resource whose Incoming regions should be returned.
-    * @param {number} offset the offset to be used for paging. 0 is the default and is used to get the first page of results.
-    * @returns {Observable<any>}
-    */
-    getIncomingRegions(resourceIRI: string, offset: number): void {
+     * Returns all incoming regions for a particular resource.
+     *
+     * @param {string} resourceIRI the Iri of the resource whose Incoming regions should be returned.
+     * @param {number} offset the offset to be used for paging. 0 is the default and is used to get the first page of results.
+     * @returns {Observable<any>}
+     */
+    getIncomingRegions(resourceIRI: string, offset: number): Observable<ReadResourceSequence | ApiResponseError> {
         const sparqlQueryStr = `
 PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
 
@@ -63,11 +63,7 @@ knora-api:hasColor knora-api:objectType knora-api:Color .
 } OFFSET ${offset}
 `;
 
-        this._dspApiConnection.v2.search.doExtendedSearch(sparqlQueryStr).subscribe(
-            (result: ReadResourceSequence) => {
-                this.response = result;
-            }
-        );
+        return this._dspApiConnection.v2.search.doExtendedSearch(sparqlQueryStr);
     }
 
     // ------------------------------------------------------------------------
@@ -84,7 +80,7 @@ knora-api:hasColor knora-api:objectType knora-api:Color .
      * @param {number} offset the offset to be used for paging. 0 is the default and is used to get the first page of results.
      * @returns {Observable<any>}
      */
-    getStillImageRepresentationsForCompoundResource(resourceIri: string, offset: number): void {
+    getStillImageRepresentationsForCompoundResource(resourceIri: string, offset: number): Observable<ReadResourceSequence | ApiResponseError> {
         const sparqlQueryStr = `
 PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
 
@@ -118,11 +114,7 @@ knora-api:hasStillImageFile knora-api:objectType knora-api:File .
 OFFSET ${offset}
 `;
 
-        this._dspApiConnection.v2.search.doExtendedSearch(sparqlQueryStr).subscribe(
-            (result: ReadResourceSequence) => {
-                this.response = result;
-            }
-        );
+        return this._dspApiConnection.v2.search.doExtendedSearch(sparqlQueryStr);
 
     }
 
@@ -139,7 +131,7 @@ OFFSET ${offset}
      * @param {number} offset the offset to be used for paging. 0 is the default and is used to get the first page of results.
      * @returns {Observable<any>}
      */
-    getIncomingLinksForResource(resourceIri: string, offset: number): void {
+    getIncomingLinksForResource(resourceIri: string, offset: number): Observable<ReadResourceSequence | ApiResponseError> {
         const sparqlQueryStr = `
 PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
 
@@ -172,11 +164,7 @@ FILTER NOT EXISTS {
 } OFFSET ${offset}
 `;
 
-        this._dspApiConnection.v2.search.doExtendedSearch(sparqlQueryStr).subscribe(
-            (result: ReadResourceSequence) => {
-                this.response = result;
-            }
-        );
+        return this._dspApiConnection.v2.search.doExtendedSearch(sparqlQueryStr);
     }
 
 
@@ -189,7 +177,7 @@ FILTER NOT EXISTS {
      * @param {number} offset the offset to be used for paging. 0 is the default and is used to get the first page of results.
      * @returns {Observable<any>}
      */
-    getIncomingLinks(resourceIri: string, offset: number): void {
+    getIncomingLinks(resourceIri: string, offset: number): Observable<ReadResourceSequence | ApiResponseError> {
         const sparqlQueryStr = `
 PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
 
@@ -222,10 +210,7 @@ FILTER NOT EXISTS {
 } OFFSET ${offset}
 `;
 
-        this._dspApiConnection.v2.search.doExtendedSearch(sparqlQueryStr).subscribe(
-            (result: ReadResourceSequence) => {
-                this.response = result;
-            }
-        );
+        return this._dspApiConnection.v2.search.doExtendedSearch(sparqlQueryStr);
     }
 }
+

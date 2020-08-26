@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { IncomingService, KnoraConstants, OntologyCacheService, OntologyInformation, ReadResource, ResourceService } from '@knora/core';
-import { BeolResource } from './beol-resource';
+import { BeolCompoundResource, BeolResource } from './beol-resource';
 import { Subscription } from 'rxjs';
 import { BeolService } from '../services/beol.service';
+import { DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
+import { Constants, KnoraApiConnection } from '@dasch-swiss/dsp-js';
+import { IncomingService } from '../services/incoming.service';
 
 @Component({
     selector: 'app-resource',
@@ -14,29 +16,27 @@ import { BeolService } from '../services/beol.service';
 export class ResourceComponent extends BeolResource {
 
     iri: string;
-    resource: ReadResource;
-    ontologyInfo: OntologyInformation;
+    resource: BeolCompoundResource;
     incomingStillImageRepresentationCurrentOffset: number; // last offset requested for `this.resource.incomingStillImageRepresentations`
     isLoading = true;
     errorMessage: any;
-    KnoraConstants = KnoraConstants;
+    dspConstants = Constants;
     navigationSubscription: Subscription;
 
     propIris;
 
-    constructor(protected _route: ActivatedRoute,
-                protected _resourceService: ResourceService,
-                protected _cacheService: OntologyCacheService,
+    constructor(@Inject(DspApiConnectionToken) protected _dspApiConnection: KnoraApiConnection,
+                protected _route: ActivatedRoute,
                 protected _incomingService: IncomingService,
                 public location: Location,
                 protected _beolService: BeolService) {
 
-        super(_route, _resourceService, _cacheService, _incomingService, _beolService);
+        super(_dspApiConnection, _route, _incomingService, _beolService);
     }
 
     initProps() {
 
-        this.mapToComponent(this.resource.type, this.iri);
+        this.mapToComponent(this.resource.readResource.type, this.iri);
 
     }
 

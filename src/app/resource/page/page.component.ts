@@ -14,12 +14,11 @@ import {
     ResourceClassAndPropertyDefinitions
 } from '@dasch-swiss/dsp-js';
 import { DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
-import { OntologyCacheService } from '@knora/core';
 import { Subscription } from 'rxjs';
 import { IncomingService } from 'src/app/services/incoming.service';
 import { AppInitService } from '../../app-init.service';
 import { BeolService } from '../../services/beol.service';
-import { BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
+import { BeolCompoundResource, BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
 
 class PageProps implements PropertyValues {
 
@@ -38,12 +37,12 @@ class PageProps implements PropertyValues {
 export class PageComponent extends BeolResource {
 
     iri: string;
-    resource: ReadResource;
+    resource: BeolCompoundResource;
     ontologyInfo: ResourceClassAndPropertyDefinitions;
     incomingStillImageRepresentationCurrentOffset: number; // last offset requested for `this.resource.incomingStillImageRepresentations`
     isLoading = true;
     errorMessage: any;
-    DspConstants = Constants;
+    dspConstants = Constants;
     navigationSubscription: Subscription;
 
     propIris: PropIriToNameMapping = {
@@ -67,13 +66,12 @@ export class PageComponent extends BeolResource {
     constructor(
         @Inject(DspApiConnectionToken) protected _dspApiConnection: KnoraApiConnection,
         protected _route: ActivatedRoute,
-        protected _cacheService: OntologyCacheService,
         protected _incomingService: IncomingService,
         protected _beolService: BeolService,
         public location: Location,
         private _appInitService: AppInitService) {
 
-        super(_dspApiConnection, _route, _cacheService, _incomingService, _beolService);
+        super(_dspApiConnection, _route, _incomingService, _beolService);
     }
 
     initProps() {
@@ -104,17 +102,14 @@ export class PageComponent extends BeolResource {
                 if (transcriptions.resources.length === 1) {
                     // get transcription associated to region
                     this._dspApiConnection.v2.res.getResource(transcriptions.resources[0].id).subscribe(
-                        (transcr: ReadResourceSequence) => {
+                        (transcr: ReadResource) => {
 
-                            // initialize ontology information
-                            this.ontologyInfo.updateOntologyInformation(transcr.resources[0].entityInfo);
+                            this.transcriptionBelongsToRegion = transcr.properties[this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#belongsToRegionValue'][0] as ReadLinkValue;
 
-                            this.transcriptionBelongsToRegion = transcr.resources[0].properties[this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#belongsToRegionValue'][0] as ReadLinkValue;
-
-                            this.manuscriptEntry = transcr.resources[0].properties[this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#transcriptionOfValue'][0] as ReadLinkValue;
+                            this.manuscriptEntry = transcr.properties[this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#transcriptionOfValue'][0] as ReadLinkValue;
 
                             this.transcription =
-                                transcr.resources[0].properties[this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasText'][0] as ReadTextValueAsHtml;
+                                transcr.properties[this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasText'][0] as ReadTextValueAsHtml;
 
                             const transcriptionsFormManuscriptEntry = this._beolService.getTranscriptionsForManuscriptEntry(this.manuscriptEntry.linkedResourceIri, 0);
 
@@ -147,9 +142,6 @@ export class PageComponent extends BeolResource {
 
         this._dspApiConnection.v2.search.doExtendedSearch(gravsearchQuery).subscribe(
             (pages: ReadResourceSequence) => {
-
-                // initialize ontology information
-                this.ontologyInfo.updateOntologyInformation(pages.resources[0].entityInfo);
 
                 if (pages.resources.length === 2) {
                     this.previousPage = pages.resources[0];

@@ -13,12 +13,11 @@ import {
     ResourceClassAndPropertyDefinitions
 } from '@dasch-swiss/dsp-js';
 import { DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
-import { OntologyCacheService } from '@knora/core';
 import { Subscription } from 'rxjs';
 import { IncomingService } from 'src/app/services/incoming.service';
 import { AppInitService } from '../../app-init.service';
 import { BeolService } from '../../services/beol.service';
-import { BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
+import { BeolCompoundResource, BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
 
 class ManuscriptEntryProps implements PropertyValues {
 
@@ -37,12 +36,12 @@ class ManuscriptEntryProps implements PropertyValues {
 export class ManuscriptEntryComponent extends BeolResource {
 
     iri: string;
-    resource: ReadResource;
+    resource: BeolCompoundResource;
     ontologyInfo: ResourceClassAndPropertyDefinitions;
     incomingStillImageRepresentationCurrentOffset: number; // last offset requested for `this.resource.incomingStillImageRepresentations`
     isLoading = true;
     errorMessage: any;
-    DspConstants = Constants;
+    dspConstants = Constants;
     navigationSubscription: Subscription;
 
     propIris: PropIriToNameMapping = {
@@ -58,13 +57,12 @@ export class ManuscriptEntryComponent extends BeolResource {
     constructor(
         @Inject(DspApiConnectionToken) protected _dspApiConnection: KnoraApiConnection,
         protected _route: ActivatedRoute,
-        protected _cacheService: OntologyCacheService,
         protected _incomingService: IncomingService,
         protected _beolService: BeolService,
         public location: Location,
         private _appInitService: AppInitService) {
 
-        super(_dspApiConnection, _route, _cacheService, _incomingService, _beolService);
+        super(_dspApiConnection, _route, _incomingService, _beolService);
     }
 
     initProps() {

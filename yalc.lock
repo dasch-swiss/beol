@@ -1,0 +1,15 @@
+{
+  "version": "v1",
+  "packages": {
+    "@dasch-swiss/dsp-js": {
+      "signature": "a01a76bdda163db659804b9ba79d4827",
+      "file": true,
+      "replaced": "1.0.0-rc.6"
+    },
+    "@dasch-swiss/dsp-ui": {
+      "signature": "5f60a426ebf0fd9b7bd0f90a2606b857",
+      "file": true,
+      "replaced": "1.0.0-rc.3"
+    }
+  }
+}

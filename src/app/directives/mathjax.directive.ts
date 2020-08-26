@@ -1,16 +1,9 @@
-import { Directive, ElementRef, HostListener, Input, OnChanges, OnInit } from '@angular/core';
-import {
-    KnoraConstants,
-    OntologyInformation,
-    ReadGeomValue,
-    ReadLinkValue,
-    ReadResource,
-    ReadResourcesSequence, ReadStillImageFileValue,
-    ReadTextValueAsHtml
-} from '@knora/core';
+import { Directive, ElementRef, HostListener, Input, OnChanges } from '@angular/core';
+import { Constants, ReadGeomValue, ReadLinkValue, ReadResource, ReadStillImageFileValue, ReadTextValueAsHtml } from '@dasch-swiss/dsp-js';
 import { BeolService } from '../services/beol.service';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { forkJoin } from 'rxjs';
+import { ReadResourceSequence } from '@dasch-swiss/dsp-js';
 
 declare var MathJax: {
     Hub: {
@@ -18,6 +11,13 @@ declare var MathJax: {
         Typeset: (param: object) => void;
     }
 };
+
+/**
+ * Represents resources referred to by standoff links.
+ */
+export class ReferredResources {
+    [index: string]: ReadResource;
+}
 
 /**
  * This directive makes MathJax render the mathematical notation contained in the inserted HTML.
@@ -59,18 +59,26 @@ export class MathJaxDirective implements OnChanges {
         return this._valueObject;
     }
 
-    private _ontologyInfo: OntologyInformation; // ontology information for the text value (HTML) and its standoff links
-
     @Input()
-    set ontologyInfo(value) {
-        this._ontologyInfo = value;
+    set resource(value: ReadResource) {
+        this._resource = value;
+
+        this._resource.outgoingReferences.forEach(
+            (ref: ReadResource) => {
+                this._referredResources[ref.id] = ref;
+            }
+        );
     }
 
-    get ontologyInfo() {
-        return this._ontologyInfo;
+    get resource() {
+        return this._resource;
     }
 
-    private _bindEvents: Boolean; // indicates if click and mouseover events have to be bound (HostListener)
+    private _resource: ReadResource;
+
+    private _referredResources: ReferredResources = {};
+
+    private _bindEvents: boolean; // indicates if click and mouseover events have to be bound (HostListener)
 
     @Input()
     set bindEvents(value) {
@@ -102,7 +110,7 @@ export class MathJaxDirective implements OnChanges {
 
         const hasFileValue = 'http://api.knora.org/ontology/knora-api/v2#hasStillImageFileValue';
 
-        const fileValue = (regionRes.properties[hasRegionValue][0] as ReadLinkValue).referredResource.properties[hasFileValue][0] as ReadStillImageFileValue;
+        const fileValue = (regionRes.properties[hasRegionValue][0] as ReadLinkValue).linkedResource.properties[hasFileValue][0] as ReadStillImageFileValue;
 
         // build Sipi URL
         const x1 = Math.min(geomValue.geometry.points[0].x, geomValue.geometry.points[1].x);
@@ -116,7 +124,7 @@ export class MathJaxDirective implements OnChanges {
 
         const pct = x1 * 100 + ',' + y1 * 100 + ',' + regionWidth + ',' + regionHeight;
 
-        const sipiURL = fileValue.imageServerIIIFBaseURL + '/' + fileValue.imageFilename + '/pct:' + pct + '/pct:20/0/default.jpg';
+        const sipiURL = fileValue.iiifBaseUrl + '/' + fileValue.filename + '/pct:' + pct + '/pct:20/0/default.jpg';
 
         return sipiURL;
     }
@@ -132,11 +140,11 @@ export class MathJaxDirective implements OnChanges {
         if (this.valueObject instanceof ReadTextValueAsHtml) {
 
             // collect figure region IRIs
-            for (const resIri in this.valueObject.referredResources) {
-                if (this.valueObject.referredResources.hasOwnProperty(resIri)) {
-                    const refRes = this.valueObject.referredResources[resIri];
+            for (const resIri in this._referredResources) {
+                if (this._referredResources.hasOwnProperty(resIri)) {
+                    const refRes = this._referredResources[resIri];
                     // Meditationes Figure regions contain "-F"
-                    if (refRes.type === KnoraConstants.Region && refRes.label.trim().includes('-F')) {
+                    if (refRes.type === Constants.Region && refRes.label.trim().includes('-F')) {
                         figureRegionIris.push(refRes.id);
                     }
                 }
@@ -167,7 +175,7 @@ export class MathJaxDirective implements OnChanges {
             const html: HTMLCollection = parsedHtml.getElementsByTagName('a');
 
             result.forEach(
-                (figReg: ReadResourcesSequence) => {
+                (figReg: ReadResourceSequence) => {
 
                     // check that figReg contains one resource
                     if (figReg.resources.length === 1) {
@@ -226,29 +234,29 @@ export class MathJaxDirective implements OnChanges {
     onClick(targetElement) {
 
         if (this._bindEvents && targetElement.nodeName.toLowerCase() === 'a'
-            && targetElement.className.toLowerCase().indexOf(KnoraConstants.SalsahLink) >= 0) {
+            && targetElement.className.toLowerCase().indexOf(Constants.SalsahLink) >= 0) {
 
             // salsah-link to a Knora resource
 
             const referredResourceIri = targetElement.href;
 
             // TODO: the value object should handle this and check for the existence of the given referred resource
-            const referred_res = this._valueObject.referredResources[referredResourceIri];
+            const referredRes = this._referredResources[referredResourceIri];
 
-            this._beol.routeByResourceType(referred_res.type, referredResourceIri);
+            this._beol.routeByResourceType(referredRes.type, referredResourceIri);
 
             // preventDefault (propagation)
             return false;
 
         } else if (this._bindEvents && targetElement.parentElement.nodeName.toLowerCase() === 'a'
-            && targetElement.parentElement.className.toLowerCase().indexOf(KnoraConstants.SalsahLink) >= 0) {
+            && targetElement.parentElement.className.toLowerCase().indexOf(Constants.SalsahLink) >= 0) {
 
             // salsah-link to a BEOL resource, activated from a parent element, e.g., a footnote (salsah-link containing a <sup>)
 
             const referredResourceIri = targetElement.parentElement.href;
 
             // TODO: the value object should handle this and check for the existence of the given referred resource
-            const referredResourceType = this._valueObject.referredResources[referredResourceIri].type;
+            const referredResourceType = this._referredResources[referredResourceIri].type;
 
             this._beol.routeByResourceType(referredResourceType, referredResourceIri);
 
@@ -256,7 +264,7 @@ export class MathJaxDirective implements OnChanges {
             return false;
 
         } else if (this._bindEvents && targetElement.parentElement.nodeName.toLowerCase() === 'a'
-            && targetElement.parentElement.className.toLowerCase().indexOf(KnoraConstants.RefMarker) >= 0) {
+            && targetElement.parentElement.className.toLowerCase().indexOf(Constants.RefMarker) >= 0) {
 
             // internal reference in a BEBB letter: scroll to footnote on page
 
@@ -312,13 +320,11 @@ export class MathJaxDirective implements OnChanges {
     onMouseEnter(targetElement) {
 
         if (this._bindEvents && targetElement.nodeName.toLowerCase() === 'a'
-            && targetElement.className.toLowerCase().indexOf(KnoraConstants.SalsahLink) >= 0) {
+            && targetElement.className.toLowerCase().indexOf(Constants.SalsahLink) >= 0) {
 
             // salsah-link to a Knora resource
 
             const referredResourceIri = targetElement.href;
-
-            const resInfo: string = this.valueObject.getReferredResourceInfo(referredResourceIri, this.ontologyInfo);
 
             // TODO: the value object should handle this and check for the existence of the given referred resource
             // const referred_res = this._valueObject.referredResources[referredResourceIri];
@@ -326,23 +332,23 @@ export class MathJaxDirective implements OnChanges {
             const config = new MatSnackBarConfig();
             config.duration = 2500;
 
-            this._snackBar.open(resInfo, undefined, config);
+            // console.log(this._referredResources[referredResourceIri].label);
+            this._snackBar.open(this._referredResources[referredResourceIri].type + ' ' + this._referredResources[referredResourceIri].label, undefined, config);
 
             // preventDefault (propagation)
             return false;
         } else if (this._bindEvents && targetElement.parentElement.nodeName.toLowerCase() === 'a'
-            && targetElement.parentElement.className.toLowerCase().indexOf(KnoraConstants.SalsahLink) >= 0) {
+            && targetElement.parentElement.className.toLowerCase().indexOf(Constants.SalsahLink) >= 0) {
 
             // salsah-link to a BEOL resource, activated from a parent element, e.g., a footnote (<sup> containing a salsah-link)
 
             const referredResourceIri = targetElement.parentElement.href;
 
-            const resInfo = this.valueObject.getReferredResourceInfo(referredResourceIri, this.ontologyInfo);
-
             const config = new MatSnackBarConfig();
             config.duration = 2500;
 
-            this._snackBar.open(resInfo, undefined, config);
+            // console.log(this._referredResources[referredResourceIri].label);
+            this._snackBar.open(this._referredResources[referredResourceIri].type + ' ' + this._referredResources[referredResourceIri].label, undefined, config);
 
             // preventDefault (propagation)
             return false;

@@ -1,16 +1,18 @@
-<span [ngSwitch]="valueObject.getClassName()">
+<span [ngSwitch]="valueType">
 
-    <!-- TODO: refactor with ValueTypeService from dsp-ui -->
-    <dsp-text-value-as-string *ngSwitchCase="DspConstants.TextValue" [displayValue]="valueObject">
+    <dsp-text-value-as-string *ngSwitchCase="'ReadTextValueAsString'"
+                              [displayValue]="valueObject">
     </dsp-text-value-as-string>
 
-    <!-- TODO: replace by the new value component from dsp-ui -->
-    <!-- <kui-text-value-as-xml *ngSwitchCase="KnoraConstants.ReadTextValueAsXml"
-                              [valueObject]="valueObject">
-    </kui-text-value-as-xml> -->
+    <!--<dsp-text-value-as-xml *ngSwitchCase="ReadTextValueAsXml"
+                           [displayValue]="valueObject">
+    </dsp-text-value-as-xml>-->
 
-    <read-text-value-as-html *ngSwitchCase="DspConstants.TextValueAsHtml" [valueObject]="valueObject"
-        [ontologyInfo]="ontologyInfo" [bindEvents]="bindEvents" [renderFigureRegions]="renderFigureRegions">
+    <read-text-value-as-html *ngSwitchCase="'ReadTextValueAsHtml'"
+                             [valueObject]="valueObject"
+                             [resource]="resource"
+                             [bindEvents]="bindEvents"
+                             [renderFigureRegions]="renderFigureRegions">
     </read-text-value-as-html>
 
 </span>

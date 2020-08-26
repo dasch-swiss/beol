@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { KuiCoreConfig } from '@knora/core';
 
+// TODO: delete
 
 export interface IAppConfig {
 
@@ -38,7 +38,7 @@ export interface TeiConfigElement {
 export class AppInitService {
 
     static settings: IAppConfig;
-    static coreConfig: KuiCoreConfig;
+    static coreConfig;
 
     constructor() {
     }
@@ -53,7 +53,7 @@ export class AppInitService {
             // console.log('AppInitService: json', data);
             AppInitService.settings = data;
 
-            AppInitService.coreConfig = <KuiCoreConfig> {
+            AppInitService.coreConfig = {
                 name: AppInitService.settings.appName,
                 api: AppInitService.settings.apiURL,
                 media: AppInitService.settings.iiifURL,
@@ -70,7 +70,7 @@ export class AppInitService {
         return AppInitService.settings;
     }
 
-    public getCoreConfig(): KuiCoreConfig {
+    public getCoreConfig() {
         return AppInitService.coreConfig;
     }
 }

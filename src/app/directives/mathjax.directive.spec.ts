@@ -1,18 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MathJaxDirective } from './mathjax.directive';
-import { Component, DebugElement, OnInit } from '@angular/core';
-import { KuiCoreConfig, KuiCoreConfigToken, KuiCoreModule } from '@knora/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MathJaxDirective } from './mathjax.directive';
+import { Component, DebugElement, OnInit } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { AppInitService } from '../app-init.service';
+import { BeolService } from '../services/beol.service';
 
 describe('MathJaxDirective', () => {
 
     // element to be rendered by MathJax
     let mathJaxQueueCalledWith: Element;
-
-    let appInitService: AppInitService;
 
     // mock MathJax (declared in component)
     const MathJax = {
@@ -36,26 +33,23 @@ describe('MathJaxDirective', () => {
 
     beforeEach(() => {
 
-        const appInitServiceSpy = jasmine.createSpyObj('AppInitService', ['getSettings']);
-
         TestBed.configureTestingModule({
             imports: [
                 RouterTestingModule,
-                MatSnackBarModule,
-                KuiCoreModule,
+                MatSnackBarModule
             ],
             declarations: [
                 TestComponent,
                 MathJaxDirective
             ],
             providers: [
-                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig },
-                { provide: AppInitService, useValue: appInitServiceSpy }
+                {
+                    provide: BeolService, useValue: {} // mock BeolService because it has its own deps
+                }
             ]
         })
             .compileComponents();
 
-        appInitServiceSpy.getSettings.and.returnValue({ontologyIRI: 'http://0.0.0.0:3333'});
     });
 
     beforeEach(() => {

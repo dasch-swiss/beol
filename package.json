@@ -9,8 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "test-ci": "ng test --watch=false --browsers=ChromeHeadless",
-    "build-prod": "ng build --prod --build-optimizer",
-    "yalc-add-modules": "yalc add @knora/action && yalc add @knora/authentication && yalc add @knora/core && yalc add @knora/search && yalc add @knora/viewer"
+    "build-prod": "ng build --prod --build-optimizer"
   },
   "private": true,
   "dependencies": {
@@ -25,8 +24,8 @@
     "@angular/platform-browser": "^9.1.12",
     "@angular/platform-browser-dynamic": "^9.1.12",
     "@angular/router": "^9.1.12",
-    "@dasch-swiss/dsp-js": "1.0.0-rc.6",
-    "@dasch-swiss/dsp-ui": "1.0.0-rc.3",
+    "@dasch-swiss/dsp-js": "file:.yalc/@dasch-swiss/dsp-js",
+    "@dasch-swiss/dsp-ui": "file:.yalc/@dasch-swiss/dsp-ui",
     "core-js": "^3.6.5",
     "jdnconvertiblecalendar": "^0.0.5",
     "jdnconvertiblecalendardateadapter": "^0.0.13",

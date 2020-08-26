@@ -45,7 +45,6 @@ import { CorrespondenceComponent } from './correspondence/correspondence.compone
 import { ContactComponent } from './contact/contact.component';
 
 import { ReactiveFormsModule } from '@angular/forms';
-// import { RECAPTCHA_SETTINGS, RecaptchaSettings } from 'ng-recaptcha';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import { PageComponent } from './resource/page/page.component';

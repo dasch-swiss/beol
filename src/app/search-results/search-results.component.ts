@@ -9,10 +9,6 @@ import {
     ReadResourceSequence
 } from '@dasch-swiss/dsp-js';
 import { AdvancedSearchParams, AdvancedSearchParamsService, DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
-import {
-    OntologyCacheService,
-    OntologyInformation
-} from '@knora/core';
 import { Subscription } from 'rxjs';
 import { AppInitService } from '../app-init.service';
 import { BeolService } from '../services/beol.service';
@@ -29,9 +25,8 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     DspConstants = Constants;
 
     result: ReadResource[] = []; // the results of a search query
-    ontologyInfo: OntologyInformation; // ontology information about resource classes and properties present in `result`
     numberOfAllResults: number; // total number of results (count query)
-    numberOfExternalResults: number = 0; // total number of results of text search on 3rd party repos
+    numberOfExternalResults = 0; // total number of results of text search on 3rd party repos
     rerender = false;
 
     // with the http get request, we need also a variable for error messages;
@@ -55,7 +50,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     constructor(
         @Inject(DspApiConnectionToken) protected _dspApiConnection: KnoraApiConnection,
         private _route: ActivatedRoute,
-        private _cacheService: OntologyCacheService,
         private _searchParamsService: AdvancedSearchParamsService,
         private _router: Router,
         public location: Location,
@@ -190,9 +184,9 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
      */
     getResultsLeibniz() {
         // cache the leibniz ontology before starting the text search to prevent unnecessary loading of ontology during the process
-        this._cacheService.getEntityDefinitionsForOntologies(
+        /*this._cacheService.getEntityDefinitionsForOntologies(
             [this._appInitService.getSettings().ontologyIRI + '/ontology/0801/leibniz/v2']).subscribe(
-                (info2: OntologyInformation) => {
+                (info2: OntologyInformation) => {*/
                     const searchRoute = this._appInitService.getSettings().leibnizApi + 'select?q=type%3Abrief+AND+(+volltext%3A';
                     const proxyurl = 'https://cors-anywhere.herokuapp.com/';
                     const experssions = ['id', 'reihe', 'band', 'brief_nummer', 'all_suggest', 'ort_anzeige',
@@ -205,7 +199,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
                             this.getLeibnizLetters(contents.response.docs);
                         })
                         .catch(() => console.log('Can’t access ' + searchExpression + ' response. Blocked by browser?'));
-                });
+                // });
     }
     getNewtonLetters(content: string) {
         /*todo just parses the first page of the results due to hard coded pagination*/
@@ -233,9 +227,9 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
      */
     getResultsNewton() {
         // cache the newton ontology before starting the text search to prevent unnecessary loading of ontology during the process
-        this._cacheService.getEntityDefinitionsForOntologies(
+        /*this._cacheService.getEntityDefinitionsForOntologies(
             [this._appInitService.getSettings().ontologyIRI + '/ontology/0801/newton/v2']).subscribe(
-                (info2: OntologyInformation) => {
+                (info2: OntologyInformation) => {*/
                     const searchRoute = 'http://www.newtonproject.ox.ac.uk/search/results?n=25&cat=';
                     const proxyurl = 'https://cors-anywhere.herokuapp.com/';
                     const mathCategory = 'Mathematics&ce=0&keyword=';
@@ -251,7 +245,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
                             })
                             .catch(() => console.log('Can’t access ' + searchExpressions[it] + ' response. Blocked by browser?'));
                     }
-                });
+                // });
     }
 
     /**
@@ -264,9 +258,9 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         if (this.searchMode === 'fulltext') {
             // cache the beol ontology and its dependencies before starting the text search to
             // prevent unnecessary loading of ontology during the process
-            this._cacheService.getEntityDefinitionsForOntologies(
+            /*this._cacheService.getEntityDefinitionsForOntologies(
                 [this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2']).subscribe(
-                    (info2: OntologyInformation) => {
+                    (info2: OntologyInformation) => {*/
 
                         const searchParams = { limitToProject: this.beolIri };
                         // perform count query
@@ -295,7 +289,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
                                     this.errorMessage = <any>error;
                                 },
                             );
-                    });
+                    // });
 
             // EXTENDED SEARCH
         } else if (this.searchMode === 'extended') {
@@ -353,13 +347,13 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
      */
     private processSearchResults = (searchResult: ReadResourceSequence) => {
         // assign ontology information to a variable so it can be used in the component's template
-        if (this.ontologyInfo === undefined) {
+        /* if (this.ontologyInfo === undefined) {
             // init ontology information
             this.ontologyInfo = searchResult.resources[0].entityInfo;
         } else {
             // update ontology information
             this.ontologyInfo.updateOntologyInformation(searchResult.resources[0].entityInfo);
-        }
+        }*/
         // append results to search results
         // console.log('results 1', this.result);
         this.result = this.result.concat(searchResult.resources);
