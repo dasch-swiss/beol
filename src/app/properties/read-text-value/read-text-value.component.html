@@ -1,7 +1,8 @@
 <span [ngSwitch]="valueType">
 
     <dsp-text-value-as-string *ngSwitchCase="'ReadTextValueAsString'"
-                              [displayValue]="valueObject">
+                              [displayValue]="valueObject"
+                                [mode]="'read'">
     </dsp-text-value-as-string>
 
     <!--<dsp-text-value-as-xml *ngSwitchCase="ReadTextValueAsXml"

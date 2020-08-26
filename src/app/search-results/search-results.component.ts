@@ -8,9 +8,8 @@ import {
     ReadResource,
     ReadResourceSequence
 } from '@dasch-swiss/dsp-js';
-import { AdvancedSearchParams, AdvancedSearchParamsService, DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
+import { AdvancedSearchParams, AdvancedSearchParamsService, AppInitService, DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
 import { Subscription } from 'rxjs';
-import { AppInitService } from '../app-init.service';
 import { BeolService } from '../services/beol.service';
 
 @Component({
@@ -22,7 +21,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
     isLoading = true;
 
-    DspConstants = Constants;
+    dspConstants = Constants;
 
     result: ReadResource[] = []; // the results of a search query
     numberOfAllResults: number; // total number of results (count query)
@@ -45,17 +44,16 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
     navigationSubscription: Subscription;
 
-    beolIri: string = 'http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF';
+    beolIri = 'http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF';
 
     constructor(
-        @Inject(DspApiConnectionToken) protected _dspApiConnection: KnoraApiConnection,
+        @Inject(DspApiConnectionToken) private _dspApiConnection: KnoraApiConnection,
+        private _appInitService: AppInitService,
         private _route: ActivatedRoute,
         private _searchParamsService: AdvancedSearchParamsService,
         private _router: Router,
         public location: Location,
-        private _beol: BeolService,
-        private _appInitService: AppInitService) {
-
+        private _beol: BeolService) {
     }
 
     ngOnInit() {
@@ -122,7 +120,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     queryExpressionWithLetterID(filter: string, ontology: string, property: string): string {
 
         const letterByNumberTemplate = `
-            PREFIX ${ontology}: <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/${ontology}/simple/v2#>
+            PREFIX ${ontology}: <${this._appInitService.config['ontologyIRI']}/ontology/0801/${ontology}/simple/v2#>
             PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
 
             CONSTRUCT {
@@ -187,7 +185,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         /*this._cacheService.getEntityDefinitionsForOntologies(
             [this._appInitService.getSettings().ontologyIRI + '/ontology/0801/leibniz/v2']).subscribe(
                 (info2: OntologyInformation) => {*/
-                    const searchRoute = this._appInitService.getSettings().leibnizApi + 'select?q=type%3Abrief+AND+(+volltext%3A';
+                    const searchRoute = this._appInitService.config['leibnizApi'] + 'select?q=type%3Abrief+AND+(+volltext%3A';
                     const proxyurl = 'https://cors-anywhere.herokuapp.com/';
                     const experssions = ['id', 'reihe', 'band', 'brief_nummer', 'all_suggest', 'ort_anzeige',
                         'datum_anzeige', 'datum_gregorianisch', 'datum_julianisch', 'kontext'];
@@ -293,7 +291,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
             // EXTENDED SEARCH
         } else if (this.searchMode === 'extended') {
-            console.log(this.searchQuery)
+            // console.log(this.searchQuery)
             // perform count query
             if (this.offset === 0) {
                 this._dspApiConnection.v2.search.doExtendedSearchCountQuery(this.searchQuery)
@@ -328,7 +326,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         if (this.numberOfAllResults > 0) {
             // offset is 0-based
             // if numberOfAllResults equals the pagingLimit, the max. offset is 0
-            this.maxOffset = Math.floor((this.numberOfAllResults - 1) / this._appInitService.getSettings().pagingLimit);
+            this.maxOffset = Math.floor((this.numberOfAllResults - 1) / this._appInitService.config['pagingLimit']);
         } else {
             this.maxOffset = 0;
         }
@@ -386,7 +384,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
      * @param resourceType the type (class) of the resource.
      */
     goToViewer(resourceIri: string, resourceType: string) {
-
         this._beol.routeByResourceType(resourceType, resourceIri);
     }
 

@@ -20,11 +20,11 @@
                 [expanded]="step === i" (opened)="setStep(i)" hideToggle>
                 <mat-expansion-panel-header>
                     <mat-panel-title>
-                        {{ontologyInfo?.getLabelForResourceClass(res.type)}}
+                        {{res?.entityInfo.classes[res.type].label}}
                     </mat-panel-title>
 
                     <mat-panel-description>
-                        {{res.label}}
+                        {{res?.label}}
 
                         <!--<mat-icon>{{ontologyInfo?.getLabelForResourceClass(res.type) | lowercase}}</mat-icon>-->
 
@@ -39,27 +39,27 @@
                     <!--<span>{{ontologyInfo?.getLabelForProperty(prop.key)}}</span>-->
                     <ul>
                         <li *ngFor="let val of prop.value | keyvalue" class="without-bullets">
-                            <div [ngSwitch]="val.value.getClassName()">
+                            <div [ngSwitch]="val.value.type">
 
                                 <!-- only render math if panel is open: step === i-->
-                                <span *ngSwitchCase="DspConstants.TextValueAsHtml" [mathJax]="val.value?.getContent()"
-                                    [renderMath]="step === i" [valueObject]="val.value" [ontologyInfo]="ontologyInfo"
-                                    [bindEvents]="false"></span>
+                                <span *ngSwitchCase="dspConstants.TextValue" [mathJax]="val.value?.strval"
+                                      [renderMath]="step === i" [valueObject]="val.value" [resource]="res"
+                                      [bindEvents]="false"></span>
 
                                 <span class="bolder">
-                                    <dsp-date-value *ngSwitchCase="DspConstants.DateValue" [displayValue]="val.value">
+                                    <dsp-date-value *ngSwitchCase="dspConstants.DateValue" [displayValue]="val.value" [mode]="'read'">
                                     </dsp-date-value>
 
-                                    <read-list-value *ngSwitchCase="DspConstants.ListValue" [valueObject]="val.value"
-                                        [renderMath]="step === i"></read-list-value>
+                                    <read-list-value *ngSwitchCase="dspConstants.ListValue" [valueObject]="val.value"
+                                                     [renderMath]="step === i"></read-list-value>
 
-                                    <span *ngSwitchDefault="">{{val.value.getContent()}}</span>
+                                    <span *ngSwitchDefault>{{val.value.strval}}</span>
                                 </span>
 
                                 <br>
                                 <span class="mat-caption"
-                                    *ngIf="ontologyInfo?.getLabelForProperty(prop.key) !== 'Text'">
-                                    {{ontologyInfo?.getLabelForProperty(prop.key)}}
+                                    *ngIf="res?.entityInfo.properties[prop.key].label !== 'Text'">
+                                    {{res?.entityInfo.properties[prop.key].label}}
                                 </span>
 
                             </div>
@@ -67,7 +67,7 @@
                     </ul>
                 </div>
 
-                <!-- go to the viewer to access the resource informations -->
+                <!-- go to the viewer to access the resource information -->
                 <button mat-button color="primary" (click)="goToViewer(res.id, res.type)">Read more &rarr;</button>
 
                 <mat-action-row>
@@ -78,7 +78,7 @@
 
         </mat-accordion>
         <div class="action-panel" *ngIf="result.length > 0">
-            <button mat-button class="link center" (click)="loadMore(offset)" *ngIf="offset < maxOffset">Load more<br>
+            <button mat-button class="link center" (click)="loadMore()" *ngIf="offset < maxOffset">Load more<br>
                 <mat-icon>keyboard_arrow_down</mat-icon>
             </button>
         </div>
