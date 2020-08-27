@@ -1,1 +1,1 @@
-<span *ngIf="node | async" [renderMath]="renderMath" [mathJax]="node?.label" [bindEvents]="false"></span>
+<span *ngIf="node | async" [renderMath]="renderMath" [mathJax]="(node | async )?.label" [bindEvents]="false"></span>

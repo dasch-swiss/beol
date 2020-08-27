@@ -1,6 +1,7 @@
 import { Component, Inject, Input, OnChanges } from '@angular/core';
-import { KnoraApiConnection, ListNodeV2, ReadListValue } from '@dasch-swiss/dsp-js';
+import { ApiResponseError, KnoraApiConnection, ListNodeV2, ReadListValue } from '@dasch-swiss/dsp-js';
 import { DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'read-list-value',
@@ -22,7 +23,7 @@ export class ReadListValueComponent implements OnChanges {
         return this._renderMath;
     }
 
-    node: ListNodeV2;
+    node: Observable<ListNodeV2>;
 
     constructor(
         @Inject(DspApiConnectionToken) private _dspApiConnection: KnoraApiConnection
@@ -30,11 +31,8 @@ export class ReadListValueComponent implements OnChanges {
 
     ngOnChanges() {
         // given the node's Iri, ask the list cache service
-        this._dspApiConnection.v2.list.getNode(this.valueObject.id).subscribe(
-            (response: ListNodeV2) => {
-                this.node = response;
-            });
-
+        // TODO: handle error case
+        this.node = this._dspApiConnection.v2.listNodeCache.getNode(this.valueObject.listNode) as Observable<ListNodeV2>;
     }
 
 }

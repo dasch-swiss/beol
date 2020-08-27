@@ -1,5 +1,5 @@
 import { Directive, ElementRef, Input, OnChanges } from '@angular/core';
-import { AppInitService } from '../app-init.service';
+import { AppInitService } from '@dasch-swiss/dsp-ui';
 
 @Directive({
     selector: '[appTeiLink]'
@@ -42,13 +42,13 @@ export class TeiLinkDirective implements OnChanges {
 
     private generateTeiLink() {
 
-        const settings = this._appInitService.getSettings();
+        const settings = this._appInitService.config;
 
-        const teiConfig = settings.tei[this._resourceType];
+        const teiConfig = settings['tei'][this._resourceType];
 
         if (teiConfig !== undefined) {
 
-            const teiLink = settings.ontologyIRI + '/v2/tei/' + encodeURIComponent(this._resourceIri)
+            const teiLink = settings['ontologyIRI'] + '/v2/tei/' + encodeURIComponent(this._resourceIri)
                 + `?${this.textProperty}=` + encodeURIComponent(teiConfig.textProperty)
                 + `&${this.mappingIri}=` + encodeURIComponent(teiConfig.mappingIRI)
                 + `&${this.gravsearchTemplateIri}=` + encodeURIComponent(teiConfig.gravsearchTemplateIri)

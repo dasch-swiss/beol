@@ -4,20 +4,17 @@ import { ActivatedRoute } from '@angular/router';
 import {
     Constants,
     KnoraApiConnection,
-    ListNodeV2,
     ReadDateValue,
     ReadLinkValue,
     ReadListValue,
-    ReadResource,
     ReadTextValue,
     ReadUriValue,
     ReadValue,
     ResourceClassAndPropertyDefinitions
 } from '@dasch-swiss/dsp-js';
-import { DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
+import { DspApiConnectionToken, AppInitService } from '@dasch-swiss/dsp-ui';
 import { Subscription } from 'rxjs';
 import { IncomingService } from 'src/app/services/incoming.service';
-import { AppInitService } from '../../app-init.service';
 import { BeolService } from '../../services/beol.service';
 import { BeolCompoundResource, PropertyValues, PropIriToNameMapping, BeolResource } from '../beol-resource';
 
@@ -62,30 +59,30 @@ export class LetterComponent extends BeolResource {
     navigationSubscription: Subscription;
     dspConstants = Constants;
 
-    ontologyIri = this._appInitService.getSettings().ontologyIRI;
+    ontologyIri = this._appInitService.config['ontologyIRI'];
 
     propIris: PropIriToNameMapping = {
-        'id': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#beolIDs',
-        'date': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#creationDate',
-        'author': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasAuthorValue',
-        'recipient': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasRecipientValue',
-        'figure': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasFigureValue',
-        'subject': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasSubject',
-        'text': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasText',
-        'mentionedPerson': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#mentionsPersonValue',
-        'language': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#letterHasLanguage',
-        'number': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#letterHasNumber',
-        'original': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#letterHasOriginalValue',
-        'repertorium': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#letterHasRepertoriumNumber',
-        'translation': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#letterHasTranslationValue',
-        'published': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#letterIsPublishedValue',
-        'replyTo': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#letterIsReplyToValue',
-        'location': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#location',
-        'title': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#title',
-        'sysnum': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasSystemNumber',
-        'standoff': this._appInitService.getSettings().ontologyIRI + '/ontology/knora-api/v2#hasStandoffLinkToValue',
-        'comment': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#comment',
-        'letterURI': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#letterHasURI',
+        'id': this.ontologyIri + '/ontology/0801/beol/v2#beolIDs',
+        'date': this.ontologyIri + '/ontology/0801/beol/v2#creationDate',
+        'author': this.ontologyIri + '/ontology/0801/beol/v2#hasAuthorValue',
+        'recipient': this.ontologyIri + '/ontology/0801/beol/v2#hasRecipientValue',
+        'figure': this.ontologyIri + '/ontology/0801/beol/v2#hasFigureValue',
+        'subject': this.ontologyIri + '/ontology/0801/beol/v2#hasSubject',
+        'text': this.ontologyIri + '/ontology/0801/beol/v2#hasText',
+        'mentionedPerson': this.ontologyIri + '/ontology/0801/beol/v2#mentionsPersonValue',
+        'language': this.ontologyIri + '/ontology/0801/beol/v2#letterHasLanguage',
+        'number': this.ontologyIri + '/ontology/0801/beol/v2#letterHasNumber',
+        'original': this.ontologyIri + '/ontology/0801/beol/v2#letterHasOriginalValue',
+        'repertorium': this.ontologyIri + '/ontology/0801/beol/v2#letterHasRepertoriumNumber',
+        'translation': this.ontologyIri + '/ontology/0801/beol/v2#letterHasTranslationValue',
+        'published': this.ontologyIri + '/ontology/0801/beol/v2#letterIsPublishedValue',
+        'replyTo': this.ontologyIri + '/ontology/0801/beol/v2#letterIsReplyToValue',
+        'location': this.ontologyIri + '/ontology/0801/beol/v2#location',
+        'title': this.ontologyIri + '/ontology/0801/beol/v2#title',
+        'sysnum': this.ontologyIri + '/ontology/0801/beol/v2#hasSystemNumber',
+        'standoff': this.ontologyIri + '/ontology/knora-api/v2#hasStandoffLinkToValue',
+        'comment': this.ontologyIri + '/ontology/0801/beol/v2#comment',
+        'letterURI': this.ontologyIri + '/ontology/0801/beol/v2#letterHasURI',
     };
 
     props: LetterProps;
@@ -106,14 +103,14 @@ export class LetterComponent extends BeolResource {
     initProps() {
 
         // request subject index so it is cached
-        this._dspApiConnection.v2.list.getList('http://rdfh.ch/lists/0801/subject_index').subscribe((list: ListNodeV2) => {
+        // this._dspApiConnection.v2.list.getList('http://rdfh.ch/lists/0801/subject_index').subscribe((list: ListNodeV2) => {
 
             const props = new LetterProps();
 
             this.mapper(props);
 
             this.props = props;
-        });
+        // });
 
     }
 
