@@ -42,7 +42,7 @@
                     </h4>
                     <p class="margin-left" *ngFor="let rt of props?.replyTo">
                         <dsp-link-value [displayValue]="rt" [parentResource]="resource.readResource"
-                            [propIri]="props?.replyTo[0].property" [mode]="'read'"></dsp-link-value>
+                            [propIri]="props?.replyTo[0].property" [mode]="'read'" (referredResourceClicked)="resLinkClicked($event)"></dsp-link-value>
 
                     </p>
                 </div>
@@ -51,14 +51,14 @@
                     <h4 class="subheading-2">{{props?.translation[0].propertyLabel}}</h4>
                     <p class="margin-left" *ngFor="let trans of props?.translation">
                         <dsp-link-value [displayValue]="trans" [parentResource]="resource.readResource"
-                            [propIri]="props?.translation[0].property" [mode]="'read'"></dsp-link-value>
+                            [propIri]="props?.translation[0].property" [mode]="'read'" (referredResourceClicked)="resLinkClicked($event)"></dsp-link-value>
                     </p>
                 </div>
                 <div *ngIf="props?.figure[0]">
                     <h4 class="subheading-2">{{props?.figure[0].propertyLabel}}</h4>
                     <p class="margin-left" *ngFor="let fig of props?.figure">
                         <dsp-link-value [displayValue]="fig" [parentResource]="resource.readResource"
-                            [propIri]="props?.figure[0].property" [mode]="'read'"></dsp-link-value>
+                            [propIri]="props?.figure[0].property" [mode]="'read'" (referredResourceClicked)="resLinkClicked($event)"></dsp-link-value>
 
                     </p>
                 </div>
@@ -86,7 +86,7 @@
                         {{props?.mentionedPerson[0].propertyLabel}}</h4>
                     <p class="margin-left" *ngFor="let mp of props?.mentionedPerson">
                         <dsp-link-value [displayValue]="mp" [parentResource]="resource.readResource"
-                            [propIri]="props?.mentionedPerson[0].property" [mode]="'read'"></dsp-link-value>
+                            [propIri]="props?.mentionedPerson[0].property" [mode]="'read'" (referredResourceClicked)="resLinkClicked($event)"></dsp-link-value>
                     </p>
                 </div>
 
@@ -99,7 +99,7 @@
                     <h4 class="subheading-2">{{props?.original[0].propertyLabel}}</h4>
                     <p class="margin-left" *ngFor="let orig of props?.original">
                         <dsp-link-value [displayValue]="orig" [parentResource]="resource.readResource"
-                            [propIri]="props?.original[0].property" [mode]="'read'"></dsp-link-value>
+                            [propIri]="props?.original[0].property" [mode]="'read'" (referredResourceClicked)="resLinkClicked($event)"></dsp-link-value>
                     </p>
 
                 </div>
@@ -107,7 +107,7 @@
                     <h4 class="subheading-2">{{props?.published[0].propertyLabel}}</h4>
                     <p class="margin-left" *ngFor="let pub of props?.published">
                         <dsp-link-value [displayValue]="pub" [parentResource]="resource.readResource"
-                            [propIri]="props?.published[0].property" [mode]="'read'"></dsp-link-value>
+                            [propIri]="props?.published[0].property" [mode]="'read'" (referredResourceClicked)="resLinkClicked($event)"></dsp-link-value>
                     </p>
 
                 </div>
@@ -131,13 +131,13 @@
                 <p class="names">
                     <span *ngFor="let author of props?.author; let last = last">
                         <dsp-link-value [displayValue]="author" [parentResource]="resource.readResource"
-                            [propIri]="author.property" [mode]="'read'"></dsp-link-value>
+                            [propIri]="author.property" [mode]="'read'" (referredResourceClicked)="resLinkClicked($event)"></dsp-link-value>
                         <span *ngIf="!last"> &amp; </span>
                     </span>
                     to
                     <span *ngFor="let recipient of props?.recipient; let last = last">
                         <dsp-link-value [displayValue]="recipient" [parentResource]="resource.readResource"
-                            [propIri]="recipient.property" [mode]="'read'"></dsp-link-value>
+                            [propIri]="recipient.property" [mode]="'read'" (referredResourceClicked)="resLinkClicked($event)"></dsp-link-value>
                         <span *ngIf="!last"> &amp; </span>
                     </span>
                 </p>
