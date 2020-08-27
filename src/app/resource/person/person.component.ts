@@ -5,15 +5,13 @@ import {
     Constants,
     KnoraApiConnection,
     ReadDateValue,
-    ReadResource,
     ReadTextValue,
     ReadValue,
     ResourceClassAndPropertyDefinitions
 } from '@dasch-swiss/dsp-js';
-import { DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
+import { DspApiConnectionToken, AppInitService } from '@dasch-swiss/dsp-ui';
 import { Subscription } from 'rxjs';
 import { IncomingService } from 'src/app/services/incoming.service';
-import { AppInitService } from '../../app-init.service';
 import { BeolService } from '../../services/beol.service';
 import { BeolCompoundResource, BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
 
@@ -49,20 +47,22 @@ export class PersonComponent extends BeolResource {
     navigationSubscription: Subscription;
     dspConstants = Constants;
 
+    ontologyIri = this._appInitService.config['ontologyIRI'];
+
     propIris: PropIriToNameMapping = {
-        'id': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#beolIDs',
-        'comment': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#comment',
-        'alternative': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasAlternativeName',
-        'birthDate': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasBirthDate',
-        'birthPlace': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasBirthPlace',
-        'deathDate': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasDeathDate',
-        'deathPlace': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasDeathPlace',
-        'dictionary': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasDictionaryEntries',
-        'familyName': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasFamilyName',
-        'givenName': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasGivenName',
-        'title': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#personHasTitle',
-        'IAF': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasIAFIdentifier',
-        'mentioned': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#mentionedIn',
+        'id': this.ontologyIri + '/ontology/0801/beol/v2#beolIDs',
+        'comment': this.ontologyIri + '/ontology/0801/beol/v2#comment',
+        'alternative': this.ontologyIri + '/ontology/0801/beol/v2#hasAlternativeName',
+        'birthDate': this.ontologyIri + '/ontology/0801/beol/v2#hasBirthDate',
+        'birthPlace': this.ontologyIri + '/ontology/0801/beol/v2#hasBirthPlace',
+        'deathDate': this.ontologyIri + '/ontology/0801/beol/v2#hasDeathDate',
+        'deathPlace': this.ontologyIri + '/ontology/0801/beol/v2#hasDeathPlace',
+        'dictionary': this.ontologyIri + '/ontology/0801/beol/v2#hasDictionaryEntries',
+        'familyName': this.ontologyIri + '/ontology/0801/beol/v2#hasFamilyName',
+        'givenName': this.ontologyIri + '/ontology/0801/beol/v2#hasGivenName',
+        'title': this.ontologyIri + '/ontology/0801/beol/v2#personHasTitle',
+        'IAF': this.ontologyIri + '/ontology/0801/beol/v2#hasIAFIdentifier',
+        'mentioned': this.ontologyIri + '/ontology/0801/beol/v2#mentionedIn',
     };
 
     props: PersonProps;
@@ -88,6 +88,7 @@ export class PersonComponent extends BeolResource {
 
         this.props = props;
     }
+
     showIncomingRes(resIri, resType) {
         this._beolService.routeByResourceType(resType, resIri);
     }

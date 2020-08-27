@@ -16,10 +16,10 @@
 
         <div class="main-content">
             <section class="center">
-                <h2 *ngIf="resource.label" class="mat-display-1 margins">{{resource?.label}}</h2>
+                <h2 *ngIf="resource?.readResource.label" class="mat-display-1 margins">{{resource?.readResource.label}}</h2>
                 <p class="mat-subheading-2" *ngIf="props?.alternative[0]">
                     <span *ngFor="let alt of props?.alternative; let last = last">
-                        <read-text-value class="margin-left" [valueObject]="alt" [ontologyInfo]="ontologyInfo"
+                        <read-text-value class="margin-left" [valueObject]="alt" [resource]="resource.readResource"
                             [bindEvents]="false">
                         </read-text-value>
                         <span *ngIf="!last">, </span>
@@ -27,14 +27,14 @@
                 </p>
                 <p mat-line>
                     <span *ngIf="props?.birthDate[0]">
-                        * <dsp-date-value [displayValue]="props?.birthDate[0]">
+                        * <dsp-date-value [displayValue]="props?.birthDate[0]" [mode]="'read'">
                         </dsp-date-value>
                     </span>
 
                     <span *ngIf="props?.birthDate[0] && props?.deathDate[0]"> &ndash; </span>
 
                     <span *ngIf="props?.deathDate[0]">
-                        † <dsp-date-value [displayValue]="props?.deathDate[0]">
+                        † <dsp-date-value [displayValue]="props?.deathDate[0]" [mode]="'read'">
                         </dsp-date-value>
                     </span>
                 </p>
@@ -43,7 +43,7 @@
             <section class="text comment" *ngIf="props?.comment[0]">
                 <span *ngFor="let com of props?.comment">
                     <p>
-                        <read-text-value class="margin-left" [valueObject]="com" [ontologyInfo]="ontologyInfo"
+                        <read-text-value class="margin-left" [valueObject]="com" [resource]="resource.readResource"
                             [bindEvents]="true"></read-text-value>
                     </p>
                 </span>
@@ -51,46 +51,46 @@
             <section class="links">
 
                 <div *ngIf="props?.IAF[0]">
-                    <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.IAF[0].propIri)}}</h4>
-                    <p class="mat-list-item-content" [dspGnd]="props?.IAF[0].strval"></p>
+                    <h4 class="subheading-2">{{props?.IAF[0].propertyLabel}}</h4>
+                    <p class="mat-list-item-content" dspGnd [gnd]="props?.IAF[0].strval"></p>
                 </div>
             </section>
             <div *ngIf="props?.givenName[0]">
-                <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.givenName[0].propIri)}}: </h4>
+                <h4 class="subheading-2">{{props?.givenName[0].propertyLabel}}: </h4>
                 <p *ngFor="let givenName of props?.givenName">
-                    <read-text-value class="margin-left" [valueObject]=givenName [ontologyInfo]="ontologyInfo"
+                    <read-text-value class="margin-left" [valueObject]=givenName [resource]="resource.readResource"
                         [bindEvents]="false">
                     </read-text-value>
                 </p>
             </div>
             <div *ngIf="props?.familyName[0]">
-                <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.familyName[0].propIri)}}: </h4>
+                <h4 class="subheading-2">{{props?.familyName[0].propertyLabel}}: </h4>
                 <p *ngFor="let familyName of props?.familyName">
-                    <read-text-value class="margin-left" [valueObject]=familyName [ontologyInfo]="ontologyInfo"
+                    <read-text-value class="margin-left" [valueObject]=familyName [resource]="resource.readResource"
                         [bindEvents]="false">
                     </read-text-value>
                 </p>
             </div>
             <div *ngIf="props?.birthPlace[0]">
-                <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.birthPlace[0].propIri)}}: </h4>
+                <h4 class="subheading-2">{{props?.birthPlace[0].propertyLabel}}: </h4>
                 <p *ngFor="let bplace of props?.birthPlace">
-                    <read-text-value class="margin-left" [valueObject]=bplace [ontologyInfo]="ontologyInfo"
+                    <read-text-value class="margin-left" [valueObject]=bplace [resource]="resource.readResource"
                         [bindEvents]="false">
                     </read-text-value>
                 </p>
             </div>
             <div *ngIf="props?.deathPlace[0]">
-                <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.deathPlace[0].propIri)}}: </h4>
+                <h4 class="subheading-2">{{props?.deathPlace[0].propertyLabel}}: </h4>
                 <p *ngFor="let dplace of props?.deathPlace">
-                    <read-text-value class="margin-left" [valueObject]=dplace [ontologyInfo]="ontologyInfo"
+                    <read-text-value class="margin-left" [valueObject]=dplace [resource]="resource.readResource"
                         [bindEvents]="false">
                     </read-text-value>
                 </p>
             </div>
             <div *ngIf="props?.title[0]">
-                <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.title[0].propIri)}}: </h4>
+                <h4 class="subheading-2">{{props?.title[0].propertyLabel}}: </h4>
                 <p *ngFor="let title of props?.title">
-                    <read-text-value class="margin-left" [valueObject]=title [ontologyInfo]="ontologyInfo"
+                    <read-text-value class="margin-left" [valueObject]=title [resource]="resource.readResource"
                         [bindEvents]="false">
                     </read-text-value>
                 </p>
@@ -107,11 +107,11 @@
             </section>-->
 
             <section class="links">
-                <div *ngIf="resource?.incomingLinks?.length > 0" class="incoming-link-position">
+                <div *ngIf="resource?.readResource.incomingReferences?.length > 0" class="incoming-link-position">
                     <p>
                         <strong>Referenced In:</strong>
                     </p>
-                    <mat-list *ngFor="let incomingLinkSourceRes of resource.incomingLinks">
+                    <mat-list *ngFor="let incomingLinkSourceRes of resource.readResource.incomingReferences">
                         <mat-list-item>
                             <span class="link"
                                 (click)="showIncomingRes(incomingLinkSourceRes.id, incomingLinkSourceRes.type)">{{incomingLinkSourceRes.label}}</span>
