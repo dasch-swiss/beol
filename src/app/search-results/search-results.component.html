@@ -25,18 +25,12 @@
 
                     <mat-panel-description>
                         {{res?.label}}
-
-                        <!--<mat-icon>{{ontologyInfo?.getLabelForResourceClass(res.type) | lowercase}}</mat-icon>-->
-
-                        <!--<mat-icon *ngIf="step !== i">account_circle</mat-icon>-->
-                        <!--<mat-icon *ngIf="step === i">close</mat-icon>-->
                     </mat-panel-description>
                 </mat-expansion-panel-header>
 
                 <!-- content of the resource -->
                 <!-- this should be implemented from @knora/viewer object -->
                 <div mat-line *ngFor="let prop of res.properties | keyvalue">
-                    <!--<span>{{ontologyInfo?.getLabelForProperty(prop.key)}}</span>-->
                     <ul>
                         <li *ngFor="let val of prop.value | keyvalue" class="without-bullets">
                             <div [ngSwitch]="val.value.type">

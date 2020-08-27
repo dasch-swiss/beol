@@ -318,7 +318,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     /**
      * Shows total number of results returned by a count query.
      *
-     * @param {ApiServiceResult} countQueryResult the response to a count query.
+     * @param countQueryResult the response to a count query.
      */
     private showNumberOfAllResults = (countQueryResult: CountQueryResponse) => {
         this.numberOfAllResults = countQueryResult.numberOfResults;
