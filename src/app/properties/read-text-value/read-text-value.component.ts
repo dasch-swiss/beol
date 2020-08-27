@@ -29,7 +29,7 @@ export class ReadTextValueComponent implements OnChanges {
     @Input()
     set resource(value: ReadResource) {
         this._resource = value;
-    };
+    }
 
     get resource() {
         return this._resource;

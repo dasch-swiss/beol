@@ -8,7 +8,13 @@ import {
     ReadResource,
     ReadResourceSequence
 } from '@dasch-swiss/dsp-js';
-import { AdvancedSearchParams, AdvancedSearchParamsService, AppInitService, DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
+import {
+    AdvancedSearchParams,
+    AdvancedSearchParamsService,
+    AppInitService,
+    DspApiConnectionToken,
+    ValueTypeService
+} from '@dasch-swiss/dsp-ui';
 import { Subscription } from 'rxjs';
 import { BeolService } from '../services/beol.service';
 
@@ -53,7 +59,8 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         private _searchParamsService: AdvancedSearchParamsService,
         private _router: Router,
         public location: Location,
-        private _beol: BeolService) {
+        private _beol: BeolService,
+        public _valueTypeService: ValueTypeService) {
     }
 
     ngOnInit() {

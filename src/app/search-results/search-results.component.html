@@ -32,22 +32,28 @@
                 <!-- this should be implemented from @knora/viewer object -->
                 <div mat-line *ngFor="let prop of res.properties | keyvalue">
                     <ul>
-                        <li *ngFor="let val of prop.value | keyvalue" class="without-bullets">
-                            <div [ngSwitch]="val.value.type">
+                        <li *ngFor="let val of prop.value" class="without-bullets">
+                            <div [ngSwitch]="val.type">
 
-                                <!-- only render math if panel is open: step === i-->
-                                <span *ngSwitchCase="dspConstants.TextValue" [mathJax]="val.value?.strval"
-                                      [renderMath]="step === i" [valueObject]="val.value" [resource]="res"
+                                <span *ngSwitchCase="dspConstants.TextValue">
+                                    <!-- only render math if panel is open: step === i-->
+                                    <span *ngIf="_valueTypeService.getValueTypeOrClass(val) == 'ReadTextValueAsHtml'; else elseBlock" [mathJax]="val.strval"
+                                      [renderMath]="step === i" [valueObject]="val" [resource]="res"
                                       [bindEvents]="false"></span>
+                                    </span>
+                                    <ng-template #elseBlock>
+                                        <!-- simple text -->
+                                        {{val.strval}}
+                                    </ng-template>
 
                                 <span class="bolder">
-                                    <dsp-date-value *ngSwitchCase="dspConstants.DateValue" [displayValue]="val.value" [mode]="'read'">
+                                    <dsp-date-value *ngSwitchCase="dspConstants.DateValue" [displayValue]="val" [mode]="'read'">
                                     </dsp-date-value>
 
-                                    <read-list-value *ngSwitchCase="dspConstants.ListValue" [valueObject]="val.value"
+                                    <read-list-value *ngSwitchCase="dspConstants.ListValue" [valueObject]="val"
                                                      [renderMath]="step === i"></read-list-value>
 
-                                    <span *ngSwitchDefault>{{val.value.strval}}</span>
+                                    <span *ngSwitchDefault>{{val.strval}}</span>
                                 </span>
 
                                 <br>
