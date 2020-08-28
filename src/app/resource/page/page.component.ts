@@ -13,10 +13,9 @@ import {
     ReadValue,
     ResourceClassAndPropertyDefinitions
 } from '@dasch-swiss/dsp-js';
-import { DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
+import { DspApiConnectionToken, AppInitService } from '@dasch-swiss/dsp-ui';
 import { Subscription } from 'rxjs';
 import { IncomingService } from 'src/app/services/incoming.service';
-import { AppInitService } from '../../app-init.service';
 import { BeolService } from '../../services/beol.service';
 import { BeolCompoundResource, BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
 
@@ -46,9 +45,9 @@ export class PageComponent extends BeolResource {
     navigationSubscription: Subscription;
 
     propIris: PropIriToNameMapping = {
-        'pagenum': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#pagenum',
-        'seqnum': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#seqnum',
-        'partOf': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#partOfValue'
+        'pagenum': this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#pagenum',
+        'seqnum': this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#seqnum',
+        'partOf': this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#partOfValue'
     };
 
     props: PageProps;
@@ -104,12 +103,12 @@ export class PageComponent extends BeolResource {
                     this._dspApiConnection.v2.res.getResource(transcriptions.resources[0].id).subscribe(
                         (transcr: ReadResource) => {
 
-                            this.transcriptionBelongsToRegion = transcr.properties[this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#belongsToRegionValue'][0] as ReadLinkValue;
+                            this.transcriptionBelongsToRegion = transcr.properties[this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#belongsToRegionValue'][0] as ReadLinkValue;
 
-                            this.manuscriptEntry = transcr.properties[this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#transcriptionOfValue'][0] as ReadLinkValue;
+                            this.manuscriptEntry = transcr.properties[this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#transcriptionOfValue'][0] as ReadLinkValue;
 
                             this.transcription =
-                                transcr.properties[this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasText'][0] as ReadTextValueAsHtml;
+                                transcr.properties[this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#hasText'][0] as ReadTextValueAsHtml;
 
                             const transcriptionsFormManuscriptEntry = this._beolService.getTranscriptionsForManuscriptEntry(this.manuscriptEntry.linkedResourceIri, 0);
 
