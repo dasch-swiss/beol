@@ -204,6 +204,23 @@ export class MathJaxDirective implements OnChanges {
     }
 
     /**
+     * Gets information about a resource pointed to by a standoff link.
+     *
+     * @param referredResIri Iri of the referred resource.
+     * @private
+     */
+    private getReferredResourceInfo(referredResIri: string) {
+
+        // check if information is available
+        if (this._referredResources[referredResIri] !== undefined) {
+            return this._referredResources[referredResIri].label + ` (${this._referredResources[referredResIri].resourceClassLabel})`;
+        } else {
+            return referredResIri;
+        }
+
+    }
+
+    /**
      * Injects HTML into the DOM and renders math, if necessary.
      *
      * @param html HTML to be injected into the DOM.
@@ -332,8 +349,7 @@ export class MathJaxDirective implements OnChanges {
             const config = new MatSnackBarConfig();
             config.duration = 2500;
 
-            // console.log(this._referredResources[referredResourceIri].label);
-            this._snackBar.open(this._referredResources[referredResourceIri].type + ' ' + this._referredResources[referredResourceIri].label, undefined, config);
+            this._snackBar.open(this.getReferredResourceInfo(referredResourceIri), undefined, config);
 
             // preventDefault (propagation)
             return false;
@@ -347,8 +363,7 @@ export class MathJaxDirective implements OnChanges {
             const config = new MatSnackBarConfig();
             config.duration = 2500;
 
-            // console.log(this._referredResources[referredResourceIri].label);
-            this._snackBar.open(this._referredResources[referredResourceIri].type + ' ' + this._referredResources[referredResourceIri].label, undefined, config);
+            this._snackBar.open(this.getReferredResourceInfo(referredResourceIri), undefined, config);
 
             // preventDefault (propagation)
             return false;

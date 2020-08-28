@@ -46,7 +46,7 @@
 
         <div *ngIf="!isLoading && transcription !== undefined">
             <h3>{{transcriptionBelongsToRegion.linkedResource.label}}</h3>
-            <read-text-value-as-html [valueObject]="transcription" [resource]="resource.readResource" [bindEvents]="true">
+            <read-text-value-as-html [valueObject]="transcription" [resource]="transcriptionResource" [bindEvents]="true">
             </read-text-value-as-html>
             <br>
             <br>

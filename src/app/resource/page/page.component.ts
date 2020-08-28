@@ -52,6 +52,7 @@ export class PageComponent extends BeolResource {
 
     props: PageProps;
 
+    transcriptionResource: ReadResource;
     transcription: ReadTextValueAsHtml;
     transcriptionBelongsToRegion: ReadLinkValue;
     manuscriptEntry: ReadLinkValue;
@@ -106,6 +107,8 @@ export class PageComponent extends BeolResource {
                             this.transcriptionBelongsToRegion = transcr.properties[this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#belongsToRegionValue'][0] as ReadLinkValue;
 
                             this.manuscriptEntry = transcr.properties[this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#transcriptionOfValue'][0] as ReadLinkValue;
+
+                            this.transcriptionResource = transcr;
 
                             this.transcription =
                                 transcr.properties[this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#hasText'][0] as ReadTextValueAsHtml;
