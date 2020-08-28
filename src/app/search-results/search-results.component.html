@@ -37,7 +37,7 @@
 
                                 <span *ngSwitchCase="dspConstants.TextValue">
                                     <!-- only render math if panel is open: step === i-->
-                                    <span *ngIf="_valueTypeService.getValueTypeOrClass(val) == 'ReadTextValueAsHtml'; else elseBlock" [mathJax]="val.strval"
+                                    <span *ngIf="_valueTypeService.getValueTypeOrClass(val) === 'ReadTextValueAsHtml'; else elseBlock" [mathJax]="val.strval"
                                       [renderMath]="step === i" [valueObject]="val" [resource]="res"
                                       [bindEvents]="false"></span>
                                     </span>
@@ -58,8 +58,8 @@
 
                                 <br>
                                 <span class="mat-caption"
-                                    *ngIf="res?.entityInfo.properties[prop.key].label !== 'Text'">
-                                    {{res?.entityInfo.properties[prop.key].label}}
+                                    *ngIf="val.type !== dspConstants.TextValue || _valueTypeService.getValueTypeOrClass(val) !== 'ReadTextValueAsHtml'">
+                                    {{val.propertyLabel}}
                                 </span>
 
                             </div>
