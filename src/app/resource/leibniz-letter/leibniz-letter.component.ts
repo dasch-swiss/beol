@@ -7,17 +7,15 @@ import {
     ReadDateValue,
     ReadLinkValue,
     ReadListValue,
-    ReadResource,
     ReadTextValue,
     ReadTextValueAsString,
     ReadUriValue,
     ReadValue,
     ResourceClassAndPropertyDefinitions
 } from '@dasch-swiss/dsp-js';
-import { DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
+import { DspApiConnectionToken, AppInitService } from '@dasch-swiss/dsp-ui';
 import { Subscription } from 'rxjs';
 import { IncomingService } from 'src/app/services/incoming.service';
-import { AppInitService } from '../../app-init.service';
 import { BeolService } from '../../services/beol.service';
 import { BeolCompoundResource, BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
 
@@ -58,22 +56,24 @@ export class LeibnizLetterComponent extends BeolResource {
     dspConstants = Constants;
     letter;
 
+    ontologyIri = this._appInitService.config['ontologyIRI'];
+
     propIris: PropIriToNameMapping = {
-        'id': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#beolIDs',
-        'date': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#creationDate',
-        'author': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasAuthorValue',
-        'recipient': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasRecipientValue',
-        'subject': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasSubject',
-        'text': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasText',
-        'mentionedPerson': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#mentionsPersonValue',
-        'replyTo': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/leibniz/v2#isReplyToValue',
-        'location': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#location',
-        'title': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#title',
-        'letterID': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/leibniz/v2#letterID',
-        'letterURI': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#letterHasURI',
-        'language': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#letterHasLanguage',
-        'number': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#letterHasNumber',
-        'citation': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/leibniz/v2#citationValue',
+        'id': this.ontologyIri + '/ontology/0801/beol/v2#beolIDs',
+        'date': this.ontologyIri + '/ontology/0801/beol/v2#creationDate',
+        'author': this.ontologyIri + '/ontology/0801/beol/v2#hasAuthorValue',
+        'recipient': this.ontologyIri + '/ontology/0801/beol/v2#hasRecipientValue',
+        'subject': this.ontologyIri + '/ontology/0801/beol/v2#hasSubject',
+        'text': this.ontologyIri + '/ontology/0801/beol/v2#hasText',
+        'mentionedPerson': this.ontologyIri + '/ontology/0801/beol/v2#mentionsPersonValue',
+        'replyTo': this.ontologyIri + '/ontology/0801/leibniz/v2#isReplyToValue',
+        'location': this.ontologyIri + '/ontology/0801/beol/v2#location',
+        'title': this.ontologyIri + '/ontology/0801/beol/v2#title',
+        'letterID': this.ontologyIri + '/ontology/0801/leibniz/v2#letterID',
+        'letterURI': this.ontologyIri + '/ontology/0801/beol/v2#letterHasURI',
+        'language': this.ontologyIri + '/ontology/0801/beol/v2#letterHasLanguage',
+        'number': this.ontologyIri + '/ontology/0801/beol/v2#letterHasNumber',
+        'citation': this.ontologyIri + '/ontology/0801/leibniz/v2#citationValue',
     };
 
     props: LetterProps;
@@ -108,7 +108,7 @@ export class LeibnizLetterComponent extends BeolResource {
         // use a proxy url as described here:
         // https://stackoverflow.com/questions/43871637/no-access-control-allow-origin-header-is-present-on-the-requested-resource-whe
         // const proxyurl = 'https://cors-anywhere.herokuapp.com//';
-        const basePath = this._appInitService.getSettings().leibnizApi + 'select?sort=type+asc&q=id%3A';
+        const basePath = this._appInitService.config['leibnizApi'] + 'select?sort=type+asc&q=id%3A';
         const basePathOR = '+OR+(doc_id%3A';
         const basePathAnd = '+AND+type%3Avariante)&rows=9999&wt=json';
         const apiUrl = basePath + filename + basePathOR + filename + basePathAnd; // site that doesn’t send Access-Control-*
@@ -126,7 +126,7 @@ export class LeibnizLetterComponent extends BeolResource {
 
     private getLeibnizImages(element) {
         const proxyurl = 'https://cors-anywhere.herokuapp.com/';
-        const basePath = this._appInitService.getSettings().leibnizApi + 'select?q=id%3A';
+        const basePath = this._appInitService.config['leibnizApi'] + 'select?q=id%3A';
         const basePathTail = '&rows=9999&wt=json';
 
         const imgs = element.getElementsByTagName('span');
@@ -142,7 +142,7 @@ export class LeibnizLetterComponent extends BeolResource {
                         image.replaceWith(svgElement);
                     });
 
-                console.log(this._appInitService.getSettings().appURL);
+                // console.log(this._appInitService.config['appURL']);
             }
 
         }
