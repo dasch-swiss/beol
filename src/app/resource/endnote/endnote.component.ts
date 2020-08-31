@@ -3,23 +3,21 @@ import { Component, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
     Constants,
-    KnoraApiConnection,
-    ReadResource,
+    KnoraApiConnection, ReadLinkValue,
     ReadTextValue,
     ReadValue,
     ResourceClassAndPropertyDefinitions
 } from '@dasch-swiss/dsp-js';
-import { DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
+import { DspApiConnectionToken, AppInitService } from '@dasch-swiss/dsp-ui';
 import { Subscription } from 'rxjs';
 import { IncomingService } from 'src/app/services/incoming.service';
-import { AppInitService } from '../../app-init.service';
 import { BeolService } from '../../services/beol.service';
 import { BeolCompoundResource, BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
 
 class EndnoteProps implements PropertyValues {
     number: ReadTextValue[] = [];
-    text: ReadValue[] = [];
-    figure: ReadValue[] = [];
+    text: ReadTextValue[] = [];
+    figure: ReadLinkValue[] = [];
 
     [index: string]: ReadValue[];
 }
@@ -41,9 +39,9 @@ export class EndnoteComponent extends BeolResource {
     dspConstants = Constants;
 
     propIris: PropIriToNameMapping = {
-        'number': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#endnoteHasNumber',
-        'text': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasText',
-        'figure': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasFigureValue'
+        'number': this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#endnoteHasNumber',
+        'text': this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#hasText',
+        'figure': this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#hasFigureValue'
     };
 
     props: EndnoteProps;
