@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { IncomingService } from './incoming.service';
 import { DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
 
-fdescribe('IncomingService', () => {
+describe('IncomingService', () => {
     let service: IncomingService;
 
     beforeEach(() => {
