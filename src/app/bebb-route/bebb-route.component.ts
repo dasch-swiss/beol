@@ -1,8 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { KnoraApiConnection, ReadResourceSequence } from '@dasch-swiss/dsp-js';
-import { DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
-import { AppInitService } from '../app-init.service';
+import { DspApiConnectionToken, AppInitService } from '@dasch-swiss/dsp-ui';
 import { BeolService } from '../services/beol.service';
 
 @Component({
@@ -41,7 +40,7 @@ export class BebbRouteComponent implements OnInit {
                             const letterIri: string = resourceSeq.resources[0].id;
 
                             // given the Iri of the letter, display the whole resource
-                            this._beolService.routeByResourceType(this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#letter', letterIri);
+                            this._beolService.routeByResourceType(this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#letter', letterIri);
                         } else {
                             // letter not found
                             this.notFound = true;

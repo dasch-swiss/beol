@@ -1,34 +1,35 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { BebbRouteComponent } from './bebb-route.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientModule } from '@angular/common/http';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { KuiCoreConfig, KuiCoreConfigToken, ReadResource, ReadResourcesSequence, SearchService } from '@knora/core';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { BeolService } from '../services/beol.service';
-import { AppInitService } from '../app-init.service';
+import { AppInitService, DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
+import { ReadResource, ReadResourceSequence, SearchEndpointV2 } from '@dasch-swiss/dsp-js';
 
 describe('BebbRouteComponent', () => {
     let component: BebbRouteComponent;
     let fixture: ComponentFixture<BebbRouteComponent>;
     const lt = '1706-03-17_Hermann_Jacob-Scheuchzer_Johannes';
 
-    let beolService: BeolService;
-    let searchService: SearchService;
-    let appInitService: AppInitService;
-
     beforeEach(async(() => {
 
         const beolServiceSpy = jasmine.createSpyObj('BeolService', ['searchForLetterFromBEBB', 'routeByResourceType']); // see https://angular.io/guide/testing#angular-testbed
-        const searchServiceSpy = jasmine.createSpyObj('SearchService', ['doExtendedSearchReadResourceSequence']);
-        const appInitServiceSpy = jasmine.createSpyObj('AppInitService', ['getSettings']);
+
+        const dspConnectionSpy = {
+            v2: {
+                search: jasmine.createSpyObj('search', ['doExtendedSearch'])
+            }
+        };
+
+        const appInitServiceMock = {
+            config: {
+                ontologyIRI: 'http://0.0.0.0:3333'
+            }
+        };
 
         TestBed.configureTestingModule({
             imports: [
-                HttpClientModule,
-                HttpClientTestingModule,
                 RouterTestingModule
             ],
             declarations: [BebbRouteComponent],
@@ -43,36 +44,37 @@ describe('BebbRouteComponent', () => {
                         })
                     }
                 },
-                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig },
                 { provide: BeolService, useValue: beolServiceSpy },
-                { provide: SearchService, useValue: searchServiceSpy },
-                { provide: AppInitService, useValue: appInitServiceSpy }
+                { provide: DspApiConnectionToken, useValue: dspConnectionSpy },
+                { provide: AppInitService, useValue: appInitServiceMock }
             ]
         })
             .compileComponents();
 
-        beolServiceSpy.searchForLetterFromBEBB.and.returnValue('gravsearchQuery');
-
-        beolService = TestBed.inject(BeolService);
-
-        const mockRes = of(
-            new ReadResourcesSequence(
-                [new ReadResource('letterIri', 'http://0.0.0.0:3333/ontology/0801/beol/v2#letter', 'label', [], [], [], [], {})],
-                1
-            )
-        );
-
-        searchServiceSpy.doExtendedSearchReadResourceSequence.and.returnValue(mockRes);
-
-        searchService = TestBed.inject(SearchService);
-
-        appInitServiceSpy.getSettings.and.returnValue({ ontologyIRI: 'http://0.0.0.0:3333' });
-
-        appInitService = TestBed.inject(AppInitService);
-
     }));
 
     beforeEach(() => {
+
+        const res = new ReadResource();
+        res.type = 'http://0.0.0.0:3333/ontology/0801/beol/v2#letter';
+        res.id = 'letterIri';
+
+        const mockRes = of(
+            new ReadResourceSequence(
+                [res],
+                false
+            )
+        );
+
+        const dspServiceSpy = TestBed.inject(DspApiConnectionToken);
+
+        (dspServiceSpy.v2.search as jasmine.SpyObj<SearchEndpointV2>).doExtendedSearch.and.returnValue(mockRes);
+
+        const beolServiceSpy = TestBed.inject(BeolService);
+
+        (beolServiceSpy as jasmine.SpyObj<BeolService>).searchForLetterFromBEBB.and.returnValue('gravsearchQuery');
+        (beolServiceSpy as jasmine.SpyObj<BeolService>).routeByResourceType.and.stub();
+
         fixture = TestBed.createComponent(BebbRouteComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
@@ -84,12 +86,17 @@ describe('BebbRouteComponent', () => {
 
     it('should perform a query to get the letter\'s actual Iri', () => {
 
-        expect(beolService.searchForLetterFromBEBB).toHaveBeenCalledWith(lt);
+        const beolServiceSpy = TestBed.inject(BeolService);
 
-        expect(searchService.doExtendedSearchReadResourceSequence).toHaveBeenCalledWith('gravsearchQuery');
+        expect(beolServiceSpy.searchForLetterFromBEBB).toHaveBeenCalledWith(lt);
 
-        expect(beolService.routeByResourceType).toHaveBeenCalledWith('http://0.0.0.0:3333/ontology/0801/beol/v2#letter', 'letterIri');
+        expect(beolServiceSpy.routeByResourceType).toHaveBeenCalledWith('http://0.0.0.0:3333/ontology/0801/beol/v2#letter', 'letterIri');
 
-        expect(appInitService.getSettings).toHaveBeenCalledTimes(1);
+        const dspServiceSpy = TestBed.inject(DspApiConnectionToken);
+
+        expect(dspServiceSpy.v2.search.doExtendedSearch).toHaveBeenCalledWith('gravsearchQuery');
+
+        expect(beolServiceSpy.routeByResourceType).toHaveBeenCalledWith('http://0.0.0.0:3333/ontology/0801/beol/v2#letter', 'letterIri' );
+
     });
 });
