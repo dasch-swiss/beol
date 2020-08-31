@@ -5,15 +5,13 @@ import {
     Constants,
     KnoraApiConnection,
     ReadLinkValue,
-    ReadResource,
     ReadTextValue,
     ReadValue,
     ResourceClassAndPropertyDefinitions
 } from '@dasch-swiss/dsp-js';
-import { DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
+import { DspApiConnectionToken, AppInitService } from '@dasch-swiss/dsp-ui';
 import { Subscription } from 'rxjs';
 import { IncomingService } from 'src/app/services/incoming.service';
-import { AppInitService } from '../../app-init.service';
 import { BeolService } from '../../services/beol.service';
 import { BeolCompoundResource, BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
 
@@ -42,11 +40,11 @@ export class PublishedLetterComponent extends BeolResource {
     dspConstants = Constants;
 
     propIris: PropIriToNameMapping = {
-        'id': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#beolIDs',
-        'isPublishedIn': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#isPublishedInValue',
-        'publishedLetterNumber': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#publishedLetterNumber',
-        'startPage': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#publishedLetterStartPage',
-        'endPage': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#publishedLetterEndPage'
+        'id': this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#beolIDs',
+        'isPublishedIn': this._appInitService.config['ontologyIRI'] + '/ontology/0801/biblio/v2#isPublishedInValue',
+        'publishedLetterNumber': this._appInitService.config['ontologyIRI'] + '/ontology/0801/biblio/v2#publishedLetterNumber',
+        'startPage': this._appInitService.config['ontologyIRI'] + '/ontology/0801/biblio/v2#publishedLetterStartPage',
+        'endPage': this._appInitService.config['ontologyIRI'] + '/ontology/0801/biblio/v2#publishedLetterEndPage'
     };
 
     props: PublishedLetterProps;
