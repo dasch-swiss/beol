@@ -4,15 +4,13 @@ import { ActivatedRoute } from '@angular/router';
 import {
     Constants,
     KnoraApiConnection,
-    ReadResource,
     ReadTextValue,
     ReadValue,
     ResourceClassAndPropertyDefinitions
 } from '@dasch-swiss/dsp-js';
-import { DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
+import { DspApiConnectionToken, AppInitService } from '@dasch-swiss/dsp-ui';
 import { Subscription } from 'rxjs';
 import { IncomingService } from 'src/app/services/incoming.service';
-import { AppInitService } from '../../app-init.service';
 import { BeolService } from '../../services/beol.service';
 import { BeolCompoundResource, BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
 
@@ -39,8 +37,8 @@ export class FigureComponent extends BeolResource {
     dspConstants = Constants;
 
     propIris: PropIriToNameMapping = {
-        'id': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#beolIDs',
-        'caption': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasCaption'
+        'id': this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#beolIDs',
+        'caption': this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#hasCaption'
     };
 
     props: FigureProps;

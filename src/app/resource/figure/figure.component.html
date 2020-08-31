@@ -14,12 +14,12 @@
         <div class="main-content">
 
             <section class="title center">
-                <h3 mat-card-subtitle>{{ontologyInfo?.getLabelForResourceClass(resource?.type)}}</h3>
-                <h2>{{resource?.label}}</h2>
+                <h3 mat-card-subtitle>{{resource?.readResource.resourceClassLabel}}</h3>
+                <h2>{{resource?.readResource.label}}</h2>
             </section>
 
             <section *ngIf="props?.caption[0]">
-                <read-text-value [valueObject]="props?.caption[0]" [ontologyInfo]="ontologyInfo" [bindEvents]="true">
+                <read-text-value [valueObject]="props?.caption[0]" [resource]="resource.readResource" [bindEvents]="true">
                 </read-text-value>
             </section>
 
