@@ -12,10 +12,9 @@ import {
     ReadValue,
     ResourceClassAndPropertyDefinitions
 } from '@dasch-swiss/dsp-js';
-import { DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
+import { DspApiConnectionToken, AppInitService } from '@dasch-swiss/dsp-ui';
 import { Subscription } from 'rxjs';
 import { IncomingService } from 'src/app/services/incoming.service';
-import { AppInitService } from '../../app-init.service';
 import { BeolService } from '../../services/beol.service';
 import { BeolCompoundResource, BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
 
@@ -45,9 +44,9 @@ export class ManuscriptEntryComponent extends BeolResource {
     navigationSubscription: Subscription;
 
     propIris: PropIriToNameMapping = {
-        'title': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#title',
-        'seqnum': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#seqnum',
-        'manuscriptEntryOf': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#manuscriptEntryOfValue'
+        'title': this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#title',
+        'seqnum': this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#seqnum',
+        'manuscriptEntryOf': this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#manuscriptEntryOfValue'
     };
 
     props: ManuscriptEntryProps;
