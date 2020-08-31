@@ -5,15 +5,13 @@ import {
     Constants,
     KnoraApiConnection,
     ReadLinkValue,
-    ReadResource,
     ReadTextValue,
     ReadValue,
     ResourceClassAndPropertyDefinitions
 } from '@dasch-swiss/dsp-js';
-import { DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
+import { DspApiConnectionToken, AppInitService } from '@dasch-swiss/dsp-ui';
 import { Subscription } from 'rxjs';
 import { IncomingService } from 'src/app/services/incoming.service';
-import { AppInitService } from '../../app-init.service';
 import { BeolService } from '../../services/beol.service';
 import { BeolCompoundResource, BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
 
@@ -43,12 +41,12 @@ export class PublisherComponent extends BeolResource {
     dspConstants = Constants;
 
     propIris: PropIriToNameMapping = {
-        'id': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#beolIDs',
-        'comment': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#comment',
-        'mentioned': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#mentionedIn',
-        'name': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#hasName',
-        'publisherLocation': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#publisherHasLocation',
-        'publishingPerson': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#publishingPersonValue'
+        'id': this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#beolIDs',
+        'comment': this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#comment',
+        'mentioned': this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#mentionedIn',
+        'name': this._appInitService.config['ontologyIRI'] + '/ontology/0801/biblio/v2#hasName',
+        'publisherLocation': this._appInitService.config['ontologyIRI'] + '/ontology/0801/biblio/v2#publisherHasLocation',
+        'publishingPerson': this._appInitService.config['ontologyIRI'] + '/ontology/0801/biblio/v2#publishingPersonValue'
     };
 
     props: PublisherProps;
