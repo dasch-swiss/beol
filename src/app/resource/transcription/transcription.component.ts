@@ -12,10 +12,9 @@ import {
     ReadValue,
     ResourceClassAndPropertyDefinitions
 } from '@dasch-swiss/dsp-js';
-import { DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
+import { DspApiConnectionToken, AppInitService } from '@dasch-swiss/dsp-ui';
 import { Subscription } from 'rxjs';
 import { IncomingService } from 'src/app/services/incoming.service';
-import { AppInitService } from '../../app-init.service';
 import { BeolService } from '../../services/beol.service';
 import { BeolCompoundResource, BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
 
@@ -47,10 +46,10 @@ export class TranscriptionComponent extends BeolResource {
     otherLayers: ReadResource[] = [];
 
     propIris: PropIriToNameMapping = {
-        'text': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasText',
-        'layer': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#layer',
-        'transcriptionOf': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#transcriptionOfValue',
-        'belongsToRegion': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#belongsToRegionValue'
+        'text': this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#hasText',
+        'layer': this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#layer',
+        'transcriptionOf': this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#transcriptionOfValue',
+        'belongsToRegion': this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#belongsToRegionValue'
 
     };
 
@@ -98,10 +97,6 @@ export class TranscriptionComponent extends BeolResource {
                 }
             }
         );
-    }
-
-    showIncomingRes(resIri, resType) {
-        this._beolService.routeByResourceType(resType, resIri);
     }
 
     goToResource(resType: string, resIri: string) {

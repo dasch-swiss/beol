@@ -15,33 +15,33 @@
 
                 <div *ngIf="props?.layer[0]">
                     <h4 *ngIf="props?.layer[0]" class="subheading-2">
-                        {{ontologyInfo?.getLabelForProperty(props?.layer[0].propIri)}}</h4>
+                        {{props?.layer[0].propertyLabel}}</h4>
                     <p class="margin-left" *ngFor="let lay of props?.layer">
-                        <dsp-int-value [displayValue]="lay"></dsp-int-value>
+                        <dsp-int-value [displayValue]="lay" [mode]="'read'"></dsp-int-value>
                     </p>
                 </div>
 
                 <div *ngIf="props?.transcriptionOf[0]">
-                    <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.transcriptionOf[0].propIri)}}
+                    <h4 class="subheading-2">{{props?.transcriptionOf[0].propertyLabel}}
                     </h4>
                     <p class="margin-left">
                         <mat-list>
                             <mat-list-item *ngFor="let trans of props?.transcriptionOf">
-                                <dsp-link-value [displayValue]="trans" [parentResource]="resource"
-                                    [propIri]="resource.property.id"></dsp-link-value>
+                                <dsp-link-value [displayValue]="trans" [parentResource]="resource.readResource"
+                                    [propIri]="props?.transcriptionOf[0].property" (referredResourceClicked)="resLinkClicked($event)" [mode]="'read'"></dsp-link-value>
                             </mat-list-item>
                         </mat-list>
                     </p>
                 </div>
 
                 <div *ngIf="props?.belongsToRegion[0]">
-                    <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.belongsToRegion[0].propIri)}}
+                    <h4 class="subheading-2">{{props?.belongsToRegion[0].propertyLabel}}
                     </h4>
                     <p class="margin-left">
                         <mat-list>
                             <mat-list-item *ngFor="let reg of props?.belongsToRegion">
-                                <dsp-link-value [displayValue]="reg" [parentResource]="resource"
-                                    [propIri]="resource.property.id"></dsp-link-value>
+                                <dsp-link-value [displayValue]="reg" [parentResource]="resource.readResource"
+                                    [propIri]="reg.property" [mode]="'read'"></dsp-link-value>
                             </mat-list-item>
                         </mat-list>
                     </p>
@@ -66,8 +66,8 @@
         <div class="main-content">
 
             <section *ngIf="props?.text[0]"
-                [ngClass]="{text: true, layer1: (props?.layer[0] && props?.layer[0].integer === 1)}">
-                <read-text-value [valueObject]="props?.text[0]" [bindEvents]="true" [ontologyInfo]="ontologyInfo"
+                [ngClass]="{text: true, layer1: (props?.layer[0] && props?.layer[0].int === 1)}">
+                <read-text-value [valueObject]="props?.text[0]" [bindEvents]="true" [resource]="resource.readResource"
                     [renderFigureRegions]="true"></read-text-value>
             </section>
 
