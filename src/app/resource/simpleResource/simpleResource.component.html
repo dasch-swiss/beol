@@ -14,12 +14,12 @@
         </div>
 
         <div class="main-content">
-            <h3 mat-card-subtitle>{{ontologyInfo?.getLabelForResourceClass(resource?.type)}}</h3>
-            <h2>{{resource?.label}}</h2>
+            <h3 mat-card-subtitle>{{resource?.readResource.resourceClassLabel}}</h3>
+            <h2>{{resource?.readResource.label}}</h2>
 
-            <div mat-line *ngFor="let prop of resource?.properties | keyvalue">
+            <div mat-line *ngFor="let prop of resource?.readResource.properties | keyvalue">
 
-                <div *ngIf="prop.key === DspConstants.StillImageFileValue; else noImage">
+                <div *ngIf="prop.key === dspConstants.StillImageFileValue; else noImage">
                     <!-- resource has images attached directly, display them -->
 
                     <dsp-still-image #OSDViewer
@@ -30,39 +30,35 @@
 
                 <ng-template #noImage>
                     <!-- resource has no images attached directly -->
-                    <span>{{ontologyInfo?.getLabelForProperty(prop.key)}}</span>
+                    <span>{{prop.value[0].propertyLabel}}</span>
                     <ul>
-                        <li *ngFor="let val of prop.value | keyvalue">
-                            <span [ngSwitch]="val.value.getClassName()">
-                                <read-text-value-as-html *ngSwitchCase="DspConstants.TextValueAsHtml"
-                                    [valueObject]="val.value" [ontologyInfo]="ontologyInfo" [bindEvents]="true">
-                                </read-text-value-as-html>
-                                <dsp-text-value-as-string *ngSwitchCase="DspConstants.TextValue"
-                                    [displayValue]="val.value"></dsp-text-value-as-string>
-                                <!-- NO XML VALUE COMPONENT: <dsp-text-value-as-xml *ngSwitchCase="KnoraConstants.ReadTextValueAsXml"
-                                    [displayValue]="val.value"></dsp-text-value-as-xml> -->
-                                <dsp-date-value *ngSwitchCase="DspConstants.DateValue" [displayValue]="val.value">
+                        <li *ngFor="let val of prop.value">
+                            <span [ngSwitch]="val.type">
+                                <read-text-value *ngSwitchCase="dspConstants.TextValue"
+                                    [valueObject]="val" [resource]="resource.readResource" [bindEvents]="true">
+                                </read-text-value>
+                                <dsp-date-value *ngSwitchCase="dspConstants.DateValue" [displayValue]="val" [mode]="'read'">
                                 </dsp-date-value>
-                                <dsp-link-value *ngSwitchCase="DspConstants.LinkValue" [displayValue]="val.value"
-                                    [parentResource]="resource" [propIri]="resource.property.id">
+                                <dsp-link-value *ngSwitchCase="dspConstants.LinkValue" [displayValue]="val"
+                                    [parentResource]="resource.readResource" [propIri]="val.property" [mode]="'read'" (referredResourceClicked)="resLinkClicked($event)">
                                 </dsp-link-value>
-                                <dsp-int-value *ngSwitchCase="DspConstants.IntValue" [displayValue]="val.value">
+                                <dsp-int-value *ngSwitchCase="dspConstants.IntValue" [displayValue]="val" [mode]="'read'">
                                 </dsp-int-value>
-                                <dsp-decimal-value *ngSwitchCase="DspConstants.DecimalValue" [displayValue]="val.value">
+                                <dsp-decimal-value *ngSwitchCase="dspConstants.DecimalValue" [displayValue]="val" [mode]="'read'">
                                 </dsp-decimal-value>
-                                <dsp-color-value *ngSwitchCase="DspConstants.ColorValue" [displayValue]="val.value">
+                                <dsp-color-value *ngSwitchCase="dspConstants.ColorValue" [displayValue]="val" [mode]="'read'">
                                 </dsp-color-value>
-                                <dsp-uri-value *ngSwitchCase="DspConstants.UriValue" [displayValue]="val.value">
+                                <dsp-uri-value *ngSwitchCase="dspConstants.UriValue" [displayValue]="val">
                                 </dsp-uri-value>
-                                <dsp-boolean-value *ngSwitchCase="DspConstants.BooleanValue" [displayValue]="val.value">
+                                <dsp-boolean-value *ngSwitchCase="dspConstants.BooleanValue" [displayValue]="val" [mode]="'read'">
                                 </dsp-boolean-value>
-                                <dsp-interval-value *ngSwitchCase="DspConstants.IntervalValue"
-                                    [displayValue]="val.value"></dsp-interval-value>
-                                <read-list-value *ngSwitchCase="DspConstants.ListValue" [valueObject]="val.value">
+                                <dsp-interval-value *ngSwitchCase="dspConstants.IntervalValue"
+                                    [displayValue]="val" [mode]="'read'"></dsp-interval-value>
+                                <read-list-value *ngSwitchCase="dspConstants.ListValue" [valueObject]="val">
                                 </read-list-value>
                                 <!-- NO VALUE COMPONENT: <dsp-textfile-value *ngSwitchCase="KnoraConstants.TextFileValue"
                                     [displayValue]="val.value"></dsp-textfile-value> -->
-                                <span *ngSwitchDefault="">Not supported {{val.value.getClassName()}}</span>
+                                <span *ngSwitchDefault>Not supported {{val.type}}</span>
                             </span>
                         </li>
                     </ul>
@@ -78,11 +74,11 @@
             <br>
             <br>
 
-            <div *ngIf="resource?.incomingLinks?.length > 0" class="incoming-link-position">
+            <div *ngIf="resource?.readResource.incomingReferences?.length > 0" class="incoming-link-position">
                 <p>
                     <strong>Incoming Links:</strong>
                 </p>
-                <mat-list *ngFor="let incomingLinkSourceRes of resource.incomingLinks">
+                <mat-list *ngFor="let incomingLinkSourceRes of resource.readResource.incomingReferences">
                     <mat-list-item>
                         <span class="link"
                             (click)="showIncomingRes(incomingLinkSourceRes.id, incomingLinkSourceRes.type)">{{incomingLinkSourceRes.label}}</span>
