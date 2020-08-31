@@ -9,10 +9,9 @@ import {
     ReadTextValue,
     ReadLinkValue
 } from '@dasch-swiss/dsp-js';
-import { DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
+import { DspApiConnectionToken, AppInitService } from '@dasch-swiss/dsp-ui';
 import { Subscription } from 'rxjs';
 import { IncomingService } from 'src/app/services/incoming.service';
-import { AppInitService } from '../../app-init.service';
 import { BeolService } from '../../services/beol.service';
 import { BeolCompoundResource, BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
 
@@ -39,11 +38,11 @@ export class CommentComponent extends BeolResource {
     navigationSubscription: Subscription;
     dspConstants = Constants;
 
-    ontologyIri = this._appInitService.getSettings().ontologyIRI;
+    ontologyIri = this._appInitService.config['ontologyIRI'];
 
     propIris: PropIriToNameMapping = {
-        'commentOf': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#entryCommentOfValue',
-        'text': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasText',
+        'commentOf': this.ontologyIri + '/ontology/0801/beol/v2#entryCommentOfValue',
+        'text': this.ontologyIri + '/ontology/0801/beol/v2#hasText',
     };
 
     props: CommentProps;
