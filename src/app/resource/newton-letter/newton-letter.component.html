@@ -15,13 +15,13 @@
 
                 <div *ngIf="props?.replyTo[0]">
                     <h4 class="subheading-2">
-                        {{ontologyInfo?.getLabelForProperty(props?.replyTo[0].propIri)}}
+                        {{props?.replyTo[0].propertyLabel}}
                     </h4>
 
 
                     <mat-list>
                         <mat-list-item *ngFor="let rt of props?.replyTo">
-                            <dsp-link-value [displayValue]="rt"></dsp-link-value>
+                            <dsp-link-value [displayValue]="rt" [propIri]="rt.property" [parentResource]="resource.readResource" (referredResourceClicked)="resLinkClicked($event)" [mode]="'read'"></dsp-link-value>
                         </mat-list-item>
                     </mat-list>
 
@@ -29,34 +29,34 @@
 
 
                 <div *ngIf="props?.facsimiles[0]">
-                    <dsp-uri-value *ngFor="let facs of props?.facsimiles" [displayValue]="facs"></dsp-uri-value>
+                    <dsp-uri-value *ngFor="let facs of props?.facsimiles" [displayValue]="facs" [mode]="'read'"></dsp-uri-value>
                 </div>
                 <div *ngIf="props?.npID[0]">
-                    <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.npID[0].propIri)}}</h4>
+                    <h4 class="subheading-2">{{props?.npID[0].propertyLabel}}</h4>
 
                     <p class="margin-left" appNewtonProject [npID]="props?.npID[0].strval"></p>
                 </div>
 
 
                 <div *ngIf="props?.location[0]">
-                    <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.location[0].propIri)}}</h4>
+                    <h4 class="subheading-2">{{props?.location[0].propertyLabel}}</h4>
                     <p *ngFor="let loc of props?.location" class="margin-left">
-                        <read-text-value [valueObject]="loc" [bindEvents]="false" [ontologyInfo]="ontologyInfo">
+                        <read-text-value [valueObject]="loc" [bindEvents]="false" [resource]="resource.readResource">
                         </read-text-value>
                     </p>
 
                 </div>
 
                 <div *ngIf="props?.language[0]">
-                    <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.language[0].propIri)}}</h4>
+                    <h4 class="subheading-2">{{props?.language[0].propertyLabel}}</h4>
                     <p *ngFor="let lang of props?.language" class="margin-left">
-                        <read-text-value [valueObject]="lang" [bindEvents]="false" [ontologyInfo]="ontologyInfo">
+                        <read-text-value [valueObject]="lang" [bindEvents]="false" [resource]="resource.readResource">
                         </read-text-value>
                     </p>
                 </div>
 
                 <div *ngIf="props?.subject[0]">
-                    <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.subject[0].propIri)}}</h4>
+                    <h4 class="subheading-2">{{props?.subject[0].propertyLabel}}</h4>
 
                     <mat-list>
                         <mat-list-item *ngFor="let subj of props?.subject">
@@ -67,12 +67,12 @@
                 </div>
                 <div *ngIf="props?.mentionedPerson[0]">
                     <h4 class="subheading-2">
-                        {{ontologyInfo?.getLabelForProperty(props?.mentionedPerson[0].propIri)}}</h4>
+                        {{props?.mentionedPerson[0].propertyLabel}}</h4>
 
                     <mat-list>
                         <mat-list-item *ngFor="let mp of props?.mentionedPerson">
-                            <dsp-link-value [displayValue]="mp" [parentResource]="resource"
-                                [propIri]="resource.property.id"></dsp-link-value>
+                            <dsp-link-value [displayValue]="mp" [parentResource]="resource.readResource"
+                                [propIri]="mp.property" (referredResourceClicked)="resLinkClicked($event)" [mode]="'read'"></dsp-link-value>
                         </mat-list-item>
                     </mat-list>
 
@@ -88,25 +88,25 @@
             <section class="title center">
                 <p class="margin-left" *ngFor="let title of props?.title">
                     <b>
-                        <read-text-value [valueObject]="title" [bindEvents]="true" [ontologyInfo]="ontologyInfo">
+                        <read-text-value [valueObject]="title" [bindEvents]="true" [resource]="resource.readResource">
                         </read-text-value>
                     </b>
                 </p>
                 <p class="names">
                     <span *ngFor="let author of props?.author; let last = last">
-                        <dsp-link-value [displayValue]="author" [parentResource]="resource"
-                            [propIri]="resource.property.id"></dsp-link-value>
+                        <dsp-link-value [displayValue]="author" [parentResource]="resource.readResource"
+                            [propIri]="author.property" (referredResourceClicked)="resLinkClicked($event)" [mode]="'read'"></dsp-link-value>
                         <span *ngIf="!last"> &amp; </span>
                     </span>
                     <span *ngFor="let recipient of props?.recipient; let last = last">
                         to
-                        <dsp-link-value [displayValue]="recipient" [parentResource]="resource"
-                            [propIri]="resource.property.id"></dsp-link-value>
+                        <dsp-link-value [displayValue]="recipient" [parentResource]="resource.readResource"
+                            [propIri]="recipient.property" (referredResourceClicked)="resLinkClicked($event)" [mode]="'read'"></dsp-link-value>
                         <span *ngIf="!last"> &amp; </span>
                     </span>
                 </p>
                 <span *ngIf="props?.date[0]">
-                    <dsp-date-value [displayValue]="props?.date[0]"></dsp-date-value>
+                    <dsp-date-value [displayValue]="props?.date[0]" [mode]="'read'"></dsp-date-value>
                 </span>
                 <p>
 
@@ -117,11 +117,11 @@
                 <div [mathJax]="letter" [bindEvents]="false" [renderMath]="true"></div>
             </div>
             <section class="links">
-                <div *ngIf="resource?.incomingLinks?.length > 0" class="incoming-link-position">
+                <div *ngIf="resource?.readResource.incomingReferences?.length > 0" class="incoming-link-position">
                     <p>
                         <strong>Referenced In:</strong>
                     </p>
-                    <mat-list *ngFor="let incomingLinkSourceRes of resource.incomingLinks">
+                    <mat-list *ngFor="let incomingLinkSourceRes of resource.readResource.incomingReferences">
                         <mat-list-item>
                             <span class="link"
                                 (click)="showIncomingRes(incomingLinkSourceRes.id, incomingLinkSourceRes.type)">{{incomingLinkSourceRes.label}}</span>

@@ -7,17 +7,15 @@ import {
     ReadDateValue,
     ReadLinkValue,
     ReadListValue,
-    ReadResource,
     ReadTextValue,
     ReadTextValueAsString,
     ReadUriValue,
     ReadValue,
     ResourceClassAndPropertyDefinitions
 } from '@dasch-swiss/dsp-js';
-import { DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
+import { DspApiConnectionToken, AppInitService } from '@dasch-swiss/dsp-ui';
 import { Subscription } from 'rxjs';
 import { IncomingService } from 'src/app/services/incoming.service';
-import { AppInitService } from '../../app-init.service';
 import { BeolService } from '../../services/beol.service';
 import { BeolCompoundResource, BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
 
@@ -59,20 +57,22 @@ export class NewtonLetterComponent extends BeolResource {
     letter: string;
     test: string;
 
+    ontologyIri = this._appInitService.config['ontologyIRI'];
+
     propIris: PropIriToNameMapping = {
-        'id': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#beolIDs',
-        'date': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#creationDate',
-        'author': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasAuthorValue',
-        'recipient': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasRecipientValue',
-        'facsimiles': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/newton/v2#hasFacsimiles',
-        'subject': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasSubject',
-        'text': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasText',
-        'mentionedPerson': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#mentionsPersonValue',
-        'replyTo': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/newton/v2#isReplyToValue',
-        'location': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#location',
-        'title': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#title',
-        'npID': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/newton/v2#newtonProjectID',
-        'language': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#letterHasLanguage',
+        'id': this.ontologyIri + '/ontology/0801/beol/v2#beolIDs',
+        'date': this.ontologyIri + '/ontology/0801/beol/v2#creationDate',
+        'author': this.ontologyIri + '/ontology/0801/beol/v2#hasAuthorValue',
+        'recipient': this.ontologyIri + '/ontology/0801/beol/v2#hasRecipientValue',
+        'facsimiles': this.ontologyIri + '/ontology/0801/newton/v2#hasFacsimiles',
+        'subject': this.ontologyIri + '/ontology/0801/beol/v2#hasSubject',
+        'text': this.ontologyIri + '/ontology/0801/beol/v2#hasText',
+        'mentionedPerson': this.ontologyIri + '/ontology/0801/beol/v2#mentionsPersonValue',
+        'replyTo': this.ontologyIri + '/ontology/0801/newton/v2#isReplyToValue',
+        'location': this.ontologyIri + '/ontology/0801/beol/v2#location',
+        'title': this.ontologyIri + '/ontology/0801/beol/v2#title',
+        'npID': this.ontologyIri + '/ontology/0801/newton/v2#newtonProjectID',
+        'language': this.ontologyIri + '/ontology/0801/beol/v2#letterHasLanguage',
     };
 
     props: LetterProps;
