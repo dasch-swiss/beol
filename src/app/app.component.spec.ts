@@ -2,8 +2,7 @@ import { async, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material-module';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ReadListValue } from '@dasch-swiss/dsp-js';
+import { Component } from '@angular/core';
 
 /**
  * Test host component to simulate dsp-search-panel component.

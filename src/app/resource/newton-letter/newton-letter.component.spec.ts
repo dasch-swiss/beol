@@ -12,7 +12,7 @@ import { MathJaxDirective } from '../../directives/mathjax.directive';
 import { ReadTextValueComponent } from '../../properties/read-text-value/read-text-value.component';
 import { NewtonProjectDirective } from '../../directives/newton-project.directive';
 import { SanitizeHtmlPipe } from '../../pipes/sanitize-html.pipe';
-import { AppInitService, DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
+import { AppInitService, DspActionModule, DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
 import { ReadResource, ReadResourceSequence, ReadTextValueAsString, ResourcesEndpointV2, SearchEndpointV2 } from '@dasch-swiss/dsp-js';
 
 describe('NewtonLetterComponent', () => {
@@ -41,7 +41,8 @@ describe('NewtonLetterComponent', () => {
                 MaterialModule,
                 RouterTestingModule,
                 HttpClientModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                DspActionModule
             ],
             declarations: [
                 NewtonLetterComponent,
