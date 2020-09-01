@@ -9,7 +9,6 @@ import { SimpleResourceComponent } from './simpleResource.component';
 import { ReadTextValueAsHtmlComponent } from '../../properties/read-text-value-as-html/read-text-value-as-html.component';
 import { ReadListValueComponent } from '../../properties/read-list-value/read-list-value.component';
 import { MathJaxDirective } from '../../directives/mathjax.directive';
-import { AppInitService } from '../../app-init.service';
 import { DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
 import { ReadResource, ReadResourceSequence, ResourcesEndpointV2, SearchEndpointV2 } from '@dasch-swiss/dsp-js';
 
@@ -24,12 +23,6 @@ describe('SimpleResourceComponent', () => {
             v2: {
                 res: jasmine.createSpyObj('res', ['getResource']),
                 search: jasmine.createSpyObj('search', ['doExtendedSearch'])
-            }
-        };
-
-        const appInitServiceMock = {
-            config: {
-                ontologyIRI: 'http://0.0.0.0:3333'
             }
         };
 
@@ -57,7 +50,6 @@ describe('SimpleResourceComponent', () => {
                         })
                     }
                 },
-                { provide: AppInitService, useValue: appInitServiceMock },
                 { provide: DspApiConnectionToken, useValue: dspConnectionSpy }
             ]
         })
