@@ -1,34 +1,35 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-
 import { LeooRouteComponent } from './leoo-route.component';
 import { of } from 'rxjs';
-import { KuiCoreConfig, ReadResource, ReadResourcesSequence, SearchService } from '@knora/core';
 import { BeolService } from '../services/beol.service';
-import { AppInitService } from '../app-init.service';
+import { AppInitService, DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
+import { ReadResource, ReadResourceSequence, SearchEndpointV2 } from '@dasch-swiss/dsp-js';
 
 describe('LeooRouteComponent', () => {
     let component: LeooRouteComponent;
     let fixture: ComponentFixture<LeooRouteComponent>;
     const rn = '721';
 
-    let beolService: BeolService;
-    let searchService: SearchService;
-    let appInitService: AppInitService;
-
     beforeEach(async(() => {
 
         const beolServiceSpy = jasmine.createSpyObj('BeolService', ['searchForLetterFromLEOO', 'routeByResourceType']); // see https://angular.io/guide/testing#angular-testbed
-        const searchServiceSpy = jasmine.createSpyObj('SearchService', ['doExtendedSearchReadResourceSequence']);
-        const appInitServiceSpy = jasmine.createSpyObj('AppInitService', ['getSettings']);
+
+        const dspConnectionSpy = {
+            v2: {
+                search: jasmine.createSpyObj('search', ['doExtendedSearch'])
+            }
+        };
+
+        const appInitServiceMock = {
+            config: {
+                ontologyIRI: 'http://0.0.0.0:3333'
+            }
+        };
 
         TestBed.configureTestingModule({
             imports: [
-                HttpClientModule,
-                HttpClientTestingModule,
                 RouterTestingModule
             ],
             declarations: [LeooRouteComponent],
@@ -43,35 +44,36 @@ describe('LeooRouteComponent', () => {
                         })
                     }
                 },
-                { provide: 'config', useValue: KuiCoreConfig },
                 { provide: BeolService, useValue: beolServiceSpy },
-                { provide: SearchService, useValue: searchServiceSpy },
-                { provide: AppInitService, useValue: appInitServiceSpy }
+                { provide: AppInitService, useValue: appInitServiceMock },
+                { provide: DspApiConnectionToken, useValue: dspConnectionSpy }
             ]
         })
             .compileComponents();
 
-        beolServiceSpy.searchForLetterFromLEOO.and.returnValue('gravsearchQuery');
-
-        beolService = TestBed.inject(BeolService);
-
-        const mockRes = of(
-            new ReadResourcesSequence(
-                [new ReadResource('letterIri', 'http://0.0.0.0:3333/ontology/0801/beol/v2#letter', 'label', [], [], [], [], {})],
-                1
-            )
-        );
-
-        searchServiceSpy.doExtendedSearchReadResourceSequence.and.returnValue(mockRes);
-
-        searchService = TestBed.inject(SearchService);
-
-        appInitServiceSpy.getSettings.and.returnValue({ ontologyIRI: 'http://0.0.0.0:3333' });
-
-        appInitService = TestBed.inject(AppInitService);
     }));
 
     beforeEach(() => {
+
+        const beolServiceSpy = TestBed.inject(BeolService);
+
+        (beolServiceSpy as jasmine.SpyObj<BeolService>).searchForLetterFromLEOO.and.returnValue('gravsearchQuery');
+
+        const res = new ReadResource();
+        res.id = 'letterIri';
+        res.type = 'http://0.0.0.0:3333/ontology/0801/beol/v2#letter';
+        res.label = 'label';
+
+        const mockRes = of(
+            new ReadResourceSequence(
+                [res],
+            )
+        );
+
+        const dspConnectionSpy = TestBed.inject(DspApiConnectionToken);
+
+        (dspConnectionSpy.v2.search as jasmine.SpyObj<SearchEndpointV2>).doExtendedSearch.and.returnValue(mockRes);
+
         fixture = TestBed.createComponent(LeooRouteComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
@@ -83,12 +85,15 @@ describe('LeooRouteComponent', () => {
 
     it('should perform a query to get the letter\'s actual Iri', () => {
 
-        expect(beolService.searchForLetterFromLEOO).toHaveBeenCalledWith(rn);
+        const beolServiceSpy = TestBed.inject(BeolService);
 
-        expect(searchService.doExtendedSearchReadResourceSequence).toHaveBeenCalledWith('gravsearchQuery');
+        expect(beolServiceSpy.searchForLetterFromLEOO).toHaveBeenCalledWith(rn);
 
-        expect(beolService.routeByResourceType).toHaveBeenCalledWith('http://0.0.0.0:3333/ontology/0801/beol/v2#letter', 'letterIri');
+        const dspConnectionSpy = TestBed.inject(DspApiConnectionToken);
 
-        expect(appInitService.getSettings).toHaveBeenCalledTimes(1);
+        expect(dspConnectionSpy.v2.search.doExtendedSearch).toHaveBeenCalledWith('gravsearchQuery');
+
+        expect(beolServiceSpy.routeByResourceType).toHaveBeenCalledWith('http://0.0.0.0:3333/ontology/0801/beol/v2#letter', 'letterIri');
+
     });
 });
