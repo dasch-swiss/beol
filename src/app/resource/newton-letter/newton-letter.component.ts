@@ -13,11 +13,12 @@ import {
     ReadValue,
     ResourceClassAndPropertyDefinitions
 } from '@dasch-swiss/dsp-js';
-import { DspApiConnectionToken, AppInitService } from '@dasch-swiss/dsp-ui';
+import { AppInitService, DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
 import { Subscription } from 'rxjs';
 import { IncomingService } from 'src/app/services/incoming.service';
 import { BeolService } from '../../services/beol.service';
 import { BeolCompoundResource, BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
+import { HttpClient } from '@angular/common/http';
 
 
 class LetterProps implements PropertyValues {
@@ -83,7 +84,8 @@ export class NewtonLetterComponent extends BeolResource {
         protected _incomingService: IncomingService,
         public location: Location,
         protected _beolService: BeolService,
-        private _appInitService: AppInitService
+        private _appInitService: AppInitService,
+        private _http: HttpClient
     ) {
 
         super(_dspApiConnection, _route, _incomingService, _beolService);
@@ -110,13 +112,13 @@ export class NewtonLetterComponent extends BeolResource {
 
         const url = basePath + filename; // site that doesn’t send Access-Control-*
 
-        fetch(proxyurl + url) // https://cors-anywhere.herokuapp.com/https://example.com
-            .then(response => response.text())
-            .then(contents => {
-                this.getNewtonLetterBody(contents);
-                this.isLoadingText = false;
-            })
-            .catch(() => console.log('Can’t access ' + url + ' response. Blocked by browser?'));
+        this._http.get(proxyurl + url) // https://cors-anywhere.herokuapp.com/https://example.com
+            // .then(response => response.text())
+            .subscribe(contents => {
+                    this.getNewtonLetterBody(contents);
+                    this.isLoadingText = false;
+                }, err => console.log('Can’t access ' + url + ' response. Blocked by browser?')
+            );
     }
 
     private getNewtonLetterBody(contents) {
@@ -134,6 +136,7 @@ export class NewtonLetterComponent extends BeolResource {
             }
         }
     }
+
     private imageSrcAttribute(element) {
         const imgs = element.getElementsByTagName('img');
         for (let imgIt = 0; imgIt < imgs.length; imgIt++) {
@@ -145,6 +148,7 @@ export class NewtonLetterComponent extends BeolResource {
         }
         return element;
     }
+
     showIncomingRes(resIri, resType) {
         this._beolService.routeByResourceType(resType, resIri);
     }
