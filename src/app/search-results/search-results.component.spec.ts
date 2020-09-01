@@ -3,45 +3,44 @@ import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-
+import { BehaviorSubject, of } from 'rxjs';
 import { SearchResultsComponent } from './search-results.component';
 import { MathJaxDirective } from '../directives/mathjax.directive';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { ReadListValueComponent } from '../properties/read-list-value/read-list-value.component';
-import { AppInitService } from '../app-init.service';
+import { AdvancedSearchParams, AdvancedSearchParamsService, AppInitService, DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
+import { CountQueryResponse, ReadResourceSequence, SearchEndpointV2 } from '@dasch-swiss/dsp-js';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-/*
 describe('SearchResultsComponent', () => {
     let component: SearchResultsComponent;
     let fixture: ComponentFixture<SearchResultsComponent>;
 
-    let appInitService: AppInitService;
-
     const mode = 'extended';
     const q = 'test';
 
-    let mockSearchParamService;
-    let searchServiceSpy: jasmine.SpyObj<SearchService>; // see https://angular.io/guide/testing#angular-testbed
-
     beforeEach(async(() => {
+        const dspConnectionSpy = {
+            v2: {
+                search: jasmine.createSpyObj('search', ['doExtendedSearch', 'doExtendedSearchCountQuery'])
+            }
+        };
 
-        mockSearchParamService = new MockSearchParamsService();
-        const spySearchService =
-            jasmine.createSpyObj('SearchService', ['doExtendedSearchCountQueryCountQueryResult', 'doExtendedSearchReadResourceSequence']);
+        const appInitServiceMock = {
+            config: {
+                ontologyIRI: 'http://0.0.0.0:3333'
+            }
+        };
 
-        const appInitServiceSpy = jasmine.createSpyObj('AppInitService', ['getSettings']);
+        const mockSearchParamService = new MockSearchParamsService();
 
         TestBed.configureTestingModule({
             imports: [
-                KuiActionModule,
-                KuiViewerModule,
                 RouterTestingModule,
-                HttpClientModule,
-                HttpClientTestingModule,
                 MatIconModule,
-                MatExpansionModule
+                MatExpansionModule,
+                BrowserAnimationsModule
             ],
             declarations: [
                 SearchResultsComponent,
@@ -63,51 +62,39 @@ describe('SearchResultsComponent', () => {
                         })
                     }
                 },
-                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig },
-                { provide: SearchParamsService, useValue: mockSearchParamService },
-                { provide: SearchService, useValue: spySearchService },
-                { provide: AppInitService, useValue: appInitServiceSpy }
+                { provide: AdvancedSearchParamsService, useValue: mockSearchParamService },
+                { provide: AppInitService, useValue: appInitServiceMock },
+                { provide: DspApiConnectionToken, useValue: dspConnectionSpy }
             ]
         })
             .compileComponents();
 
-        searchServiceSpy = TestBed.inject(SearchService);
+    }));
 
-        searchServiceSpy.doExtendedSearchCountQueryCountQueryResult.and.callFake((gravsearch: string) => {
+    beforeEach(() => {
 
-            const countQueryRes = new CountQueryResult(197);
+        const dspServiceSpy = TestBed.inject(DspApiConnectionToken);
 
-            return of(
-                countQueryRes
-            );
-        }
+        (dspServiceSpy.v2.search as jasmine.SpyObj<SearchEndpointV2>).doExtendedSearchCountQuery.and.callFake((gravsearch: string) => {
+
+                const countQueryRes = new CountQueryResponse();
+                countQueryRes.numberOfResults = 0;
+
+                return of(
+                    countQueryRes
+                );
+            }
         );
 
-        searchServiceSpy.doExtendedSearchReadResourceSequence.and.callFake((gravsearch: string) => {
+        (dspServiceSpy.v2.search as jasmine.SpyObj<SearchEndpointV2>).doExtendedSearch.and.callFake((gravsearch: string) => {
 
-            const letters = require('../test-data/search-results/search-response-letters_expanded.json'); // mock response
-
-            const lettersSeq = ConvertJSONLD.createReadResourcesSequenceFromJsonLD(letters);
-
-            const resClasses: ResourceClasses = require('../test-data/search-results/ontology-info-resource-classes.json');
-            const properties: Properties = require('../test-data/search-results/ontology-info-properties.json');
-
-            const ontoInfo = new OntologyInformation({}, resClasses, properties);
-
-            lettersSeq.ontologyInformation.updateOntologyInformation(ontoInfo);
+            const lettersSeq = new ReadResourceSequence([]);
 
             return of(
                 lettersSeq
             );
         });
 
-        appInitServiceSpy.getSettings.and.returnValue({ ontologyIRI: 'http://0.0.0.0:3333', pagingLimit: 25 });
-
-        appInitService = TestBed.inject(AppInitService);
-
-    }));
-
-    beforeEach(() => {
         fixture = TestBed.createComponent(SearchResultsComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
@@ -115,25 +102,27 @@ describe('SearchResultsComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
-
-        expect(appInitService.getSettings).toHaveBeenCalled();
     });
 
     it('should perform a count query', () => {
-        expect(searchServiceSpy.doExtendedSearchCountQueryCountQueryResult).toHaveBeenCalledTimes(1);
+        const dspServiceSpy = TestBed.inject(DspApiConnectionToken);
 
-        expect(searchServiceSpy.doExtendedSearchCountQueryCountQueryResult).toHaveBeenCalledWith('testquery0');
+        expect(dspServiceSpy.v2.search.doExtendedSearchCountQuery).toHaveBeenCalledTimes(1);
 
-        expect(component.numberOfAllResults).toEqual(197);
+        expect(dspServiceSpy.v2.search.doExtendedSearchCountQuery).toHaveBeenCalledWith('testquery0');
+
+        expect(component.numberOfAllResults).toEqual(0);
 
     });
 
     it('should perform a gravsearch query', () => {
-        expect(searchServiceSpy.doExtendedSearchReadResourceSequence).toHaveBeenCalledTimes(1);
+        const dspServiceSpy = TestBed.inject(DspApiConnectionToken);
 
-        expect(searchServiceSpy.doExtendedSearchReadResourceSequence).toHaveBeenCalledWith('testquery0');
+        expect(dspServiceSpy.v2.search.doExtendedSearch).toHaveBeenCalledTimes(1);
 
-        expect(component.result.length).toEqual(25);
+        expect(dspServiceSpy.v2.search.doExtendedSearch).toHaveBeenCalledWith('testquery0');
+
+        expect(component.result.length).toEqual(0);
 
     });
 
@@ -146,17 +135,17 @@ class MockSearchParamsService {
     private _currentSearchParams: BehaviorSubject<any>;
 
     constructor() {
-        this._currentSearchParams = new BehaviorSubject<ExtendedSearchParams>(new ExtendedSearchParams((offset: number) => 'testquery' + offset));
+        this._currentSearchParams = new BehaviorSubject<AdvancedSearchParams>(new AdvancedSearchParams((offset: number) => 'testquery' + offset));
     }
 
-    changeSearchParamsMsg(searchParams: ExtendedSearchParams): void {
+    changeSearchParamsMsg(searchParams: AdvancedSearchParams): void {
         this._currentSearchParams.next(searchParams);
     }
 
-    getSearchParams(): ExtendedSearchParams {
+    getSearchParams(): AdvancedSearchParams {
         return this._currentSearchParams.getValue();
     }
 
 
 
-}*/
+}
