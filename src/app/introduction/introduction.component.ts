@@ -6,8 +6,7 @@ import {
     Constants,
     KnoraApiConnection,
     ReadResource,
-    ReadResourceSequence,
-    ReadValue
+    ReadResourceSequence, ReadTextValue
 } from '@dasch-swiss/dsp-js';
 import { AppInitService, DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
 import { Subscription } from 'rxjs';
@@ -16,8 +15,8 @@ import { BeolService } from '../services/beol.service';
 declare let require: any;
 
 export interface IntroProps {
-    'title': ReadValue[];
-    'text': ReadValue[];
+    'title': ReadTextValue[];
+    'text': ReadTextValue[];
 }
 
 export interface Introduction {
@@ -67,7 +66,8 @@ export class IntroductionComponent implements OnInit, OnDestroy {
         private _beol: BeolService,
         private _appInitService: AppInitService,
         public location: Location
-    ) { }
+    ) {
+    }
 
     ngOnInit() {
 
