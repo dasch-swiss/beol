@@ -1,22 +1,19 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { KuiSearchModule } from '@knora/search';
 import { MaterialModule } from './material-module';
-import { KuiCoreConfig, KuiCoreConfigToken } from '@knora/core';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        KuiSearchModule,
         MaterialModule,
         RouterTestingModule
       ],
       declarations: [
         AppComponent
       ],
-      providers: [{ provide: KuiCoreConfigToken, useValue: KuiCoreConfig }]
+      providers: []
     }).compileComponents();
   }));
   it('should create the app', async(() => {
