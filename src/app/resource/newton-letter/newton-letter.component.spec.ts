@@ -15,7 +15,7 @@ import { SanitizeHtmlPipe } from '../../pipes/sanitize-html.pipe';
 import { AppInitService, DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
 import { ReadResource, ReadResourceSequence, ReadTextValueAsString, ResourcesEndpointV2, SearchEndpointV2 } from '@dasch-swiss/dsp-js';
 
-fdescribe('NewtonLetterComponent', () => {
+describe('NewtonLetterComponent', () => {
     let component: NewtonLetterComponent;
     let fixture: ComponentFixture<NewtonLetterComponent>;
 
