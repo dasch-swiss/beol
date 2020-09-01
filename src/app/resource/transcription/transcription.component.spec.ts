@@ -8,24 +8,31 @@ import { MathJaxDirective } from '../../directives/mathjax.directive';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AppInitService } from '../../app-init.service';
+import { AppInitService, DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
+import { ReadResource, ReadResourceSequence, ResourcesEndpointV2, SearchEndpointV2 } from '@dasch-swiss/dsp-js';
 
-/*
 describe('TranscriptionComponent', () => {
     let component: TranscriptionComponent;
     let fixture: ComponentFixture<TranscriptionComponent>;
 
-    let appInitService: AppInitService;
-
     const id = 'http://rdfh.ch/0801/7ZvL2A5PQ9C4eAmr-n26gw';
 
     beforeEach(async(() => {
-        const appInitServiceSpy = jasmine.createSpyObj('AppInitService', ['getSettings']);
+        const dspConnectionSpy = {
+            v2: {
+                res: jasmine.createSpyObj('res', ['getResource']),
+                search: jasmine.createSpyObj('search', ['doExtendedSearch'])
+            }
+        };
+
+        const appInitServiceMock = {
+            config: {
+                ontologyIRI: 'http://0.0.0.0:3333'
+            }
+        };
 
         TestBed.configureTestingModule({
             imports: [
-                KuiActionModule,
-                KuiViewerModule,
                 MaterialModule,
                 RouterTestingModule
             ],
@@ -36,7 +43,6 @@ describe('TranscriptionComponent', () => {
                 ReadTextValueComponent
             ],
             providers: [
-                OntologyCacheService,
                 {
                     provide: ActivatedRoute,
                     useValue: {
@@ -47,18 +53,21 @@ describe('TranscriptionComponent', () => {
                         })
                     }
                 },
-                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig },
-                { provide: AppInitService, useValue: appInitServiceSpy }
+                { provide: AppInitService, useValue: appInitServiceMock },
+                { provide: DspApiConnectionToken, useValue: dspConnectionSpy }
             ]
         })
             .compileComponents();
 
-        appInitServiceSpy.getSettings.and.returnValue({ ontologyIRI: 'http://0.0.0.0:3333' });
 
-        appInitService = TestBed.inject(AppInitService);
     }));
 
     beforeEach(() => {
+        const dspServiceSpy = TestBed.inject(DspApiConnectionToken);
+
+        (dspServiceSpy.v2.res as jasmine.SpyObj<ResourcesEndpointV2>).getResource.and.returnValue(of(new ReadResource()));
+        (dspServiceSpy.v2.search as jasmine.SpyObj<SearchEndpointV2>).doExtendedSearch.and.returnValue(of(new ReadResourceSequence([])));
+
         fixture = TestBed.createComponent(TranscriptionComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
@@ -67,6 +76,5 @@ describe('TranscriptionComponent', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
 
-        expect(appInitService.getSettings).toHaveBeenCalled();
     });
-});*/
+});
