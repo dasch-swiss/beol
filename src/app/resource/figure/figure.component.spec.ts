@@ -3,17 +3,13 @@ import { MaterialModule } from '../../material-module';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { Location } from '@angular/common';
-
-import { KuiActionModule } from '@knora/action';
 import { FigureComponent } from './figure.component';
 import { ReadTextValueAsHtmlComponent } from '../../properties/read-text-value-as-html/read-text-value-as-html.component';
-import { KuiViewerModule } from '@knora/viewer';
 import { MathJaxDirective } from '../../directives/mathjax.directive';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReadTextValueComponent } from '../../properties/read-text-value/read-text-value.component';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { KuiCoreConfig, KuiCoreConfigToken } from '@knora/core';
-import { AppInitService } from '../../app-init.service';
+import { AppInitService, DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
+import { ReadResource, ReadResourceSequence, ResourcesEndpointV2, SearchEndpointV2 } from '@dasch-swiss/dsp-js';
 
 describe('FigureComponent', () => {
     let component: FigureComponent;
@@ -22,16 +18,33 @@ describe('FigureComponent', () => {
         back: jasmine.createSpy('back')
     };
 
-    let appInitService: AppInitService;
 
     const id = 'http://rdfh.ch/0801/mmZSMsgqQH6XwE7bI30DJw';
 
     beforeEach(async(() => {
-        const appInitServiceSpy = jasmine.createSpyObj('AppInitService', ['getSettings']);
+        const dspConnectionSpy = {
+            v2: {
+                res: jasmine.createSpyObj('res', ['getResource']),
+                search: jasmine.createSpyObj('search', ['doExtendedSearch'])
+            }
+        };
+
+        const appInitServiceMock = {
+            config: {
+                ontologyIRI: 'http://0.0.0.0:3333'
+            }
+        };
 
         TestBed.configureTestingModule({
-            imports: [KuiActionModule, KuiViewerModule, MaterialModule, RouterTestingModule, HttpClientTestingModule],
-            declarations: [FigureComponent, ReadTextValueAsHtmlComponent, MathJaxDirective, ReadTextValueComponent],
+            imports: [
+                MaterialModule,
+                RouterTestingModule],
+            declarations: [
+                FigureComponent,
+                ReadTextValueAsHtmlComponent,
+                MathJaxDirective,
+                ReadTextValueComponent
+            ],
             providers: [
                 {
                     provide: ActivatedRoute,
@@ -44,18 +57,20 @@ describe('FigureComponent', () => {
                     }
                 },
                 { provide: Location, useValue: locationStub },
-                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig },
-                { provide: AppInitService, useValue: appInitServiceSpy }
+                { provide: AppInitService, useValue: appInitServiceMock },
+                { provide: DspApiConnectionToken, useValue: dspConnectionSpy }
             ]
         })
             .compileComponents();
 
-        appInitServiceSpy.getSettings.and.returnValue({ ontologyIRI: 'http://0.0.0.0:3333' });
-
-        appInitService = TestBed.inject(AppInitService);
     }));
 
     beforeEach(() => {
+        const dspServiceSpy = TestBed.inject(DspApiConnectionToken);
+
+        (dspServiceSpy.v2.res as jasmine.SpyObj<ResourcesEndpointV2>).getResource.and.returnValue(of(new ReadResource()));
+        (dspServiceSpy.v2.search as jasmine.SpyObj<SearchEndpointV2>).doExtendedSearch.and.returnValue(of(new ReadResourceSequence([])));
+
         fixture = TestBed.createComponent(FigureComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
@@ -63,7 +78,5 @@ describe('FigureComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
-
-        expect(appInitService.getSettings).toHaveBeenCalled();
     });
 });
