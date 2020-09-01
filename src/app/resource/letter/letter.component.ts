@@ -12,11 +12,11 @@ import {
     ReadValue,
     ResourceClassAndPropertyDefinitions
 } from '@dasch-swiss/dsp-js';
-import { DspApiConnectionToken, AppInitService } from '@dasch-swiss/dsp-ui';
+import { AppInitService, DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
 import { Subscription } from 'rxjs';
 import { IncomingService } from 'src/app/services/incoming.service';
 import { BeolService } from '../../services/beol.service';
-import { BeolCompoundResource, PropertyValues, PropIriToNameMapping, BeolResource } from '../beol-resource';
+import { BeolCompoundResource, BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
 
 class LetterProps implements PropertyValues {
     id: ReadTextValue[] = [];
@@ -102,15 +102,11 @@ export class LetterComponent extends BeolResource {
 
     initProps() {
 
-        // request subject index so it is cached
-        // this._dspApiConnection.v2.list.getList('http://rdfh.ch/lists/0801/subject_index').subscribe((list: ListNodeV2) => {
+        const props = new LetterProps();
 
-            const props = new LetterProps();
+        this.mapper(props);
 
-            this.mapper(props);
-
-            this.props = props;
-        // });
+        this.props = props;
 
     }
 
