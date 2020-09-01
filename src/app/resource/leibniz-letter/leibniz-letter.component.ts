@@ -18,6 +18,7 @@ import { Subscription } from 'rxjs';
 import { IncomingService } from 'src/app/services/incoming.service';
 import { BeolService } from '../../services/beol.service';
 import { BeolCompoundResource, BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
+import { HttpClient } from '@angular/common/http';
 
 class LetterProps implements PropertyValues {
     id: ReadTextValue[] = [];
@@ -84,7 +85,8 @@ export class LeibnizLetterComponent extends BeolResource {
         protected _incomingService: IncomingService,
         public location: Location,
         protected _beolService: BeolService,
-        private _appInitService: AppInitService
+        private _appInitService: AppInitService,
+        private _http: HttpClient
     ) {
 
         super(_dspApiConnection, _route, _incomingService, _beolService);
@@ -113,14 +115,15 @@ export class LeibnizLetterComponent extends BeolResource {
         const basePathAnd = '+AND+type%3Avariante)&rows=9999&wt=json';
         const apiUrl = basePath + filename + basePathOR + filename + basePathAnd; // site that doesn’t send Access-Control-*
 
-        fetch(apiUrl) // could be proxyurl + apiURL as https://cors-anywhere.herokuapp.com/https://example.com
-            .then(response => response.json())
-            .then(contents => {
+        this._http.get(apiUrl) // could be proxyurl + apiURL as https://cors-anywhere.herokuapp.com/https://example.com
+            //.then(response => response.json())
+            .subscribe(contents => {
 
                 this.getLeibnizLetterBody(contents);
                 this.isLoadingText = false;
-            })
-            .catch(e => console.log('Can’t access ' + apiUrl + ' response. Blocked by browser?', e));
+            },
+                err => console.log('Can’t access ' + apiUrl + ' response. Blocked by browser?', err)
+            );
     }
 
 
@@ -135,9 +138,9 @@ export class LeibnizLetterComponent extends BeolResource {
             if (image.getAttribute('class') === 'reference -image') {
                 const filename = image.getAttribute('data-id');
                 const apiUrl = basePath + filename + basePathTail; // get the svg element
-                fetch(proxyurl + apiUrl) // https://cors-anywhere.herokuapp.com/https://example.com
-                    .then(response => response.json())
-                    .then(contents => {
+                this._http.get(proxyurl + apiUrl) // https://cors-anywhere.herokuapp.com/https://example.com
+                    //.then(response => response.json())
+                    .subscribe(contents => {
                         const svgElement = this.getLeibnizImageSVG(contents);
                         image.replaceWith(svgElement);
                     });

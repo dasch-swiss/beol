@@ -2,40 +2,47 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MaterialModule } from '../../material-module';
-import { HttpClientModule } from '@angular/common/http';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
 import { LeibnizLetterComponent } from './leibniz-letter.component';
-import { KuiActionModule } from '@knora/action';
-import { KuiCoreConfig, KuiCoreConfigToken, OntologyCacheService } from '@knora/core';
 import { ReadTextValueAsHtmlComponent } from '../../properties/read-text-value-as-html/read-text-value-as-html.component';
 import { ReadListValueComponent } from '../../properties/read-list-value/read-list-value.component';
 import { MathJaxDirective } from '../../directives/mathjax.directive';
-import { KuiViewerModule } from '@knora/viewer';
 import { ReadTextValueComponent } from '../../properties/read-text-value/read-text-value.component';
 import { LeibnizPortalDirective } from '../../directives/leibniz-portal.directive';
 import { SanitizeHtmlPipe } from '../../pipes/sanitize-html.pipe';
-import { AppInitService } from '../../app-init.service';
+import { AppInitService, DspActionModule, DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
+import { ReadResource, ReadResourceSequence, ReadTextValueAsString, ResourcesEndpointV2, SearchEndpointV2 } from '@dasch-swiss/dsp-js';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('LeibnizLetterComponent', () => {
     let component: LeibnizLetterComponent;
     let fixture: ComponentFixture<LeibnizLetterComponent>;
 
-    let appInitService: AppInitService;
-
     const id = 'http://rdfh.ch/0801/7ZvL2A5PQ9C4eAmr-n26gw';
 
     beforeEach(async(() => {
-        const appInitServiceSpy = jasmine.createSpyObj('AppInitService', ['getSettings']);
+        const dspConnectionSpy = {
+            v2: {
+                res: jasmine.createSpyObj('res', ['getResource']),
+                search: jasmine.createSpyObj('search', ['doExtendedSearch'])
+            }
+        };
+
+        const appInitServiceMock = {
+            config: {
+                ontologyIRI: 'http://0.0.0.0:3333',
+                leibnizApi: 'http://www.leibniz.de/'
+            }
+        };
 
         TestBed.configureTestingModule({
             imports: [
-                KuiActionModule,
-                KuiViewerModule,
                 MaterialModule,
                 RouterTestingModule,
-                HttpClientModule,
-                HttpClientTestingModule
+                DspActionModule,
+                HttpClientTestingModule,
+                HttpClientModule
             ],
             declarations: [
                 LeibnizLetterComponent,
@@ -47,7 +54,6 @@ describe('LeibnizLetterComponent', () => {
                 SanitizeHtmlPipe
             ],
             providers: [
-                OntologyCacheService,
                 {
                     provide: ActivatedRoute,
                     useValue: {
@@ -58,27 +64,51 @@ describe('LeibnizLetterComponent', () => {
                         })
                     }
                 },
-                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig },
-                { provide: AppInitService, useValue: appInitServiceSpy }
+                { provide: AppInitService, useValue: appInitServiceMock },
+                { provide: DspApiConnectionToken, useValue: dspConnectionSpy }
             ]
         })
             .compileComponents();
 
-        appInitServiceSpy.getSettings.and.returnValue({ ontologyIRI: 'http://0.0.0.0:3333' });
-
-        appInitService = TestBed.inject(AppInitService);
-
     }));
 
     beforeEach(() => {
+        const dspServiceSpy = TestBed.inject(DspApiConnectionToken);
+
+        const res = new ReadResource();
+        const letterIdVal = new ReadTextValueAsString();
+        letterIdVal.strval = '1';
+        letterIdVal.property = 'http://0.0.0.0:3333/ontology/0801/leibniz/v2#letterID';
+
+        res.properties = {
+            'http://0.0.0.0:3333/ontology/0801/leibniz/v2#letterID': [letterIdVal]
+        };
+
+        (dspServiceSpy.v2.res as jasmine.SpyObj<ResourcesEndpointV2>).getResource.and.returnValue(of(res));
+        (dspServiceSpy.v2.search as jasmine.SpyObj<SearchEndpointV2>).doExtendedSearch.and.returnValue(of(new ReadResourceSequence([])));
+
         fixture = TestBed.createComponent(LeibnizLetterComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
 
     it('should create', () => {
+        const httpTestingController = TestBed.inject(HttpTestingController);
+
         expect(component).toBeTruthy();
 
-        expect(appInitService.getSettings).toHaveBeenCalled();
+        httpTestingController
+            .expectOne('http://www.leibniz.de/select?sort=type+asc&q=id%3A1+OR+(doc_id%3A1+AND+type%3Avariante)&rows=9999&wt=json')
+            .flush({
+                response: {
+                docs: [{
+                    volltext: 'text'
+                }]
+            }});
+    });
+
+    afterEach(() => {
+        const httpTestingController = TestBed.inject(HttpTestingController);
+        httpTestingController.verify();
     });
 });

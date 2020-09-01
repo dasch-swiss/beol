@@ -63,6 +63,7 @@ import { TranscriptionComponent } from './resource/transcription/transcription.c
 import { ManuscriptEntryComponent } from './resource/manuscript-entry/manuscript-entry.component';
 import { TeiLinkDirective } from './directives/tei-link.directive';
 import { CommentComponent } from './resource/comment/comment.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
     declarations: [
@@ -111,7 +112,8 @@ import { CommentComponent } from './resource/comment/comment.component';
         DspActionModule,
         DspSearchModule,
         MaterialModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        HttpClientModule
     ],
     providers: [
         {

@@ -275,7 +275,7 @@ export abstract class BeolResource implements OnInit, OnDestroy {
     /**
      * The user clicked on an internal link.
      *
-     * @param linkVal the value reprenting the referred resource.
+     * @param linkVal the value representing the referred resource.
      */
     protected resLinkClicked(linkVal: ReadLinkValue) {
 
@@ -319,7 +319,6 @@ export abstract class BeolResource implements OnInit, OnDestroy {
         for (const key in this.resource.readResource.properties) {
             if (this.resource.readResource.properties.hasOwnProperty(key)) {
                 for (const val of this.resource.readResource.properties[key]) {
-
                     const name = swapped[val.property];
 
                     if (name !== undefined && Array.isArray(propClass[name])) {
