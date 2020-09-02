@@ -45,7 +45,6 @@ import { CorrespondenceComponent } from './correspondence/correspondence.compone
 import { ContactComponent } from './contact/contact.component';
 
 import { ReactiveFormsModule } from '@angular/forms';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import { PageComponent } from './resource/page/page.component';
 import { ReadTextValueComponent } from './properties/read-text-value/read-text-value.component';
@@ -106,7 +105,6 @@ import { HttpClientModule } from '@angular/common/http';
         AppRouting,
         BrowserModule,
         FlexLayoutModule,
-        InfiniteScrollModule,
         DspCoreModule,
         DspViewerModule,
         DspActionModule,
