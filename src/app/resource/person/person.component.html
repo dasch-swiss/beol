@@ -27,14 +27,14 @@
                 </p>
                 <p mat-line>
                     <span *ngIf="props?.birthDate[0]">
-                        * <dsp-date-value [displayValue]="props?.birthDate[0]" [mode]="'read'">
+                        * <dsp-date-value [displayValue]="props?.birthDate[0]" [mode]="'read'" [labels]="false" [displayOptions]="'era'">
                         </dsp-date-value>
                     </span>
 
                     <span *ngIf="props?.birthDate[0] && props?.deathDate[0]"> &ndash; </span>
 
                     <span *ngIf="props?.deathDate[0]">
-                        † <dsp-date-value [displayValue]="props?.deathDate[0]" [mode]="'read'">
+                        † <dsp-date-value [displayValue]="props?.deathDate[0]" [mode]="'read'" [labels]="false" [displayOptions]="'era'">
                         </dsp-date-value>
                     </span>
                 </p>

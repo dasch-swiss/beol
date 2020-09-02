@@ -37,7 +37,7 @@
                                 <read-text-value *ngSwitchCase="dspConstants.TextValue"
                                     [valueObject]="val" [resource]="resource.readResource" [bindEvents]="true">
                                 </read-text-value>
-                                <dsp-date-value *ngSwitchCase="dspConstants.DateValue" [displayValue]="val" [mode]="'read'">
+                                <dsp-date-value *ngSwitchCase="dspConstants.DateValue" [displayValue]="val" [mode]="'read'" [displayOptions]="'all'">
                                 </dsp-date-value>
                                 <dsp-link-value *ngSwitchCase="dspConstants.LinkValue" [displayValue]="val"
                                     [parentResource]="resource.readResource" [propIri]="val.property" [mode]="'read'" (referredResourceClicked)="resLinkClicked($event)">

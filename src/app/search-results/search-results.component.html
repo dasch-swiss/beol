@@ -47,7 +47,7 @@
                                     </ng-template>
 
                                 <span class="bolder">
-                                    <dsp-date-value *ngSwitchCase="dspConstants.DateValue" [displayValue]="val" [mode]="'read'">
+                                    <dsp-date-value *ngSwitchCase="dspConstants.DateValue" [displayValue]="val" [mode]="'read'" [displayOptions]="'all'">
                                     </dsp-date-value>
 
                                     <read-list-value *ngSwitchCase="dspConstants.ListValue" [valueObject]="val"
