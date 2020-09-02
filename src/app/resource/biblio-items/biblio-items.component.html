@@ -153,7 +153,7 @@
                 <mat-list>
                     <mat-list-item *ngFor="let editor of props?.editor">
                         <dsp-link-value [displayValue]="editor" [parentResource]="resource.readResource"
-                            [propIri]="props?.editor[0].property" [mode]="'read'"></dsp-link-value>
+                            [propIri]="props?.editor[0].property" [mode]="'read'" (referredResourceClicked)="resLinkClicked($event)"></dsp-link-value>
                     </mat-list-item>
                 </mat-list>
             </div>
@@ -162,7 +162,7 @@
                 <h4 class="subheading-2">{{props?.editorOrg[0].propertyLabel}}</h4>
                 <p class="margin-left">
                     <dsp-link-value *ngFor="let eo of props?.editorOrg" [displayValue]="eo" [parentResource]="resource.readResource"
-                        [propIri]="props?.editorOrg[0].property" [mode]="'read'"></dsp-link-value>
+                        [propIri]="props?.editorOrg[0].property" [mode]="'read'" (referredResourceClicked)="resLinkClicked($event)"></dsp-link-value>
                 </p>
             </div>
 

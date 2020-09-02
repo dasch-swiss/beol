@@ -41,7 +41,7 @@
                         <mat-list>
                             <mat-list-item *ngFor="let reg of props?.belongsToRegion">
                                 <dsp-link-value [displayValue]="reg" [parentResource]="resource.readResource"
-                                    [propIri]="reg.property" [mode]="'read'"></dsp-link-value>
+                                    [propIri]="reg.property" [mode]="'read'" (referredResourceClicked)="resLinkClicked($event)"></dsp-link-value>
                             </mat-list-item>
                         </mat-list>
                     </p>
