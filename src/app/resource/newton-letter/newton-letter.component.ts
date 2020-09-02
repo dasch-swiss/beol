@@ -112,13 +112,13 @@ export class NewtonLetterComponent extends BeolResource {
 
         const url = basePath + filename; // site that doesn’t send Access-Control-*
 
-        this._http.get(proxyurl + url) // https://cors-anywhere.herokuapp.com/https://example.com
-            // .then(response => response.text())
-            .subscribe(contents => {
+        fetch(proxyurl + url) // https://cors-anywhere.herokuapp.com/https://example.com
+            .then(response => response.text())
+            .then(contents => {
                     this.getNewtonLetterBody(contents);
                     this.isLoadingText = false;
-                }, err => console.log('Can’t access ' + url + ' response. Blocked by browser?')
-            );
+                }
+            ).catch(() => console.log('Can’t access ' + url + ' response. Blocked by browser?'));
     }
 
     private getNewtonLetterBody(contents) {
