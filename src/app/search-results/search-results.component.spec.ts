@@ -1,8 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientModule } from '@angular/common/http';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BehaviorSubject, of } from 'rxjs';
 import { SearchResultsComponent } from './search-results.component';
 import { MathJaxDirective } from '../directives/mathjax.directive';
@@ -17,7 +15,7 @@ describe('SearchResultsComponent', () => {
     let component: SearchResultsComponent;
     let fixture: ComponentFixture<SearchResultsComponent>;
 
-    const mode = 'extended';
+    const mode = 'gravsearch';
     const q = 'test';
 
     beforeEach(async(() => {
