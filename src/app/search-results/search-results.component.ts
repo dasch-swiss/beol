@@ -75,7 +75,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
             if (this.searchMode === 'fulltext') {
                 // filter by project
                 this.searchQuery = params.get('q');
-            } else if (this.searchMode === 'extended') {
+            } else if (this.searchMode === 'gravsearch') {
                 this.gravsearchGenerator = this._searchParamsService.getSearchParams();
                 this.generateGravsearchQuery();
             }
@@ -297,7 +297,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
                     // });
 
             // EXTENDED SEARCH
-        } else if (this.searchMode === 'extended') {
+        } else if (this.searchMode === 'gravsearch') {
             // console.log(this.searchQuery)
             // perform count query
             if (this.offset === 0) {
@@ -408,7 +408,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
             return;
         }
 
-        if (this.searchMode === 'extended') {
+        if (this.searchMode === 'gravsearch') {
             this.generateGravsearchQuery();
         }
 
