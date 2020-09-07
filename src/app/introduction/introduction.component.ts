@@ -1,27 +1,22 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import {
-    ApiServiceError,
-    KnoraConstants,
-    OntologyCacheService,
-    OntologyInformation,
-    ReadPropertyItem,
+    ApiResponseError,
+    Constants,
+    KnoraApiConnection,
     ReadResource,
-    ReadResourcesSequence,
-    ResourceService,
-    SearchService
-} from '@knora/core';
-import { BeolService } from '../services/beol.service';
-import { HttpClient } from '@angular/common/http';
+    ReadResourceSequence, ReadTextValue
+} from '@dasch-swiss/dsp-js';
+import { AppInitService, DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
 import { Subscription } from 'rxjs';
-import { AppInitService } from '../app-init.service';
+import { BeolService } from '../services/beol.service';
 
 declare let require: any;
 
 export interface IntroProps {
-    'title': ReadPropertyItem[];
-    'text': ReadPropertyItem[];
+    'title': ReadTextValue[];
+    'text': ReadTextValue[];
 }
 
 export interface Introduction {
@@ -44,10 +39,9 @@ export class IntroductionComponent implements OnInit, OnDestroy {
     iri: string;
     project: string;
     resource: ReadResource;
-    ontologyInfo: OntologyInformation;
     errorMessage;
 
-    KnoraConstants = KnoraConstants;
+    KnoraConstants = Constants;
 
     listLeoo: Introduction[];
     listLece: Introduction[];
@@ -62,19 +56,17 @@ export class IntroductionComponent implements OnInit, OnDestroy {
     paramsSubscription: Subscription;
 
     propIris: any = {
-        'title': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#sectionHasTitle',
-        'text': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasText',
+        'title': this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#sectionHasTitle',
+        'text': this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#hasText',
     };
 
-    constructor (private _route: ActivatedRoute,
-        private _http: HttpClient,
-        private _router: Router,
-        private _searchService: SearchService,
+    constructor(
+        @Inject(DspApiConnectionToken) private _dspApiConnection: KnoraApiConnection,
+        private _route: ActivatedRoute,
         private _beol: BeolService,
-        private _resourceService: ResourceService,
-        private _cacheService: OntologyCacheService,
-        public location: Location,
-        private _appInitService: AppInitService) {
+        private _appInitService: AppInitService,
+        public location: Location
+    ) {
     }
 
     ngOnInit() {
@@ -101,8 +93,8 @@ export class IntroductionComponent implements OnInit, OnDestroy {
     searchForIntro(id: string): void {
         const gravsearch: string = this._beol.searchForIntroductionById(id);
 
-        this._searchService.doExtendedSearchReadResourceSequence(gravsearch).subscribe(
-            (result: ReadResourcesSequence) => {
+        this._dspApiConnection.v2.search.doExtendedSearch(gravsearch).subscribe(
+            (result: ReadResourceSequence) => {
 
                 if (result.resources.length === 1) {
                     // console.log('we got a resource sequence ', resourceSeq.resources);
@@ -122,45 +114,38 @@ export class IntroductionComponent implements OnInit, OnDestroy {
      */
     private requestResource(iri: string): void {
 
-        this._resourceService.getReadResource(iri)
+        this._dspApiConnection.v2.res.getResource(iri)
             .subscribe(
-                (result: ReadResourcesSequence) => {
+                (result: ReadResource) => {
 
-                    // make sure that exactly one resource is returned
-                    if (result.resources.length === 1) {
+                    this.resource = result;
 
-                        // initialize ontology information
-                        this.ontologyInfo = result.ontologyInformation;
+                    this.props = {
+                        title: [],
+                        text: []
+                    };
 
-                        this.resource = result.resources[0];
+                    for (const key in this.resource.properties) {
+                        if (this.resource.properties.hasOwnProperty(key)) {
+                            for (const val of this.resource.properties[key]) {
+                                switch (val.property) {
+                                    case this.propIris.title:
+                                        this.props.title.push(val);
+                                        break;
 
-                        this.props = {
-                            title: [],
-                            text: []
-                        };
+                                    case this.propIris.text:
+                                        this.props.text.push(val);
+                                        break;
 
-                        for (const key in this.resource.properties) {
-                            if (this.resource.properties.hasOwnProperty(key)) {
-                                for (const val of this.resource.properties[key]) {
-                                    switch (val.propIri) {
-                                        case this.propIris.title:
-                                            this.props.title.push(val);
-                                            break;
-
-                                        case this.propIris.text:
-                                            this.props.text.push(val);
-                                            break;
-
-                                        default:
-                                        // do nothing
-                                    }
+                                    default:
+                                    // do nothing
                                 }
                             }
                         }
                     }
                     this.isLoading = false;
                 },
-                (error: ApiServiceError) => {
+                (error: ApiResponseError) => {
                     this.errorMessage = <any>error;
                     this.isLoading = false;
                 }

@@ -3,33 +3,22 @@ import { ReadTextValueAsHtmlComponent } from './read-text-value-as-html.componen
 
 import { MathJaxDirective } from '../../directives/mathjax.directive';
 import { Component, DebugElement, OnInit, ViewChild } from '@angular/core';
-import {
-    KuiCoreConfig,
-    KuiCoreConfigToken,
-    OntologyInformation,
-    ReadTextValue,
-    ReadTextValueAsHtml,
-    ResourceClass,
-    ResourceClasses,
-    ResourceClassIrisForOntology
-} from '@knora/core';
+
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 
 import { HttpClientModule } from '@angular/common/http';
+import { ReadResource, ReadTextValue, ReadTextValueAsHtml } from '@dasch-swiss/dsp-js';
+import { BeolService } from '../../services/beol.service';
 
-import { AppInitService } from '../../app-init.service';
 
 
 describe('ReadTextValueAsHtmlComponent', () => {
     let testHostComponent: TestHostComponent;
     let testHostFixture: ComponentFixture<TestHostComponent>;
 
-    let appInitService: AppInitService;
-
     beforeEach(async(() => {
-        const appInitServiceSpy = jasmine.createSpyObj('AppInitService', ['getSettings']);
 
         TestBed.configureTestingModule({
             imports: [
@@ -43,15 +32,13 @@ describe('ReadTextValueAsHtmlComponent', () => {
                 TestHostComponent
             ],
             providers: [
-                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig },
-                { provide: AppInitService, useValue: appInitServiceSpy }
+                {
+                    provide: BeolService, useValue: {} // mock BeolService because it has its own deps
+                }
             ]
         })
             .compileComponents();
 
-        appInitServiceSpy.getSettings.and.returnValue({ ontologyIRI: 'http://0.0.0.0:3333' });
-
-        appInitService = TestBed.get(AppInitService);
     }));
 
     beforeEach(() => {
@@ -66,11 +53,9 @@ describe('ReadTextValueAsHtmlComponent', () => {
         expect(testHostComponent.htmlValueComponent).toBeTruthy();
 
         expect(testHostComponent.htmlValueComponent.valueObject.id).toEqual('http://rdfh.ch/0802/V/values/Z');
-        expect(testHostComponent.htmlValueComponent.valueObject.propIri).toEqual('http://0.0.0.0/ontology/0801/beol/v2#hasText');
-        expect(testHostComponent.htmlValueComponent.valueObject.getClassName()).toEqual('ReadTextValueAsHtml');
+        expect(testHostComponent.htmlValueComponent.valueObject.property).toEqual('http://0.0.0.0/ontology/0801/beol/v2#hasText');
 
         expect(testHostComponent.htmlValueComponent.bindEvents).toBeTruthy();
-        expect(testHostComponent.htmlValueComponent.ontologyInfo).toEqual(ontoInfo);
 
         const hostCompDe = testHostFixture.debugElement;
 
@@ -96,46 +81,29 @@ describe('ReadTextValueAsHtmlComponent', () => {
         <read-text-value-as-html #htmlValComp
                                  [valueObject]="htmlVal"
                                  [bindEvents]="bindEvents"
-                                 [ontologyInfo]="ontologyInfo">
+                                 [resource]="res">
         </read-text-value-as-html>`
 })
 class TestHostComponent implements OnInit {
 
     @ViewChild('htmlValComp', { static: false }) htmlValueComponent: ReadTextValueAsHtmlComponent;
 
-    htmlVal: ReadTextValue;
+    htmlVal: ReadTextValueAsHtml;
     bindEvents = true;
-    ontologyInfo;
+    res: ReadResource;
 
-    constructor () {
+    constructor() {
     }
 
     ngOnInit() {
-        this.htmlVal =
-            new ReadTextValueAsHtml('http://rdfh.ch/0802/V/values/Z',
-                'http://0.0.0.0/ontology/0801/beol/v2#hasText',
-                '<div>test</div>', {});
+        const htmlVal = new ReadTextValueAsHtml();
+        htmlVal.id = 'http://rdfh.ch/0802/V/values/Z';
+        htmlVal.property = 'http://0.0.0.0/ontology/0801/beol/v2#hasText';
+        htmlVal.html = '<div>test</div>';
+        htmlVal.strval = htmlVal.html;
 
-        this.ontologyInfo = ontoInfo;
+        this.htmlVal = htmlVal;
+        this.res = new ReadResource();
+
     }
 }
-
-const resClassesForOnto: ResourceClassIrisForOntology = {
-    'http://0.0.0.0:3333/ontology/0803/incunabula/v2': [
-        'http://0.0.0.0:3333/ontology/0803/incunabula/v2#book'
-    ]
-};
-
-const resClasses: ResourceClasses = {
-    'http://0.0.0.0:3333/ontology/0803/incunabula/v2#book':
-        new ResourceClass(
-            'http://0.0.0.0:3333/ontology/0803/incunabula/v2#book',
-            'book.png',
-            'A book.',
-            'book',
-            [],
-            []
-        )
-};
-
-const ontoInfo = new OntologyInformation(resClassesForOnto, resClasses, {});

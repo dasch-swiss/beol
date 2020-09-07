@@ -1,28 +1,30 @@
-import { Component, OnInit } from '@angular/core';
-import { BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
-import {
-    IncomingService,
-    KnoraConstants, OntologyCacheService,
-    OntologyInformation,
-    ReadIntegerValue,
-    ReadLinkValue,
-    ReadPropertyItem,
-    ReadResource, ReadResourcesSequence,
-    ReadTextValue, ResourceService, SearchService
-} from '@knora/core';
-import { Subscription } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
-import { BeolService } from '../../services/beol.service';
 import { Location } from '@angular/common';
-import { AppInitService } from '../../app-init.service';
+import { Component, Inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import {
+    Constants,
+    KnoraApiConnection,
+    ReadIntValue,
+    ReadLinkValue,
+    ReadResource,
+    ReadResourceSequence,
+    ReadTextValue,
+    ReadValue,
+    ResourceClassAndPropertyDefinitions
+} from '@dasch-swiss/dsp-js';
+import { DspApiConnectionToken, AppInitService } from '@dasch-swiss/dsp-ui';
+import { Subscription } from 'rxjs';
+import { IncomingService } from 'src/app/services/incoming.service';
+import { BeolService } from '../../services/beol.service';
+import { BeolCompoundResource, BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
 
 class ManuscriptEntryProps implements PropertyValues {
 
     title: ReadTextValue[] = [];
-    seqnum: ReadIntegerValue[] = [];
+    seqnum: ReadIntValue[] = [];
     manuscriptEntryOf: ReadLinkValue[] = [];
 
-    [index: string]: ReadPropertyItem[];
+    [index: string]: ReadValue[];
 }
 
 @Component({
@@ -33,35 +35,33 @@ class ManuscriptEntryProps implements PropertyValues {
 export class ManuscriptEntryComponent extends BeolResource {
 
     iri: string;
-    resource: ReadResource;
-    ontologyInfo: OntologyInformation;
+    resource: BeolCompoundResource;
+    ontologyInfo: ResourceClassAndPropertyDefinitions;
     incomingStillImageRepresentationCurrentOffset: number; // last offset requested for `this.resource.incomingStillImageRepresentations`
     isLoading = true;
     errorMessage: any;
-    KnoraConstants = KnoraConstants;
+    dspConstants = Constants;
     navigationSubscription: Subscription;
 
     propIris: PropIriToNameMapping = {
-        'title': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#title',
-        'seqnum': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#seqnum',
-        'manuscriptEntryOf': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#manuscriptEntryOfValue'
+        'title': this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#title',
+        'seqnum': this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#seqnum',
+        'manuscriptEntryOf': this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#manuscriptEntryOfValue'
     };
 
     props: ManuscriptEntryProps;
 
     transcriptions: ReadResource[] = [];
 
-    constructor(protected _route: ActivatedRoute,
-                private _router: Router,
-                protected _resourceService: ResourceService,
-                protected _cacheService: OntologyCacheService,
-                protected _incomingService: IncomingService,
-                protected _beolService: BeolService,
-                private _searchService: SearchService,
-                public location: Location,
-                private _appInitService: AppInitService) {
+    constructor(
+        @Inject(DspApiConnectionToken) protected _dspApiConnection: KnoraApiConnection,
+        protected _route: ActivatedRoute,
+        protected _incomingService: IncomingService,
+        protected _beolService: BeolService,
+        public location: Location,
+        private _appInitService: AppInitService) {
 
-        super(_route, _resourceService, _cacheService, _incomingService, _beolService);
+        super(_dspApiConnection, _route, _incomingService, _beolService);
     }
 
     initProps() {
@@ -81,10 +81,10 @@ export class ManuscriptEntryComponent extends BeolResource {
 
         const criticalLayersQuery = this._beolService.getTranscriptionsForManuscriptEntry(this.iri, 0, false);
 
-        this._searchService.doExtendedSearchReadResourceSequence(titleRegionTranscriptionQuery).subscribe(
-            (titleRegionTranscr) => {
-                this._searchService.doExtendedSearchReadResourceSequence(criticalLayersQuery).subscribe(
-                    (transcriptions: ReadResourcesSequence) => {
+        this._dspApiConnection.v2.search.doExtendedSearch(titleRegionTranscriptionQuery).subscribe(
+            (titleRegionTranscr: ReadResourceSequence) => {
+                this._dspApiConnection.v2.search.doExtendedSearch(criticalLayersQuery).subscribe(
+                    (transcriptions: ReadResourceSequence) => {
                         this.transcriptions = titleRegionTranscr.resources.concat(transcriptions.resources);
                     }
                 );

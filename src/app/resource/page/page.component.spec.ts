@@ -1,30 +1,43 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PageComponent } from './page.component';
-import { KuiViewerModule } from '@knora/viewer';
 import { ReadTextValueAsHtmlComponent } from '../../properties/read-text-value-as-html/read-text-value-as-html.component';
 import { MathJaxDirective } from '../../directives/mathjax.directive';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
-import { KuiCoreConfig, KuiCoreConfigToken, OntologyCacheService } from '@knora/core';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { HttpTestingController } from '@angular/common/http/testing';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { ReadTextValueComponent } from '../../properties/read-text-value/read-text-value.component';
-import { AppInitService } from '../../app-init.service';
+import { AppInitService, DspApiConnectionToken, DspViewerModule } from '@dasch-swiss/dsp-ui';
+import {
+    ReadIntValue,
+    ReadLinkValue,
+    ReadResource,
+    ReadResourceSequence,
+    ResourcesEndpointV2,
+    SearchEndpointV2
+} from '@dasch-swiss/dsp-js';
 
 describe('PageComponent', () => {
     let component: PageComponent;
     let fixture: ComponentFixture<PageComponent>;
 
-    let appInitService: AppInitService;
-
     const id = 'http://rdfh.ch/0801/gggg';
 
     beforeEach(async(() => {
-        const appInitServiceSpy = jasmine.createSpyObj('AppInitService', ['getSettings']);
+        const dspConnectionSpy = {
+            v2: {
+                res: jasmine.createSpyObj('res', ['getResource']),
+                search: jasmine.createSpyObj('search', ['doExtendedSearch'])
+            }
+        };
+
+        const appInitServiceMock = {
+            config: {
+                ontologyIRI: 'http://0.0.0.0:3333'
+            }
+        };
 
         TestBed.configureTestingModule({
             declarations: [
@@ -33,9 +46,13 @@ describe('PageComponent', () => {
                 ReadTextValueComponent,
                 MathJaxDirective
             ],
-            imports: [KuiViewerModule, RouterTestingModule, HttpClientModule, MatListModule, MatIconModule],
+            imports: [
+                RouterTestingModule,
+                MatListModule,
+                MatIconModule,
+                DspViewerModule
+            ],
             providers: [
-                OntologyCacheService,
                 {
                     provide: ActivatedRoute,
                     useValue: {
@@ -46,19 +63,36 @@ describe('PageComponent', () => {
                         })
                     }
                 },
-                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig },
-                { provide: AppInitService, useValue: appInitServiceSpy }
+                { provide: AppInitService, useValue: appInitServiceMock },
+                { provide: DspApiConnectionToken, useValue: dspConnectionSpy }
             ]
         })
             .compileComponents();
 
-        appInitServiceSpy.getSettings.and.returnValue({ontologyIRI: 'http://0.0.0.0:3333'});
-
-        appInitService = TestBed.get(AppInitService);
 
     }));
 
     beforeEach(() => {
+        const dspServiceSpy = TestBed.inject(DspApiConnectionToken);
+
+        const res = new ReadResource();
+        const partOfVal = new ReadLinkValue();
+        partOfVal.strval = '1';
+        partOfVal.property = 'http://0.0.0.0:3333/ontology/0801/beol/v2#partOfValue';
+        partOfVal.linkedResourceIri = '';
+
+        const seqnumVal = new ReadIntValue();
+        seqnumVal.int = 2;
+        seqnumVal.property = 'http://0.0.0.0:3333/ontology/0801/beol/v2#seqnum';
+
+        res.properties = {
+            'http://0.0.0.0:3333/ontology/0801/beol/v2#partOfValue': [partOfVal],
+            'http://0.0.0.0:3333/ontology/0801/beol/v2#seqnum': [seqnumVal]
+        };
+
+        (dspServiceSpy.v2.res as jasmine.SpyObj<ResourcesEndpointV2>).getResource.and.returnValue(of(res));
+        (dspServiceSpy.v2.search as jasmine.SpyObj<SearchEndpointV2>).doExtendedSearch.and.returnValue(of(new ReadResourceSequence([])));
+
         fixture = TestBed.createComponent(PageComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
@@ -66,7 +100,5 @@ describe('PageComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
-
-        expect(appInitService.getSettings).toHaveBeenCalled();
     });
 });

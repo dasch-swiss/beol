@@ -1,17 +1,27 @@
 import { TeiLinkDirective } from './tei-link.directive';
 import { Component, DebugElement, OnInit } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppInitService } from '../app-init.service';
 import { By } from '@angular/platform-browser';
+import { AppInitService } from '@dasch-swiss/dsp-ui';
 
 describe('TeiLinkDirective', () => {
     let component: TestComponent;
     let fixture: ComponentFixture<TestComponent>;
 
-    let appInitService: AppInitService;
-
     beforeEach(() => {
-        const appInitServiceSpy = jasmine.createSpyObj('AppInitService', ['getSettings']);
+        const appInitServiceSpy = {
+            config: {
+                ontologyIRI: 'http://0.0.0.0:3333',
+                tei: {
+                    'http://0.0.0.0:3333/ontology/0801/beol/v2#letter': {
+                        'textProperty': 'http://0.0.0.0:3333/ontology/0801/beol/v2#hasText',
+                        'mappingIRI': 'http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF/mappings/BEOLTEIMapping',
+                        'gravsearchTemplateIri': 'http://rdfh.ch/0801/templateIri',
+                        'teiHeaderXSLTIri': 'http://rdfh.ch/0801/headerIri'
+                    }
+                }
+            }
+        };
 
         TestBed.configureTestingModule({
             imports: [],
@@ -25,21 +35,6 @@ describe('TeiLinkDirective', () => {
         })
             .compileComponents();
 
-        const mockConfig = {
-            'ontologyIRI': 'http://0.0.0.0:3333',
-            'tei': {
-                'http://0.0.0.0:3333/ontology/0801/beol/v2#letter': {
-                    'textProperty': 'http://0.0.0.0:3333/ontology/0801/beol/v2#hasText',
-                    'mappingIRI': 'http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF/mappings/BEOLTEIMapping',
-                    'gravsearchTemplateIri': 'http://rdfh.ch/0801/templateIri',
-                    'teiHeaderXSLTIri': 'http://rdfh.ch/0801/headerIri'
-                }
-            }
-        };
-
-        appInitServiceSpy.getSettings.and.returnValue(mockConfig);
-
-        appInitService = TestBed.get(AppInitService);
     });
 
     beforeEach(() => {

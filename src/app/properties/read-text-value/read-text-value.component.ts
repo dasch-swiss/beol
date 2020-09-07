@@ -1,35 +1,38 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { KnoraConstants, OntologyInformation, ReadTextValue, ReadTextValueAsHtml } from '@knora/core';
+import { Component, Input, OnChanges } from '@angular/core';
+import { ReadResource, ReadTextValue, Constants } from '@dasch-swiss/dsp-js';
+import { ValueTypeService } from '@dasch-swiss/dsp-ui';
 
 @Component({
     selector: 'read-text-value',
     templateUrl: './read-text-value.component.html',
     styleUrls: ['./read-text-value.component.scss']
 })
-export class ReadTextValueComponent implements OnInit {
+export class ReadTextValueComponent implements OnChanges {
 
-    private _textValue: ReadTextValue; // value object representing text without markup, XML or HTML
-    private _ontoInfo: OntologyInformation; // needed if text has standoff links
+    private _valueObject: ReadTextValue; // value object representing text without markup, XML or HTML
+    private _resource: ReadResource; // needed if text has standoff links
     private _bindEvents: boolean; // indicates if click and mouseover events have to be bound
 
-    KnoraConstants = KnoraConstants;
+    valueType: string;
+
+    constants = Constants;
 
     @Input()
     set valueObject(value: ReadTextValue) {
-        this._textValue = value;
+        this._valueObject = value;
     }
 
     get valueObject() {
-        return this._textValue;
+        return this._valueObject;
     }
 
     @Input()
-    set ontologyInfo(value: OntologyInformation) {
-        this._ontoInfo = value;
-    };
+    set resource(value: ReadResource) {
+        this._resource = value;
+    }
 
-    get ontologyInfo() {
-        return this._ontoInfo;
+    get resource() {
+        return this._resource;
     }
 
     @Input()
@@ -43,10 +46,13 @@ export class ReadTextValueComponent implements OnInit {
 
     @Input() renderFigureRegions = false;
 
-    constructor() {
+    constructor(private _valueTypeService: ValueTypeService) {
     }
 
-    ngOnInit() {
+    ngOnChanges() {
+
+        this.valueType = this._valueTypeService.getValueTypeOrClass(this.valueObject);
+
     }
 
 }

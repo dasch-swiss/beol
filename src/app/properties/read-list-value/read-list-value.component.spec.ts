@@ -4,25 +4,30 @@ import { MathJaxDirective } from '../../directives/mathjax.directive';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { Component, DebugElement, OnInit, ViewChild } from '@angular/core';
-import { KuiCoreConfig, KuiCoreConfigToken, ListCacheService, ListNodeV2, ReadListValue } from '@knora/core';
 import { By } from '@angular/platform-browser';
-
-import { AppInitService } from '../../app-init.service';
-import { of } from 'rxjs';
+import { AsyncSubject } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
-
+import { AppInitService, DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
+import { ListNodeV2Cache } from '@dasch-swiss/dsp-js/src/cache/ListNodeV2Cache';
+import { ListNodeV2, ReadListValue } from '@dasch-swiss/dsp-js';
 
 describe('ReadListValueComponent', () => {
     let testHostComponent: TestHostComponent;
     let testHostFixture: ComponentFixture<TestHostComponent>;
 
-    let appInitService: AppInitService;
-    let listCacheService: ListCacheService;
-
     beforeEach(async(() => {
-        const appInitServiceSpy = jasmine.createSpyObj('AppInitService', ['getSettings']);
 
-        const spyListCacheService = jasmine.createSpyObj('ListCacheService', ['getListNode']);
+        const dspConnectionSpy = {
+            v2: {
+                listNodeCache: jasmine.createSpyObj('listNodeCache', ['getNode'])
+            }
+        };
+
+        const appInitServiceMock = {
+            config: {
+                ontologyIRI: 'http://0.0.0.0:3333'
+            }
+        };
 
         TestBed.configureTestingModule({
             declarations: [
@@ -37,25 +42,30 @@ describe('ReadListValueComponent', () => {
                 HttpClientModule
             ],
             providers: [
-                { provide: ListCacheService, useValue: spyListCacheService },
-                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig },
-                { provide: AppInitService, useValue: appInitServiceSpy }
+                { provide: AppInitService, useValue: appInitServiceMock },
+                { provide: DspApiConnectionToken, useValue: dspConnectionSpy }
             ]
         })
             .compileComponents();
 
-        appInitServiceSpy.getSettings.and.returnValue({ ontologyIRI: 'http://0.0.0.0:3333' });
-
-        appInitService = TestBed.get(AppInitService);
-
-        spyListCacheService.getListNode.and.callFake((nodeIri) => {
-            return of(new ListNodeV2(nodeIri, 'test' + nodeIri, 1, ''));
-        });
-
-        listCacheService = TestBed.get(ListCacheService);
     }));
 
     beforeEach(() => {
+
+        const listCacheServiceSpy = TestBed.inject(DspApiConnectionToken);
+
+        (listCacheServiceSpy.v2.listNodeCache as jasmine.SpyObj<ListNodeV2Cache>).getNode.and.callFake((nodeIri) => {
+            const subj = new AsyncSubject<ListNodeV2>();
+
+            const node = new ListNodeV2();
+            node.id = 'nodeIri';
+            node.label = 'test' + nodeIri;
+
+            subj.next(node);
+            subj.complete();
+            return subj;
+        });
+
         testHostFixture = TestBed.createComponent(TestHostComponent);
         testHostComponent = testHostFixture.componentInstance;
         testHostFixture.detectChanges();
@@ -72,7 +82,10 @@ describe('ReadListValueComponent', () => {
     });
 
     it('should be equal to the list node label value "ListNodeLabel1"', () => {
-        expect(testHostComponent.listValueComponent.valueObject.listNodeIri).toEqual('http://rdfh.ch/8be1b7cf7103');
+
+        const listCacheServiceSpy = TestBed.inject(DspApiConnectionToken);
+
+        expect(testHostComponent.listValueComponent.valueObject.listNode).toEqual('http://rdfh.ch/8be1b7cf7103');
 
         const hostCompDe = testHostFixture.debugElement;
 
@@ -84,8 +97,8 @@ describe('ReadListValueComponent', () => {
 
         expect(spanNativeElement.innerText).toEqual('testhttp://rdfh.ch/8be1b7cf7103');
 
-        expect(listCacheService.getListNode).toHaveBeenCalledTimes(1);
-        expect(listCacheService.getListNode).toHaveBeenCalledWith('http://rdfh.ch/8be1b7cf7103');
+        expect(listCacheServiceSpy.v2.listNodeCache.getNode).toHaveBeenCalledTimes(1);
+        expect(listCacheServiceSpy.v2.listNodeCache.getNode).toHaveBeenCalledWith('http://rdfh.ch/8be1b7cf7103');
 
         const mathJaxDirDe: DebugElement = hostCompDe.query(By.directive(MathJaxDirective));
 
@@ -94,7 +107,12 @@ describe('ReadListValueComponent', () => {
     });
 
     it('should be equal to the list node label value "ListNodeLabel2"', () => {
-        testHostComponent.listValue = new ReadListValue('id', 'propIri', 'http://rdfh.ch/9sdf8sfd2jf9');
+        const listCacheServiceSpy = TestBed.inject(DspApiConnectionToken);
+
+        const node = new ReadListValue();
+        node.id = 'id';
+        node.listNode = 'http://rdfh.ch/9sdf8sfd2jf9';
+        testHostComponent.listValue = node;
 
         testHostFixture.detectChanges();
 
@@ -108,9 +126,9 @@ describe('ReadListValueComponent', () => {
 
         expect(spanNativeElement.innerText).toEqual('testhttp://rdfh.ch/9sdf8sfd2jf9');
 
-        expect(listCacheService.getListNode).toHaveBeenCalledTimes(2);
-        expect(listCacheService.getListNode).toHaveBeenCalledWith('http://rdfh.ch/8be1b7cf7103');
-        expect(listCacheService.getListNode).toHaveBeenCalledWith('http://rdfh.ch/9sdf8sfd2jf9');
+        expect(listCacheServiceSpy.v2.listNodeCache.getNode).toHaveBeenCalledTimes(2);
+        expect(listCacheServiceSpy.v2.listNodeCache.getNode).toHaveBeenCalledWith('http://rdfh.ch/8be1b7cf7103');
+        expect(listCacheServiceSpy.v2.listNodeCache.getNode).toHaveBeenCalledWith('http://rdfh.ch/9sdf8sfd2jf9');
 
         const mathJaxDirDe: DebugElement = hostCompDe.query(By.directive(MathJaxDirective));
 
@@ -142,15 +160,19 @@ describe('ReadListValueComponent', () => {
 })
 class TestHostComponent implements OnInit {
 
-    @ViewChild('listVal', { static: false }) listValueComponent: ReadListValueComponent;
+    @ViewChild('listVal') listValueComponent: ReadListValueComponent;
 
     listValue;
 
-    constructor () {
+    constructor() {
     }
 
     ngOnInit() {
-        this.listValue = new ReadListValue('id', 'propIri', 'http://rdfh.ch/8be1b7cf7103');
+        const listVal = new ReadListValue();
+        listVal.id = 'id';
+        listVal.property = 'propIri';
+        listVal.listNode =  'http://rdfh.ch/8be1b7cf7103';
+        this.listValue = listVal;
     }
 }
 
@@ -163,16 +185,20 @@ class TestHostComponent implements OnInit {
 })
 class TestHostComponent2 implements OnInit {
 
-    @ViewChild('listVal', { static: false }) listValueComponent: ReadListValueComponent;
+    @ViewChild('listVal') listValueComponent: ReadListValueComponent;
 
     listValue;
 
     renderMathInput = false;
 
-    constructor () {
+    constructor() {
     }
 
     ngOnInit() {
-        this.listValue = new ReadListValue('id', 'propIri', 'http://rdfh.ch/8be1b7cf7103');
+        const listVal = new ReadListValue();
+        listVal.id = 'id';
+        listVal.property = 'propIri';
+        listVal.listNode =  'http://rdfh.ch/8be1b7cf7103';
+        this.listValue = listVal;
     }
 }

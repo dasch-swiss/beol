@@ -1,34 +1,36 @@
-import { inject, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
 import { BeolService } from './beol.service';
+import { DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AppInitService } from '../app-init.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { KuiCoreConfig, KuiCoreConfigToken } from '@knora/core';
 
 describe('BeolService', () => {
-    let appInitService: AppInitService;
+    let service: BeolService;
+
+    const dspConnSpyObj = {
+        v2: {
+            res: jasmine.createSpyObj('res', ['getResource']),
+            search: jasmine.createSpyObj('search', ['doExtendedSearch'])
+        }
+    };
 
     beforeEach(() => {
-        const appInitServiceSpy = jasmine.createSpyObj('AppInitService', ['getSettings']);
-
         TestBed.configureTestingModule({
-            imports: [RouterTestingModule, HttpClientTestingModule],
+            imports: [
+                RouterTestingModule
+            ],
             providers: [
-                BeolService,
-                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig },
-                { provide: AppInitService, useValue: appInitServiceSpy }
+                {
+                    provide: DspApiConnectionToken,
+                    useValue: dspConnSpyObj
+                }
             ]
-        })
-            .compileComponents();
-
-        appInitServiceSpy.getSettings.and.returnValue({ontologyIRI: 'http://0.0.0.0:3333'});
-
-        appInitService = TestBed.get(AppInitService);
+        });
+        service = TestBed.inject(BeolService);
     });
 
-    it('should be created', inject([BeolService], (service: BeolService) => {
+    it('should be created', () => {
         expect(service).toBeTruthy();
-        
-    }));
+    });
+
 });

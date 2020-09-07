@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { Component, Inject, OnInit } from '@angular/core';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { KnoraApiConnection, ReadResourceSequence } from '@dasch-swiss/dsp-js';
+import { AppInitService, DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
 import { BeolService } from '../services/beol.service';
-import { ReadResourcesSequence, SearchService } from '@knora/core';
-import { AppInitService } from '../app-init.service';
 
 @Component({
     selector: 'app-leoo-route',
@@ -15,10 +15,9 @@ export class LeooRouteComponent implements OnInit {
     notFound: boolean;
 
     constructor(
+        @Inject(DspApiConnectionToken) private _dspApiConnection: KnoraApiConnection,
         private _route: ActivatedRoute,
-        private _router: Router,
         private _beolService: BeolService,
-        private _searchService: SearchService,
         private _appInitService: AppInitService) {
     }
 
@@ -32,15 +31,15 @@ export class LeooRouteComponent implements OnInit {
                 // create a query that gets the Iri of the LEOO letter
                 const query = this._beolService.searchForLetterFromLEOO(this.repertoriumNumber);
 
-                this._searchService.doExtendedSearchReadResourceSequence(query).subscribe(
-                    (resourceSeq: ReadResourcesSequence) => {
+                this._dspApiConnection.v2.search.doExtendedSearch(query).subscribe(
+                    (resourceSeq: ReadResourceSequence) => {
 
-                        if (resourceSeq.numberOfResources === 1) {
+                        if (resourceSeq.resources.length === 1) {
 
                             const letterIri: string = resourceSeq.resources[0].id;
 
                             // given the Iri of the letter, display the whole resource
-                            this._beolService.routeByResourceType(this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#letter', letterIri);
+                            this._beolService.routeByResourceType(this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#letter', letterIri);
                         } else {
                             // letter not found
                             console.log(`letter with repertorium number ${this.repertoriumNumber} not found`);

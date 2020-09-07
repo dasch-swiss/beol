@@ -1,6 +1,6 @@
 <div class="full-size scroll-y-only">
 
-    <kui-progress-indicator *ngIf="isLoading" [color]="'#D88958'"></kui-progress-indicator>
+    <dsp-progress-indicator *ngIf="isLoading" [color]="'#D88958'"></dsp-progress-indicator>
 
     <div *ngIf="!isLoading">
 
@@ -14,39 +14,51 @@
         </div>
 
         <div class="main-content">
-            <h3 mat-card-subtitle>{{ontologyInfo?.getLabelForResourceClass(resource?.type)}}</h3>
-            <h2>{{resource?.label}}</h2>
+            <h3 mat-card-subtitle>{{resource?.readResource.resourceClassLabel}}</h3>
+            <h2>{{resource?.readResource.label}}</h2>
 
-            <div mat-line *ngFor="let prop of resource?.properties | kuiKey">
+            <div mat-line *ngFor="let prop of resource?.readResource.properties | keyvalue">
 
-                <div *ngIf="prop.key === KnoraConstants.hasStillImageFileValue; else noImage">
+                <div *ngIf="prop.key === dspConstants.StillImageFileValue; else noImage">
                     <!-- resource has images attached directly, display them -->
 
-                    <kui-still-image #OSDViewer *ngIf="!isLoading && resource.stillImageRepresentationsToDisplay.length > 0" class="osd-viewer" [images]="resource?.stillImageRepresentationsToDisplay">
-                    </kui-still-image>
+                    <dsp-still-image #OSDViewer
+                        *ngIf="!isLoading && resource.stillImageRepresentationsToDisplay.length > 0" class="osd-viewer"
+                        [images]="resource?.stillImageRepresentationsToDisplay">
+                    </dsp-still-image>
                 </div>
 
                 <ng-template #noImage>
                     <!-- resource has no images attached directly -->
-                    <span>{{ontologyInfo?.getLabelForProperty(prop.key)}}</span>
+                    <span>{{prop.value[0].propertyLabel}}</span>
                     <ul>
-                        <li *ngFor="let val of prop.value | kuiKey">
-                            <span [ngSwitch]="val.value.getClassName()">
-                                <read-text-value-as-html *ngSwitchCase="KnoraConstants.ReadTextValueAsHtml" [valueObject]="val.value" [ontologyInfo]="ontologyInfo" [bindEvents]="true"></read-text-value-as-html>
-                                <kui-text-value-as-string *ngSwitchCase="KnoraConstants.ReadTextValueAsString" [valueObject]="val.value"></kui-text-value-as-string>
-                                <kui-text-value-as-xml *ngSwitchCase="KnoraConstants.ReadTextValueAsXml" [valueObject]="val.value"></kui-text-value-as-xml>
-                                <kui-date-value *ngSwitchCase="KnoraConstants.ReadDateValue" [valueObject]="val.value" [calendar]="true" [era]="true"></kui-date-value>
-                                <kui-link-value *ngSwitchCase="KnoraConstants.ReadLinkValue" [valueObject]="val.value" [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
-                                <kui-integer-value *ngSwitchCase="KnoraConstants.ReadIntegerValue" [valueObject]="val.value"></kui-integer-value>
-                                <kui-decimal-value *ngSwitchCase="KnoraConstants.ReadDecimalValue" [valueObject]="val.value"></kui-decimal-value>
-                                <kui-geometry-value *ngSwitchCase="KnoraConstants.ReadGeomValue" [valueObject]="val.value"></kui-geometry-value>
-                                <kui-color-value *ngSwitchCase="KnoraConstants.ReadColorValue" [valueObject]="val.value"></kui-color-value>
-                                <kui-uri-value *ngSwitchCase="KnoraConstants.ReadUriValue" [valueObject]="val.value"></kui-uri-value>
-                                <kui-boolean-value *ngSwitchCase="KnoraConstants.ReadBooleanValue" [valueObject]="val.value"></kui-boolean-value>
-                                <kui-interval-value *ngSwitchCase="KnoraConstants.ReadIntervalValue" [valueObject]="val.value"></kui-interval-value>
-                                <read-list-value *ngSwitchCase="KnoraConstants.ReadListValue" [valueObject]="val.value"></read-list-value>
-                                <kui-textfile-value *ngSwitchCase="KnoraConstants.TextFileValue" [valueObject]="val.value"></kui-textfile-value>
-                                <span *ngSwitchDefault="">Not supported {{val.value.getClassName()}}</span>
+                        <li *ngFor="let val of prop.value">
+                            <span [ngSwitch]="val.type">
+                                <read-text-value *ngSwitchCase="dspConstants.TextValue"
+                                    [valueObject]="val" [resource]="resource.readResource" [bindEvents]="true">
+                                </read-text-value>
+                                <dsp-date-value *ngSwitchCase="dspConstants.DateValue" [displayValue]="val" [mode]="'read'" [displayOptions]="'all'">
+                                </dsp-date-value>
+                                <dsp-link-value *ngSwitchCase="dspConstants.LinkValue" [displayValue]="val"
+                                    [parentResource]="resource.readResource" [propIri]="val.property" [mode]="'read'" (referredResourceClicked)="resLinkClicked($event)">
+                                </dsp-link-value>
+                                <dsp-int-value *ngSwitchCase="dspConstants.IntValue" [displayValue]="val" [mode]="'read'">
+                                </dsp-int-value>
+                                <dsp-decimal-value *ngSwitchCase="dspConstants.DecimalValue" [displayValue]="val" [mode]="'read'">
+                                </dsp-decimal-value>
+                                <dsp-color-value *ngSwitchCase="dspConstants.ColorValue" [displayValue]="val" [mode]="'read'">
+                                </dsp-color-value>
+                                <dsp-uri-value *ngSwitchCase="dspConstants.UriValue" [displayValue]="val">
+                                </dsp-uri-value>
+                                <dsp-boolean-value *ngSwitchCase="dspConstants.BooleanValue" [displayValue]="val" [mode]="'read'">
+                                </dsp-boolean-value>
+                                <dsp-interval-value *ngSwitchCase="dspConstants.IntervalValue"
+                                    [displayValue]="val" [mode]="'read'"></dsp-interval-value>
+                                <read-list-value *ngSwitchCase="dspConstants.ListValue" [valueObject]="val">
+                                </read-list-value>
+                                <!-- NO VALUE COMPONENT: <dsp-textfile-value *ngSwitchCase="KnoraConstants.TextFileValue"
+                                    [displayValue]="val.value"></dsp-textfile-value> -->
+                                <span *ngSwitchDefault>Not supported {{val.type}}</span>
                             </span>
                         </li>
                     </ul>
@@ -54,19 +66,22 @@
             </div>
 
             <!-- Check for incoming images pointing to this resource -->
-            <kui-still-image #OSDViewer class="osd-viewer" *ngIf="!isLoading && resource?.incomingStillImageRepresentations?.length > 0 && resource.stillImageRepresentationsToDisplay.length > 0" [images]="resource?.stillImageRepresentationsToDisplay">
-            </kui-still-image>
+            <dsp-still-image #OSDViewer class="osd-viewer"
+                *ngIf="!isLoading && resource?.incomingStillImageRepresentations?.length > 0 && resource.stillImageRepresentationsToDisplay.length > 0"
+                [images]="resource?.stillImageRepresentationsToDisplay">
+            </dsp-still-image>
 
             <br>
             <br>
 
-            <div *ngIf="resource?.incomingLinks?.length > 0" class="incoming-link-position">
+            <div *ngIf="resource?.readResource.incomingReferences?.length > 0" class="incoming-link-position">
                 <p>
                     <strong>Incoming Links:</strong>
                 </p>
-                <mat-list *ngFor="let incomingLinkSourceRes of resource.incomingLinks">
+                <mat-list *ngFor="let incomingLinkSourceRes of resource.readResource.incomingReferences">
                     <mat-list-item>
-                        <span class="link" (click)="showIncomingRes(incomingLinkSourceRes.id, incomingLinkSourceRes.type)">{{incomingLinkSourceRes.label}}</span>
+                        <span class="link"
+                            (click)="showIncomingRes(incomingLinkSourceRes.id, incomingLinkSourceRes.type)">{{incomingLinkSourceRes.label}}</span>
                     </mat-list-item>
                 </mat-list>
             </div>

@@ -12,48 +12,54 @@
     <div *ngIf="numberOfAllResults !== 0 && result; else noResult">
         <h4>Number of results: {{numberOfAllResults + numberOfExternalResults}}</h4>
 
-        <kui-progress-indicator *ngIf="isLoading" [color]="'#D88958'"></kui-progress-indicator>
+        <dsp-progress-indicator *ngIf="isLoading" [color]="'#D88958'"></dsp-progress-indicator>
 
         <!-- the following list will be moved to @knora/viewer views -->
         <mat-accordion class="example-headers-align">
-            <mat-expansion-panel *ngFor="let res of result; let i = index; let first = first; let last = last;" [expanded]="step === i" (opened)="setStep(i)" hideToggle>
+            <mat-expansion-panel *ngFor="let res of result; let i = index; let first = first; let last = last;"
+                [expanded]="step === i" (opened)="setStep(i)" hideToggle>
                 <mat-expansion-panel-header>
                     <mat-panel-title>
-                        {{ontologyInfo?.getLabelForResourceClass(res.type)}}
+                        {{res?.entityInfo.classes[res.type].label}}
                     </mat-panel-title>
 
                     <mat-panel-description>
-                        {{res.label}}
-
-                        <!--<mat-icon>{{ontologyInfo?.getLabelForResourceClass(res.type) | lowercase}}</mat-icon>-->
-
-                        <!--<mat-icon *ngIf="step !== i">account_circle</mat-icon>-->
-                        <!--<mat-icon *ngIf="step === i">close</mat-icon>-->
+                        {{res?.label}}
                     </mat-panel-description>
                 </mat-expansion-panel-header>
 
                 <!-- content of the resource -->
                 <!-- this should be implemented from @knora/viewer object -->
-                <div mat-line *ngFor="let prop of res.properties | kuiKey">
-                    <!--<span>{{ontologyInfo?.getLabelForProperty(prop.key)}}</span>-->
+                <div mat-line *ngFor="let prop of res.properties | keyvalue">
                     <ul>
-                        <li *ngFor="let val of prop.value | kuiKey" class="without-bullets">
-                            <div [ngSwitch]="val.value.getClassName()">
+                        <li *ngFor="let val of prop.value" class="without-bullets">
+                            <div [ngSwitch]="val.type">
 
-                                <!-- only render math if panel is open: step === i-->
-                                <span *ngSwitchCase="KnoraConstants.ReadTextValueAsHtml" [mathJax]="val.value?.getContent()" [renderMath]="step === i" [valueObject]="val.value" [ontologyInfo]="ontologyInfo" [bindEvents]="false"></span>
+                                <span *ngSwitchCase="dspConstants.TextValue">
+                                    <!-- only render math if panel is open: step === i-->
+                                    <span *ngIf="_valueTypeService.getValueTypeOrClass(val) === 'ReadTextValueAsHtml'; else elseBlock" [mathJax]="val.strval"
+                                      [renderMath]="step === i" [valueObject]="val" [resource]="res"
+                                      [bindEvents]="false"></span>
+                                    </span>
+                                    <ng-template #elseBlock>
+                                        <!-- simple text -->
+                                        {{val.strval}}
+                                    </ng-template>
 
                                 <span class="bolder">
-                                    <kui-date-value *ngSwitchCase="KnoraConstants.ReadDateValue" [valueObject]="val.value" [calendar]="true" [era]="true"></kui-date-value>
+                                    <dsp-date-value *ngSwitchCase="dspConstants.DateValue" [displayValue]="val" [mode]="'read'" [displayOptions]="'all'">
+                                    </dsp-date-value>
 
-                                    <read-list-value *ngSwitchCase="KnoraConstants.ReadListValue" [valueObject]="val.value" [renderMath]="step === i"></read-list-value>
+                                    <read-list-value *ngSwitchCase="dspConstants.ListValue" [valueObject]="val"
+                                                     [renderMath]="step === i"></read-list-value>
 
-                                    <span *ngSwitchDefault="">{{val.value.getContent()}}</span>
+                                    <span *ngSwitchDefault>{{val.strval}}</span>
                                 </span>
 
                                 <br>
-                                <span class="mat-caption" *ngIf="ontologyInfo?.getLabelForProperty(prop.key) !== 'Text'">
-                                    {{ontologyInfo?.getLabelForProperty(prop.key)}}
+                                <span class="mat-caption"
+                                    *ngIf="val.type !== dspConstants.TextValue || _valueTypeService.getValueTypeOrClass(val) !== 'ReadTextValueAsHtml'">
+                                    {{val.propertyLabel}}
                                 </span>
 
                             </div>
@@ -61,7 +67,7 @@
                     </ul>
                 </div>
 
-                <!-- go to the viewer to access the resource informations -->
+                <!-- go to the viewer to access the resource information -->
                 <button mat-button color="primary" (click)="goToViewer(res.id, res.type)">Read more &rarr;</button>
 
                 <mat-action-row>
@@ -72,7 +78,9 @@
 
         </mat-accordion>
         <div class="action-panel" *ngIf="result.length > 0">
-            <button mat-button class="link center" (click)="loadMore(offset)" *ngIf="offset < maxOffset">Load more<br><mat-icon>keyboard_arrow_down</mat-icon></button>
+            <button mat-button class="link center" (click)="loadMore()" *ngIf="offset < maxOffset">Load more<br>
+                <mat-icon>keyboard_arrow_down</mat-icon>
+            </button>
         </div>
     </div>
 

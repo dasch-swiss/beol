@@ -1,27 +1,25 @@
-import { Component } from '@angular/core';
 import { Location } from '@angular/common';
+import { Component, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
-    IncomingService,
-    KnoraConstants,
-    OntologyCacheService,
-    OntologyInformation,
-    ReadPropertyItem,
-    ReadResource,
+    Constants,
+    KnoraApiConnection, ReadLinkValue,
     ReadTextValue,
-    ResourceService
-} from '@knora/core';
-import { BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
+    ReadValue,
+    ResourceClassAndPropertyDefinitions
+} from '@dasch-swiss/dsp-js';
+import { DspApiConnectionToken, AppInitService } from '@dasch-swiss/dsp-ui';
 import { Subscription } from 'rxjs';
+import { IncomingService } from 'src/app/services/incoming.service';
 import { BeolService } from '../../services/beol.service';
-import { AppInitService } from '../../app-init.service';
+import { BeolCompoundResource, BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
 
 class EndnoteProps implements PropertyValues {
     number: ReadTextValue[] = [];
-    text: ReadPropertyItem[] = [];
-    figure: ReadPropertyItem[] = [];
+    text: ReadTextValue[] = [];
+    figure: ReadLinkValue[] = [];
 
-    [index: string]: ReadPropertyItem[];
+    [index: string]: ReadValue[];
 }
 
 @Component({
@@ -32,32 +30,32 @@ class EndnoteProps implements PropertyValues {
 export class EndnoteComponent extends BeolResource {
 
     iri: string;
-    resource: ReadResource;
-    ontologyInfo: OntologyInformation;
+    resource: BeolCompoundResource;
+    ontologyInfo: ResourceClassAndPropertyDefinitions;
     incomingStillImageRepresentationCurrentOffset: number; // last offset requested for `this.resource.incomingStillImageRepresentations`
     isLoading = true;
     errorMessage: any;
     navigationSubscription: Subscription;
-    KnoraConstants = KnoraConstants;
+    dspConstants = Constants;
 
     propIris: PropIriToNameMapping = {
-        'number': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#endnoteHasNumber',
-        'text': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasText',
-        'figure': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasFigureValue'
+        'number': this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#endnoteHasNumber',
+        'text': this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#hasText',
+        'figure': this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#hasFigureValue'
     };
 
     props: EndnoteProps;
 
-    constructor(protected _route: ActivatedRoute,
-                protected _resourceService: ResourceService,
-                protected _incomingService: IncomingService,
-                protected _cacheService: OntologyCacheService,
-                public location: Location,
-                protected _beolService: BeolService,
-                private _appInitService: AppInitService
+    constructor(
+        @Inject(DspApiConnectionToken) protected _dspApiConnection: KnoraApiConnection,
+        protected _route: ActivatedRoute,
+        protected _incomingService: IncomingService,
+        public location: Location,
+        protected _beolService: BeolService,
+        private _appInitService: AppInitService
     ) {
 
-        super(_route, _resourceService, _cacheService, _incomingService, _beolService);
+        super(_dspApiConnection, _route, _incomingService, _beolService);
 
     }
 

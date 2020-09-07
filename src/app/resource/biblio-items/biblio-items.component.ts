@@ -1,23 +1,20 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { Component, Inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import {
-    IncomingService,
-    KnoraConstants,
-    OntologyCacheService,
-    OntologyInformation,
+    Constants,
+    KnoraApiConnection,
     ReadDateValue,
     ReadLinkValue,
-    ReadPropertyItem,
-    ReadResource,
     ReadTextValue,
     ReadUriValue,
-    ResourceService
-} from '@knora/core';
+    ReadValue
+} from '@dasch-swiss/dsp-js';
+import { DspApiConnectionToken, AppInitService } from '@dasch-swiss/dsp-ui';
 import { Subscription } from 'rxjs';
-import { BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
+import { IncomingService } from 'src/app/services/incoming.service';
 import { BeolService } from '../../services/beol.service';
-import { AppInitService } from '../../app-init.service';
+import { BeolCompoundResource, BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
 
 class BiblioItemsProps implements PropertyValues {
     startPage: ReadTextValue[] = [];
@@ -50,7 +47,7 @@ class BiblioItemsProps implements PropertyValues {
     journalIssue: ReadTextValue[] = [];
     externalLink: ReadUriValue[] = [];
 
-    [index: string]: ReadPropertyItem[];
+    [index: string]: ReadValue[];
 }
 
 @Component({
@@ -61,45 +58,46 @@ class BiblioItemsProps implements PropertyValues {
 export class BiblioItemsComponent extends BeolResource {
 
     iri: string;
-    resource: ReadResource;
-    ontologyInfo: OntologyInformation;
+    resource: BeolCompoundResource;
     incomingStillImageRepresentationCurrentOffset: number; // last offset requested for `this.resource.incomingStillImageRepresentations`
     isLoading = true;
     errorMessage: any;
     navigationSubscription: Subscription;
-    KnoraConstants = KnoraConstants;
+    dspConstants = Constants;
+
+    ontologyIri = this._appInitService.config['ontologyIRI'];
 
     propIris: PropIriToNameMapping = {
-        'id': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#beolIDs',
-        'comment': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#comment',
-        'mentionedIn': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#mentionedIn',
-        'endPage': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#endPage',
-        'startPage': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#startPage',
-        'isPartOfJournal': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#isPartOfJournalValue',
-        'isPartOfEditedBook': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#isPartOfEditedBookValue',
-        'isPartOfCollection': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#isPartOfCollectionValue',
-        'journalVolume': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#journalVolume',
-        'numVolumes': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#numVolumes',
-        'numPages': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#numPages',
-        'collectionNumber': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#collectionNumber',
-        'author': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#publicationHasAuthorValue',
-        'editor': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#publicationHasEditorValue',
-        'editorOrg': this._appInitService.getSettings().ontologyIRI + '/0801/biblio/v2#publicationHasEditorOrgValue',
-        'date': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#publicationHasDate',
-        'title': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#publicationHasTitle',
-        'subtitle': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#publicationHasSubtitle',
-        'name': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#hasName',
-        'publisher': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#publicationHasPublisherValue',
-        'abbreviation': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#publicationHasAbbreviation',
-        'location': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#publicationHasLocation',
-        'isReprinted': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#publicationIsReprintedValue',
-        'bookContent': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#bookHasContentValue',
-        'isbn': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#bookHasISBN',
-        'introduction': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#hasIntroductionValue',
-        'translator': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#publicationHasTranslatorValue',
-        'isTranslationOf': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#publicationIsTranslationOfValue',
-        'journalIssue': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#journalIssue',
-        'externalLink': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#publicationHasExternalLink',
+        'id': this.ontologyIri + '/ontology/0801/beol/v2#beolIDs',
+        'comment': this.ontologyIri + '/ontology/0801/beol/v2#comment',
+        'mentionedIn': this.ontologyIri + '/ontology/0801/beol/v2#mentionedIn',
+        'endPage': this.ontologyIri + '/ontology/0801/biblio/v2#endPage',
+        'startPage': this.ontologyIri + '/ontology/0801/biblio/v2#startPage',
+        'isPartOfJournal': this.ontologyIri + '/ontology/0801/biblio/v2#isPartOfJournalValue',
+        'isPartOfEditedBook': this.ontologyIri + '/ontology/0801/biblio/v2#isPartOfEditedBookValue',
+        'isPartOfCollection': this.ontologyIri + '/ontology/0801/biblio/v2#isPartOfCollectionValue',
+        'journalVolume': this.ontologyIri + '/ontology/0801/biblio/v2#journalVolume',
+        'numVolumes': this.ontologyIri + '/ontology/0801/biblio/v2#numVolumes',
+        'numPages': this.ontologyIri + '/ontology/0801/biblio/v2#numPages',
+        'collectionNumber': this.ontologyIri + '/ontology/0801/biblio/v2#collectionNumber',
+        'author': this.ontologyIri + '/ontology/0801/biblio/v2#publicationHasAuthorValue',
+        'editor': this.ontologyIri + '/ontology/0801/biblio/v2#publicationHasEditorValue',
+        'editorOrg': this.ontologyIri + '/0801/biblio/v2#publicationHasEditorOrgValue',
+        'date': this.ontologyIri + '/ontology/0801/biblio/v2#publicationHasDate',
+        'title': this.ontologyIri + '/ontology/0801/biblio/v2#publicationHasTitle',
+        'subtitle': this.ontologyIri + '/ontology/0801/biblio/v2#publicationHasSubtitle',
+        'name': this.ontologyIri + '/ontology/0801/biblio/v2#hasName',
+        'publisher': this.ontologyIri + '/ontology/0801/biblio/v2#publicationHasPublisherValue',
+        'abbreviation': this.ontologyIri + '/ontology/0801/biblio/v2#publicationHasAbbreviation',
+        'location': this.ontologyIri + '/ontology/0801/biblio/v2#publicationHasLocation',
+        'isReprinted': this.ontologyIri + '/ontology/0801/biblio/v2#publicationIsReprintedValue',
+        'bookContent': this.ontologyIri + '/ontology/0801/biblio/v2#bookHasContentValue',
+        'isbn': this.ontologyIri + '/ontology/0801/biblio/v2#bookHasISBN',
+        'introduction': this.ontologyIri + '/ontology/0801/biblio/v2#hasIntroductionValue',
+        'translator': this.ontologyIri + '/ontology/0801/biblio/v2#publicationHasTranslatorValue',
+        'isTranslationOf': this.ontologyIri + '/ontology/0801/biblio/v2#publicationIsTranslationOfValue',
+        'journalIssue': this.ontologyIri + '/ontology/0801/biblio/v2#journalIssue',
+        'externalLink': this.ontologyIri + '/ontology/0801/biblio/v2#publicationHasExternalLink',
 
         /* // Unused properties (names come from Knora biblio ontology)
         'volumeSubtitle': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#volumeSubtitle',
@@ -131,16 +129,15 @@ export class BiblioItemsComponent extends BeolResource {
     props: BiblioItemsProps;
 
     constructor(
+        @Inject(DspApiConnectionToken) protected _dspApiConnection: KnoraApiConnection,
         protected _route: ActivatedRoute,
-        protected _resourceService: ResourceService,
-        protected _cacheService: OntologyCacheService,
         protected _incomingService: IncomingService,
         public location: Location,
         protected _beolService: BeolService,
         private _appInitService: AppInitService
     ) {
 
-        super(_route, _resourceService, _cacheService, _incomingService, _beolService);
+        super(_dspApiConnection, _route, _incomingService, _beolService);
 
     }
 

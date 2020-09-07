@@ -6,31 +6,36 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { PublishedLetterComponent } from './publishedLetter.component';
-import { KuiActionModule } from '@knora/action';
 import { of } from 'rxjs';
-import { KuiCoreConfig, KuiCoreConfigToken } from '@knora/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReadTextValueAsHtmlComponent } from '../../properties/read-text-value-as-html/read-text-value-as-html.component';
 import { MathJaxDirective } from '../../directives/mathjax.directive';
-import { KuiViewerModule } from '@knora/viewer';
 import { ReadTextValueComponent } from '../../properties/read-text-value/read-text-value.component';
-import { AppInitService } from '../../app-init.service';
+import { AppInitService, DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
+import { ReadResource, ReadResourceSequence, ResourcesEndpointV2, SearchEndpointV2 } from '@dasch-swiss/dsp-js';
 
 describe('PublishedLetterComponent', () => {
     let component: PublishedLetterComponent;
     let fixture: ComponentFixture<PublishedLetterComponent>;
 
-    let appInitService: AppInitService;
-
     const id = 'http://rdfh.ch/0802/o2zZYlxUTnqPSx3pW0h7nQ'; // Olms Hildesheim id
 
     beforeEach(async(() => {
-        const appInitServiceSpy = jasmine.createSpyObj('AppInitService', ['getSettings']);
+        const dspConnectionSpy = {
+            v2: {
+                res: jasmine.createSpyObj('res', ['getResource']),
+                search: jasmine.createSpyObj('search', ['doExtendedSearch'])
+            }
+        };
+
+        const appInitServiceMock = {
+            config: {
+                ontologyIRI: 'http://0.0.0.0:3333'
+            }
+        };
 
         TestBed.configureTestingModule({
             imports: [
-                KuiActionModule,
-                KuiViewerModule,
                 MaterialModule,
                 HttpClientModule,
                 HttpClientTestingModule,
@@ -43,7 +48,7 @@ describe('PublishedLetterComponent', () => {
                 MathJaxDirective
             ],
             providers: [
-                {provide: Location},
+                { provide: Location },
                 {
                     provide: ActivatedRoute,
                     useValue: {
@@ -54,18 +59,20 @@ describe('PublishedLetterComponent', () => {
                         })
                     }
                 },
-                {provide: KuiCoreConfigToken, useValue: KuiCoreConfig},
-                {provide: AppInitService, useValue: appInitServiceSpy}
+                { provide: AppInitService, useValue: appInitServiceMock },
+                { provide: DspApiConnectionToken, useValue: dspConnectionSpy }
             ]
         })
             .compileComponents();
 
-        appInitServiceSpy.getSettings.and.returnValue({ontologyIRI: 'http://0.0.0.0:3333'});
-
-        appInitService = TestBed.get(AppInitService);
     }));
 
     beforeEach(() => {
+        const dspServiceSpy = TestBed.inject(DspApiConnectionToken);
+
+        (dspServiceSpy.v2.res as jasmine.SpyObj<ResourcesEndpointV2>).getResource.and.returnValue(of(new ReadResource()));
+        (dspServiceSpy.v2.search as jasmine.SpyObj<SearchEndpointV2>).doExtendedSearch.and.returnValue(of(new ReadResourceSequence([])));
+
         fixture = TestBed.createComponent(PublishedLetterComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
@@ -74,6 +81,5 @@ describe('PublishedLetterComponent', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
 
-        expect(appInitService.getSettings).toHaveBeenCalled();
     });
 });

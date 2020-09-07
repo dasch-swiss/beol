@@ -1,15 +1,9 @@
-import { Injectable } from '@angular/core';
-import {
-    ExtendedSearchParams,
-    KnoraConstants,
-    ReadLinkValue, ReadResource,
-    ReadResourcesSequence,
-    ResourceService,
-    SearchParamsService, SearchService
-} from '@knora/core';
+import { Inject, Injectable } from '@angular/core';
+import { AdvancedSearchParams, AdvancedSearchParamsService, AppInitService, DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
+import { ApiResponseError, KnoraApiConnection, ReadResourceSequence } from '@dasch-swiss/dsp-js';
 import { Router } from '@angular/router';
-import { AppInitService } from '../app-init.service';
 import { Observable } from 'rxjs';
+import { Constants, ReadResource, ReadLinkValue } from '@dasch-swiss/dsp-js';
 
 @Injectable({
     providedIn: 'root'
@@ -17,12 +11,11 @@ import { Observable } from 'rxjs';
 export class BeolService {
 
     constructor(
-        private _searchParamsService: SearchParamsService,
-        private _router: Router,
-        private _resourceService: ResourceService,
-        private _searchSerice: SearchService,
-        private _appInitService: AppInitService
-    ) {}
+        @Inject(DspApiConnectionToken) private _dspApiConnection: KnoraApiConnection,
+        private _searchParamsService: AdvancedSearchParamsService,
+        private _appInitService: AppInitService,
+        private _router: Router
+    ) { }
 
     /**
      * Given the ISBN, returns the Gravsearch to search for the book.
@@ -35,8 +28,8 @@ export class BeolService {
 
         const bookTemplate = `
     PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
-    PREFIX biblio: <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/biblio/simple/v2#>
-    PREFIX beol: <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/beol/simple/v2#>
+    PREFIX biblio: <${this._appInitService.config['ontologyIRI']}/ontology/0801/biblio/simple/v2#>
+    PREFIX beol: <${this._appInitService.config['ontologyIRI']}/ontology/0801/beol/simple/v2#>
 
     CONSTRUCT {
 
@@ -95,7 +88,7 @@ export class BeolService {
 
         const introTemplate = `
     PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
-    PREFIX beol: <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/beol/simple/v2#>
+    PREFIX beol: <${this._appInitService.config['ontologyIRI']}/ontology/0801/beol/simple/v2#>
 
     CONSTRUCT {
 
@@ -161,7 +154,7 @@ export class BeolService {
         }
 
         const correspondenceTemplate = `
-    PREFIX beol: <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/beol/simple/v2#>
+    PREFIX beol: <${this._appInitService.config['ontologyIRI']}/ontology/0801/beol/simple/v2#>
     PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
 
     CONSTRUCT {
@@ -231,7 +224,7 @@ export class BeolService {
 
         if (offset === 0) {
             // store the function so another Gravsearch query can be created with an increased offset
-            this._searchParamsService.changeSearchParamsMsg(new ExtendedSearchParams(generateGravsearchWithCustomOffset));
+            this._searchParamsService.changeSearchParamsMsg(new AdvancedSearchParams(generateGravsearchWithCustomOffset));
         }
 
         // console.log(correspondenceTemplate + offsetTemplate);
@@ -245,7 +238,7 @@ export class BeolService {
     searchForNewtonCorrespondence(offset: number = 0): string {
 
         const correspondenceTemplate = `
-            PREFIX newton: <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/newton/simple/v2#>
+            PREFIX newton: <${this._appInitService.config['ontologyIRI']}/ontology/0801/newton/simple/v2#>
             PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
 
             CONSTRUCT {
@@ -276,7 +269,7 @@ export class BeolService {
 
         if (offset === 0) {
             // store the function so another Gravsearch query can be created with an increased offset
-            this._searchParamsService.changeSearchParamsMsg(new ExtendedSearchParams(generateGravsearchWithCustomOffset));
+            this._searchParamsService.changeSearchParamsMsg(new AdvancedSearchParams(generateGravsearchWithCustomOffset));
         }
         return correspondenceTemplate + offsetTemplate;
     }
@@ -287,7 +280,7 @@ export class BeolService {
     searchForLeibnizCorrespondence(offset: number = 0): string {
 
         const correspondenceTemplate = `
-            PREFIX leibniz: <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/leibniz/simple/v2#>
+            PREFIX leibniz: <${this._appInitService.config['ontologyIRI']}/ontology/0801/leibniz/simple/v2#>
             PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
 
             CONSTRUCT {
@@ -318,11 +311,11 @@ export class BeolService {
 
         if (offset === 0) {
             // store the function so another Gravsearch query can be created with an increased offset
-            this._searchParamsService.changeSearchParamsMsg(new ExtendedSearchParams(generateGravsearchWithCustomOffset));
+            this._searchParamsService.changeSearchParamsMsg(new AdvancedSearchParams(generateGravsearchWithCustomOffset));
         }
         return correspondenceTemplate + offsetTemplate;
     }
-        /**
+    /**
      * Given the repertorium number of a letter from LEOO, searches for that letter.
      *
      * @param repertoriumNumber the repertorium number to search for.
@@ -331,8 +324,8 @@ export class BeolService {
     searchForLetterFromLEOO(repertoriumNumber: string): string {
 
         const letterByNumberTemplate = `
-        PREFIX beol: <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/beol/simple/v2#>
-        PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>  
+        PREFIX beol: <${this._appInitService.config['ontologyIRI']}/ontology/0801/beol/simple/v2#>
+        PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
         CONSTRUCT {
 
             ?letter knora-api:isMainResource true .
@@ -369,8 +362,8 @@ export class BeolService {
     getTranscriptionIriForRegion(regionIri: string, offset: number = 0) {
 
         const transcriptionIriForPage = `
-        PREFIX beol: <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/beol/simple/v2#>
-        PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>  
+        PREFIX beol: <${this._appInitService.config['ontologyIRI']}/ontology/0801/beol/simple/v2#>
+        PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
         CONSTRUCT {
             ?transcription knora-api:isMainResource true .
         } WHERE {
@@ -410,18 +403,18 @@ export class BeolService {
 
             ?trans a knora-api:Resource .
 
-            ?trans a <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/beol/simple/v2#transcription> .
-            
-            ?trans <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/beol/simple/v2#transcriptionOf> <${manuscriptEntryIri}> .
-            
-            ?trans <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/beol/simple/v2#layer> ?layer .
-            
+            ?trans a <${this._appInitService.config['ontologyIRI']}/ontology/0801/beol/simple/v2#transcription> .
+
+            ?trans <${this._appInitService.config['ontologyIRI']}/ontology/0801/beol/simple/v2#transcriptionOf> <${manuscriptEntryIri}> .
+
+            ?trans <${this._appInitService.config['ontologyIRI']}/ontology/0801/beol/simple/v2#layer> ?layer .
+
             FILTER(?layer != ${excludeLayer})
 
-            ${excludeLayer0filter}    
+            ${excludeLayer0filter}
         }
 
-        ORDER BY ?layer 
+        ORDER BY ?layer
         OFFSET ${offset}
         `;
 
@@ -440,20 +433,20 @@ export class BeolService {
 
             ?trans a knora-api:Resource .
 
-            ?trans a <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/beol/simple/v2#transcription> .
-            
-            ?trans <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/beol/simple/v2#transcriptionOf> <${manuscriptEntryIri}> .
-            
-            ?trans <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/beol/simple/v2#belongsToRegion> ?region .
-            
+            ?trans a <${this._appInitService.config['ontologyIRI']}/ontology/0801/beol/simple/v2#transcription> .
+
+            ?trans <${this._appInitService.config['ontologyIRI']}/ontology/0801/beol/simple/v2#transcriptionOf> <${manuscriptEntryIri}> .
+
+            ?trans <${this._appInitService.config['ontologyIRI']}/ontology/0801/beol/simple/v2#belongsToRegion> ?region .
+
             ?region knora-api:hasComment ?title .
-            
+
             FILTER(regex(?title, '01-TT'))
 
-           
+
         }
 
-        
+
         OFFSET ${offset}
         `;
 
@@ -469,21 +462,20 @@ export class BeolService {
     routeToPageWithActiveRegion(regionIri: string) {
         const isRegionOfValueProp = 'http://api.knora.org/ontology/knora-api/v2#isRegionOfValue';
 
-        this._resourceService.getReadResource(regionIri).subscribe(
-            (regionRes: ReadResourcesSequence) => {
+        this._dspApiConnection.v2.res.getResource(regionIri).subscribe(
+            (regionRes: ReadResource) => {
+                if (regionRes.type === Constants.Region
+                    && Array.isArray(regionRes.properties[isRegionOfValueProp])
+                    && regionRes.properties[isRegionOfValueProp].length === 1) {
 
-                if (regionRes.numberOfResources === 1 && regionRes.resources[0].type === KnoraConstants.Region
-                    && Array.isArray(regionRes.resources[0].properties[isRegionOfValueProp])
-                    && regionRes.resources[0].properties[isRegionOfValueProp].length === 1) {
+                    const regionOfVal: ReadLinkValue = regionRes.properties[isRegionOfValueProp][0] as ReadLinkValue;
 
-                    const regionOfVal: ReadLinkValue = <ReadLinkValue> regionRes.resources[0].properties[isRegionOfValueProp][0];
-
-                    if (regionOfVal.referredResource !== undefined) {
-                        const pageIri = regionOfVal.referredResource.id;
-                        const page = regionOfVal.referredResource.type;
+                    if (regionOfVal.linkedResource !== undefined) {
+                        const pageIri = regionOfVal.linkedResource.id;
+                        const page = regionOfVal.linkedResource.type;
 
                         // refer directly to page template, indicating the active region
-                        this._router.navigateByUrl('page/' + encodeURIComponent(pageIri) + '/' + encodeURIComponent(regionRes.resources[0].id));
+                        this._router.navigateByUrl('page/' + encodeURIComponent(pageIri) + '/' + encodeURIComponent(regionRes.id));
                     } else {
                         console.error(`Could not route region ${regionIri} to page`);
                     }
@@ -503,27 +495,27 @@ export class BeolService {
     private getRegionDimensionsAndPageQuery(regionIri: string): string {
 
         const regionDimsTemplate = `
-    PREFIX beol: <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/beol/simple/v2#>
-    PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>  
+    PREFIX beol: <${this._appInitService.config['ontologyIRI']}/ontology/0801/beol/simple/v2#>
+    PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
 
     CONSTRUCT {
        ?region knora-api:isMainResource true .
-		
-       ?region knora-api:hasGeometry ?geometry .  
+
+       ?region knora-api:hasGeometry ?geometry .
 
        ?region knora-api:isRegionOf ?page .
-       
+
        ?page knora-api:hasStillImageFile ?file .
 
     } WHERE {
        BIND(<${regionIri}> AS ?region)
- 
- 	   ?region knora-api:hasGeometry ?geometry . 
- 
+
+ 	   ?region knora-api:hasGeometry ?geometry .
+
        ?region knora-api:isRegionOf ?page .
-        
+
        ?page knora-api:hasStillImageFile ?file .
-       
+
     } OFFSET 0
         `;
 
@@ -536,11 +528,11 @@ export class BeolService {
      * @param regionIri the Iri of the region whose geometry and related file value should be retrieved.
      * @return the region resource with the geometry value and the related file value.
      */
-    getRegionDimsAndFile(regionIri: string): Observable<ReadResourcesSequence> {
+    getRegionDimsAndFile(regionIri: string): Observable<ApiResponseError | ReadResourceSequence> {
 
         const gravsearch = this.getRegionDimensionsAndPageQuery(regionIri);
 
-        return this._searchSerice.doExtendedSearchReadResourceSequence(gravsearch);
+        return this._dspApiConnection.v2.search.doExtendedSearch(gravsearch);
 
     }
 
@@ -553,8 +545,8 @@ export class BeolService {
     searchForLetterFromBEBB(title: string): string {
 
         const letterByTitleTemplate = `
-        PREFIX beol: <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/beol/simple/v2#>
-        PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>  
+        PREFIX beol: <${this._appInitService.config['ontologyIRI']}/ontology/0801/beol/simple/v2#>
+        PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
         CONSTRUCT {
 
             ?letter knora-api:isMainResource true .
@@ -590,8 +582,8 @@ export class BeolService {
     getPreviousAndNextPartOfCompound(compoundIri: string, currentSeqnum: number): string {
 
         const pageTemplate = `
-        PREFIX beol: <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/beol/simple/v2#>
-        PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>  
+        PREFIX beol: <${this._appInitService.config['ontologyIRI']}/ontology/0801/beol/simple/v2#>
+        PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
         CONSTRUCT {
 
             ?page knora-api:isMainResource true .
@@ -609,7 +601,7 @@ export class BeolService {
 
         ORDER BY ?seqnum
         OFFSET 0
-        
+
         `;
 
 
@@ -625,8 +617,8 @@ export class BeolService {
     getEntriesForManuscript(manuscriptIri: string, offset: number = 0): string {
 
         const manuscriptEntriesTemplate = `
-        PREFIX beol: <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/beol/simple/v2#>
-        PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>  
+        PREFIX beol: <${this._appInitService.config['ontologyIRI']}/ontology/0801/beol/simple/v2#>
+        PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
         CONSTRUCT {
 
             ?entry knora-api:isMainResource true .
@@ -640,7 +632,7 @@ export class BeolService {
         }
 
         ORDER BY ?seqnum
-        
+
         `;
 
         // offset component of the Gravsearch query
@@ -659,7 +651,7 @@ export class BeolService {
 
         if (offset === 0) {
             // store the function so another Gravsearch query can be created with an increased offset
-            this._searchParamsService.changeSearchParamsMsg(new ExtendedSearchParams(generateGravsearchWithCustomOffset));
+            this._searchParamsService.changeSearchParamsMsg(new AdvancedSearchParams(generateGravsearchWithCustomOffset));
         }
         return manuscriptEntriesTemplate + offsetTemplate;
 
@@ -673,47 +665,47 @@ export class BeolService {
      */
     routeByResourceType(referredResourceType: string, referredResourceIri: string): void {
 
-       if (referredResourceType === this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#person') {
+        if (referredResourceType === this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#person') {
             // route to person template
             this._router.navigateByUrl('person/' + encodeURIComponent(referredResourceIri));
-        } else if (referredResourceType === this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#Publisher') {
+        } else if (referredResourceType === this._appInitService.config['ontologyIRI'] + '/ontology/0801/biblio/v2#Publisher') {
             // route to publisher template
             this._router.navigateByUrl('publisher/' + encodeURIComponent(referredResourceIri));
-        } else if (referredResourceType === this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#letter') {
+        } else if (referredResourceType === this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#letter') {
             // route to letter template
             this._router.navigateByUrl('letter/' + encodeURIComponent(referredResourceIri));
-        } else if (referredResourceType === this._appInitService.getSettings().ontologyIRI + '/ontology/0801/newton/v2#letter') {
+        } else if (referredResourceType === this._appInitService.config['ontologyIRI'] + '/ontology/0801/newton/v2#letter') {
             this._router.navigateByUrl('newtonLetter/' + encodeURIComponent(referredResourceIri));
-        } else if  (referredResourceType === this._appInitService.getSettings().ontologyIRI + '/ontology/0801/leibniz/v2#letter') {
+        } else if (referredResourceType === this._appInitService.config['ontologyIRI'] + '/ontology/0801/leibniz/v2#letter') {
             this._router.navigateByUrl('leibnizLetter/' + encodeURIComponent(referredResourceIri));
-        } else if (referredResourceType === this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#endnote') {
+        } else if (referredResourceType === this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#endnote') {
             // route to letter template
             this._router.navigateByUrl('endnote/' + encodeURIComponent(referredResourceIri));
-        } else if (referredResourceType === this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#figure') {
+        } else if (referredResourceType === this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#figure') {
             // route to letter template
             this._router.navigateByUrl('figure/' + encodeURIComponent(referredResourceIri));
         } else if (
-            referredResourceType === this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#Book' ||
-            referredResourceType === this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#EditedBook' ||
-            referredResourceType === this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#CollectionArticle' ||
-            referredResourceType === this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#Collection' ||
-            referredResourceType === this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#Journal' ||
-            referredResourceType === this._appInitService.getSettings().ontologyIRI + '/ontology/0801/biblio/v2#JournalArticle') {
+            referredResourceType === this._appInitService.config['ontologyIRI'] + '/ontology/0801/biblio/v2#Book' ||
+            referredResourceType === this._appInitService.config['ontologyIRI'] + '/ontology/0801/biblio/v2#EditedBook' ||
+            referredResourceType === this._appInitService.config['ontologyIRI'] + '/ontology/0801/biblio/v2#CollectionArticle' ||
+            referredResourceType === this._appInitService.config['ontologyIRI'] + '/ontology/0801/biblio/v2#Collection' ||
+            referredResourceType === this._appInitService.config['ontologyIRI'] + '/ontology/0801/biblio/v2#Journal' ||
+            referredResourceType === this._appInitService.config['ontologyIRI'] + '/ontology/0801/biblio/v2#JournalArticle') {
             // route to biblio-items template
             this._router.navigateByUrl('biblio/' + encodeURIComponent(referredResourceIri));
-        } else if (referredResourceType === this._appInitService.getSettings().ontologyIRI  + '/ontology/0801/beol/v2#page') {
+        } else if (referredResourceType === this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#page') {
             this._router.navigateByUrl('page/' + encodeURIComponent(referredResourceIri));
         } else if (referredResourceType === 'http://api.knora.org/ontology/knora-api/v2#Region') {
             // route region to page it belongs to
             this.routeToPageWithActiveRegion(referredResourceIri);
-        } else if (referredResourceType === this._appInitService.getSettings().ontologyIRI  + '/ontology/0801/beol/v2#transcription') {
+        } else if (referredResourceType === this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#transcription') {
             this._router.navigateByUrl('transcription/' + encodeURIComponent(referredResourceIri));
-        } else if (referredResourceType === this._appInitService.getSettings().ontologyIRI  + '/ontology/0801/beol/v2#entryComment') {
+        } else if (referredResourceType === this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#entryComment') {
             this._router.navigateByUrl('entryComment/' + encodeURIComponent(referredResourceIri));
-        } else if (referredResourceType === this._appInitService.getSettings().ontologyIRI  + '/ontology/0801/beol/v2#manuscriptEntry') {
+        } else if (referredResourceType === this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#manuscriptEntry') {
             this._router.navigateByUrl('manuscriptEntry/' + encodeURIComponent(referredResourceIri));
-        } else if (referredResourceType === this._appInitService.getSettings().ontologyIRI  + '/ontology/0801/biblio/v2#letter') {
-           this._router.navigateByUrl('publishedLetter/' + encodeURIComponent(referredResourceIri));
+        } else if (referredResourceType === this._appInitService.config['ontologyIRI'] + '/ontology/0801/biblio/v2#letter') {
+            this._router.navigateByUrl('publishedLetter/' + encodeURIComponent(referredResourceIri));
         } else {
             // route to generic template
             this._router.navigateByUrl('simpleResource/' + encodeURIComponent(referredResourceIri));

@@ -1,19 +1,5 @@
-/* Copyright © 2016 Lukas Rosenthaler, André Kilchenmann, Andreas Aeschlimann,
- * Sofia Georgakopoulou, Ivan Subotic, Benjamin Geer, Tobias Schweizer.
- * This file is part of SALSAH.
- * SALSAH is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as published
- * by the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * SALSAH is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * You should have received a copy of the GNU Affero General Public
- * License along with SALSAH.  If not, see <http://www.gnu.org/licenses/>.
- * */
-
 import { Component, Input, OnInit } from '@angular/core';
-import { OntologyInformation, ReadTextValueAsHtml } from '@knora/core';
+import { ReadResource, ReadTextValueAsHtml } from '@dasch-swiss/dsp-js';
 
 @Component({
     selector: 'read-text-value-as-html',
@@ -23,7 +9,7 @@ import { OntologyInformation, ReadTextValueAsHtml } from '@knora/core';
 export class ReadTextValueAsHtmlComponent implements OnInit {
 
     private _valueObject: ReadTextValueAsHtml;
-    private _ontologyInfo: OntologyInformation;
+    private _resource: ReadResource;
     private _bindEvents: boolean; // indicates if click and mouseover events have to be bound
 
     @Input()
@@ -36,12 +22,12 @@ export class ReadTextValueAsHtmlComponent implements OnInit {
     }
 
     @Input()
-    set ontologyInfo(value: OntologyInformation) {
-        this._ontologyInfo = value;
+    set resource(value: ReadResource) {
+        this._resource = value;
     }
 
-    get ontologyInfo() {
-        return this._ontologyInfo;
+    get resource() {
+        return this._resource;
     }
 
     @Input()

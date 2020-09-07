@@ -3,38 +3,38 @@ import { MaterialModule } from '../../material-module';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
-import { HttpClientModule } from '@angular/common/http';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-
-import { KuiActionModule } from '@knora/action';
-import { KuiCoreConfig, KuiCoreConfigToken } from '@knora/core';
 
 import { BiblioItemsComponent } from './biblio-items.component';
 import { ReadTextValueAsHtmlComponent } from '../../properties/read-text-value-as-html/read-text-value-as-html.component';
 import { MathJaxDirective } from '../../directives/mathjax.directive';
-import { KuiViewerModule } from '@knora/viewer';
 import { ReadTextValueComponent } from '../../properties/read-text-value/read-text-value.component';
-import { AppInitService } from '../../app-init.service';
+import { AppInitService, DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
+import { ResourcesEndpointV2, SearchEndpointV2, ReadResource, ReadResourceSequence } from '@dasch-swiss/dsp-js';
 
 describe('BiblioItemsComponent', () => {
     let component: BiblioItemsComponent;
     let fixture: ComponentFixture<BiblioItemsComponent>;
 
-    let appInitService: AppInitService;
-
     const id = 'http://rdfh.ch/0802/eJ-JOOfoS4yvACkcTgZDfw';
 
     beforeEach(async(() => {
-        const appInitServiceSpy = jasmine.createSpyObj('AppInitService', ['getSettings']);
+        const dspConnectionSpy = {
+            v2: {
+                res: jasmine.createSpyObj('res', ['getResource']),
+                search: jasmine.createSpyObj('search', ['doExtendedSearch'])
+            }
+        };
+
+        const appInitServiceMock = {
+            config: {
+                ontologyIRI: 'http://0.0.0.0:3333'
+            }
+        };
 
         TestBed.configureTestingModule({
             imports: [
-                KuiActionModule,
-                KuiViewerModule,
                 MaterialModule,
-                RouterTestingModule,
-                HttpClientModule,
-                HttpClientTestingModule
+                RouterTestingModule
             ],
             declarations: [
                 BiblioItemsComponent,
@@ -53,18 +53,21 @@ describe('BiblioItemsComponent', () => {
                         })
                     }
                 },
-                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig },
-                { provide: AppInitService, useValue: appInitServiceSpy }
+                { provide: AppInitService, useValue: appInitServiceMock },
+                { provide: DspApiConnectionToken, useValue: dspConnectionSpy }
             ]
         })
             .compileComponents();
 
-        appInitServiceSpy.getSettings.and.returnValue({ontologyIRI: 'http://0.0.0.0:3333'});
-
-        appInitService = TestBed.get(AppInitService);
     }));
 
     beforeEach(() => {
+
+        const dspServiceSpy = TestBed.inject(DspApiConnectionToken);
+
+        (dspServiceSpy.v2.res as jasmine.SpyObj<ResourcesEndpointV2>).getResource.and.returnValue(of(new ReadResource()));
+        (dspServiceSpy.v2.search as jasmine.SpyObj<SearchEndpointV2>).doExtendedSearch.and.returnValue(of(new ReadResourceSequence([])));
+
         fixture = TestBed.createComponent(BiblioItemsComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
@@ -72,7 +75,5 @@ describe('BiblioItemsComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
-
-        expect(appInitService.getSettings).toHaveBeenCalled();
     });
 });

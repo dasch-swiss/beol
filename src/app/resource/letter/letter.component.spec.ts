@@ -6,32 +6,45 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
 import { LetterComponent } from './letter.component';
-import { KuiActionModule } from '@knora/action';
-import { KuiCoreConfig, KuiCoreConfigToken, OntologyCacheService } from '@knora/core';
 import { ReadTextValueAsHtmlComponent } from '../../properties/read-text-value-as-html/read-text-value-as-html.component';
 import { ReadListValueComponent } from '../../properties/read-list-value/read-list-value.component';
 import { MathJaxDirective } from '../../directives/mathjax.directive';
-import { KuiViewerModule } from '@knora/viewer';
 import { ReadTextValueComponent } from '../../properties/read-text-value/read-text-value.component';
 import { HanCatalogueDirective } from '../../directives/han-catalogue.directive';
-import { AppInitService } from '../../app-init.service';
 import { TeiLinkDirective } from '../../directives/tei-link.directive';
+import { AppInitService, DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
+import { ReadResource, ReadResourceSequence, ResourcesEndpointV2, SearchEndpointV2 } from '@dasch-swiss/dsp-js';
 
 describe('LetterComponent', () => {
     let component: LetterComponent;
     let fixture: ComponentFixture<LetterComponent>;
 
-    let appInitService: AppInitService;
-
     const id = 'http://rdfh.ch/0801/7ZvL2A5PQ9C4eAmr-n26gw';
 
     beforeEach(async(() => {
-        const appInitServiceSpy = jasmine.createSpyObj('AppInitService', ['getSettings']);
+        const dspConnectionSpy = {
+            v2: {
+                res: jasmine.createSpyObj('res', ['getResource']),
+                search: jasmine.createSpyObj('search', ['doExtendedSearch'])
+            }
+        };
+
+        const appInitServiceMock = {
+            config: {
+                ontologyIRI: 'http://0.0.0.0:3333',
+                tei: {
+                    'http://0.0.0.0:3333/ontology/0801/beol/v2#letter': {
+                        'textProperty': 'http://0.0.0.0:3333/ontology/0801/beol/v2#hasText',
+                        'mappingIRI': 'http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF/mappings/BEOLTEIMapping',
+                        'gravsearchTemplateIri': 'http://rdfh.ch/0801/templateIri',
+                        'teiHeaderXSLTIri': 'http://rdfh.ch/0801/headerIri'
+                    }
+                }
+            }
+        };
 
         TestBed.configureTestingModule({
             imports: [
-                KuiActionModule,
-                KuiViewerModule,
                 MaterialModule,
                 RouterTestingModule,
                 HttpClientModule,
@@ -47,7 +60,6 @@ describe('LetterComponent', () => {
                 TeiLinkDirective
             ],
             providers: [
-                OntologyCacheService,
                 {
                     provide: ActivatedRoute,
                     useValue: {
@@ -58,18 +70,19 @@ describe('LetterComponent', () => {
                         })
                     }
                 },
-                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig },
-                { provide: AppInitService, useValue: appInitServiceSpy }
+                { provide: AppInitService, useValue: appInitServiceMock },
+                { provide: DspApiConnectionToken, useValue: dspConnectionSpy }
             ]
         })
             .compileComponents();
-
-        appInitServiceSpy.getSettings.and.returnValue({ ontologyIRI: 'http://0.0.0.0:3333' });
-
-        appInitService = TestBed.get(AppInitService);
     }));
 
     beforeEach(() => {
+        const dspServiceSpy = TestBed.inject(DspApiConnectionToken);
+
+        (dspServiceSpy.v2.res as jasmine.SpyObj<ResourcesEndpointV2>).getResource.and.returnValue(of(new ReadResource()));
+        (dspServiceSpy.v2.search as jasmine.SpyObj<SearchEndpointV2>).doExtendedSearch.and.returnValue(of(new ReadResourceSequence([])));
+
         fixture = TestBed.createComponent(LetterComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
@@ -77,7 +90,5 @@ describe('LetterComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
-
-        expect(appInitService.getSettings).toHaveBeenCalled();
     });
 });

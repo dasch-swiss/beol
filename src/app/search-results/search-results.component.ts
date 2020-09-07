@@ -1,21 +1,22 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
-    ApiServiceResult,
-    CountQueryResult,
-    ExtendedSearchParams,
-    KnoraConstants,
-    OntologyCacheService,
-    OntologyInformation,
+    Constants,
+    CountQueryResponse,
+    KnoraApiConnection,
     ReadResource,
-    ReadResourcesSequence,
-    SearchParamsService,
-    SearchService
-} from '@knora/core';
-import { BeolService } from '../services/beol.service';
+    ReadResourceSequence
+} from '@dasch-swiss/dsp-js';
+import {
+    AdvancedSearchParams,
+    AdvancedSearchParamsService,
+    AppInitService,
+    DspApiConnectionToken,
+    ValueTypeService
+} from '@dasch-swiss/dsp-ui';
 import { Subscription } from 'rxjs';
-import { AppInitService } from '../app-init.service';
+import { BeolService } from '../services/beol.service';
 
 @Component({
     selector: 'app-search-results',
@@ -26,12 +27,11 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
     isLoading = true;
 
-    KnoraConstants = KnoraConstants;
+    dspConstants = Constants;
 
     result: ReadResource[] = []; // the results of a search query
-    ontologyInfo: OntologyInformation; // ontology information about resource classes and properties present in `result`
     numberOfAllResults: number; // total number of results (count query)
-    numberOfExternalResults: number = 0; // total number of results of text search on 3rd party repos
+    numberOfExternalResults = 0; // total number of results of text search on 3rd party repos
     rerender = false;
 
     // with the http get request, we need also a variable for error messages;
@@ -40,7 +40,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
     offset = 0;
     maxOffset = 0;
-    gravsearchGenerator: ExtendedSearchParams;
+    gravsearchGenerator: AdvancedSearchParams;
 
     step: number = undefined;
     panelOpenState = false;
@@ -50,18 +50,17 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
     navigationSubscription: Subscription;
 
-    beolIri: string = 'http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF';
+    beolIri = 'http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF';
 
-    constructor (
+    constructor(
+        @Inject(DspApiConnectionToken) private _dspApiConnection: KnoraApiConnection,
+        private _appInitService: AppInitService,
         private _route: ActivatedRoute,
-        private _searchService: SearchService,
-        private _cacheService: OntologyCacheService,
-        private _searchParamsService: SearchParamsService,
+        private _searchParamsService: AdvancedSearchParamsService,
         private _router: Router,
         public location: Location,
         private _beol: BeolService,
-        private _appInitService: AppInitService) {
-
+        public _valueTypeService: ValueTypeService) {
     }
 
     ngOnInit() {
@@ -76,7 +75,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
             if (this.searchMode === 'fulltext') {
                 // filter by project
                 this.searchQuery = params.get('q');
-            } else if (this.searchMode === 'extended') {
+            } else if (this.searchMode === 'gravsearch') {
                 this.gravsearchGenerator = this._searchParamsService.getSearchParams();
                 this.generateGravsearchQuery();
             }
@@ -114,7 +113,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         for (let it = 0; it < results.length; it++) {
             filter += '?letterNumber = "' + results[it] + '"';
             if (it !== results.length - 1) {
-                filter += " || "; // or operation should be in double quote otherwise it is skipped
+                filter += ' || '; // or operation should be in double quote otherwise it is skipped
             }
         }
         return filter;
@@ -128,7 +127,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     queryExpressionWithLetterID(filter: string, ontology: string, property: string): string {
 
         const letterByNumberTemplate = `
-            PREFIX ${ontology}: <${this._appInitService.getSettings().ontologyIRI}/ontology/0801/${ontology}/simple/v2#>
+            PREFIX ${ontology}: <${this._appInitService.config['ontologyIRI']}/ontology/0801/${ontology}/simple/v2#>
             PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
 
             CONSTRUCT {
@@ -154,8 +153,8 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
      * Extended search for letters by ID
      */
     extendedSearchForExternalLetters(query: string) {
-        this._searchService.doExtendedSearchReadResourceSequence(query).subscribe(
-            (resourceSeq: ReadResourcesSequence) => {
+        this._dspApiConnection.v2.search.doExtendedSearch(query).subscribe(
+            (resourceSeq: ReadResourceSequence) => {
                 this.processSearchResults(resourceSeq);
                 this.numberOfExternalResults += resourceSeq.resources.length;
             }
@@ -190,22 +189,22 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
      */
     getResultsLeibniz() {
         // cache the leibniz ontology before starting the text search to prevent unnecessary loading of ontology during the process
-        this._cacheService.getEntityDefinitionsForOntologies(
+        /*this._cacheService.getEntityDefinitionsForOntologies(
             [this._appInitService.getSettings().ontologyIRI + '/ontology/0801/leibniz/v2']).subscribe(
-            (info2: OntologyInformation) => {
-                const searchRoute = this._appInitService.getSettings().leibnizApi + 'select?q=type%3Abrief+AND+(+volltext%3A';
-                const proxyurl = 'https://cors-anywhere.herokuapp.com/';
-                const experssions = ['id', 'reihe', 'band', 'brief_nummer', 'all_suggest', 'ort_anzeige',
-                    'datum_anzeige', 'datum_gregorianisch', 'datum_julianisch', 'kontext'];
-                const format = ')&rows=9999&wt=json';
-                const searchExpression = this.makeLeibnizSearchExpressions(searchRoute, experssions) + format;
-                fetch(searchExpression) // https://cors-anywhere.herokuapp.com/https://example.com
-                    .then(response => response.json())
-                    .then(contents => {
-                        this.getLeibnizLetters(contents.response.docs);
-                    })
-                    .catch(() => console.log('Can’t access ' + searchExpression + ' response. Blocked by browser?'));
-            });
+                (info2: OntologyInformation) => {*/
+                    const searchRoute = this._appInitService.config['leibnizApi'] + 'select?q=type%3Abrief+AND+(+volltext%3A';
+                    const proxyurl = 'https://cors-anywhere.herokuapp.com/';
+                    const experssions = ['id', 'reihe', 'band', 'brief_nummer', 'all_suggest', 'ort_anzeige',
+                        'datum_anzeige', 'datum_gregorianisch', 'datum_julianisch', 'kontext'];
+                    const format = ')&rows=9999&wt=json';
+                    const searchExpression = this.makeLeibnizSearchExpressions(searchRoute, experssions) + format;
+                    fetch(searchExpression) // https://cors-anywhere.herokuapp.com/https://example.com
+                        .then(response => response.json())
+                        .then(contents => {
+                            this.getLeibnizLetters(contents.response.docs);
+                        })
+                        .catch(() => console.log('Can’t access ' + searchExpression + ' response. Blocked by browser?'));
+                // });
     }
     getNewtonLetters(content: string) {
         /*todo just parses the first page of the results due to hard coded pagination*/
@@ -233,25 +232,25 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
      */
     getResultsNewton() {
         // cache the newton ontology before starting the text search to prevent unnecessary loading of ontology during the process
-        this._cacheService.getEntityDefinitionsForOntologies(
+        /*this._cacheService.getEntityDefinitionsForOntologies(
             [this._appInitService.getSettings().ontologyIRI + '/ontology/0801/newton/v2']).subscribe(
-            (info2: OntologyInformation) => {
-                const searchRoute = 'http://www.newtonproject.ox.ac.uk/search/results?n=25&cat=';
-                const proxyurl = 'https://cors-anywhere.herokuapp.com/';
-                const mathCategory = 'Mathematics&ce=0&keyword=';
-                const opticsCategory = 'Optics&ce=0&keyword=';
-                const queryTail = '&sort=relevance';
-                const searchExpressions = [searchRoute + mathCategory + this.searchQuery + queryTail,
+                (info2: OntologyInformation) => {*/
+                    const searchRoute = 'http://www.newtonproject.ox.ac.uk/search/results?n=25&cat=';
+                    const proxyurl = 'https://cors-anywhere.herokuapp.com/';
+                    const mathCategory = 'Mathematics&ce=0&keyword=';
+                    const opticsCategory = 'Optics&ce=0&keyword=';
+                    const queryTail = '&sort=relevance';
+                    const searchExpressions = [searchRoute + mathCategory + this.searchQuery + queryTail,
                     searchRoute + opticsCategory + this.searchQuery + queryTail];
-                for (let it = 0; it < searchExpressions.length; it++) {
-                    fetch(proxyurl + searchExpressions[it]) // https://cors-anywhere.herokuapp.com/https://example.com
-                        .then(response => response.text())
-                        .then(contents => {
-                            this.getNewtonLetters(contents);
-                        })
-                        .catch(() => console.log('Can’t access ' + searchExpressions[it] + ' response. Blocked by browser?'));
-                }
-            });
+                    for (let it = 0; it < searchExpressions.length; it++) {
+                        fetch(proxyurl + searchExpressions[it]) // https://cors-anywhere.herokuapp.com/https://example.com
+                            .then(response => response.text())
+                            .then(contents => {
+                                this.getNewtonLetters(contents);
+                            })
+                            .catch(() => console.log('Can’t access ' + searchExpressions[it] + ' response. Blocked by browser?'));
+                    }
+                // });
     }
 
     /**
@@ -264,45 +263,45 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         if (this.searchMode === 'fulltext') {
             // cache the beol ontology and its dependencies before starting the text search to
             // prevent unnecessary loading of ontology during the process
-            this._cacheService.getEntityDefinitionsForOntologies(
+            /*this._cacheService.getEntityDefinitionsForOntologies(
                 [this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2']).subscribe(
-                (info2: OntologyInformation) => {
+                    (info2: OntologyInformation) => {*/
 
-                    const searchParams = { limitToProject: this.beolIri };
-                    // perform count query
-                    if (this.offset === 0) {
+                        const searchParams = { limitToProject: this.beolIri };
+                        // perform count query
+                        if (this.offset === 0) {
 
-                        this._searchService.doFullTextSearchCountQueryCountQueryResult(this.searchQuery, searchParams)
+                            this._dspApiConnection.v2.search.doFulltextSearchCountQuery(this.searchQuery, this.offset, searchParams)
+                                .subscribe(
+                                    this.showNumberOfAllResults,
+                                    (error: any) => {
+                                        this.errorMessage = <any>error;
+                                        // console.log('numberOfAllResults', this.numberOfAllResults);
+                                    }
+                                );
+                            // here get the search results from the other projects
+                            this.getResultsLeibniz();
+                            this.getResultsNewton();
+
+                        }
+
+                        // perform full text search
+
+                        this._dspApiConnection.v2.search.doFulltextSearch(this.searchQuery, this.offset, searchParams)
                             .subscribe(
-                                this.showNumberOfAllResults,
+                                this.processSearchResults, // function pointer
                                 (error: any) => {
                                     this.errorMessage = <any>error;
-                                    // console.log('numberOfAllResults', this.numberOfAllResults);
-                                }
+                                },
                             );
-                        // here get the search results from the other projects
-                        this.getResultsLeibniz();
-                        this.getResultsNewton();
-
-                    }
-
-                    // perform full text search
-
-                    this._searchService.doFullTextSearchReadResourceSequence(this.searchQuery, this.offset, searchParams)
-                        .subscribe(
-                            this.processSearchResults, // function pointer
-                            (error: any) => {
-                                this.errorMessage = <any>error;
-                            },
-                        );
-                });
+                    // });
 
             // EXTENDED SEARCH
-        } else if (this.searchMode === 'extended') {
-            console.log(this.searchQuery)
+        } else if (this.searchMode === 'gravsearch') {
+            // console.log(this.searchQuery)
             // perform count query
             if (this.offset === 0) {
-                this._searchService.doExtendedSearchCountQueryCountQueryResult(this.searchQuery)
+                this._dspApiConnection.v2.search.doExtendedSearchCountQuery(this.searchQuery)
                     .subscribe(
                         this.showNumberOfAllResults,
                         (error: any) => {
@@ -311,7 +310,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
                     );
             }
 
-            this._searchService.doExtendedSearchReadResourceSequence(this.searchQuery)
+            this._dspApiConnection.v2.search.doExtendedSearch(this.searchQuery)
                 .subscribe(
                     this.processSearchResults, // function pointer
                     (error: any) => {
@@ -326,15 +325,15 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     /**
      * Shows total number of results returned by a count query.
      *
-     * @param {ApiServiceResult} countQueryResult the response to a count query.
+     * @param countQueryResult the response to a count query.
      */
-    private showNumberOfAllResults = (countQueryResult: CountQueryResult) => {
+    private showNumberOfAllResults = (countQueryResult: CountQueryResponse) => {
         this.numberOfAllResults = countQueryResult.numberOfResults;
 
         if (this.numberOfAllResults > 0) {
             // offset is 0-based
             // if numberOfAllResults equals the pagingLimit, the max. offset is 0
-            this.maxOffset = Math.floor((this.numberOfAllResults - 1) / this._appInitService.getSettings().pagingLimit);
+            this.maxOffset = Math.floor((this.numberOfAllResults - 1) / this._appInitService.config['pagingLimit']);
         } else {
             this.maxOffset = 0;
         }
@@ -351,15 +350,15 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
      *
      * @param {ApiServiceResult} searchResult the answer to a search request.
      */
-    private processSearchResults = (searchResult: ReadResourcesSequence) => {
+    private processSearchResults = (searchResult: ReadResourceSequence) => {
         // assign ontology information to a variable so it can be used in the component's template
-        if (this.ontologyInfo === undefined) {
+        /* if (this.ontologyInfo === undefined) {
             // init ontology information
-            this.ontologyInfo = searchResult.ontologyInformation;
+            this.ontologyInfo = searchResult.resources[0].entityInfo;
         } else {
             // update ontology information
-            this.ontologyInfo.updateOntologyInformation(searchResult.ontologyInformation);
-        }
+            this.ontologyInfo.updateOntologyInformation(searchResult.resources[0].entityInfo);
+        }*/
         // append results to search results
         // console.log('results 1', this.result);
         this.result = this.result.concat(searchResult.resources);
@@ -392,7 +391,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
      * @param resourceType the type (class) of the resource.
      */
     goToViewer(resourceIri: string, resourceType: string) {
-
         this._beol.routeByResourceType(resourceType, resourceIri);
     }
 
@@ -410,7 +408,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
             return;
         }
 
-        if (this.searchMode === 'extended') {
+        if (this.searchMode === 'gravsearch') {
             this.generateGravsearchQuery();
         }
 

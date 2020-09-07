@@ -1,26 +1,25 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-
+import { Component, Inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import {
-    IncomingService,
-    KnoraConstants,
-    OntologyCacheService,
-    OntologyInformation,
+    Constants,
+    KnoraApiConnection,
     ReadDateValue,
     ReadLinkValue,
     ReadListValue,
-    ReadPropertyItem,
-    ReadResource,
     ReadTextValue,
     ReadTextValueAsString,
     ReadUriValue,
-    ResourceService
-} from '@knora/core';
-import { BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
+    ReadValue,
+    ResourceClassAndPropertyDefinitions
+} from '@dasch-swiss/dsp-js';
+import { AppInitService, DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
 import { Subscription } from 'rxjs';
+import { IncomingService } from 'src/app/services/incoming.service';
 import { BeolService } from '../../services/beol.service';
-import { AppInitService } from '../../app-init.service';
+import { BeolCompoundResource, BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
+import { HttpClient } from '@angular/common/http';
+
 
 class LetterProps implements PropertyValues {
     id: ReadTextValue[] = [];
@@ -37,7 +36,7 @@ class LetterProps implements PropertyValues {
     npID: ReadTextValue[] = [];
     language: ReadTextValue[] = [];
 
-    [index: string]: ReadPropertyItem[];
+    [index: string]: ReadValue[];
 }
 
 @Component({
@@ -47,46 +46,49 @@ class LetterProps implements PropertyValues {
 })
 export class NewtonLetterComponent extends BeolResource {
     iri: string;
-    resource: ReadResource;
-    ontologyInfo: OntologyInformation;
+    resource: BeolCompoundResource;
+    ontologyInfo: ResourceClassAndPropertyDefinitions;
     incomingStillImageRepresentationCurrentOffset: number; // last offset requested for `this.resource.incomingStillImageRepresentations`
     isLoading = true;
     isLoadingText = true;
     errorMessage: any;
     navigationSubscription: Subscription;
-    KnoraConstants = KnoraConstants;
+    dspConstants = Constants;
 
     letter: string;
     test: string;
 
+    ontologyIri = this._appInitService.config['ontologyIRI'];
+
     propIris: PropIriToNameMapping = {
-        'id': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#beolIDs',
-        'date': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#creationDate',
-        'author': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasAuthorValue',
-        'recipient': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasRecipientValue',
-        'facsimiles': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/newton/v2#hasFacsimiles',
-        'subject': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasSubject',
-        'text': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#hasText',
-        'mentionedPerson': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#mentionsPersonValue',
-        'replyTo': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/newton/v2#isReplyToValue',
-        'location': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#location',
-        'title': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#title',
-        'npID': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/newton/v2#newtonProjectID',
-        'language': this._appInitService.getSettings().ontologyIRI + '/ontology/0801/beol/v2#letterHasLanguage',
+        'id': this.ontologyIri + '/ontology/0801/beol/v2#beolIDs',
+        'date': this.ontologyIri + '/ontology/0801/beol/v2#creationDate',
+        'author': this.ontologyIri + '/ontology/0801/beol/v2#hasAuthorValue',
+        'recipient': this.ontologyIri + '/ontology/0801/beol/v2#hasRecipientValue',
+        'facsimiles': this.ontologyIri + '/ontology/0801/newton/v2#hasFacsimiles',
+        'subject': this.ontologyIri + '/ontology/0801/beol/v2#hasSubject',
+        'text': this.ontologyIri + '/ontology/0801/beol/v2#hasText',
+        'mentionedPerson': this.ontologyIri + '/ontology/0801/beol/v2#mentionsPersonValue',
+        'replyTo': this.ontologyIri + '/ontology/0801/newton/v2#isReplyToValue',
+        'location': this.ontologyIri + '/ontology/0801/beol/v2#location',
+        'title': this.ontologyIri + '/ontology/0801/beol/v2#title',
+        'npID': this.ontologyIri + '/ontology/0801/newton/v2#newtonProjectID',
+        'language': this.ontologyIri + '/ontology/0801/beol/v2#letterHasLanguage',
     };
 
     props: LetterProps;
 
-    constructor(protected _route: ActivatedRoute,
-                protected _resourceService: ResourceService,
-                protected _cacheService: OntologyCacheService,
-                protected _incomingService: IncomingService,
-                public location: Location,
-                protected _beolService: BeolService,
-                private _appInitService: AppInitService
+    constructor(
+        @Inject(DspApiConnectionToken) protected _dspApiConnection: KnoraApiConnection,
+        protected _route: ActivatedRoute,
+        protected _incomingService: IncomingService,
+        public location: Location,
+        protected _beolService: BeolService,
+        private _appInitService: AppInitService,
+        private _http: HttpClient
     ) {
 
-        super(_route, _resourceService, _cacheService, _incomingService, _beolService);
+        super(_dspApiConnection, _route, _incomingService, _beolService);
 
     }
 
@@ -98,7 +100,7 @@ export class NewtonLetterComponent extends BeolResource {
         this.mapper(props);
         this.props = props;
         // get the id from the route newtonletter/:id e.g. NATP00120
-        this.getNewtonLetterText(this.props.npID[0].getContent());
+        this.getNewtonLetterText(this.props.npID[0].strval);
     }
 
 
@@ -113,10 +115,10 @@ export class NewtonLetterComponent extends BeolResource {
         fetch(proxyurl + url) // https://cors-anywhere.herokuapp.com/https://example.com
             .then(response => response.text())
             .then(contents => {
-                this.getNewtonLetterBody(contents);
-                this.isLoadingText = false;
-            })
-            .catch(() => console.log('Can’t access ' + url + ' response. Blocked by browser?'));
+                    this.getNewtonLetterBody(contents);
+                    this.isLoadingText = false;
+                }
+            ).catch(() => console.log('Can’t access ' + url + ' response. Blocked by browser?'));
     }
 
     private getNewtonLetterBody(contents) {
@@ -134,17 +136,19 @@ export class NewtonLetterComponent extends BeolResource {
             }
         }
     }
+
     private imageSrcAttribute(element) {
         const imgs = element.getElementsByTagName('img');
         for (let imgIt = 0; imgIt < imgs.length; imgIt++) {
             const image = imgs[imgIt];
             if (image.src) {
-                image.src = image.src.replace(this._appInitService.getSettings().appURL, 'http://www.newtonproject.ox.ac.uk');
-                console.log(this._appInitService.getSettings().appURL);
+                image.src = image.src.replace(this._appInitService.config['appURL'], 'http://www.newtonproject.ox.ac.uk');
+                // console.log(this._appInitService.config['appURL']);
             }
         }
         return element;
     }
+
     showIncomingRes(resIri, resType) {
         this._beolService.routeByResourceType(resType, resIri);
     }

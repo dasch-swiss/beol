@@ -1,17 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MaterialModule } from '../material-module';
-import { KuiActionModule } from '@knora/action';
-import {
-    ConvertJSONLD,
-    KuiCoreConfig, KuiCoreConfigToken,
-    OntologyInformation,
-    Properties,
-    ResourceClasses,
-    ResourceService,
-    SearchService
-} from '@knora/core';
-import { KuiSearchModule } from '@knora/search';
 import { IntroductionComponent } from './introduction.component';
 import { ReadTextValueAsHtmlComponent } from '../properties/read-text-value-as-html/read-text-value-as-html.component';
 import { ReadListValueComponent } from '../properties/read-list-value/read-list-value.component';
@@ -19,7 +8,8 @@ import { of } from 'rxjs';
 import { BeolService } from '../services/beol.service';
 import { ActivatedRoute } from '@angular/router';
 import { MathJaxDirective } from '../directives/mathjax.directive';
-import { AppInitService } from '../app-init.service';
+import { DspApiConnectionToken, AppInitService } from '@dasch-swiss/dsp-ui';
+import { ReadResource, ReadResourceSequence, ResourcesEndpointV2, SearchEndpointV2 } from '@dasch-swiss/dsp-js';
 
 describe('IntroductionComponent', () => {
     let component: IntroductionComponent;
@@ -27,21 +17,24 @@ describe('IntroductionComponent', () => {
     const project = 'leooIV';
     const id = 'goldbach_introduction_1';
 
-    let beolServiceSpy: jasmine.SpyObj<BeolService>; // see https://angular.io/guide/testing#angular-testbed
-    let searchServiceSpy: jasmine.SpyObj<SearchService>;
-    let resourceServiceSpy: jasmine.SpyObj<ResourceService>;
-    let appInitService: AppInitService;
-
-    const spyBeolService = jasmine.createSpyObj('BeolService', ['searchForIntroductionById']);
-    const spySearchService = jasmine.createSpyObj('SearchService', ['doExtendedSearchReadResourceSequence']);
-    const spyResourceService = jasmine.createSpyObj('ResourceService', ['getReadResource']);
-    const appInitServiceSpy = jasmine.createSpyObj('AppInitService', ['getSettings']);
-
     beforeEach(async(() => {
+
+        const dspConnectionSpy = {
+            v2: {
+                res: jasmine.createSpyObj('res', ['getResource']),
+                search: jasmine.createSpyObj('search', ['doExtendedSearch'])
+            }
+        };
+        const beolServiceSpy = jasmine.createSpyObj('BeolService', ['searchForIntroductionById']);
+
+        const appInitServiceMock = {
+            config: {
+                ontologyIRI: 'http://0.0.0.0:3333'
+            }
+        };
+
         TestBed.configureTestingModule({
             imports: [
-                KuiActionModule,
-                KuiSearchModule,
                 MaterialModule,
                 RouterTestingModule
             ],
@@ -67,18 +60,44 @@ describe('IntroductionComponent', () => {
                         )
                     }
                 },
-                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig },
-                { provide: BeolService, useValue: spyBeolService },
-                { provide: SearchService, useValue: spySearchService },
-                { provide: ResourceService, useValue: spyResourceService },
-                { provide: AppInitService, useValue: appInitServiceSpy }
+                { provide: BeolService, useValue: beolServiceSpy },
+                { provide: AppInitService, useValue: appInitServiceMock },
+                { provide: DspApiConnectionToken, useValue: dspConnectionSpy }
             ]
         })
             .compileComponents();
 
-        beolServiceSpy = TestBed.get(BeolService);
+    }));
 
-        beolServiceSpy.searchForIntroductionById.and.callFake((introid: string) => {
+    beforeEach(() => {
+
+        const dspConnectionSpy = TestBed.inject(DspApiConnectionToken);
+
+        (dspConnectionSpy.v2.search as jasmine.SpyObj<SearchEndpointV2>).doExtendedSearch.and.callFake((gravsearch: string) => {
+
+            const res = new ReadResource();
+            res.id = 'http://rdfh.ch/0801/jTAU22HmTJWplGJgO6uVIw';
+
+            const seq = new ReadResourceSequence([res]);
+
+            return of(
+                seq
+            );
+        });
+
+        (dspConnectionSpy.v2.res as jasmine.SpyObj<ResourcesEndpointV2>).getResource.and.callFake((resIri) => {
+
+            const res = new ReadResource();
+
+            return of(
+                res
+            );
+
+        });
+
+        const beolServiceSpy = TestBed.inject(BeolService);
+
+        (beolServiceSpy as jasmine.SpyObj<BeolService>).searchForIntroductionById.and.callFake((introid: string) => {
 
             const introTemplate = `
     PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
@@ -107,75 +126,56 @@ describe('IntroductionComponent', () => {
             return introTemplate;
         });
 
-        searchServiceSpy = TestBed.get(SearchService);
 
-        searchServiceSpy.doExtendedSearchReadResourceSequence.and.callFake((gravsearch: string) => {
-
-            const introJson = require('../test-data/introduction/gravsearch-result-goldbach_introduction_1-expanded.json'); // mock response
-
-            const intro = ConvertJSONLD.createReadResourcesSequenceFromJsonLD(introJson);
-
-            const resClasses: ResourceClasses = require('../test-data/introduction/resource-classes.json');
-            const properties: Properties = require('../test-data/introduction/properties.json');
-
-            const ontoInfo = new OntologyInformation({}, resClasses, properties);
-
-            intro.ontologyInformation.updateOntologyInformation(ontoInfo);
-
-            return of(
-                intro
-            );
-        });
-
-        resourceServiceSpy = TestBed.get(ResourceService);
-
-        resourceServiceSpy.getReadResource.and.callFake((resIri) => {
-
-            const introJson = require('../test-data/introduction/introduction_1-expanded.json'); // mock response
-
-            const intro = ConvertJSONLD.createReadResourcesSequenceFromJsonLD(introJson);
-
-            const resClasses: ResourceClasses = require('../test-data/introduction/resource-classes.json');
-            const properties: Properties = require('../test-data/introduction/properties.json');
-
-            const ontoInfo = new OntologyInformation({}, resClasses, properties);
-
-            intro.ontologyInformation.updateOntologyInformation(ontoInfo);
-
-            return of(
-                intro
-            );
-
-        });
-
-        appInitServiceSpy.getSettings.and.returnValue({ ontologyIRI: 'http://0.0.0.0:3333' });
-
-        appInitService = TestBed.get(AppInitService);
-
-    }));
-
-    beforeEach(() => {
         fixture = TestBed.createComponent(IntroductionComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
 
     it('should create', () => {
+
+        const dspConnectionSpy = TestBed.inject(DspApiConnectionToken);
+
+        const beolServiceSpy = TestBed.inject(BeolService);
+
         expect(component).toBeTruthy();
 
         expect(beolServiceSpy.searchForIntroductionById).toHaveBeenCalledTimes(1);
 
         expect(beolServiceSpy.searchForIntroductionById).toHaveBeenCalledWith('goldbach_introduction_1');
 
-        expect(searchServiceSpy.doExtendedSearchReadResourceSequence).toHaveBeenCalledTimes(1);
+        expect(dspConnectionSpy.v2.search.doExtendedSearch).toHaveBeenCalledTimes(1);
 
-        expect(resourceServiceSpy.getReadResource).toHaveBeenCalledTimes(1);
+        const introTemplate = `
+    PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
+    PREFIX beol: <http://0.0.0.0:3333/ontology/0801/beol/simple/v2#>
 
-        expect(resourceServiceSpy.getReadResource).toHaveBeenCalledWith('http://rdfh.ch/0801/jTAU22HmTJWplGJgO6uVIw');
+    CONSTRUCT {
 
-        expect(component.ontologyInfo).not.toBeUndefined();
+        ?introSection knora-api:isMainResource true .
 
-        expect(appInitService.getSettings).toHaveBeenCalledTimes(2);
+    } WHERE {
+
+        ?introSection a beol:section .
+      	?introSection a knora-api:Resource .
+        ?introSection beol:beolIDs ?sectionId .
+
+        beol:beolIDs knora-api:objectType xsd:string .
+        ?sectionId a xsd:string .
+
+        FILTER(?sectionId = "goldbach_introduction_1")
+
+    }
+
+    OFFSET 0
+        `;
+
+        expect(dspConnectionSpy.v2.search.doExtendedSearch).toHaveBeenCalledWith(introTemplate);
+
+        expect(dspConnectionSpy.v2.res.getResource).toHaveBeenCalledTimes(1);
+
+        expect(dspConnectionSpy.v2.res.getResource).toHaveBeenCalledWith('http://rdfh.ch/0801/jTAU22HmTJWplGJgO6uVIw');
+
     });
 
 });

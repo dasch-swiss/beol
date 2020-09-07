@@ -1,6 +1,6 @@
 <div class="full-size scroll-y-only">
 
-    <kui-progress-indicator *ngIf="isLoading" [color]="'#D88958'"></kui-progress-indicator>
+    <dsp-progress-indicator *ngIf="isLoading" [color]="'#D88958'"></dsp-progress-indicator>
 
     <div *ngIf="!isLoading && props">
 
@@ -14,29 +14,34 @@
             <section>
 
                 <div *ngIf="props?.layer[0]">
-                    <h4 *ngIf="props?.layer[0]" class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.layer[0].propIri)}}</h4>
+                    <h4 *ngIf="props?.layer[0]" class="subheading-2">
+                        {{props?.layer[0].propertyLabel}}</h4>
                     <p class="margin-left" *ngFor="let lay of props?.layer">
-                        <kui-integer-value [valueObject]="lay"></kui-integer-value>
+                        <dsp-int-value [displayValue]="lay" [mode]="'read'"></dsp-int-value>
                     </p>
                 </div>
 
                 <div *ngIf="props?.transcriptionOf[0]">
-                    <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.transcriptionOf[0].propIri)}}</h4>
+                    <h4 class="subheading-2">{{props?.transcriptionOf[0].propertyLabel}}
+                    </h4>
                     <p class="margin-left">
                         <mat-list>
                             <mat-list-item *ngFor="let trans of props?.transcriptionOf">
-                                <kui-link-value [valueObject]="trans" [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
+                                <dsp-link-value [displayValue]="trans" [parentResource]="resource.readResource"
+                                    [propIri]="props?.transcriptionOf[0].property" (referredResourceClicked)="resLinkClicked($event)" [mode]="'read'"></dsp-link-value>
                             </mat-list-item>
                         </mat-list>
                     </p>
                 </div>
 
                 <div *ngIf="props?.belongsToRegion[0]">
-                    <h4 class="subheading-2">{{ontologyInfo?.getLabelForProperty(props?.belongsToRegion[0].propIri)}}</h4>
+                    <h4 class="subheading-2">{{props?.belongsToRegion[0].propertyLabel}}
+                    </h4>
                     <p class="margin-left">
                         <mat-list>
                             <mat-list-item *ngFor="let reg of props?.belongsToRegion">
-                                <kui-link-value [valueObject]="reg" [ontologyInfo]="ontologyInfo" (referredResourceClicked)="resLinkClicked($event)"></kui-link-value>
+                                <dsp-link-value [displayValue]="reg" [parentResource]="resource.readResource"
+                                    [propIri]="reg.property" [mode]="'read'" (referredResourceClicked)="resLinkClicked($event)"></dsp-link-value>
                             </mat-list-item>
                         </mat-list>
                     </p>
@@ -60,9 +65,10 @@
 
         <div class="main-content">
 
-            <section *ngIf="props?.text[0]" [ngClass]="{text: true, layer1: (props?.layer[0] && props?.layer[0].integer === 1)}">
-                <read-text-value [valueObject]="props?.text[0]" [bindEvents]="true"
-                                 [ontologyInfo]="ontologyInfo" [renderFigureRegions]="true"></read-text-value>
+            <section *ngIf="props?.text[0]"
+                [ngClass]="{text: true, layer1: (props?.layer[0] && props?.layer[0].int === 1)}">
+                <read-text-value [valueObject]="props?.text[0]" [bindEvents]="true" [resource]="resource.readResource"
+                    [renderFigureRegions]="true"></read-text-value>
             </section>
 
         </div>

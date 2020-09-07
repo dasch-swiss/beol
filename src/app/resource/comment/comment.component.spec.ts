@@ -1,42 +1,43 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CommentComponent } from './comment.component';
-import { AppInitService } from '../../app-init.service';
-import { KuiActionModule } from '@knora/action';
-import { KuiViewerModule } from '@knora/viewer';
 import { MaterialModule } from '../../material-module';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientModule } from '@angular/common/http';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MathJaxDirective } from '../../directives/mathjax.directive';
 import { ReadTextValueAsHtmlComponent } from '../../properties/read-text-value-as-html/read-text-value-as-html.component';
 import { ReadListValueComponent } from '../../properties/read-list-value/read-list-value.component';
 import { ReadTextValueComponent } from '../../properties/read-text-value/read-text-value.component';
 import { HanCatalogueDirective } from '../../directives/han-catalogue.directive';
 import { TeiLinkDirective } from '../../directives/tei-link.directive';
-import { KuiCoreConfig, KuiCoreConfigToken, OntologyCacheService } from '@knora/core';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
+import { AppInitService, DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
+import { ReadResource, ReadResourceSequence, ResourcesEndpointV2, SearchEndpointV2 } from '@dasch-swiss/dsp-js';
 
 describe('CommentComponent', () => {
     let component: CommentComponent;
     let fixture: ComponentFixture<CommentComponent>;
 
-    let appInitService: AppInitService;
-
     const id = 'http://rdfh.ch/0801/7ZvL2A5PQ9C4eAmr-n26gw';
 
     beforeEach(async(() => {
-        const appInitServiceSpy = jasmine.createSpyObj('AppInitService', ['getSettings']);
+        const dspConnectionSpy = {
+            v2: {
+                res: jasmine.createSpyObj('res', ['getResource']),
+                search: jasmine.createSpyObj('search', ['doExtendedSearch'])
+            }
+        };
+
+        const appInitServiceMock = {
+            config: {
+                ontologyIRI: 'http://0.0.0.0:3333'
+            }
+        };
 
         TestBed.configureTestingModule({
             imports: [
-                KuiActionModule,
-                KuiViewerModule,
                 MaterialModule,
-                RouterTestingModule,
-                HttpClientModule,
-                HttpClientTestingModule
+                RouterTestingModule
             ],
             declarations: [
                 CommentComponent,
@@ -48,27 +49,30 @@ describe('CommentComponent', () => {
                 TeiLinkDirective
             ],
             providers: [
-                OntologyCacheService,
                 {
                     provide: ActivatedRoute,
-                    useValue: { paramMap: of({
+                    useValue: {
+                        paramMap: of({
                             get: () => {
                                 return id;
                             }
-                        })}
+                        })
+                    }
                 },
-                { provide: KuiCoreConfigToken, useValue: KuiCoreConfig },
-                { provide: AppInitService, useValue: appInitServiceSpy }
+                { provide: AppInitService, useValue: appInitServiceMock },
+                { provide: DspApiConnectionToken, useValue: dspConnectionSpy }
             ]
         })
             .compileComponents();
 
-        appInitServiceSpy.getSettings.and.returnValue({ontologyIRI: 'http://0.0.0.0:3333'});
-
-        appInitService = TestBed.get(AppInitService);
     }));
 
     beforeEach(() => {
+        const dspServiceSpy = TestBed.inject(DspApiConnectionToken);
+
+        (dspServiceSpy.v2.res as jasmine.SpyObj<ResourcesEndpointV2>).getResource.and.returnValue(of(new ReadResource()));
+        (dspServiceSpy.v2.search as jasmine.SpyObj<SearchEndpointV2>).doExtendedSearch.and.returnValue(of(new ReadResourceSequence([])));
+
         fixture = TestBed.createComponent(CommentComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
@@ -76,7 +80,5 @@ describe('CommentComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
-
-        expect(appInitService.getSettings).toHaveBeenCalled();
     });
 });

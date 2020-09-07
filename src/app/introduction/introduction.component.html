@@ -1,22 +1,22 @@
 <div class="full-size scroll-y-only">
 
-    <kui-progress-indicator *ngIf="isLoading" [color]="'#D88958'"></kui-progress-indicator>
+    <dsp-progress-indicator *ngIf="isLoading" [color]="'#D88958'"></dsp-progress-indicator>
 
     <div *ngIf="!isLoading && props">
 
-        <div class="sidebar" >
+        <div class="sidebar">
             <button mat-stroked-button class="previousBtn" (click)="location.back()">
                 <mat-icon>arrow_back</mat-icon>
                 Previous
             </button>
             <!-- Tree of introduction links to navigate through several levels on each intro page with data from json file called introductions.json -->
             <mat-list class="nav">
-                <div  *ngIf="project=='leoo'">
+                <div *ngIf="project=='leoo'">
                     <div *ngFor="let item of listLeoo; let i = index;">
 
                         <mat-list-item [class.parent]="item.children">
                             <button mat-button [routerLink]="'/introduction/leoo/' + item.name"
-                                    routerLinkActive="active-link" class="nav-item" (click)="toggleChildren(i)">
+                                routerLinkActive="active-link" class="nav-item" (click)="toggleChildren(i)">
                                 {{item.label}}
                                 <mat-icon *ngIf="!item.children">keyboard_arrow_right</mat-icon>
                                 <mat-icon *ngIf="item.children">keyboard_arrow_down</mat-icon>
@@ -27,19 +27,20 @@
                             <div *ngFor="let child of item.children; let c = index;">
                                 <mat-list-item>
                                     <button mat-button [routerLink]="'/introduction/leoo/' + child.name"
-                                            routerLinkActive="active-link" class="nav-item"
-                                            (click)="toggleGrandChildren(c)">
+                                        routerLinkActive="active-link" class="nav-item"
+                                        (click)="toggleGrandChildren(c)">
                                         {{child.label}}
                                         <mat-icon *ngIf="!child.children">keyboard_arrow_right</mat-icon>
                                         <mat-icon *ngIf="child.children">keyboard_arrow_down</mat-icon>
                                     </button>
                                 </mat-list-item>
 
-                                <div *ngIf="child.children" class="nav-grand-children" [class.open]="curChildIndex === c">
+                                <div *ngIf="child.children" class="nav-grand-children"
+                                    [class.open]="curChildIndex === c">
                                     <mat-list-item *ngFor="let gc of child.children">
                                         <!-- [routerLink]="item.name -->
                                         <button mat-button [routerLink]="'/introduction/leoo/' + gc.name"
-                                                routerLinkActive="active-link" class="nav-item">
+                                            routerLinkActive="active-link" class="nav-item">
                                             {{gc.label}}
                                             <mat-icon>keyboard_arrow_right</mat-icon>
                                         </button>
@@ -50,12 +51,12 @@
                         </div>
                     </div>
                 </div>
-                <div  *ngIf="project=='lece'">
+                <div *ngIf="project=='lece'">
                     <div *ngFor="let item of listLece; let i = index;">
 
                         <mat-list-item [class.parent]="item.children">
                             <button mat-button [routerLink]="'/introduction/lece/' + item.name"
-                                    routerLinkActive="active-link" class="nav-item" (click)="toggleChildren(i)">
+                                routerLinkActive="active-link" class="nav-item" (click)="toggleChildren(i)">
                                 {{item.label}}
                                 <mat-icon *ngIf="!item.children">keyboard_arrow_right</mat-icon>
                                 <mat-icon *ngIf="item.children">keyboard_arrow_down</mat-icon>
@@ -66,8 +67,8 @@
                             <div *ngFor="let child of item.children; let c = index;">
                                 <mat-list-item>
                                     <button mat-button [routerLink]="'/introduction/lece/' + child.name"
-                                            routerLinkActive="active-link" class="nav-item"
-                                            (click)="toggleGrandChildren(c)">
+                                        routerLinkActive="active-link" class="nav-item"
+                                        (click)="toggleGrandChildren(c)">
                                         {{child.label}}
                                         <mat-icon *ngIf="!child.children">keyboard_arrow_right</mat-icon>
                                         <mat-icon *ngIf="child.children">keyboard_arrow_down</mat-icon>
@@ -88,13 +89,13 @@
 
             <section class="title center">
                 <h3 mat-card-subtitle>{{resource?.label}}</h3>
-                <h1 mat-card-title *ngFor="let title of props.title">{{title.getContent()}}</h1>
+                <h1 mat-card-title *ngFor="let title of props.title">{{title.strval}}</h1>
             </section>
 
 
             <section class="text introduction">
-                <read-text-value-as-html [valueObject]="props.text[0]" [ontologyInfo]="ontologyInfo"
-                                         [bindEvents]="true"></read-text-value-as-html>
+                <read-text-value-as-html [valueObject]="props.text[0]" [resource]="resource"
+                    [bindEvents]="true"></read-text-value-as-html>
             </section>
 
         </div>
