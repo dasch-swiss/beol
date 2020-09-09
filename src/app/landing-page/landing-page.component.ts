@@ -24,7 +24,7 @@ export class LandingPageComponent implements OnInit {
 
         const gravsearch = this._beol.getEntriesForManuscript(manuscriptIri);
 
-        this._router.navigate(['/search/extended/', gravsearch], { relativeTo: this._route });
+        this._router.navigate(['/search/gravsearch/', gravsearch], { relativeTo: this._route });
     }
 
 }
