@@ -276,7 +276,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
                                     this.showNumberOfAllResults,
                                     (error: any) => {
                                         this.errorMessage = <any>error;
-                                        // console.log('numberOfAllResults', this.numberOfAllResults);
                                     }
                                 );
                             // here get the search results from the other projects
@@ -298,7 +297,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
             // EXTENDED SEARCH
         } else if (this.searchMode === 'gravsearch') {
-            // console.log(this.searchQuery)
             // perform count query
             if (this.offset === 0) {
                 this._dspApiConnection.v2.search.doExtendedSearchCountQuery(this.searchQuery)
@@ -317,8 +315,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
                         this.errorMessage = <any>error;
                     });
 
-        } else {
-            this.errorMessage = `search mode invalid: ${this.searchMode}`;
         }
     }
 
@@ -360,7 +356,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
             this.ontologyInfo.updateOntologyInformation(searchResult.resources[0].entityInfo);
         }*/
         // append results to search results
-        // console.log('results 1', this.result);
         this.result = this.result.concat(searchResult.resources);
 
         this.isLoading = false;
