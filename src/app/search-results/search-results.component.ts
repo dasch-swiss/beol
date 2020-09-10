@@ -34,10 +34,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     numberOfExternalResults = 0; // total number of results of text search on 3rd party repos
     rerender = false;
 
-    // with the http get request, we need also a variable for error messages;
-    // just in case something goes wrong
-    errorMessage: any = undefined;
-
     offset = 0;
     maxOffset = 0;
     gravsearchGenerator: AdvancedSearchParams;
@@ -275,8 +271,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
                                 .subscribe(
                                     this.showNumberOfAllResults,
                                     (error: any) => {
-                                        this.errorMessage = <any>error;
-                                        // console.log('numberOfAllResults', this.numberOfAllResults);
+                                        console.error(error);
                                     }
                                 );
                             // here get the search results from the other projects
@@ -291,21 +286,20 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
                             .subscribe(
                                 this.processSearchResults, // function pointer
                                 (error: any) => {
-                                    this.errorMessage = <any>error;
+                                    console.error(error);
                                 },
                             );
                     // });
 
             // EXTENDED SEARCH
         } else if (this.searchMode === 'gravsearch') {
-            // console.log(this.searchQuery)
             // perform count query
             if (this.offset === 0) {
                 this._dspApiConnection.v2.search.doExtendedSearchCountQuery(this.searchQuery)
                     .subscribe(
                         this.showNumberOfAllResults,
                         (error: any) => {
-                            this.errorMessage = <any>error;
+                            console.error(error);
                         }
                     );
             }
@@ -314,11 +308,9 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
                 .subscribe(
                     this.processSearchResults, // function pointer
                     (error: any) => {
-                        this.errorMessage = <any>error;
+                        console.error(error);
                     });
 
-        } else {
-            this.errorMessage = `search mode invalid: ${this.searchMode}`;
         }
     }
 
@@ -360,7 +352,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
             this.ontologyInfo.updateOntologyInformation(searchResult.resources[0].entityInfo);
         }*/
         // append results to search results
-        // console.log('results 1', this.result);
         this.result = this.result.concat(searchResult.resources);
 
         this.isLoading = false;
