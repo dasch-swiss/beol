@@ -535,7 +535,7 @@ export class CorrespondenceComponent implements OnInit {
      */
     private submitQuery(gravsearch: string) {
 
-        this._router.navigate(['/search/extended/', gravsearch], { relativeTo: this._route });
+        this._router.navigate(['/search/gravsearch/', gravsearch], { relativeTo: this._route });
     }
 
 }
