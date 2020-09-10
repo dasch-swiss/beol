@@ -34,10 +34,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     numberOfExternalResults = 0; // total number of results of text search on 3rd party repos
     rerender = false;
 
-    // with the http get request, we need also a variable for error messages;
-    // just in case something goes wrong
-    errorMessage: any = undefined;
-
     offset = 0;
     maxOffset = 0;
     gravsearchGenerator: AdvancedSearchParams;
@@ -275,7 +271,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
                                 .subscribe(
                                     this.showNumberOfAllResults,
                                     (error: any) => {
-                                        this.errorMessage = <any>error;
+                                        console.error(error);
                                     }
                                 );
                             // here get the search results from the other projects
@@ -290,7 +286,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
                             .subscribe(
                                 this.processSearchResults, // function pointer
                                 (error: any) => {
-                                    this.errorMessage = <any>error;
+                                    console.error(error);
                                 },
                             );
                     // });
@@ -303,7 +299,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
                     .subscribe(
                         this.showNumberOfAllResults,
                         (error: any) => {
-                            this.errorMessage = <any>error;
+                            console.error(error);
                         }
                     );
             }
@@ -312,7 +308,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
                 .subscribe(
                     this.processSearchResults, // function pointer
                     (error: any) => {
-                        this.errorMessage = <any>error;
+                        console.error(error);
                     });
 
         }
