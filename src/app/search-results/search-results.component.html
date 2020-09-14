@@ -43,7 +43,7 @@
                                     </span>
                                     <ng-template #elseBlock>
                                         <!-- simple text -->
-                                        {{val.strval}}<br/>
+                                        {{val.strval}}<br>
                                     </ng-template>
 
                                 <span class="bolder">
@@ -52,10 +52,10 @@
 
                                     <span *ngSwitchCase="dspConstants.ListValue">
                                         <read-list-value [valueObject]="val"
-                                                     [renderMath]="step === i"></read-list-value><br/>
+                                                     [renderMath]="step === i"></read-list-value><br>
                                     </span>
 
-                                    <span *ngSwitchDefault>{{val.strval}}<br/></span>
+                                    <span *ngSwitchDefault>{{val.strval}}<br></span>
                                 </span>
 
                                 <span class="mat-caption"
