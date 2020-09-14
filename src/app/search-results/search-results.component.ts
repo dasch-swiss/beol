@@ -60,7 +60,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-
         this.navigationSubscription = this._route.paramMap.subscribe((params: Params) => {
             this.searchMode = params.get('mode');
             // init offset to 0
@@ -292,7 +291,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
                     // });
 
             // EXTENDED SEARCH
-        } else if (this.searchMode === 'gravsearch') {
+        } else if (this.searchMode === 'gravsearch' && this.searchQuery) {
             // perform count query
             if (this.offset === 0) {
                 this._dspApiConnection.v2.search.doExtendedSearchCountQuery(this.searchQuery)
