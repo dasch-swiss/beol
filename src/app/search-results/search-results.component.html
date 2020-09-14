@@ -50,8 +50,10 @@
                                     <dsp-date-value *ngSwitchCase="dspConstants.DateValue" [displayValue]="val" [mode]="'read'" [displayOptions]="'all'">
                                     </dsp-date-value>
 
-                                    <read-list-value *ngSwitchCase="dspConstants.ListValue" [valueObject]="val"
-                                                     [renderMath]="step === i"></read-list-value>
+                                    <span *ngSwitchCase="dspConstants.ListValue">
+                                        <read-list-value [valueObject]="val"
+                                                     [renderMath]="step === i"></read-list-value><br/>
+                                    </span>
 
                                     <span *ngSwitchDefault>{{val.strval}}<br/></span>
                                 </span>
