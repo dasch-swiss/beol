@@ -26,3 +26,7 @@ kui-calendar-header {
   }
 }
 
+// override default CSS for dsp-ui viewer
+span.rm-value, span.rm-comment {
+  display: inline !important;
+}

@@ -43,20 +43,23 @@
                                     </span>
                                     <ng-template #elseBlock>
                                         <!-- simple text -->
-                                        {{val.strval}}
+                                        {{val.strval}}<br>
                                     </ng-template>
 
                                 <span class="bolder">
-                                    <dsp-date-value *ngSwitchCase="dspConstants.DateValue" [displayValue]="val" [mode]="'read'" [displayOptions]="'all'">
-                                    </dsp-date-value>
+                                    <span *ngSwitchCase="dspConstants.DateValue">
+                                        <dsp-date-value [displayValue]="val" [mode]="'read'" [displayOptions]="'all'">
+                                    </dsp-date-value><br>
+                                    </span>
 
-                                    <read-list-value *ngSwitchCase="dspConstants.ListValue" [valueObject]="val"
-                                                     [renderMath]="step === i"></read-list-value>
+                                    <span *ngSwitchCase="dspConstants.ListValue">
+                                        <read-list-value [valueObject]="val"
+                                                     [renderMath]="step === i"></read-list-value><br>
+                                    </span>
 
-                                    <span *ngSwitchDefault>{{val.strval}}</span>
+                                    <span *ngSwitchDefault>{{val.strval}}<br></span>
                                 </span>
 
-                                <br>
                                 <span class="mat-caption"
                                     *ngIf="val.type !== dspConstants.TextValue || _valueTypeService.getValueTypeOrClass(val) !== 'ReadTextValueAsHtml'">
                                     {{val.propertyLabel}}
