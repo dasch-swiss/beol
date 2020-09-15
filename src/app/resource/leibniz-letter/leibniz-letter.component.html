@@ -59,7 +59,7 @@
                 </div>
 
                 <div *ngIf="props?.letterURI[0]">
-                    <dsp-uri-value *ngFor="let uri of props?.letterURI" [displayValue]="uri" [mode]="'read'"></dsp-uri-value>
+                    <dsp-uri-value *ngFor="let uri of props?.letterURI" [displayValue]="uri" [mode]="'read'" [label]="uri.propertyLabel"></dsp-uri-value>
                 </div>
                 <div *ngIf="props?.citation[0]">
                     <h4 class="subheading-2">
