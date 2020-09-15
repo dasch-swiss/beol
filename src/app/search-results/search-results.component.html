@@ -38,7 +38,7 @@
                                 <span *ngSwitchCase="dspConstants.TextValue">
                                     <!-- only render math if panel is open: step === i-->
                                     <span *ngIf="_valueTypeService.getValueTypeOrClass(val) === 'ReadTextValueAsHtml'; else elseBlock" [mathJax]="val.strval"
-                                      [renderMath]="step === i" [valueObject]="val" [resource]="res"
+                                      [renderMath]="step === i" [valueObject]="$any(val)" [resource]="res"
                                       [bindEvents]="false"></span>
                                     </span>
                                     <ng-template #elseBlock>
@@ -48,12 +48,12 @@
 
                                 <span class="bolder">
                                     <span *ngSwitchCase="dspConstants.DateValue">
-                                        <dsp-date-value [displayValue]="val" [mode]="'read'" [displayOptions]="'all'">
+                                        <dsp-date-value [displayValue]="$any(val)" [mode]="'read'" [displayOptions]="'all'">
                                     </dsp-date-value><br>
                                     </span>
 
                                     <span *ngSwitchCase="dspConstants.ListValue">
-                                        <read-list-value [valueObject]="val"
+                                        <read-list-value [valueObject]="$any(val)"
                                                      [renderMath]="step === i"></read-list-value><br>
                                     </span>
 
