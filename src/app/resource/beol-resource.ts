@@ -277,7 +277,7 @@ export abstract class BeolResource implements OnInit, OnDestroy {
      *
      * @param linkVal the value representing the referred resource.
      */
-    protected resLinkClicked(linkVal: ReadLinkValue) {
+    resLinkClicked(linkVal: ReadLinkValue) {
 
         const refResType = (linkVal.linkedResource !== undefined ? linkVal.linkedResource.type : '');
 

@@ -37,24 +37,24 @@
                                 <read-text-value *ngSwitchCase="dspConstants.TextValue"
                                     [valueObject]="val" [resource]="resource.readResource" [bindEvents]="true">
                                 </read-text-value>
-                                <dsp-date-value *ngSwitchCase="dspConstants.DateValue" [displayValue]="val" [mode]="'read'" [displayOptions]="'all'">
+                                <dsp-date-value *ngSwitchCase="dspConstants.DateValue" [displayValue]="$any(val)" [mode]="'read'" [displayOptions]="'all'">
                                 </dsp-date-value>
-                                <dsp-link-value *ngSwitchCase="dspConstants.LinkValue" [displayValue]="val"
+                                <dsp-link-value *ngSwitchCase="dspConstants.LinkValue" [displayValue]="$any(val)"
                                     [parentResource]="resource.readResource" [propIri]="val.property" [mode]="'read'" (referredResourceClicked)="resLinkClicked($event)">
                                 </dsp-link-value>
-                                <dsp-int-value *ngSwitchCase="dspConstants.IntValue" [displayValue]="val" [mode]="'read'">
+                                <dsp-int-value *ngSwitchCase="dspConstants.IntValue" [displayValue]="$any(val)" [mode]="'read'">
                                 </dsp-int-value>
-                                <dsp-decimal-value *ngSwitchCase="dspConstants.DecimalValue" [displayValue]="val" [mode]="'read'">
+                                <dsp-decimal-value *ngSwitchCase="dspConstants.DecimalValue" [displayValue]="$any(val)" [mode]="'read'">
                                 </dsp-decimal-value>
-                                <dsp-color-value *ngSwitchCase="dspConstants.ColorValue" [displayValue]="val" [mode]="'read'">
+                                <dsp-color-value *ngSwitchCase="dspConstants.ColorValue" [displayValue]="$any(val)" [mode]="'read'">
                                 </dsp-color-value>
-                                <dsp-uri-value *ngSwitchCase="dspConstants.UriValue" [displayValue]="val">
+                                <dsp-uri-value *ngSwitchCase="dspConstants.UriValue" [displayValue]="$any(val)">
                                 </dsp-uri-value>
-                                <dsp-boolean-value *ngSwitchCase="dspConstants.BooleanValue" [displayValue]="val" [mode]="'read'">
+                                <dsp-boolean-value *ngSwitchCase="dspConstants.BooleanValue" [displayValue]="$any(val)" [mode]="'read'">
                                 </dsp-boolean-value>
                                 <dsp-interval-value *ngSwitchCase="dspConstants.IntervalValue"
-                                    [displayValue]="val" [mode]="'read'"></dsp-interval-value>
-                                <read-list-value *ngSwitchCase="dspConstants.ListValue" [valueObject]="val">
+                                    [displayValue]="$any(val)" [mode]="'read'"></dsp-interval-value>
+                                <read-list-value *ngSwitchCase="dspConstants.ListValue" [valueObject]="$any(val)">
                                 </read-list-value>
                                 <!-- NO VALUE COMPONENT: <dsp-textfile-value *ngSwitchCase="KnoraConstants.TextFileValue"
                                     [displayValue]="val.value"></dsp-textfile-value> -->

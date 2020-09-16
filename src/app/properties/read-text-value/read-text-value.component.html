@@ -1,7 +1,7 @@
 <span [ngSwitch]="valueType">
 
     <dsp-text-value-as-string *ngSwitchCase="'ReadTextValueAsString'"
-                              [displayValue]="valueObject"
+                              [displayValue]="$any(valueObject)"
                                 [mode]="'read'">
     </dsp-text-value-as-string>
 
@@ -10,7 +10,7 @@
     </dsp-text-value-as-xml>-->
 
     <read-text-value-as-html *ngSwitchCase="'ReadTextValueAsHtml'"
-                             [valueObject]="valueObject"
+                             [valueObject]="$any(valueObject)"
                              [resource]="resource"
                              [bindEvents]="bindEvents"
                              [renderFigureRegions]="renderFigureRegions">
