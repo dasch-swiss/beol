@@ -27,6 +27,8 @@
     "@dasch-swiss/dsp-js": "1.0.0-rc.12",
     "@dasch-swiss/dsp-ui": "1.0.0-rc.8",
     "core-js": "^3.6.5",
+    "@ckeditor/ckeditor5-angular": "^1.2.3",
+    "ckeditor5-custom-build": "github:dasch-swiss/ckeditor_custom_build",
     "jdnconvertiblecalendar": "^0.0.5",
     "jdnconvertiblecalendardateadapter": "^0.0.13",
     "ngx-color-picker": "^9.1.0",
