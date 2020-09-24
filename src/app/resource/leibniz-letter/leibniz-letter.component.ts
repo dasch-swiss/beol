@@ -121,11 +121,11 @@ export class LeibnizLetterComponent extends BeolResource {
     }
 
 
-    private getLeibnizImages(element) {
+    private getLeibnizImages(bodyElement) {
         const basePath = this._appInitService.config['leibnizApi'] + 'select?q=id%3A';
         const basePathTail = '&rows=9999&wt=json';
 
-        const imgs = element.getElementsByTagName('span');
+        const imgs = bodyElement.getElementsByTagName('span');
         for (let imgIt = 0; imgIt < imgs.length; imgIt++) {
             const image = imgs[imgIt];
             if (image.getAttribute('class') === 'reference -image') {
@@ -140,7 +140,7 @@ export class LeibnizLetterComponent extends BeolResource {
             }
 
         }
-        return element;
+        return bodyElement;
     }
 
     private getLeibnizImageSVG(contents) {
@@ -150,8 +150,8 @@ export class LeibnizLetterComponent extends BeolResource {
 
     private getLeibnizLetterBody(contents) {
         const html = new DOMParser().parseFromString(contents.response.docs[0].volltext, 'text/html');
-        this.getLeibnizImages(html.body);
-        this.letter = html.body;
+        const updatedBody = this.getLeibnizImages(html.body);
+        this.letter = updatedBody;
     }
     showIncomingRes(resIri, resType) {
         this._beolService.routeByResourceType(resType, resIri);
