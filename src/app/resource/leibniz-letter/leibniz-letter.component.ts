@@ -107,18 +107,12 @@ export class LeibnizLetterComponent extends BeolResource {
 
 
     private getLeibnizLetterText(filename) {
-        // use a proxy url as described here:
-        // https://stackoverflow.com/questions/43871637/no-access-control-allow-origin-header-is-present-on-the-requested-resource-whe
-        // const proxyurl = 'https://cors-anywhere.herokuapp.com//';
         const basePath = this._appInitService.config['leibnizApi'] + 'select?sort=type+asc&q=id%3A';
         const basePathOR = '+OR+(doc_id%3A';
         const basePathAnd = '+AND+type%3Avariante)&rows=9999&wt=json';
         const apiUrl = basePath + filename + basePathOR + filename + basePathAnd; // site that doesn’t send Access-Control-*
 
-        this._http.get(apiUrl) // could be proxyurl + apiURL as https://cors-anywhere.herokuapp.com/https://example.com
-            //.then(response => response.json())
-            .subscribe(contents => {
-
+        this._http.get(apiUrl).subscribe(contents => {
                 this.getLeibnizLetterBody(contents);
                 this.isLoadingText = false;
             },
@@ -127,20 +121,17 @@ export class LeibnizLetterComponent extends BeolResource {
     }
 
 
-    private getLeibnizImages(element) {
-        const proxyurl = 'https://cors-anywhere.herokuapp.com/';
+    private getLeibnizImages(bodyElement) {
         const basePath = this._appInitService.config['leibnizApi'] + 'select?q=id%3A';
         const basePathTail = '&rows=9999&wt=json';
 
-        const imgs = element.getElementsByTagName('span');
+        const imgs = bodyElement.getElementsByTagName('span');
         for (let imgIt = 0; imgIt < imgs.length; imgIt++) {
             const image = imgs[imgIt];
             if (image.getAttribute('class') === 'reference -image') {
                 const filename = image.getAttribute('data-id');
                 const apiUrl = basePath + filename + basePathTail; // get the svg element
-                this._http.get(proxyurl + apiUrl) // https://cors-anywhere.herokuapp.com/https://example.com
-                    //.then(response => response.json())
-                    .subscribe(contents => {
+                this._http.get(apiUrl).subscribe(contents => {
                         const svgElement = this.getLeibnizImageSVG(contents);
                         image.replaceWith(svgElement);
                     });
@@ -149,7 +140,7 @@ export class LeibnizLetterComponent extends BeolResource {
             }
 
         }
-        return element;
+        return bodyElement;
     }
 
     private getLeibnizImageSVG(contents) {
@@ -159,8 +150,8 @@ export class LeibnizLetterComponent extends BeolResource {
 
     private getLeibnizLetterBody(contents) {
         const html = new DOMParser().parseFromString(contents.response.docs[0].volltext, 'text/html');
-        this.getLeibnizImages(html.body);
-        this.letter = html.body;
+        const updatedBody = this.getLeibnizImages(html.body);
+        this.letter = updatedBody;
     }
     showIncomingRes(resIri, resType) {
         this._beolService.routeByResourceType(resType, resIri);
