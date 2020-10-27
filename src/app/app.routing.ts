@@ -124,7 +124,7 @@ const appRoutes: Routes = [
         component: PublishedLetterComponent
     },
     {
-        path: 'project/' + this._appInitService.config['projectShortCode'] + '/info',
+        path: 'project/0801/info',
         component: LandingPageComponent
     },
     {
