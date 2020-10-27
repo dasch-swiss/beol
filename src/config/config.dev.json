@@ -16,5 +16,6 @@
   "pagingLimit": 25,
   "startComponent": "dasch",
   "leibnizApi": "https://solr.leibniz.sub.uni-goettingen.de/solr/leibniz/",
-  "tei": {}
+  "tei": {},
+  "projectShortCode": "0801"
 }

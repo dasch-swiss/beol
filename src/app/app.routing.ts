@@ -124,6 +124,10 @@ const appRoutes: Routes = [
         component: PublishedLetterComponent
     },
     {
+        path: 'project/' + this._appInitService.config['projectShortCode'] + '/info',
+        component: LandingPageComponent
+    },
+    {
         path: '**',
         component: ErrorComponent,
         data: { status: 404 }
