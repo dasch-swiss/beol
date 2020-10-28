@@ -124,6 +124,10 @@ const appRoutes: Routes = [
         component: PublishedLetterComponent
     },
     {
+        path: 'project/0801/info',
+        component: LandingPageComponent
+    },
+    {
         path: '**',
         component: ErrorComponent,
         data: { status: 404 }
