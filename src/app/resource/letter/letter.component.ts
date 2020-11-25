@@ -150,7 +150,7 @@ export class LetterComponent extends BeolResource {
     showEditorsRes(gnd) {
         const resType =  this.ontologyIri + '/ontology/0801/beol/v2#person';
 
-        // create a query that gets the Iri of the LEOO letter
+        // create a query that gets the editor by gnd
         const query = this._beolService.searchForPersonWithGND(gnd);
 
         this._dspApiConnection.v2.search.doExtendedSearch(query).subscribe(
@@ -163,7 +163,7 @@ export class LetterComponent extends BeolResource {
                     // given the Iri of the letter, display the whole resource
                     this._beolService.routeByResourceType(resType, personIri);
                 } else {
-                    // letter not found
+                    // person not found
                     console.log(`editor with gnd number ${gnd} not found`);
                 }
 
