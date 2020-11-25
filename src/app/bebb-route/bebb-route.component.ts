@@ -29,7 +29,7 @@ export class BebbRouteComponent implements OnInit {
 
             if (this.bebbLettertitle !== null) {
 
-                // create a query that gets the Iri of the LEOO letter
+                // create a query that gets the Iri of the bebb letter
                 const query = this._beolService.searchForLetterFromBEBB(this.bebbLettertitle);
 
                 this._dspApiConnection.v2.search.doExtendedSearch(query).subscribe(
