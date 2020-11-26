@@ -133,12 +133,14 @@ export class LetterComponent extends BeolResource {
         const Sulamith_Gehr = new Editor('Sulamith Gehr', '(DE-588)128594551');
         const Vanja_Hug = new Editor('Vanja Hug', '(DE-588)1077840497');
         const Christian_Gilain = new Editor('Christian Gilain', '(DE-588)103230197X');
+        const Rene_Taton = new Editor('René Taton', '(DE-588)117232521');
+
         if (this.props.sysnum.length > 0) {
             this.editors = [Fritz_Nagel, Sulamith_Gehr];
         } else if (this.props.letterURI.length > 0 ) {
-            this.editors = [Martin_Mattmueller, Franz_Lemmermeyer];
+            this.editors = [Martin_Mattmueller];
         } else {
-            this.editors = [Vanja_Hug, Christian_Gilain, Martin_Mattmueller];
+            this.editors = [Christian_Gilain, Vanja_Hug, Rene_Taton];
         }
 
     }
