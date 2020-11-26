@@ -138,7 +138,7 @@ export class LetterComponent extends BeolResource {
         if (this.props.sysnum.length > 0) {
             this.editors = [Fritz_Nagel, Sulamith_Gehr];
         } else if (this.props.letterURI.length > 0 ) {
-            this.editors = [Martin_Mattmueller];
+            this.editors = [Franz_Lemmermeyer, Martin_Mattmueller];
         } else {
             this.editors = [Christian_Gilain, Vanja_Hug, Rene_Taton];
         }
