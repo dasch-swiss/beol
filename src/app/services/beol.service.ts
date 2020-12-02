@@ -573,6 +573,44 @@ export class BeolService {
 
     }
 
+
+    /**
+     * Given the gnd number of a person, searches for that person.
+     *
+     * @param gnd the gnd number of the person.
+     * @returns the Gravsearch query.
+     */
+    searchForPersonWithGND(gnd: string): string {
+
+        const personByGNDTemplate = `
+        PREFIX beol: <${this._appInitService.config['ontologyIRI']}/ontology/0801/beol/simple/v2#>
+        PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
+        CONSTRUCT {
+
+            ?person knora-api:isMainResource true .
+
+
+        } WHERE {
+
+            ?person a knora-api:Resource .
+
+            ?person a beol:person .
+
+            ?person beol:hasIAFIdentifier ?gnd .
+            beol:hasIAFIdentifier knora-api:objectType <http://www.w3.org/2001/XMLSchema#string> .
+            ?gnd a <http://www.w3.org/2001/XMLSchema#string> .
+
+            FILTER(?gnd = "${gnd}"^^<http://www.w3.org/2001/XMLSchema#string>)
+
+        }
+
+        OFFSET 0
+        `;
+
+        return personByGNDTemplate;
+
+    }
+
     /**
      * Given the Iri of a compound object and the sequence number of the current part, returns the previous and next part.
      *

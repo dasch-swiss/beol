@@ -111,6 +111,20 @@
                     </p>
 
                 </div>
+
+
+                <!-- show editors-->
+                <div *ngIf="editors.length>0" class="editorSection">
+                    <h4 class="subheading-2">
+                        <strong>Edited by:</strong>
+                    </h4>
+                    <mat-list *ngFor="let editor of editors" class="editorList">
+                        <mat-list-item class="editorItemList">
+                        <span class="link"
+                              (click)="showEditorsRes(editor.gnd)">{{editor.name}}</span>
+                        </mat-list-item>
+                    </mat-list>
+                </div>
             </section>
 
         </div>

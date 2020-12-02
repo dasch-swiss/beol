@@ -7,6 +7,7 @@ import {
     ReadDateValue,
     ReadLinkValue,
     ReadListValue,
+    ReadResourceSequence,
     ReadTextValue,
     ReadUriValue,
     ReadValue,
@@ -43,6 +44,21 @@ class LetterProps implements PropertyValues {
     [index: string]: ReadValue[];
 }
 
+/**
+ * Represents an editor.
+ */
+class Editor {
+
+    /**
+     * Represents a person that took part in an edition.
+     *
+     * @param {string} name the name of the person.
+     * @param {string} gnd the GND/IAF identifier of the person.
+     */
+    constructor(readonly name: string, readonly gnd: string) {
+    }
+}
+
 @Component({
     selector: 'app-letter',
     templateUrl: './letter.component.html',
@@ -58,6 +74,7 @@ export class LetterComponent extends BeolResource {
     errorMessage: any;
     navigationSubscription: Subscription;
     dspConstants = Constants;
+    editors: Editor[] = [];
 
     ontologyIri = this._appInitService.config['ontologyIRI'];
 
@@ -108,10 +125,55 @@ export class LetterComponent extends BeolResource {
 
         this.props = props;
 
+        /**
+         * List of all existing editors
+         */
+        const Martin_Mattmueller = new Editor('Martin Mattmüller', '(VIAF)69100561');
+        const Franz_Lemmermeyer = new Editor('Franz Lemmermeyer', '(DE-588)114515999');
+        const Fritz_Nagel =  new Editor('Fritz Nagel', '(DE-588)101629915');
+        const Sulamith_Gehr = new Editor('Sulamith Gehr', '(DE-588)128594551');
+        const Vanja_Hug = new Editor('Vanja Hug', '(DE-588)1077840497');
+        const Christian_Gilain = new Editor('Christian Gilain', '(DE-588)103230197X');
+        const Rene_Taton = new Editor('René Taton', '(DE-588)117232521');
+
+        if (this.props.sysnum.length > 0) {
+            this.editors = [Fritz_Nagel, Sulamith_Gehr];
+        } else if (this.props.letterURI.length > 0 ) {
+            this.editors = [Franz_Lemmermeyer, Martin_Mattmueller];
+        } else {
+            this.editors = [Christian_Gilain, Vanja_Hug, Rene_Taton];
+        }
+
     }
 
     showIncomingRes(resIri, resType) {
         this._beolService.routeByResourceType(resType, resIri);
+    }
+
+    showEditorsRes(gnd) {
+        const resType =  this.ontologyIri + '/ontology/0801/beol/v2#person';
+
+        // create a query that gets the editor by gnd
+        const query = this._beolService.searchForPersonWithGND(gnd);
+
+        this._dspApiConnection.v2.search.doExtendedSearch(query).subscribe(
+            (resourceSeq: ReadResourceSequence) => {
+
+                if (resourceSeq.resources.length === 1) {
+
+                    const personIri: string = resourceSeq.resources[0].id;
+
+                    // given the Iri of the letter, display the whole resource
+                    this._beolService.routeByResourceType(resType, personIri);
+                } else {
+                    // person not found
+                    console.log(`editor with gnd number ${gnd} not found`);
+                }
+
+            }, (err) => {
+                console.log('search failed ' + err);
+            }
+        );
     }
 
 }

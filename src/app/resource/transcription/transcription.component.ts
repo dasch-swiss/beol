@@ -27,6 +27,20 @@ class TranscriptionProps implements PropertyValues {
     [index: string]: ReadValue[];
 }
 
+/**
+ * Represents an editor.
+ */
+class Editor {
+
+    /**
+     * Represents a person that took part in an edition.
+     *
+     * @param {string} name the name of the person.
+     * @param {string} gnd the GND/IAF identifier of the person.
+     */
+    constructor(readonly name: string, readonly gnd: string) {
+    }
+}
 @Component({
     selector: 'app-transcription',
     templateUrl: './transcription.component.html',
@@ -42,9 +56,8 @@ export class TranscriptionComponent extends BeolResource {
     errorMessage: any;
     navigationSubscription: Subscription;
     dspConstants = Constants;
-
     otherLayers: ReadResource[] = [];
-
+    editor: Editor;
     propIris: PropIriToNameMapping = {
         'text': this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#hasText',
         'layer': this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#layer',
@@ -76,6 +89,11 @@ export class TranscriptionComponent extends BeolResource {
 
         this.getOtherLayersForManuscriptEntry();
 
+        /**
+         * List of all existing editors
+         */
+       this.editor = new Editor('Martin Mattmüller', '(VIAF)69100561');
+
     }
 
     getOtherLayersForManuscriptEntry() {
@@ -101,5 +119,31 @@ export class TranscriptionComponent extends BeolResource {
 
     goToResource(resType: string, resIri: string) {
         this._beolService.routeByResourceType(resType, resIri);
+    }
+
+    showEditorsRes(gnd) {
+        const resType = this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#person';
+
+        // create a query that gets the editor by gnd
+        const query = this._beolService.searchForPersonWithGND(gnd);
+
+        this._dspApiConnection.v2.search.doExtendedSearch(query).subscribe(
+            (resourceSeq: ReadResourceSequence) => {
+
+                if (resourceSeq.resources.length === 1) {
+
+                    const personIri: string = resourceSeq.resources[0].id;
+
+                    // given the Iri of the letter, display the whole resource
+                    this._beolService.routeByResourceType(resType, personIri);
+                } else {
+                    // person not found
+                    console.log(`editor with gnd number ${gnd} not found`);
+                }
+
+            }, (err) => {
+                console.log('search failed ' + err);
+            }
+        );
     }
 }
