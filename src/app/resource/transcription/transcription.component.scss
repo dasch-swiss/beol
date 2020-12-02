@@ -5,3 +5,28 @@
 .text.layer1 {
   text-align: left;
 }
+
+h4.subheading-2 {
+  margin-bottom: 0 !important;
+}
+
+.editorSection {
+  margin-bottom: 24px;
+}
+
+.editorList {
+  margin-top: 10px !important;
+}
+
+.editorItemList {
+  min-height: 24px !important;
+  margin: 0 !important;
+  font-size: 20px;
+}
+
+.mat-list-item {
+  min-height: 36px !important;
+  height: auto !important;
+  margin: 12px 0;
+  font-size: 20px !important;
+}
