@@ -13,7 +13,7 @@ import {
     AdvancedSearchParamsService,
     AppInitService,
     DspApiConnectionToken,
-    ValueTypeService
+    ValueService
 } from '@dasch-swiss/dsp-ui';
 import { Subscription } from 'rxjs';
 import { BeolService } from '../services/beol.service';
@@ -46,7 +46,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
     navigationSubscription: Subscription;
 
-    beolIri = 'http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF';
+    beolIri =  this._appInitService.config['beolProjectIri'];
 
     constructor(
         @Inject(DspApiConnectionToken) private _dspApiConnection: KnoraApiConnection,
@@ -56,7 +56,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         private _router: Router,
         public location: Location,
         private _beol: BeolService,
-        public _valueTypeService: ValueTypeService) {
+        public _valueTypeService: ValueService) {
     }
 
     ngOnInit() {

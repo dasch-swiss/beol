@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SearchParams } from '@dasch-swiss/dsp-ui';
+import { SearchParams, AppInitService } from '@dasch-swiss/dsp-ui';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,9 +10,11 @@ import { Router } from '@angular/router';
 export class AppComponent {
     title = 'app';
     searchParams: SearchParams;
+    beolProjectIri =  this._appInitService.config['beolProjectIri'];
 
     constructor(
-        private _router: Router) { }
+        private _router: Router,
+        private _appInitService: AppInitService) { }
 
     /**
      * Perform the full text search
