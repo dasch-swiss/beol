@@ -3,7 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material-module';
 import { Component } from '@angular/core';
-import {AppInitService} from '@dasch-swiss/dsp-ui';
+import { AppInitService } from '@dasch-swiss/dsp-ui';
 
 /**
  * Test host component to simulate dsp-search-panel component.
@@ -35,7 +35,7 @@ describe('AppComponent', () => {
                 DspSearchPanelComponent
             ],
             providers: [
-                { provide: AppInitService, useValue: appInitServiceMock },
+                { provide: AppInitService, useValue: appInitServiceMock }
             ]
         }).compileComponents();
 
