@@ -19,6 +19,7 @@ import { IncomingService } from 'src/app/services/incoming.service';
 import { BeolService } from '../../services/beol.service';
 import { BeolCompoundResource, BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
 import { HttpClient } from '@angular/common/http';
+import * as BeolConstants from '../../beol-constants';
 
 class LetterProps implements PropertyValues {
     id: ReadTextValue[] = [];
@@ -78,6 +79,7 @@ export class LeibnizLetterComponent extends BeolResource {
     };
 
     props: LetterProps;
+    leibnizApiBasePath = BeolConstants.leibnizSolrApiBasePath;
 
     constructor(
         @Inject(DspApiConnectionToken) protected _dspApiConnection: KnoraApiConnection,
@@ -107,7 +109,7 @@ export class LeibnizLetterComponent extends BeolResource {
 
 
     private getLeibnizLetterText(filename) {
-        const basePath = this._appInitService.config['leibnizApi'] + 'select?sort=type+asc&q=id%3A';
+        const basePath = this.leibnizApiBasePath + 'select?sort=type+asc&q=id%3A';
         const basePathOR = '+OR+(doc_id%3A';
         const basePathAnd = '+AND+type%3Avariante)&rows=9999&wt=json';
         const apiUrl = basePath + filename + basePathOR + filename + basePathAnd; // site that doesn’t send Access-Control-*
@@ -122,7 +124,7 @@ export class LeibnizLetterComponent extends BeolResource {
 
 
     private getLeibnizImages(bodyElement) {
-        const basePath = this._appInitService.config['leibnizApi'] + 'select?q=id%3A';
+        const basePath = this.leibnizApiBasePath + 'select?q=id%3A';
         const basePathTail = '&rows=9999&wt=json';
 
         const imgs = bodyElement.getElementsByTagName('span');
@@ -135,8 +137,6 @@ export class LeibnizLetterComponent extends BeolResource {
                         const svgElement = this.getLeibnizImageSVG(contents);
                         image.replaceWith(svgElement);
                     });
-
-                // console.log(this._appInitService.config['appURL']);
             }
 
         }

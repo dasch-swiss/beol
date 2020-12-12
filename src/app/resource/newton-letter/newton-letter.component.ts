@@ -19,7 +19,7 @@ import { IncomingService } from 'src/app/services/incoming.service';
 import { BeolService } from '../../services/beol.service';
 import { BeolCompoundResource, BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
 import { HttpClient } from '@angular/common/http';
-
+import * as BeolConstants from '../../beol-constants';
 
 class LetterProps implements PropertyValues {
     id: ReadTextValue[] = [];
@@ -59,6 +59,8 @@ export class NewtonLetterComponent extends BeolResource {
     test: string;
 
     ontologyIri = this._appInitService.config['ontologyIRI'];
+    newtonProjectPath = BeolConstants.newtonProjectIri;
+    newtonLetterPath = BeolConstants.newtonDirectivePath;
 
     propIris: PropIriToNameMapping = {
         'id': this.ontologyIri + '/ontology/0801/beol/v2#beolIDs',
@@ -108,7 +110,7 @@ export class NewtonLetterComponent extends BeolResource {
         // use a proxy url as described here:
         // https://stackoverflow.com/questions/43871637/no-access-control-allow-origin-header-is-present-on-the-requested-resource-whe
         const proxyurl = 'https://cors-anywhere.herokuapp.com/';
-        const basePath = 'http://www.newtonproject.ox.ac.uk/view/texts/normalized/';
+        const basePath = this.newtonLetterPath;
 
         const url = basePath + filename; // site that doesn’t send Access-Control-*
 
@@ -142,7 +144,7 @@ export class NewtonLetterComponent extends BeolResource {
         for (let imgIt = 0; imgIt < imgs.length; imgIt++) {
             const image = imgs[imgIt];
             if (image.src) {
-                image.src = image.src.replace(this._appInitService.config['appURL'], 'http://www.newtonproject.ox.ac.uk');
+                image.src = image.src.replace(this._appInitService.config['appURL'], this.newtonProjectPath);
                 // console.log(this._appInitService.config['appURL']);
             }
         }

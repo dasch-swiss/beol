@@ -17,6 +17,7 @@ import {
 } from '@dasch-swiss/dsp-ui';
 import { Subscription } from 'rxjs';
 import { BeolService } from '../services/beol.service';
+import * as BeolConstants from '../beol-constants';
 
 @Component({
     selector: 'app-search-results',
@@ -46,7 +47,9 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
     navigationSubscription: Subscription;
 
-    beolIri =  this._appInitService.config['beolProjectIri'];
+    beolIri = BeolConstants.beolProjectIri;
+    leibnizApiBasePath = BeolConstants.leibnizSolrApiBasePath;
+    newtonBasePath = BeolConstants.newtonProjectIri;
 
     constructor(
         @Inject(DspApiConnectionToken) private _dspApiConnection: KnoraApiConnection,
@@ -187,7 +190,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         /*this._cacheService.getEntityDefinitionsForOntologies(
             [this._appInitService.getSettings().ontologyIRI + '/ontology/0801/leibniz/v2']).subscribe(
                 (info2: OntologyInformation) => {*/
-                    const searchRoute = this._appInitService.config['leibnizApi'] + 'select?q=type%3Abrief+AND+(+volltext%3A';
+                    const searchRoute = this.leibnizApiBasePath + 'select?q=type%3Abrief+AND+(+volltext%3A';
                     const proxyurl = 'https://cors-anywhere.herokuapp.com/';
                     const experssions = ['id', 'reihe', 'band', 'brief_nummer', 'all_suggest', 'ort_anzeige',
                         'datum_anzeige', 'datum_gregorianisch', 'datum_julianisch', 'kontext'];
@@ -230,7 +233,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         /*this._cacheService.getEntityDefinitionsForOntologies(
             [this._appInitService.getSettings().ontologyIRI + '/ontology/0801/newton/v2']).subscribe(
                 (info2: OntologyInformation) => {*/
-                    const searchRoute = 'http://www.newtonproject.ox.ac.uk/search/results?n=25&cat=';
+                    const searchRoute = this.newtonBasePath + '/search/results?n=25&cat=';
                     const proxyurl = 'https://cors-anywhere.herokuapp.com/';
                     const mathCategory = 'Mathematics&ce=0&keyword=';
                     const opticsCategory = 'Optics&ce=0&keyword=';

@@ -3,7 +3,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material-module';
 import { Component } from '@angular/core';
-import { AppInitService } from '@dasch-swiss/dsp-ui';
 
 /**
  * Test host component to simulate dsp-search-panel component.
@@ -19,11 +18,6 @@ class DspSearchPanelComponent {
 describe('AppComponent', () => {
 
     beforeEach(async(() => {
-        const appInitServiceMock = {
-            config: {
-                ontologyIRI: 'http://0.0.0.0:3333'
-            }
-        };
 
         TestBed.configureTestingModule({
             imports: [
@@ -34,9 +28,7 @@ describe('AppComponent', () => {
                 AppComponent,
                 DspSearchPanelComponent
             ],
-            providers: [
-                { provide: AppInitService, useValue: appInitServiceMock }
-            ]
+            providers: []
         }).compileComponents();
 
 
