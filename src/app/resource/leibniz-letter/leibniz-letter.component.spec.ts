@@ -21,7 +21,7 @@ describe('LeibnizLetterComponent', () => {
     let fixture: ComponentFixture<LeibnizLetterComponent>;
 
     const id = 'http://rdfh.ch/0801/7ZvL2A5PQ9C4eAmr-n26gw';
-    const leibnizApiBasePath = BeolConstants.leibnizSolrApiBasePath;
+    const leibnizApiBasePath = BeolConstants.LEIBNIZ_SOLR_API_BASE_PATH;
 
     beforeEach(async(() => {
         const dspConnectionSpy = {

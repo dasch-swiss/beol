@@ -11,7 +11,7 @@ import * as Constants from './beol-constants';
 export class AppComponent {
     title = 'app';
     searchParams: SearchParams;
-    projectIri = Constants.beolProjectIri;
+    projectIri = Constants.BEOL_PROJECT_IRI;
     constructor(private _router: Router) { }
 
     /**

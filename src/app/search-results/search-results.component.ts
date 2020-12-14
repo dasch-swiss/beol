@@ -47,9 +47,9 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
     navigationSubscription: Subscription;
 
-    beolIri = BeolConstants.beolProjectIri;
-    leibnizApiBasePath = BeolConstants.leibnizSolrApiBasePath;
-    newtonBasePath = BeolConstants.newtonProjectIri;
+    beolIri = BeolConstants.BEOL_PROJECT_IRI;
+    leibnizApiBasePath = BeolConstants.LEIBNIZ_SOLR_API_BASE_PATH;
+    newtonBasePath = BeolConstants.NEWTON_PROJECT_IRI;
 
     constructor(
         @Inject(DspApiConnectionToken) private _dspApiConnection: KnoraApiConnection,

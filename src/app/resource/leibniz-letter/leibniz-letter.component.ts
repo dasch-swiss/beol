@@ -79,7 +79,7 @@ export class LeibnizLetterComponent extends BeolResource {
     };
 
     props: LetterProps;
-    leibnizApiBasePath = BeolConstants.leibnizSolrApiBasePath;
+    leibnizApiBasePath = BeolConstants.LEIBNIZ_SOLR_API_BASE_PATH;
 
     constructor(
         @Inject(DspApiConnectionToken) protected _dspApiConnection: KnoraApiConnection,

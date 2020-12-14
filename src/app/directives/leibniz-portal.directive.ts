@@ -22,7 +22,7 @@ export class LeibnizPortalDirective implements OnChanges {
 
     private generateLinkToLeibnizPortal() {
 
-        const basePath = BeolConstants.leibnizDirectivePath;
+        const basePath = BeolConstants.LEIBNIZ_DIRECTIVE_PATH;
 
         return basePath + this._letterID;
 

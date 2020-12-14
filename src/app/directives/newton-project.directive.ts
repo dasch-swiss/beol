@@ -22,7 +22,7 @@ export class NewtonProjectDirective implements OnChanges {
 
     private generateLinkToNewtonProject() {
 
-        const basePath = BeolConstants.newtonDirectivePath;
+        const basePath = BeolConstants.NEWTON_DIRECTIVE_PATH;
 
         return basePath + this._npID;
 

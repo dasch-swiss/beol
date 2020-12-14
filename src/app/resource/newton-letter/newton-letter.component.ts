@@ -59,8 +59,8 @@ export class NewtonLetterComponent extends BeolResource {
     test: string;
 
     ontologyIri = this._appInitService.config['ontologyIRI'];
-    newtonProjectPath = BeolConstants.newtonProjectIri;
-    newtonLetterPath = BeolConstants.newtonDirectivePath;
+    newtonProjectPath = BeolConstants.NEWTON_PROJECT_IRI;
+    newtonLetterPath = BeolConstants.NEWTON_DIRECTIVE_PATH;
 
     propIris: PropIriToNameMapping = {
         'id': this.ontologyIri + '/ontology/0801/beol/v2#beolIDs',

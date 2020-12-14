@@ -1,12 +1,9 @@
-export const beolProjectIri = 'http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF';
-export const leibnizSolrApiBasePath = 'https://solr.leibniz.sub.uni-goettingen.de/solr/leibniz/';
-export const leibnizDirectivePath = 'http://leibniz-briefportal.adw-goe.de/letter/';
-export const newtonProjectIri = 'http://www.newtonproject.ox.ac.uk';
-export const newtonDirectivePath = newtonProjectIri + '/view/texts/normalized/';
-export const appName = 'BEOL | Bernoulli-Euler OnLine';
-export const localData = 'data';
+export const BEOL_PROJECT_IRI = 'http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF';
+export const LEIBNIZ_SOLR_API_BASE_PATH = 'https://solr.leibniz.sub.uni-goettingen.de/solr/leibniz/';
+export const LEIBNIZ_DIRECTIVE_PATH = 'http://leibniz-briefportal.adw-goe.de/letter/';
+export const NEWTON_PROJECT_IRI = 'http://www.newtonproject.ox.ac.uk';
+export const NEWTON_DIRECTIVE_PATH = NEWTON_PROJECT_IRI + '/view/texts/normalized/';
 export const PAGING_LIMIT = 25;
-export const startComponent = 'dasch';
 export const TEI_INIT_CONFIG =  {
                     'http://0.0.0.0:3333/ontology/0801/beol/v2#letter': {
                         'textProperty': 'http://0.0.0.0:3333/ontology/0801/beol/v2#hasText',
