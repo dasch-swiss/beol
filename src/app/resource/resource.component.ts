@@ -7,6 +7,7 @@ import { BeolService } from '../services/beol.service';
 import { DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
 import { Constants, KnoraApiConnection } from '@dasch-swiss/dsp-js';
 import { IncomingService } from '../services/incoming.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'app-resource',
@@ -29,9 +30,11 @@ export class ResourceComponent extends BeolResource {
                 protected _route: ActivatedRoute,
                 protected _incomingService: IncomingService,
                 public location: Location,
-                protected _beolService: BeolService) {
+                protected _beolService: BeolService,
+                protected _snackBar: MatSnackBar
+    ) {
 
-        super(_dspApiConnection, _route, _incomingService, _beolService);
+        super(_dspApiConnection, _route, _incomingService, _beolService, _snackBar);
     }
 
     initProps() {
