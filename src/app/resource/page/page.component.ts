@@ -18,6 +18,7 @@ import { Subscription } from 'rxjs';
 import { IncomingService } from 'src/app/services/incoming.service';
 import { BeolService } from '../../services/beol.service';
 import { BeolCompoundResource, BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 class PageProps implements PropertyValues {
 
@@ -62,6 +63,7 @@ export class PageComponent extends BeolResource {
 
     previousPage: ReadResource;
     nextPage: ReadResource;
+    versionArkUrl: string;
 
     constructor(
         @Inject(DspApiConnectionToken) protected _dspApiConnection: KnoraApiConnection,
@@ -69,9 +71,10 @@ export class PageComponent extends BeolResource {
         protected _incomingService: IncomingService,
         protected _beolService: BeolService,
         public location: Location,
-        private _appInitService: AppInitService) {
+        private _appInitService: AppInitService,
+        protected _snackBar: MatSnackBar) {
 
-        super(_dspApiConnection, _route, _incomingService, _beolService);
+        super(_dspApiConnection, _route, _incomingService, _beolService, _snackBar);
     }
 
     initProps() {
@@ -81,6 +84,7 @@ export class PageComponent extends BeolResource {
         this.mapper(props);
 
         this.props = props;
+        this.versionArkUrl = this.resource.readResource.versionArkUrl;
 
         this.getPreviousAndNextPage();
 

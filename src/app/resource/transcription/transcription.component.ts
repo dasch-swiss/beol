@@ -1,6 +1,7 @@
 import { Location } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import {
     Constants,
     KnoraApiConnection,
@@ -74,9 +75,10 @@ export class TranscriptionComponent extends BeolResource {
         protected _incomingService: IncomingService,
         public location: Location,
         protected _beolService: BeolService,
-        private _appInitService: AppInitService) {
+        private _appInitService: AppInitService,
+        protected _snackBar: MatSnackBar) {
 
-        super(_dspApiConnection, _route, _incomingService, _beolService);
+        super(_dspApiConnection, _route, _incomingService, _beolService, _snackBar);
     }
 
     initProps() {

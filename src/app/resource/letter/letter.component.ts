@@ -106,9 +106,6 @@ export class LetterComponent extends BeolResource {
     };
 
     props: LetterProps;
-    versionArkUrl: string; // versionArkUrl value
-    message: string; // message to show in the snackbar to confirm the copy of the ARK URL
-    action: string; // label for the snackbar action
 
     constructor(
         @Inject(DspApiConnectionToken) protected _dspApiConnection: KnoraApiConnection,
@@ -117,10 +114,10 @@ export class LetterComponent extends BeolResource {
         public location: Location,
         protected _beolService: BeolService,
         private _appInitService: AppInitService,
-        private _snackBar: MatSnackBar
+        protected _snackBar: MatSnackBar
     ) {
 
-        super(_dspApiConnection, _route, _incomingService, _beolService);
+        super(_dspApiConnection, _route, _incomingService, _beolService, _snackBar);
 
     }
 
@@ -150,10 +147,6 @@ export class LetterComponent extends BeolResource {
         } else {
             this.editors = [Christian_Gilain, Vanja_Hug, Rene_Taton];
         }
-
-        // set the arkUrl value
-        this.versionArkUrl = this.resource.readResource.versionArkUrl;
-        console.log(this.versionArkUrl)
 
     }
 
@@ -185,21 +178,6 @@ export class LetterComponent extends BeolResource {
                 console.log('search failed ' + err);
             }
         );
-    }
-
-    /**
-     * Display message to confirm the copy of the citation link (ARK URL)
-     * @param message
-     * @param action
-     */
-    openSnackBar(message: string, action: string) {
-        message = 'Copied to clipboard!';
-        action = 'Citation Link';
-        this._snackBar.open(message, action, {
-            duration: 3000,
-            horizontalPosition: 'center',
-            verticalPosition: 'top'
-        });
     }
 
 }
