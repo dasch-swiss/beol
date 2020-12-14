@@ -3,7 +3,6 @@ import { Component, DebugElement, OnInit } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AppInitService } from '@dasch-swiss/dsp-ui';
-import * as BeolConstants from '../beol-constants';
 
 describe('TeiLinkDirective', () => {
     let component: TestComponent;

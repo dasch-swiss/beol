@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { SearchParams } from '@dasch-swiss/dsp-ui';
 import { Router } from '@angular/router';
-import * as Constants from './beol-constants';
+import * as BeolConstants from './beol-constants';
 
 @Component({
     selector: 'app-root',
@@ -11,7 +11,7 @@ import * as Constants from './beol-constants';
 export class AppComponent {
     title = 'app';
     searchParams: SearchParams;
-    projectIri = Constants.BEOL_PROJECT_IRI;
+    projectIri = BeolConstants.BEOL_PROJECT_IRI;
     constructor(private _router: Router) { }
 
     /**
