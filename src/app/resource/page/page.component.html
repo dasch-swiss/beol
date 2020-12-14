@@ -43,7 +43,7 @@
                     <input id="clipboard-arkurl" class="clipboard-arkurl" cols="30" rows="10" readonly
                            [(ngModel)]="versionArkUrl" />
                     <button mat-button class="btn-copy-arkurl" [cdkCopyToClipboard]="versionArkUrl"
-                            matTooltip="Copy ARK url" matTooltipPosition="below" (click)="openSnackBar()">
+                            matTooltip="Copy ARK url" matTooltipPosition="below" (click)="openARKURLSnackBar()">
                         <mat-icon class="icon-arkurl">copy</mat-icon>
                     </button>
                 </div>

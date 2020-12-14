@@ -12,7 +12,7 @@
         </div>
 
         <div class="main-content">
-            
+
             <section class="cite-link">
                 <button mat-button class="share-res" matTooltip="Share resource by copying ARK url" matTooltipPosition="above"
                         [matMenuTriggerFor]="share">
@@ -28,7 +28,7 @@
                         <input id="clipboard-arkurl" class="clipboard-arkurl" cols="30" rows="10" readonly
                                [(ngModel)]="resource.readResource.versionArkUrl" />
                         <button mat-button class="btn-copy-arkurl" [cdkCopyToClipboard]="resource.readResource.versionArkUrl"
-                                matTooltip="Copy ARK url" matTooltipPosition="below" (click)="openSnackBar()">
+                                matTooltip="Copy ARK url" matTooltipPosition="below" (click)="openARKURLSnackBar()">
                             <mat-icon class="icon-arkurl">copy</mat-icon>
                         </button>
                     </div>

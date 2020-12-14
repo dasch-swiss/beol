@@ -373,10 +373,10 @@ export abstract class BeolResource implements OnInit, OnDestroy {
      * @param message
      * @param action
      */
-    openSnackBar(message: string, action: string) {
-        message = 'Copied to clipboard!';
-        action = 'Citation Link';
-        this._snackBar.open(message, action, {
+    openARKURLSnackBar() {
+        this.message = 'Copied to clipboard!';
+        this.action = 'Citation Link';
+        this._snackBar.open(this.message, this.action, {
             duration: 3000,
             horizontalPosition: 'center',
             verticalPosition: 'top'
