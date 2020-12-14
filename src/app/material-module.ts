@@ -30,8 +30,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule
 //    StyleModule
  } from '@angular/material/tree';
-
-// import {CdkTableModule} from '@angular/cdk';
+import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 
 @NgModule({
     imports: [
@@ -63,9 +63,10 @@ import { MatTreeModule
         MatTabsModule,
         MatToolbarModule,
         MatTooltipModule,
-        MatTreeModule
-//        CdkTableModule,
-//        StyleModule
+        MatTreeModule,
+        FormsModule,
+        ReactiveFormsModule,
+        ClipboardModule
     ],
 
     exports: [
@@ -97,9 +98,10 @@ import { MatTreeModule
         MatTabsModule,
         MatToolbarModule,
         MatTooltipModule,
-        MatTreeModule
-//        CdkTableModule,
-//        StyleModule
+        MatTreeModule,
+        FormsModule,
+        ReactiveFormsModule,
+        ClipboardModule
     ]
 })
 export class MaterialModule {

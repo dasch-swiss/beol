@@ -1,6 +1,8 @@
 import { Location } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 import {
     Constants,
     KnoraApiConnection,
@@ -18,6 +20,7 @@ import { Subscription } from 'rxjs';
 import { IncomingService } from 'src/app/services/incoming.service';
 import { BeolService } from '../../services/beol.service';
 import { BeolCompoundResource, BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
+
 
 class LetterProps implements PropertyValues {
     id: ReadTextValue[] = [];
@@ -103,6 +106,9 @@ export class LetterComponent extends BeolResource {
     };
 
     props: LetterProps;
+    versionArkUrl: string; // versionArkUrl value
+    message: string; // message to show in the snackbar to confirm the copy of the ARK URL
+    action: string; // label for the snackbar action
 
     constructor(
         @Inject(DspApiConnectionToken) protected _dspApiConnection: KnoraApiConnection,
@@ -110,7 +116,8 @@ export class LetterComponent extends BeolResource {
         protected _incomingService: IncomingService,
         public location: Location,
         protected _beolService: BeolService,
-        private _appInitService: AppInitService
+        private _appInitService: AppInitService,
+        private _snackBar: MatSnackBar
     ) {
 
         super(_dspApiConnection, _route, _incomingService, _beolService);
@@ -144,6 +151,10 @@ export class LetterComponent extends BeolResource {
             this.editors = [Christian_Gilain, Vanja_Hug, Rene_Taton];
         }
 
+        // set the arkUrl value
+        this.versionArkUrl = this.resource.readResource.versionArkUrl;
+        console.log(this.versionArkUrl)
+
     }
 
     showIncomingRes(resIri, resType) {
@@ -174,6 +185,21 @@ export class LetterComponent extends BeolResource {
                 console.log('search failed ' + err);
             }
         );
+    }
+
+    /**
+     * Display message to confirm the copy of the citation link (ARK URL)
+     * @param message
+     * @param action
+     */
+    openSnackBar(message: string, action: string) {
+        message = 'Copied to clipboard!';
+        action = 'Citation Link';
+        this._snackBar.open(message, action, {
+            duration: 3000,
+            horizontalPosition: 'center',
+            verticalPosition: 'top'
+        });
     }
 
 }

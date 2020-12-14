@@ -158,3 +158,31 @@ li.without-bullets {
   }
 }
 
+.clipboard-arkurl {
+  width: 264px;
+  height: 32px;
+  border: 1px solid rgba(0, 0, 0, 0.35);
+  border-radius: 4px 0 0 4px;
+}
+.ark-url-label {
+  margin-bottom: 8px
+}
+.btn-copy-arkurl {
+  border-radius: 0 4px 4px 0;
+  background-color: $accent !important;
+}
+
+.icon-arkurl {
+  margin-right: 20px;
+  margin-bottom: 10px;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.cite-link {
+  text-align: right;
+}
+
+.share-res {
+  color: $accent !important;
+}
