@@ -3,6 +3,7 @@ import { Component, DebugElement, OnInit } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AppInitService } from '@dasch-swiss/dsp-ui';
+import * as BeolConstants from '../beol-constants';
 
 describe('TeiLinkDirective', () => {
     let component: TestComponent;
@@ -11,15 +12,7 @@ describe('TeiLinkDirective', () => {
     beforeEach(() => {
         const appInitServiceSpy = {
             config: {
-                ontologyIRI: 'http://0.0.0.0:3333',
-                tei: {
-                    'http://0.0.0.0:3333/ontology/0801/beol/v2#letter': {
-                        'textProperty': 'http://0.0.0.0:3333/ontology/0801/beol/v2#hasText',
-                        'mappingIRI': 'http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF/mappings/BEOLTEIMapping',
-                        'gravsearchTemplateIri': 'http://rdfh.ch/0801/templateIri',
-                        'teiHeaderXSLTIri': 'http://rdfh.ch/0801/headerIri'
-                    }
-                }
+                ontologyIRI: 'http://0.0.0.0:3333'
             }
         };
 

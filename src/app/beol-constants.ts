@@ -7,4 +7,11 @@ export const appName = 'BEOL | Bernoulli-Euler OnLine';
 export const localData = 'data';
 export const PAGING_LIMIT = 25;
 export const startComponent = 'dasch';
-export const TEI = {};
+export const TEI_INIT_CONFIG =  {
+                    'http://0.0.0.0:3333/ontology/0801/beol/v2#letter': {
+                        'textProperty': 'http://0.0.0.0:3333/ontology/0801/beol/v2#hasText',
+                            'mappingIRI': 'http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF/mappings/BEOLTEIMapping',
+                            'gravsearchTemplateIri': 'http://rdfh.ch/0801/templateIri',
+                            'teiHeaderXSLTIri': 'http://rdfh.ch/0801/headerIri'
+                        }
+                    };

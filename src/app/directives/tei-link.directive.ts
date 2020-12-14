@@ -38,17 +38,17 @@ export class TeiLinkDirective implements OnChanges {
     }
 
     constructor (private el: ElementRef,
-        private _appInitService: AppInitService) {
+                 private _appInitService: AppInitService) {
     }
 
     private generateTeiLink() {
 
         const settings = this._appInitService.config;
-
-        const teiConfig = BeolConstants.TEI[this._resourceType];
+        const teiInitConfig = BeolConstants.TEI_INIT_CONFIG;
+        const teiConfig = teiInitConfig[this._resourceType];
 
         if (teiConfig !== undefined) {
-
+            
             const teiLink = settings['ontologyIRI'] + '/v2/tei/' + encodeURIComponent(this._resourceIri)
                 + `?${this.textProperty}=` + encodeURIComponent(teiConfig.textProperty)
                 + `&${this.mappingIri}=` + encodeURIComponent(teiConfig.mappingIRI)
