@@ -1,5 +1,6 @@
 import { Directive, ElementRef, Input, OnChanges } from '@angular/core';
 import { AppInitService } from '@dasch-swiss/dsp-ui';
+import * as BeolConstants from '../beol-constants';
 
 @Directive({
     selector: '[appTeiLink]'
@@ -44,7 +45,7 @@ export class TeiLinkDirective implements OnChanges {
 
         const settings = this._appInitService.config;
 
-        const teiConfig = settings['tei'][this._resourceType];
+        const teiConfig = BeolConstants.TEI[this._resourceType];
 
         if (teiConfig !== undefined) {
 

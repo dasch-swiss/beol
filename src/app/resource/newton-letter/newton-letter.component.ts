@@ -145,7 +145,6 @@ export class NewtonLetterComponent extends BeolResource {
             const image = imgs[imgIt];
             if (image.src) {
                 image.src = image.src.replace(this._appInitService.config['appURL'], this.newtonProjectPath);
-                // console.log(this._appInitService.config['appURL']);
             }
         }
         return element;

@@ -327,7 +327,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         if (this.numberOfAllResults > 0) {
             // offset is 0-based
             // if numberOfAllResults equals the pagingLimit, the max. offset is 0
-            this.maxOffset = Math.floor((this.numberOfAllResults - 1) / this._appInitService.config['pagingLimit']);
+            this.maxOffset = Math.floor((this.numberOfAllResults - 1) / BeolConstants.PAGING_LIMIT);
         } else {
             this.maxOffset = 0;
         }
