@@ -15,6 +15,29 @@
 
         <div class="main-content">
 
+            <section class="cite-link">
+                <button mat-button class="share-res" matTooltip="Share resource by copying ARK url" matTooltipPosition="above"
+                        [matMenuTriggerFor]="share">
+                    <mat-icon>share</mat-icon>
+                    <span class="desktop-only">Citation Link</span>
+                </button>
+                <mat-menu #share="matMenu" class="res-share-menu">
+                    <!-- citation link - ARK URL -->
+                    <div class="ark-url-label mat-body">
+                        <label for="clipboard-arkurl">Citation Link (ARK URL)</label>
+                    </div>
+                    <div class="ark-url-input">
+                        <input id="clipboard-arkurl" class="clipboard-arkurl" cols="30" rows="10" readonly
+                               [(ngModel)]="resource.readResource.versionArkUrl" />
+                        <button mat-button class="btn-copy-arkurl" [cdkCopyToClipboard]="resource.readResource.versionArkUrl"
+                                matTooltip="Copy ARK url" matTooltipPosition="below" (click)="openARKURLSnackBar()">
+                            <mat-icon class="icon-arkurl">copy</mat-icon>
+                        </button>
+                    </div>
+                </mat-menu>
+            </section>
+
+
             <section class="title center">
                 <h3 mat-card-subtitle>{{resource.readResource.resourceClassLabel}}</h3>
                 <!-- <h4>label: {{resource?.label}}</h4> -->
@@ -24,9 +47,9 @@
                         <h2>
                             <read-text-value [valueObject]="title" [resource]="resource.readResource" [bindEvents]="true">
                             </read-text-value>
-                            <span *ngIf="props?.abbreviation[0]"> (<read-text-value
+                            <span *ngIf="props?.abbreviation[0]"> <div>(<read-text-value
                                     [valueObject]="props?.abbreviation[0]" [resource]="resource.readResource"
-                                    [bindEvents]="false"></read-text-value>)</span>
+                                    [bindEvents]="false"></read-text-value>)</div></span>
                         </h2>
                     </span>
                 </p>

@@ -20,6 +20,7 @@ import { BeolService } from '../../services/beol.service';
 import { BeolCompoundResource, BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
 import { HttpClient } from '@angular/common/http';
 import * as BeolConstants from '../../beol-constants';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 class LetterProps implements PropertyValues {
     id: ReadTextValue[] = [];
@@ -88,10 +89,11 @@ export class LeibnizLetterComponent extends BeolResource {
         public location: Location,
         protected _beolService: BeolService,
         private _appInitService: AppInitService,
-        private _http: HttpClient
+        private _http: HttpClient,
+        protected _snackBar: MatSnackBar
     ) {
 
-        super(_dspApiConnection, _route, _incomingService, _beolService);
+        super(_dspApiConnection, _route, _incomingService, _beolService, _snackBar);
 
     }
 

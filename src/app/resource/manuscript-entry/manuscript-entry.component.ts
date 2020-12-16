@@ -17,6 +17,7 @@ import { Subscription } from 'rxjs';
 import { IncomingService } from 'src/app/services/incoming.service';
 import { BeolService } from '../../services/beol.service';
 import { BeolCompoundResource, BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 class ManuscriptEntryProps implements PropertyValues {
 
@@ -59,9 +60,11 @@ export class ManuscriptEntryComponent extends BeolResource {
         protected _incomingService: IncomingService,
         protected _beolService: BeolService,
         public location: Location,
-        private _appInitService: AppInitService) {
+        private _appInitService: AppInitService,
+        protected _snackBar: MatSnackBar
+    ) {
 
-        super(_dspApiConnection, _route, _incomingService, _beolService);
+        super(_dspApiConnection, _route, _incomingService, _beolService, _snackBar);
     }
 
     initProps() {
