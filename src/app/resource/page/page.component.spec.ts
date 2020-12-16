@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
 import { ReadTextValueComponent } from '../../properties/read-text-value/read-text-value.component';
 import { AppInitService, DspApiConnectionToken, DspViewerModule } from '@dasch-swiss/dsp-ui';
 import {
@@ -50,6 +51,7 @@ describe('PageComponent', () => {
                 RouterTestingModule,
                 MatListModule,
                 MatIconModule,
+                MatMenuModule,
                 DspViewerModule
             ],
             providers: [
