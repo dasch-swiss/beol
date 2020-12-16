@@ -14,12 +14,14 @@ import { AppInitService, DspActionModule, DspApiConnectionToken } from '@dasch-s
 import { ReadResource, ReadResourceSequence, ReadTextValueAsString, ResourcesEndpointV2, SearchEndpointV2 } from '@dasch-swiss/dsp-js';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { HttpClientModule } from '@angular/common/http';
+import * as BeolConstants from '../../beol-constants';
 
 describe('LeibnizLetterComponent', () => {
     let component: LeibnizLetterComponent;
     let fixture: ComponentFixture<LeibnizLetterComponent>;
 
     const id = 'http://rdfh.ch/0801/7ZvL2A5PQ9C4eAmr-n26gw';
+    const leibnizApiBasePath = BeolConstants.LEIBNIZ_SOLR_API_BASE_PATH;
 
     beforeEach(async(() => {
         const dspConnectionSpy = {
@@ -31,8 +33,7 @@ describe('LeibnizLetterComponent', () => {
 
         const appInitServiceMock = {
             config: {
-                ontologyIRI: 'http://0.0.0.0:3333',
-                leibnizApi: 'http://www.leibniz.de/'
+                ontologyIRI: 'http://0.0.0.0:3333'
             }
         };
 
@@ -98,7 +99,7 @@ describe('LeibnizLetterComponent', () => {
         expect(component).toBeTruthy();
 
         httpTestingController
-            .expectOne('http://www.leibniz.de/select?sort=type+asc&q=id%3A1+OR+(doc_id%3A1+AND+type%3Avariante)&rows=9999&wt=json')
+            .expectOne(leibnizApiBasePath + 'select?sort=type+asc&q=id%3A1+OR+(doc_id%3A1+AND+type%3Avariante)&rows=9999&wt=json')
             .flush({
                 response: {
                 docs: [{

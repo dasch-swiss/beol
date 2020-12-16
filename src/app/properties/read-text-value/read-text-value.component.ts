@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { ReadResource, ReadTextValue, Constants } from '@dasch-swiss/dsp-js';
-import { ValueTypeService } from '@dasch-swiss/dsp-ui';
+import { ValueService } from '@dasch-swiss/dsp-ui';
 
 @Component({
     selector: 'read-text-value',
@@ -46,7 +46,7 @@ export class ReadTextValueComponent implements OnChanges {
 
     @Input() renderFigureRegions = false;
 
-    constructor(private _valueTypeService: ValueTypeService) {
+    constructor(private _valueTypeService: ValueService) {
     }
 
     ngOnChanges() {

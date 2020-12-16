@@ -13,10 +13,11 @@ import {
     AdvancedSearchParamsService,
     AppInitService,
     DspApiConnectionToken,
-    ValueTypeService
+    ValueService
 } from '@dasch-swiss/dsp-ui';
 import { Subscription } from 'rxjs';
 import { BeolService } from '../services/beol.service';
+import * as BeolConstants from '../beol-constants';
 
 @Component({
     selector: 'app-search-results',
@@ -46,7 +47,9 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
     navigationSubscription: Subscription;
 
-    beolIri = 'http://rdfh.ch/projects/yTerZGyxjZVqFMNNKXCDPF';
+    beolIri = BeolConstants.BEOL_PROJECT_IRI;
+    leibnizApiBasePath = BeolConstants.LEIBNIZ_SOLR_API_BASE_PATH;
+    newtonBasePath = BeolConstants.NEWTON_PROJECT_IRI;
 
     constructor(
         @Inject(DspApiConnectionToken) private _dspApiConnection: KnoraApiConnection,
@@ -56,7 +59,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         private _router: Router,
         public location: Location,
         private _beol: BeolService,
-        public _valueTypeService: ValueTypeService) {
+        public _valueTypeService: ValueService) {
     }
 
     ngOnInit() {
@@ -187,7 +190,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         /*this._cacheService.getEntityDefinitionsForOntologies(
             [this._appInitService.getSettings().ontologyIRI + '/ontology/0801/leibniz/v2']).subscribe(
                 (info2: OntologyInformation) => {*/
-                    const searchRoute = this._appInitService.config['leibnizApi'] + 'select?q=type%3Abrief+AND+(+volltext%3A';
+                    const searchRoute = this.leibnizApiBasePath + 'select?q=type%3Abrief+AND+(+volltext%3A';
                     const proxyurl = 'https://cors-anywhere.herokuapp.com/';
                     const experssions = ['id', 'reihe', 'band', 'brief_nummer', 'all_suggest', 'ort_anzeige',
                         'datum_anzeige', 'datum_gregorianisch', 'datum_julianisch', 'kontext'];
@@ -230,7 +233,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         /*this._cacheService.getEntityDefinitionsForOntologies(
             [this._appInitService.getSettings().ontologyIRI + '/ontology/0801/newton/v2']).subscribe(
                 (info2: OntologyInformation) => {*/
-                    const searchRoute = 'http://www.newtonproject.ox.ac.uk/search/results?n=25&cat=';
+                    const searchRoute = this.newtonBasePath + '/search/results?n=25&cat=';
                     const proxyurl = 'https://cors-anywhere.herokuapp.com/';
                     const mathCategory = 'Mathematics&ce=0&keyword=';
                     const opticsCategory = 'Optics&ce=0&keyword=';
@@ -324,7 +327,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         if (this.numberOfAllResults > 0) {
             // offset is 0-based
             // if numberOfAllResults equals the pagingLimit, the max. offset is 0
-            this.maxOffset = Math.floor((this.numberOfAllResults - 1) / this._appInitService.config['pagingLimit']);
+            this.maxOffset = Math.floor((this.numberOfAllResults - 1) / BeolConstants.PAGING_LIMIT);
         } else {
             this.maxOffset = 0;
         }

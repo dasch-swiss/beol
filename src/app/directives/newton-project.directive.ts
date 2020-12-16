@@ -1,4 +1,5 @@
 import { Directive, ElementRef, Input, OnChanges } from '@angular/core';
+import * as BeolConstants from '../beol-constants';
 
 @Directive({
     selector: '[appNewtonProject]'
@@ -21,7 +22,7 @@ export class NewtonProjectDirective implements OnChanges {
 
     private generateLinkToNewtonProject() {
 
-        const basePath = 'http://www.newtonproject.ox.ac.uk/view/texts/normalized/';
+        const basePath = BeolConstants.NEWTON_DIRECTIVE_PATH;
 
         return basePath + this._npID;
 

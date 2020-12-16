@@ -1,4 +1,5 @@
 import { Directive, ElementRef, Input, OnChanges } from '@angular/core';
+import * as BeolConstants from '../beol-constants';
 
 @Directive({
     selector: '[appLeibnizPortal]'
@@ -21,7 +22,7 @@ export class LeibnizPortalDirective implements OnChanges {
 
     private generateLinkToLeibnizPortal() {
 
-        const basePath = 'http://leibniz-briefportal.adw-goe.de/letter/';
+        const basePath = BeolConstants.LEIBNIZ_DIRECTIVE_PATH;
 
         return basePath + this._letterID;
 

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { SearchParams } from '@dasch-swiss/dsp-ui';
 import { Router } from '@angular/router';
+import * as BeolConstants from './beol-constants';
 
 @Component({
     selector: 'app-root',
@@ -10,9 +11,8 @@ import { Router } from '@angular/router';
 export class AppComponent {
     title = 'app';
     searchParams: SearchParams;
-
-    constructor(
-        private _router: Router) { }
+    projectIri = BeolConstants.BEOL_PROJECT_IRI;
+    constructor(private _router: Router) { }
 
     /**
      * Perform the full text search
