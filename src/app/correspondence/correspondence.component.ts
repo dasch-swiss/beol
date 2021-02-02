@@ -52,7 +52,7 @@ class Correspondence {
         readonly correspondent1: Correspondent,
         readonly correspondent2: Correspondent,
         readonly description: string = '',
-        readonly noTranslation: boolean = false) {
+        readonly showTranslation: boolean = false) {
     }
 }
 
@@ -79,7 +79,6 @@ class CorrespondenceGroupWithSection {
         readonly mainCorrespondent: Correspondent,
         readonly sections: Section[],
         readonly description: string = '',
-        readonly noTranslations: boolean = false,
         public panelOpenState: boolean = false) {
 
     }
@@ -309,12 +308,12 @@ export class CorrespondenceComponent implements OnInit {
         this.leooIV = [
             new Book('LEOO IVA.IV', '978-3-0348-0880-4', [
                 new CorrespondenceGroup(Leonhard_Euler, [
-                    new Correspondence(Leonhard_Euler, Christian_Goldbach, 'Original', true),
-                    new Correspondence(Leonhard_Euler, Christian_Goldbach, 'Translation')
+                    new Correspondence(Leonhard_Euler, Christian_Goldbach, 'Original'),
+                    new Correspondence(Leonhard_Euler, Christian_Goldbach, 'Translation', true)
                 ], 'between Leonhard Euler and Christian Goldbach'),
                 new CorrespondenceGroup(Johann_Albrecht_Euler, [
-                    new Correspondence(Johann_Albrecht_Euler, Christian_Goldbach, 'Original', true),
-                    new Correspondence(Johann_Albrecht_Euler, Christian_Goldbach, 'Translation')
+                    new Correspondence(Johann_Albrecht_Euler, Christian_Goldbach, 'Original'),
+                    new Correspondence(Johann_Albrecht_Euler, Christian_Goldbach, 'Translation', true)
                 ], 'between Johann Albrecht Euler and Christian Goldbach')
             ])
         ];
@@ -502,12 +501,26 @@ export class CorrespondenceComponent implements OnInit {
       * @param gnd2 GND of the second correspondent.
       * @param noTranslations indicates if translations should be excluded.
       */
-    searchForCorrespondence(gnd1: string, gnd2: string, noTranslations: boolean = false) {
+    searchForLeooCorrespondence(gnd1: string, gnd2: string, showTranslation: boolean = false) {
 
-        const gravsearch: string = this._beol.searchForCorrespondence(gnd1, gnd2, noTranslations, 0);
+        const gravsearch: string = this._beol.searchForLeooCorrespondence(gnd1, gnd2, showTranslation, 0);
 
         this.submitQuery(gravsearch);
     }
+
+    /**
+     * Generate Gravsearch query to search for BEBB and LECE correspondence
+     *
+     * @param gnd1 GND of the first correspondent.
+     * @param gnd2 GND of the second correspondent.
+     */
+    searchForCorrespondence(gnd1: string, gnd2: string) {
+
+        const gravsearch: string = this._beol.searchForCorrespondence(gnd1, gnd2, 0);
+
+        this.submitQuery(gravsearch);
+    }
+
     /**
     * Generate Gravsearch query to search for The Newton project Correspondence.
 
