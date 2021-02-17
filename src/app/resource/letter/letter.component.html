@@ -214,7 +214,7 @@
                 <mat-list *ngFor="let incomingLinkSourceRes of resource.readResource.incomingReferences">
                     <mat-list-item>
                         <span class="link"
-                            (click)="showIncomingRes(incomingLinkSourceRes.id, incomingLinkSourceRes.type)">{{incomingLinkSourceRes.label}}</span>
+                            (click)="showIncomingRes(incomingLinkSourceRes.id, incomingLinkSourceRes.type, incomingLinkSourceRes)">{{incomingLinkSourceRes.label}}</span>
                     </mat-list-item>
                 </mat-list>
             </div>

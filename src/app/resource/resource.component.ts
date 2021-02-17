@@ -5,7 +5,7 @@ import { BeolCompoundResource, BeolResource } from './beol-resource';
 import { Subscription } from 'rxjs';
 import { BeolService } from '../services/beol.service';
 import { DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
-import { Constants, KnoraApiConnection } from '@dasch-swiss/dsp-js';
+import { Constants, KnoraApiConnection, ReadResource } from '@dasch-swiss/dsp-js';
 import { IncomingService } from '../services/incoming.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -39,12 +39,12 @@ export class ResourceComponent extends BeolResource {
 
     initProps() {
 
-        this.mapToComponent(this.resource.readResource.type, this.iri);
+        this.mapToComponent(this.resource.readResource.type, this.iri, this.resource.readResource);
 
     }
 
-    mapToComponent(referredResourceType: string, referredResourceIri: string): void {
-        this._beolService.routeByResourceType(referredResourceType, referredResourceIri);
+    mapToComponent(referredResourceType: string, referredResourceIri: string, refferedResource: ReadResource): void {
+        this._beolService.routeByResourceType(referredResourceType, referredResourceIri, refferedResource);
     }
 
 }

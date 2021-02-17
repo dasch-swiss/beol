@@ -155,7 +155,7 @@ export class LeibnizLetterComponent extends BeolResource {
         const updatedBody = this.getLeibnizImages(html.body);
         this.letter = updatedBody;
     }
-    showIncomingRes(resIri, resType) {
-        this._beolService.routeByResourceType(resType, resIri);
+    showIncomingRes(resIri, resType, res) {
+        this._beolService.routeByResourceType(resType, resIri, res);
     }
 }

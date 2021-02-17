@@ -18,7 +18,7 @@
                     <p class="margin-left">
                         <mat-list>
                             <mat-list-item *ngFor="let trans of transcriptions">
-                                <a class="salsah-link" (click)="goToResource(trans.type, trans.id)">{{trans.label}}</a>
+                                <a class="salsah-link" (click)="goToResource(trans.type, trans.id, trans)">{{trans.label}}</a>
                             </mat-list-item>
                         </mat-list>
                     </p>
