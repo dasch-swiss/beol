@@ -93,6 +93,7 @@ describe('BebbRouteComponent', () => {
         const dspServiceSpy = TestBed.inject(DspApiConnectionToken);
 
         expect(dspServiceSpy.v2.search.doExtendedSearch).toHaveBeenCalledWith('gravsearchQuery');
+        expect(beolServiceSpy.routeByResourceType).toHaveBeenCalledTimes(2);
 
     });
 });
