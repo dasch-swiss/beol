@@ -96,8 +96,8 @@ export class ManuscriptEntryComponent extends BeolResource {
 
     }
 
-    goToResource(resType: string, resIri: string) {
-        this._beolService.routeByResourceType(resType, resIri);
+    goToResource(resType: string, resIri: string, res) {
+        this._beolService.routeByResourceType(resType, resIri, res);
     }
 
 }

@@ -11,6 +11,7 @@ import {
 import { AppInitService, DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
 import { Subscription } from 'rxjs';
 import { BeolService } from '../services/beol.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 declare let require: any;
 
@@ -60,12 +61,16 @@ export class IntroductionComponent implements OnInit, OnDestroy {
         'text': this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#hasText',
     };
 
+    message: string; // message to show in the snackbar to confirm the copy of the ARK URL
+    action: string; // label for the snackbar action
+
     constructor(
         @Inject(DspApiConnectionToken) private _dspApiConnection: KnoraApiConnection,
         private _route: ActivatedRoute,
         private _beol: BeolService,
         private _appInitService: AppInitService,
-        public location: Location
+        public location: Location,
+        protected _snackBar: MatSnackBar
     ) {
     }
 
@@ -161,5 +166,18 @@ export class IntroductionComponent implements OnInit, OnDestroy {
     toggleGrandChildren(index: number) {
         this.curChildIndex = (index === this.curChildIndex ? undefined : index);
     }
-
+    /**
+     * Display message to confirm the copy of the citation link (ARK URL)
+     * @param message
+     * @param action
+     */
+    openARKURLSnackBar() {
+        this.message = 'Copied to clipboard!';
+        this.action = 'Citation Link';
+        this._snackBar.open(this.message, this.action, {
+            duration: 3000,
+            horizontalPosition: 'center',
+            verticalPosition: 'top'
+        });
+    }
 }

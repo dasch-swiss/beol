@@ -54,8 +54,8 @@ export class SimpleResourceComponent extends BeolResource {
      * @param resIri
      * @param resType
      */
-    showIncomingRes(resIri, resType) {
-        this._beolService.routeByResourceType(resType, resIri);
+    showIncomingRes(resIri, resType, res) {
+        this._beolService.routeByResourceType(resType, resIri, res);
     }
 
 }

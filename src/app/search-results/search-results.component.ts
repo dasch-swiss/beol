@@ -383,8 +383,8 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
      * @param resourceIri the Iri of the resource.
      * @param resourceType the type (class) of the resource.
      */
-    goToViewer(resourceIri: string, resourceType: string) {
-        this._beol.routeByResourceType(resourceType, resourceIri);
+    goToViewer(resourceIri: string, resourceType: string, res: ReadResource) {
+        this._beol.routeByResourceType(resourceType, resourceIri, res);
     }
 
     /**

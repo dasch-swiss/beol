@@ -119,8 +119,8 @@ export class TranscriptionComponent extends BeolResource {
         );
     }
 
-    goToResource(resType: string, resIri: string) {
-        this._beolService.routeByResourceType(resType, resIri);
+    goToResource(resType: string, resIri: string, res: ReadResource) {
+        this._beolService.routeByResourceType(resType, resIri, res);
     }
 
     showEditorsRes(gnd) {
@@ -133,11 +133,11 @@ export class TranscriptionComponent extends BeolResource {
             (resourceSeq: ReadResourceSequence) => {
 
                 if (resourceSeq.resources.length === 1) {
-
-                    const personIri: string = resourceSeq.resources[0].id;
+                    const personResource = resourceSeq.resources[0];
+                    const personIri: string = personResource.id;
 
                     // given the Iri of the letter, display the whole resource
-                    this._beolService.routeByResourceType(resType, personIri);
+                    this._beolService.routeByResourceType(resType, personIri, personResource);
                 } else {
                     // person not found
                     console.log(`editor with gnd number ${gnd} not found`);

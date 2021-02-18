@@ -260,7 +260,7 @@ export class MathJaxDirective implements OnChanges {
             // TODO: the value object should handle this and check for the existence of the given referred resource
             const referredRes = this._referredResources[referredResourceIri];
 
-            this._beol.routeByResourceType(referredRes.type, referredResourceIri);
+            this._beol.routeByResourceType(referredRes.type, referredResourceIri, referredRes);
 
             // preventDefault (propagation)
             return false;
@@ -275,7 +275,7 @@ export class MathJaxDirective implements OnChanges {
             // TODO: the value object should handle this and check for the existence of the given referred resource
             const referredResourceType = this._referredResources[referredResourceIri].type;
 
-            this._beol.routeByResourceType(referredResourceType, referredResourceIri);
+            this._beol.routeByResourceType(referredResourceType, referredResourceIri, this._referredResources[referredResourceIri]);
 
             // preventDefault (propagation)
             return false;

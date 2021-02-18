@@ -36,11 +36,11 @@ export class BebbRouteComponent implements OnInit {
                     (resourceSeq: ReadResourceSequence) => {
 
                         if (resourceSeq.resources.length === 1) {
-
-                            const letterIri: string = resourceSeq.resources[0].id;
+                            const letter = resourceSeq.resources[0];
+                            const letterIri: string = letter.id;
 
                             // given the Iri of the letter, display the whole resource
-                            this._beolService.routeByResourceType(this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#letter', letterIri);
+                            this._beolService.routeByResourceType(this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#letter', letterIri, letter);
                         } else {
                             // letter not found
                             this.notFound = true;

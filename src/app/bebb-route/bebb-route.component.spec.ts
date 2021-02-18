@@ -90,13 +90,10 @@ describe('BebbRouteComponent', () => {
 
         expect(beolServiceSpy.searchForLetterFromBEBB).toHaveBeenCalledWith(lt);
 
-        expect(beolServiceSpy.routeByResourceType).toHaveBeenCalledWith('http://0.0.0.0:3333/ontology/0801/beol/v2#letter', 'letterIri');
-
         const dspServiceSpy = TestBed.inject(DspApiConnectionToken);
 
         expect(dspServiceSpy.v2.search.doExtendedSearch).toHaveBeenCalledWith('gravsearchQuery');
-
-        expect(beolServiceSpy.routeByResourceType).toHaveBeenCalledWith('http://0.0.0.0:3333/ontology/0801/beol/v2#letter', 'letterIri' );
+        expect(beolServiceSpy.routeByResourceType).toHaveBeenCalledTimes(1);
 
     });
 });

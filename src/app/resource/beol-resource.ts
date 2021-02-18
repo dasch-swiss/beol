@@ -286,7 +286,7 @@ export abstract class BeolResource implements OnInit, OnDestroy {
 
         const refResType = (linkVal.linkedResource !== undefined ? linkVal.linkedResource.type : '');
 
-        this._beolService.routeByResourceType(refResType, linkVal.linkedResourceIri);
+        this._beolService.routeByResourceType(refResType, linkVal.linkedResourceIri, linkVal.linkedResource);
     }
 
     ngOnInit() {

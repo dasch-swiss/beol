@@ -714,8 +714,9 @@ export class BeolService {
      *
      * @param referredResourceType the type of the referred resource.
      * @param referredResourceIri the Iri of the referred resource.
+     * @param resource the referred resource.
      */
-    routeByResourceType(referredResourceType: string, referredResourceIri: string): void {
+    routeByResourceType(referredResourceType: string, referredResourceIri: string, resource: ReadResource): void {
 
         if (referredResourceType === this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#person') {
             // route to person template
@@ -758,6 +759,17 @@ export class BeolService {
             this._router.navigateByUrl('manuscriptEntry/' + encodeURIComponent(referredResourceIri));
         } else if (referredResourceType === this._appInitService.config['ontologyIRI'] + '/ontology/0801/biblio/v2#letter') {
             this._router.navigateByUrl('publishedLetter/' + encodeURIComponent(referredResourceIri));
+        } else if (referredResourceType === this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#section') {
+            const sectionID = resource.properties[this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#beolIDs'][0].strval;
+            if (sectionID.startsWith('goldbach')) {
+                this._router.navigateByUrl('introduction/leoo/' + sectionID);
+            } else if (sectionID.startsWith('CondorcetTurgot') || sectionID.startsWith('condorcet') || sectionID.startsWith('CondorcetMJA')
+                || sectionID.startsWith('Turgot')
+            ) {
+                this._router.navigateByUrl('introduction/lece/' + sectionID);
+            } else {
+                this._router.navigateByUrl('simpleResource/' + encodeURIComponent(referredResourceIri));
+            }
         } else {
             // route to generic template
             this._router.navigateByUrl('simpleResource/' + encodeURIComponent(referredResourceIri));

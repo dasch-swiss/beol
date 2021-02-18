@@ -52,7 +52,7 @@
                     <p class="margin-left">
                         <mat-list>
                             <mat-list-item *ngFor="let layer of otherLayers">
-                                <a class="salsah-link" (click)="goToResource(layer.type, layer.id)">{{layer.label}}</a>
+                                <a class="salsah-link" (click)="goToResource(layer.type, layer.id, layer)">{{layer.label}}</a>
                             </mat-list-item>
                         </mat-list>
                     </p>

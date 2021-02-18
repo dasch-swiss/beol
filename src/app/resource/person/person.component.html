@@ -129,19 +129,15 @@
                 </div>
             </section>-->
 
-            <section class="links">
-                <div *ngIf="resource?.readResource.incomingReferences?.length > 0" class="incoming-link-position">
-                    <p>
-                        <strong>Referenced In:</strong>
-                    </p>
-                    <mat-list *ngFor="let incomingLinkSourceRes of resource.readResource.incomingReferences">
-                        <mat-list-item>
-                            <span class="link"
-                                (click)="showIncomingRes(incomingLinkSourceRes.id, incomingLinkSourceRes.type)">{{incomingLinkSourceRes.label}}</span>
-                        </mat-list-item>
-                    </mat-list>
-                </div>
-            </section>
+            <div *ngIf="resource?.readResource.incomingReferences?.length > 0" class="incoming-link-position">
+                <h4 class="subheading-2">Referenced in:</h4>
+                <mat-list *ngFor="let incomingLinkSourceRes of resource.readResource.incomingReferences">
+                    <mat-list-item>
+                        <span class="link"
+                            (click)="showIncomingRes(incomingLinkSourceRes.id, incomingLinkSourceRes.type, incomingLinkSourceRes)">{{incomingLinkSourceRes.label}}</span>
+                    </mat-list-item>
+                </mat-list>
+            </div>
 
         </div>
     </div>

@@ -3,6 +3,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { KnoraApiConnection, ReadResourceSequence } from '@dasch-swiss/dsp-js';
 import { AppInitService, DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
 import { BeolService } from '../services/beol.service';
+import { ReadResource } from '@dasch-swiss/dsp-js/src/models/v2/resources/read/read-resource';
 
 @Component({
     selector: 'app-leoo-route',
@@ -35,11 +36,11 @@ export class LeooRouteComponent implements OnInit {
                     (resourceSeq: ReadResourceSequence) => {
 
                         if (resourceSeq.resources.length === 1) {
-
-                            const letterIri: string = resourceSeq.resources[0].id;
+                            const letterRes: ReadResource = resourceSeq.resources[0];
+                            const letterIri: string = letterRes.id;
 
                             // given the Iri of the letter, display the whole resource
-                            this._beolService.routeByResourceType(this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#letter', letterIri);
+                            this._beolService.routeByResourceType(this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#letter', letterIri, letterRes);
                         } else {
                             // letter not found
                             console.log(`letter with repertorium number ${this.repertoriumNumber} not found`);

@@ -71,7 +71,7 @@
                 </div>
 
                 <!-- go to the viewer to access the resource information -->
-                <button mat-button color="primary" (click)="goToViewer(res.id, res.type)">Read more &rarr;</button>
+                <button mat-button color="primary" (click)="goToViewer(res.id, res.type, res)">Read more &rarr;</button>
 
                 <mat-action-row>
                     <button mat-button color="accent" *ngIf="!first" (click)="prevStep()">Previous</button>
