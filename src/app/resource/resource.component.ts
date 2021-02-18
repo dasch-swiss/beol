@@ -43,8 +43,8 @@ export class ResourceComponent extends BeolResource {
 
     }
 
-    mapToComponent(referredResourceType: string, referredResourceIri: string, refferedResource: ReadResource): void {
-        this._beolService.routeByResourceType(referredResourceType, referredResourceIri, refferedResource);
+    mapToComponent(referredResourceType: string, referredResourceIri: string, referedResource: ReadResource): void {
+        this._beolService.routeByResourceType(referredResourceType, referredResourceIri, referedResource);
     }
 
 }
