@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ReadTextValueComponent } from './read-text-value.component';
@@ -20,7 +20,7 @@ describe('ReadTextValueComponent', () => {
     let testHostComponent: TestHostComponent;
     let testHostFixture: ComponentFixture<TestHostComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         const appInitServiceSpy = jasmine.createSpyObj('AppInitService', ['getSettings']);
 
         TestBed.configureTestingModule({

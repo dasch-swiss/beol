@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MaterialModule } from '../../material-module';
@@ -23,7 +23,7 @@ describe('LeibnizLetterComponent', () => {
     const id = 'http://rdfh.ch/0801/7ZvL2A5PQ9C4eAmr-n26gw';
     const leibnizApiBasePath = BeolConstants.LEIBNIZ_SOLR_API_BASE_PATH;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         const dspConnectionSpy = {
             v2: {
                 res: jasmine.createSpyObj('res', ['getResource']),

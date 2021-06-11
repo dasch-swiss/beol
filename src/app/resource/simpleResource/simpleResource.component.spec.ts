@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
@@ -18,7 +18,7 @@ describe('SimpleResourceComponent', () => {
 
     const id = 'http://rdfh.ch/0801/qEy1S5u4Tsurt2wU58J6zw'; // letter nr. 001
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         const dspConnectionSpy = {
             v2: {
                 res: jasmine.createSpyObj('res', ['getResource']),

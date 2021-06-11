@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MaterialModule } from '../../material-module';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
@@ -22,7 +22,7 @@ describe('EndnoteComponent', () => {
 
     const id = 'http://rdfh.ch/0801/-cPynqayQI2hJZ1K7aRWMA';
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         const dspConnectionSpy = {
             v2: {
                 res: jasmine.createSpyObj('res', ['getResource']),

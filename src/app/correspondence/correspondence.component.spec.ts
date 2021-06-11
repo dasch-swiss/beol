@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MaterialModule } from '../material-module';
 import { CorrespondenceComponent } from './correspondence.component';
@@ -10,7 +10,7 @@ describe('CorrespondenceComponent', () => {
 
     const beolServiceSpy = jasmine.createSpyObj('BeolService', ['searchForCorrespondence', 'searchForNewtonCorrespondence', 'searchForLeibnizCorrespondence']); // see https://angular.io/guide/testing#angular-testbed
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
 
         TestBed.configureTestingModule({
             imports: [

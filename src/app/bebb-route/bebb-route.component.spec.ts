@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { BebbRouteComponent } from './bebb-route.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute } from '@angular/router';
@@ -12,7 +12,7 @@ describe('BebbRouteComponent', () => {
     let fixture: ComponentFixture<BebbRouteComponent>;
     const lt = '1706-03-17_Hermann_Jacob-Scheuchzer_Johannes';
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
 
         const beolServiceSpy = jasmine.createSpyObj('BeolService', ['searchForLetterFromBEBB', 'routeByResourceType']); // see https://angular.io/guide/testing#angular-testbed
 

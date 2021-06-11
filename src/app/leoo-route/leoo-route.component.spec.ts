@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LeooRouteComponent } from './leoo-route.component';
@@ -12,7 +12,7 @@ describe('LeooRouteComponent', () => {
     let fixture: ComponentFixture<LeooRouteComponent>;
     const rn = '721';
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
 
         const beolServiceSpy = jasmine.createSpyObj('BeolService', ['searchForLetterFromLEOO', 'routeByResourceType']); // see https://angular.io/guide/testing#angular-testbed
 
