@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MaterialModule } from '../material-module';
 import { IntroductionComponent } from './introduction.component';
@@ -17,7 +17,7 @@ describe('IntroductionComponent', () => {
     const project = 'leooIV';
     const id = 'goldbach_introduction_1';
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
 
         const dspConnectionSpy = {
             v2: {

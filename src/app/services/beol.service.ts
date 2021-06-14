@@ -142,30 +142,30 @@ export class BeolService {
         const correspondenceTemplate = `
             PREFIX beol: <${this._appInitService.config['ontologyIRI']}/ontology/0801/beol/v2#>
             PREFIX knora-api: <http://api.knora.org/ontology/knora-api/v2#>
-        
+
             CONSTRUCT {
                 ?letter knora-api:isMainResource true .
                 ?letter ?linkingProp1  ?person1 .
                 ?letter ?linkingProp2  ?person2 .
                 ?letter beol:creationDate ?date .
-                
+
             } WHERE {
-            
+
                ?gnd1 knora-api:valueAsString "${gnd1}" .
                ?person1 beol:hasIAFIdentifier ?gnd1 .
-               
+
                ?gnd2 knora-api:valueAsString "${gnd2}" .
                ?person2 beol:hasIAFIdentifier ?gnd2 .
-               
+
                 ?letter ?linkingProp1 ?person1 .
                 FILTER(?linkingProp1 = beol:hasAuthor || ?linkingProp1 = beol:hasRecipient )
-        
+
                 ?letter ?linkingProp2 ?person2 .
                 FILTER(?linkingProp2 = beol:hasAuthor || ?linkingProp2 = beol:hasRecipient )
-                
+
                 ?letter beol:creationDate ?date .
                 ${resourcesThatHaveNoTranslation}
-                
+
             } ORDER BY ?date
         `;
 
@@ -206,29 +206,29 @@ export class BeolService {
         const correspondenceTemplate = `
             PREFIX beol: <${this._appInitService.config['ontologyIRI']}/ontology/0801/beol/v2#>
             PREFIX knora-api: <http://api.knora.org/ontology/knora-api/v2#>
-        
+
             CONSTRUCT {
                 ?letter knora-api:isMainResource true .
                 ?letter ?linkingProp1  ?person1 .
                 ?letter ?linkingProp2  ?person2 .
                 ?letter beol:creationDate ?date .
-                
+
             } WHERE {
-            
+
                ?gnd1 knora-api:valueAsString "${gnd1}" .
                ?person1 beol:hasIAFIdentifier ?gnd1 .
-               
+
                ?gnd2 knora-api:valueAsString "${gnd2}" .
                ?person2 beol:hasIAFIdentifier ?gnd2 .
-               
+
                 ?letter ?linkingProp1 ?person1 .
                 FILTER(?linkingProp1 = beol:hasAuthor || ?linkingProp1 = beol:hasRecipient )
-        
+
                 ?letter ?linkingProp2 ?person2 .
                 FILTER(?linkingProp2 = beol:hasAuthor || ?linkingProp2 = beol:hasRecipient )
-                
+
                 ?letter beol:creationDate ?date .
-                
+
             } ORDER BY ?date
         `;
 
@@ -760,14 +760,21 @@ export class BeolService {
         } else if (referredResourceType === this._appInitService.config['ontologyIRI'] + '/ontology/0801/biblio/v2#letter') {
             this._router.navigateByUrl('publishedLetter/' + encodeURIComponent(referredResourceIri));
         } else if (referredResourceType === this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#section') {
-            const sectionID = resource.properties[this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#beolIDs'][0].strval;
-            if (sectionID.startsWith('goldbach')) {
-                this._router.navigateByUrl('introduction/leoo/' + sectionID);
-            } else if (sectionID.startsWith('CondorcetTurgot') || sectionID.startsWith('condorcet') || sectionID.startsWith('CondorcetMJA')
-                || sectionID.startsWith('Turgot')
-            ) {
-                this._router.navigateByUrl('introduction/lece/' + sectionID);
+            const beolIdPropMaybe = resource.properties[this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#beolIDs'];
+            // check if BEOL prop exists
+            if (Array.isArray(beolIdPropMaybe) && beolIdPropMaybe.length > 0) {
+                const sectionID = beolIdPropMaybe[0].strval;
+                if (sectionID.startsWith('goldbach')) {
+                    this._router.navigateByUrl('introduction/leoo/' + sectionID);
+                } else if (sectionID.startsWith('CondorcetTurgot') || sectionID.startsWith('condorcet') || sectionID.startsWith('CondorcetMJA')
+                    || sectionID.startsWith('Turgot')
+                ) {
+                    this._router.navigateByUrl('introduction/lece/' + sectionID);
+                } else {
+                    this._router.navigateByUrl('simpleResource/' + encodeURIComponent(referredResourceIri));
+                }
             } else {
+                // route to generic template
                 this._router.navigateByUrl('simpleResource/' + encodeURIComponent(referredResourceIri));
             }
         } else {

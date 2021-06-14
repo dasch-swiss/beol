@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { CommentComponent } from './comment.component';
 import { MaterialModule } from '../../material-module';
@@ -20,7 +20,7 @@ describe('CommentComponent', () => {
 
     const id = 'http://rdfh.ch/0801/7ZvL2A5PQ9C4eAmr-n26gw';
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         const dspConnectionSpy = {
             v2: {
                 res: jasmine.createSpyObj('res', ['getResource']),

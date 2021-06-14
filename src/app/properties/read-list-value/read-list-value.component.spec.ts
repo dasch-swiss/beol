@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ReadListValueComponent } from './read-list-value.component';
 import { MathJaxDirective } from '../../directives/mathjax.directive';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -15,7 +15,7 @@ describe('ReadListValueComponent', () => {
     let testHostComponent: TestHostComponent;
     let testHostFixture: ComponentFixture<TestHostComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
 
         const dspConnectionSpy = {
             v2: {

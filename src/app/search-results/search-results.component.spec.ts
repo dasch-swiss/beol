@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BehaviorSubject, of } from 'rxjs';
@@ -18,7 +18,7 @@ describe('SearchResultsComponent', () => {
     const mode = 'gravsearch';
     const q = 'test';
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         const dspConnectionSpy = {
             v2: {
                 search: jasmine.createSpyObj('search', ['doExtendedSearch', 'doExtendedSearchCountQuery'])
