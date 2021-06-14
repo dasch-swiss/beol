@@ -13,6 +13,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "json2typescript"
+            ],
             "aot": true,
             "outputPath": "dist/beol",
             "index": "src/index.html",
