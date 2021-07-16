@@ -106,13 +106,13 @@ export class NewtonLetterComponent extends BeolResource {
 
     private getNewtonLetterText(filename) {
         // use a proxy url as described here:
-        // https://stackoverflow.com/questions/43871637/no-access-control-allow-origin-header-is-present-on-the-requested-resource-whe
-        const proxyurl = 'https://cors-anywhere.herokuapp.com/';
+        // https://blog.grida.co/cors-anywhere-for-everyone-free-reliable-cors-proxy-service-73507192714e
+        const proxyurl = 'https://cors.bridged.cc/';
         const basePath = this.newtonLetterPath;
 
         const url = basePath + filename; // site that doesn’t send Access-Control-*
 
-        fetch(proxyurl + url) // https://cors-anywhere.herokuapp.com/https://example.com
+        fetch(proxyurl + url, {headers: {'Origin': ''}})
             .then(response => response.text())
             .then(contents => {
                     this.getNewtonLetterBody(contents);

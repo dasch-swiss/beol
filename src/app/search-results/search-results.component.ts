@@ -191,7 +191,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
             [this._appInitService.getSettings().ontologyIRI + '/ontology/0801/leibniz/v2']).subscribe(
                 (info2: OntologyInformation) => {*/
                     const searchRoute = this.leibnizApiBasePath + 'select?q=type%3Abrief+AND+(+volltext%3A';
-                    const proxyurl = 'https://cors-anywhere.herokuapp.com/';
                     const experssions = ['id', 'reihe', 'band', 'brief_nummer', 'all_suggest', 'ort_anzeige',
                         'datum_anzeige', 'datum_gregorianisch', 'datum_julianisch', 'kontext'];
                     const format = ')&rows=9999&wt=json';
@@ -234,14 +233,14 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
             [this._appInitService.getSettings().ontologyIRI + '/ontology/0801/newton/v2']).subscribe(
                 (info2: OntologyInformation) => {*/
                     const searchRoute = this.newtonBasePath + '/search/results?n=25&cat=';
-                    const proxyurl = 'https://cors-anywhere.herokuapp.com/';
+                    const proxyurl = ' https://cors.bridged.cc/';
                     const mathCategory = 'Mathematics&ce=0&keyword=';
                     const opticsCategory = 'Optics&ce=0&keyword=';
                     const queryTail = '&sort=relevance';
                     const searchExpressions = [searchRoute + mathCategory + this.searchQuery + queryTail,
                     searchRoute + opticsCategory + this.searchQuery + queryTail];
                     for (let it = 0; it < searchExpressions.length; it++) {
-                        fetch(proxyurl + searchExpressions[it]) // https://cors-anywhere.herokuapp.com/https://example.com
+                        fetch(proxyurl + searchExpressions[it], {headers: {'Origin': ''}})
                             .then(response => response.text())
                             .then(contents => {
                                 this.getNewtonLetters(contents);
