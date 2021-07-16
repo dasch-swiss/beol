@@ -90,26 +90,12 @@ describe('NewtonLetterComponent', () => {
 
         (dspServiceSpy.v2.search as jasmine.SpyObj<SearchEndpointV2>).doExtendedSearch.and.returnValue(of(new ReadResourceSequence([])));
 
-        // TODO: use Angular's HTTP client
-        const fetchSpy = spyOn(window, 'fetch').and.callFake(
-            path => {
-                return Promise.resolve(new Response(''));
-            }
-        );
-
         fixture = TestBed.createComponent(NewtonLetterComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
 
     it('should create', () => {
-        const httpTestingController = TestBed.inject(HttpTestingController);
-
-        // TODO: use Angular's HTTP client
-        /*httpTestingController
-            .expectOne('https://cors-anywhere.herokuapp.com/http://www.newtonproject.ox.ac.uk/view/texts/normalized/1')
-            .flush('');*/
-
         expect(component).toBeTruthy();
     });
 
