@@ -233,7 +233,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
             [this._appInitService.getSettings().ontologyIRI + '/ontology/0801/newton/v2']).subscribe(
                 (info2: OntologyInformation) => {*/
                     const searchRoute = this.newtonBasePath + '/search/results?n=25&cat=';
-                    const proxyurl = ' https://cors.bridged.cc/';
+                    const proxyurl = 'https://cors.bridged.cc/';
                     const mathCategory = 'Mathematics&ce=0&keyword=';
                     const opticsCategory = 'Optics&ce=0&keyword=';
                     const queryTail = '&sort=relevance';
