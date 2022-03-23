@@ -9,8 +9,8 @@ on:
 
 jobs:
 
-  build-test:
-    name: Build and Test
+  test:
+    name: Test the app
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source
@@ -23,7 +23,20 @@ jobs:
         run: npm install
       - name: Run Unit Tests
         run: npm run test-ci
-      - name: Build app
+
+  build:
+    name: Build the app
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v2
+      - name: Set up Node.js ${{ env.NV }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ env.NV }}
+      - name: Install dependencies
+        run: npm install
+      - name: Build in prod mode
         run: docker build .
 
   release-please:
@@ -44,7 +57,8 @@ jobs:
   publish:
     name: Publish to Dockerhub
     needs: [
-      build-test
+      build,
+      test
     ]
     runs-on: ubuntu-latest
     if: github.event_name == 'release' && startsWith(github.ref, 'refs/tags')
