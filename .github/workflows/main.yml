@@ -48,7 +48,7 @@ jobs:
       - name: Get release please action
         uses: GoogleCloudPlatform/release-please-action@v2
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_TOKEN }}
           release-type: node
           package-name: beol
           changelog-types: '[
