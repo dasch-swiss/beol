@@ -233,14 +233,14 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
             [this._appInitService.getSettings().ontologyIRI + '/ontology/0801/newton/v2']).subscribe(
                 (info2: OntologyInformation) => {*/
                     const searchRoute = this.newtonBasePath + '/search/results?n=25&cat=';
-                    const proxyurl = 'https://cors.bridged.cc/';
+                    const cors_proxyurl = 'https://thingproxy.freeboard.io/fetch/';
                     const mathCategory = 'Mathematics&ce=0&keyword=';
                     const opticsCategory = 'Optics&ce=0&keyword=';
                     const queryTail = '&sort=relevance';
                     const searchExpressions = [searchRoute + mathCategory + this.searchQuery + queryTail,
                     searchRoute + opticsCategory + this.searchQuery + queryTail];
                     for (let it = 0; it < searchExpressions.length; it++) {
-                        fetch(proxyurl + searchExpressions[it], {headers: {'Origin': ''}})
+                        fetch(cors_proxyurl + searchExpressions[it])
                             .then(response => response.text())
                             .then(contents => {
                                 this.getNewtonLetters(contents);
