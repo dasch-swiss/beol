@@ -105,14 +105,12 @@ export class NewtonLetterComponent extends BeolResource {
 
 
     private getNewtonLetterText(filename) {
-        // use a proxy url as described here:
-        // https://blog.grida.co/cors-anywhere-for-everyone-free-reliable-cors-proxy-service-73507192714e
-        const proxyurl = 'https://cors.bridged.cc/';
+        const cors_proxyurl = 'https://thingproxy.freeboard.io/fetch/';
         const basePath = this.newtonLetterPath;
 
         const url = basePath + filename; // site that doesn’t send Access-Control-*
 
-        fetch(proxyurl + url, {headers: {'Origin': ''}})
+        fetch(cors_proxyurl + url)
             .then(response => response.text())
             .then(contents => {
                     this.getNewtonLetterBody(contents);
