@@ -3,7 +3,7 @@
 Bernoulli-Euler OnLine
 
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.2.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.14 and node version 16.13.0.
 
 ## Development server
 

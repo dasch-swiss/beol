@@ -105,7 +105,7 @@ export class NewtonLetterComponent extends BeolResource {
 
 
     private getNewtonLetterText(filename) {
-        const cors_proxyurl = 'https://thingproxy.freeboard.io/fetch/';
+        const cors_proxyurl = 'https://cors-container.herokuapp.com/';
         const basePath = this.newtonLetterPath;
 
         const url = basePath + filename; // site that doesn’t send Access-Control-*
