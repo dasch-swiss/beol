@@ -195,7 +195,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
                         'datum_anzeige', 'datum_gregorianisch', 'datum_julianisch', 'kontext'];
                     const format = ')&rows=9999&wt=json';
                     const searchExpression = this.makeLeibnizSearchExpressions(searchRoute, experssions) + format;
-                    fetch(searchExpression) // https://cors-anywhere.herokuapp.com/https://example.com
+                    fetch(searchExpression)
                         .then(response => response.json())
                         .then(contents => {
                             this.getLeibnizLetters(contents.response.docs);
@@ -233,7 +233,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
             [this._appInitService.getSettings().ontologyIRI + '/ontology/0801/newton/v2']).subscribe(
                 (info2: OntologyInformation) => {*/
                     const searchRoute = this.newtonBasePath + '/search/results?n=25&cat=';
-                    const cors_proxyurl = 'https://thingproxy.freeboard.io/fetch/';
+                    const cors_proxyurl = 'https://cors-container.herokuapp.com/';
                     const mathCategory = 'Mathematics&ce=0&keyword=';
                     const opticsCategory = 'Optics&ce=0&keyword=';
                     const queryTail = '&sort=relevance';
