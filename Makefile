@@ -11,7 +11,7 @@ include vars.mk
 #################################
 .PHONY: build-beol-image
 build-beol-image: ## build BEOL APP image locally
-	docker buildx build --platform linux/amd64 -t $(BEOL_IMAGE) -t $(BEOL_REPO):latest .
+	docker buildx build --platform linux/amd64 -t $(BEOL_IMAGE) -t $(BEOL_REPO):latest --load .
 
 .PHONY: publish-beol-image
 publish-beol-image: build-beol-image ## publish BEOL APP Docker image to Docker-Hub
