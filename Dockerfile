@@ -3,11 +3,7 @@
 # We label our stage as 'builder'
 FROM node:12-stretch as builder
 
-LABEL maintainer="ivan.subotic@unibas.ch"
-
-# The qq is for silent output in the console
-# You are welcome to modify this part as it
-RUN apt-get update -qq && apt-get install -y build-essential libpq-dev
+LABEL maintainer="support@dasch.swiss"
 
 # Sets the path where the app is going to be installed
 ENV NODE_ROOT /usr/app/
@@ -33,7 +29,7 @@ RUN npm run build-prod
 
 FROM daschswiss/nginx-server:v1.1.1
 
-LABEL maintainer="400790+subotic@users.noreply.github.com"
+LABEL maintainer="support@dasch.swiss"
 
 RUN rm -rf /public/*
 
