@@ -9,7 +9,8 @@ import {
     ReadValue
 } from '@dasch-swiss/dsp-js';
 import { Subscription } from 'rxjs';
-import { DspApiConnectionToken, Region, StillImageComponent, StillImageRepresentation } from '@dasch-swiss/dsp-ui';
+import { DspApiConnectionToken } from '../dsp-ui-lib/core';
+import { Region, StillImageComponent, StillImageRepresentation} from '../dsp-ui-lib/viewer';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { IncomingService } from '../services/incoming.service';
 import { BeolService } from '../services/beol.service';

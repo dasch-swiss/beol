@@ -7,13 +7,13 @@ import { KnoraApiConnection } from '@dasch-swiss/dsp-js';
 // @dsp-ui library
 import {
     AppInitService,
-    DspActionModule,
     DspApiConfigToken,
     DspApiConnectionToken,
-    DspCoreModule,
-    DspSearchModule,
-    DspViewerModule
-} from '@dasch-swiss/dsp-ui';
+    DspCoreModule
+} from './dsp-ui-lib/core';
+import { DspSearchModule } from './dsp-ui-lib/search';
+import { DspActionModule } from './dsp-ui-lib/action';
+import { DspViewerModule } from './dsp-ui-lib/viewer';
 // modules from @angular/material and @angular/flex-layout
 import { MaterialModule } from './material-module';
 import { FlexLayoutModule } from '@angular/flex-layout';

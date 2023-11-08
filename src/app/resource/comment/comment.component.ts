@@ -9,7 +9,7 @@ import {
     ReadTextValue,
     ReadLinkValue
 } from '@dasch-swiss/dsp-js';
-import { DspApiConnectionToken, AppInitService } from '@dasch-swiss/dsp-ui';
+import { DspApiConnectionToken, AppInitService } from '../../dsp-ui-lib/core';
 import { Subscription } from 'rxjs';
 import { IncomingService } from 'src/app/services/incoming.service';
 import { BeolService } from '../../services/beol.service';

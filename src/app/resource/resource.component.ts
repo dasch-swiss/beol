@@ -4,7 +4,7 @@ import { Location } from '@angular/common';
 import { BeolCompoundResource, BeolResource } from './beol-resource';
 import { Subscription } from 'rxjs';
 import { BeolService } from '../services/beol.service';
-import { DspApiConnectionToken } from '@dasch-swiss/dsp-ui';
+import { DspApiConnectionToken } from '../dsp-ui-lib/core';
 import { Constants, KnoraApiConnection, ReadResource } from '@dasch-swiss/dsp-js';
 import { IncomingService } from '../services/incoming.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
