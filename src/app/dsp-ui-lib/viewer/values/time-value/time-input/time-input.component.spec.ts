@@ -7,10 +7,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
-import { MatDatepickerModule } from '@angular/material/datepicker'
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { GregorianCalendarDate, CalendarPeriod, CalendarDate } from 'jdnconvertiblecalendar';
 import { MatJDNConvertibleCalendarDateAdapterModule } from 'jdnconvertiblecalendardateadapter';
-import { JDNDatepickerDirective } from "../../jdn-datepicker-directive/jdndatepicker.directive";
+import { JDNDatepickerDirective } from '../../jdn-datepicker-directive/jdndatepicker.directive';
 
 
 /**
@@ -142,7 +142,7 @@ describe('TimeInputComponent', () => {
     it('should return a timestamp from userInputToTimestamp()', () => {
         const calendarDate = new CalendarDate(1993, 10, 10);
         const gcd = new GregorianCalendarDate(new CalendarPeriod(calendarDate, calendarDate));
-        const userInput = new DateTime(gcd, "12:00");
+        const userInput = new DateTime(gcd, '12:00');
 
         const timestamp = testHostComponent.timeInputComponent.userInputToTimestamp(userInput);
 
