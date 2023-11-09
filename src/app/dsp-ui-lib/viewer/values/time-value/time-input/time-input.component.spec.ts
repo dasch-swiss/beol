@@ -172,7 +172,7 @@ describe('TimeInputComponent', () => {
 
         expect(testHostComponent.timeInputComponent.form.valid).toBe(false);
 
-        testHostComponent.timeInputComponent.timeFormControl.setValue("");
+        testHostComponent.timeInputComponent.timeFormControl.setValue('');
 
         testHostComponent.timeInputComponent._handleInput();
 
