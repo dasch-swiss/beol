@@ -15,7 +15,7 @@ import {
     ProjectsEndpointAdmin,
     ReadResource
 } from '@dasch-swiss/dsp-js';
-import { DspApiConnectionToken } from 'projects/dsp-ui/src/lib/core';
+import { DspApiConnectionToken } from '../../../../core';
 import { UserService } from '../../../services/user.service';
 import { PropertyToolbarComponent } from './property-toolbar.component';
 import { of } from 'rxjs';
