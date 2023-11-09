@@ -18,10 +18,10 @@ import {
 } from '@dasch-swiss/dsp-js';
 
 // This component needs the openseadragon library itself, as well as the openseadragon plugin openseadragon-svg-overlay
-// Both libraries are installed via package.json, and loaded globally via the script tag in .angular-cli.json
+// Both libraries are installed via package.json, and loaded globally via the script tag in .angular.json
 
 // OpenSeadragon does not export itself as ES6/ECMA2015 module,
-// it is loaded globally in scripts tag of angular-cli.json,
+// it is loaded globally in scripts tag of angular.json,
 // we still need to declare the namespace to make TypeScript compiler happy.
 declare let OpenSeadragon: any;
 
