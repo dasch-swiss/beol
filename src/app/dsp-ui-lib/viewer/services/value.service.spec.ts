@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import {
     Constants,
-    KnoraDate, KnoraPeriod,
+    KnoraDate,
     MockResource, ReadDateValue,
     ReadIntValue, ReadLinkValue,
     ReadTextValueAsHtml,
@@ -210,7 +210,7 @@ describe('ValueService', () => {
                 'http://api.knora.org/ontology/knora-api/v2#IntValue',
                 'http://api.knora.org/ontology/knora-api/v2#DecimalValue'))
                 .toBeFalsy();
-        })
+        });
 
         it('should fail to compare "http://api.knora.org/ontology/knora-api/v2#IntValue" with "ReadTextValueAsString"', () => {
             expect(service.compareObjectTypeWithValueType(
