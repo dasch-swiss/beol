@@ -84,9 +84,10 @@ describe('SelectOntologyComponent', () => {
     });
 
     it('should initialise the ontologies\' metadata', () => {
+        const ontology_metadata_amount = 15;
 
         expect(testHostComponent.selectOntology.ontologiesMetadata.ontologies).toBeDefined();
-        expect(testHostComponent.selectOntology.ontologiesMetadata.ontologies.length).toEqual(14);
+        expect(testHostComponent.selectOntology.ontologiesMetadata.ontologies.length).toEqual(ontology_metadata_amount);
 
     });
 
@@ -102,7 +103,7 @@ describe('SelectOntologyComponent', () => {
 
         const options = await select.getOptions();
 
-        expect(options.length).toEqual(14);
+        expect(options.length).toEqual(15);
 
         const option1 = await options[0].getText();
 
@@ -110,7 +111,7 @@ describe('SelectOntologyComponent', () => {
 
         const option2 = await options[1].getText();
 
-        expect(option2).toEqual('A minimal ontology');
+        expect(option2).toEqual('The free test ontology');
 
     });
 
