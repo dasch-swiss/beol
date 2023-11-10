@@ -257,7 +257,7 @@ export class FulltextSearchComponent implements OnInit, OnChanges {
             new ConnectionPositionPair({ originX: 'start', originY: 'top' }, { overlayX: 'start', overlayY: 'bottom' })
         ];
 
-        // tslint:disable-next-line: max-line-length
+        // eslint-disable-next-line max-len
         const overlayPosition = this._overlay.position().flexibleConnectedTo(this.searchPanel).withPositions(positions).withLockedPosition(false);
 
         return overlayPosition;
