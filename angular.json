@@ -16,7 +16,6 @@
             "allowedCommonJsDependencies": [
               "json2typescript"
             ],
-            "aot": true,
             "outputPath": "dist/beol",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -35,7 +34,13 @@
             "scripts": [
               "node_modules/openseadragon/build/openseadragon/openseadragon.min.js",
               "node_modules/svg-overlay/openseadragon-svg-overlay.js"
-            ]
+            ],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -55,12 +60,12 @@
               "outputHashing": "all",
               "sourceMap": false,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true
             }
-          }
+          },
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
