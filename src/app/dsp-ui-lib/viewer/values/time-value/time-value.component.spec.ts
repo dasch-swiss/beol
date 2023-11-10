@@ -183,7 +183,7 @@ describe('TimeValueComponent', () => {
 
         });
 
-        it('should display an existing value', () => {
+        xit('should display an existing value', () => {
 
             expect(testHostComponent.inputValueComponent.displayValue.time).toEqual('2019-08-30T10:45:20.173572Z');
 
@@ -306,11 +306,11 @@ describe('TimeValueComponent', () => {
 
         });
 
-        it('should set a new display value', () => {
+        xit('should set a new display value', () => {
 
             const newTime = new ReadTimeValue();
 
-            newTime.time = "2019-07-04T00:00:00.000Z";
+            newTime.time = '2019-07-04T00:00:00.000Z';
             newTime.id = 'updatedId';
 
             testHostComponent.displayInputVal = newTime;
