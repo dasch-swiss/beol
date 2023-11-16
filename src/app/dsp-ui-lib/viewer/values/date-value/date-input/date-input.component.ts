@@ -13,7 +13,7 @@ import {
     ValidatorFn,
     Validators
 } from '@angular/forms';
-import { CanUpdateErrorState, CanUpdateErrorStateCtor, ErrorStateMatcher, mixinErrorState } from '@angular/material/core';
+import { CanUpdateErrorState, ErrorStateMatcher, mixinErrorState } from '@angular/material/core';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { KnoraDate, KnoraPeriod } from '@dasch-swiss/dsp-js';
 import {
@@ -84,7 +84,7 @@ class MatInputBase {
     }
 }
 
-const _MatInputMixinBase: CanUpdateErrorStateCtor & typeof MatInputBase =
+const _MatInputMixinBase =
     mixinErrorState(MatInputBase);
 
 @Component({
