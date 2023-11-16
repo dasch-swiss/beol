@@ -40,7 +40,7 @@ class ConfirmationDialogTestHostComponent implements OnInit {
                 buttonTextCancel: 'Cancel'
             }
         }).afterClosed().subscribe((payload: ConfirmationDialogValueDeletionPayload) => {
-            if (payload.confirmed) {
+            if (payload?.confirmed) {
                 this.confirmationDialogResponse = 'Action was confirmed!';
             } else {
                 this.confirmationDialogResponse = 'Action was cancelled';
@@ -101,7 +101,7 @@ describe('ConfirmationDialogComponent', () => {
         const dialogs = await rootLoader.getAllHarnesses(MatDialogHarness);
         await Promise.all(dialogs.map(async d => await d.close()));
 
-        // Angular won't call this for us so we need to do it ourselves to avoid leaks.
+        // Angular won't call this for us, so we need to do it ourselves to avoid leaks.
         overlayContainer.ngOnDestroy();
     });
 
