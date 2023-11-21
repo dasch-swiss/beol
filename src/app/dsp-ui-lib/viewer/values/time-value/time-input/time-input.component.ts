@@ -34,6 +34,7 @@ export function dateTimeValidator(otherControl: UntypedFormControl): ValidatorFn
 }
 
 class MatInputBase {
+    readonly stateChanges = new Subject<void>();
     constructor(public _defaultErrorStateMatcher: ErrorStateMatcher,
         public _parentForm: NgForm,
         public _parentFormGroup: FormGroupDirective,

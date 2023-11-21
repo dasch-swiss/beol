@@ -45,6 +45,7 @@ export function periodStartEndValidator(isPeriod: UntypedFormControl, endDate: U
 }
 
 class MatInputBase {
+    readonly stateChanges = new Subject<void>();
     constructor(public _defaultErrorStateMatcher: ErrorStateMatcher,
                 public _parentForm: NgForm,
                 public _parentFormGroup: FormGroupDirective,
