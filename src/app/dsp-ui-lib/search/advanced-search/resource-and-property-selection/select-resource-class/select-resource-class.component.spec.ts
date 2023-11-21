@@ -2,7 +2,7 @@ import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SelectResourceClassComponent } from './select-resource-class.component';
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MockOntology, ResourceClassDefinition } from '@dasch-swiss/dsp-js';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
@@ -23,13 +23,13 @@ class TestHostComponent implements OnInit {
 
     @ViewChild('selectResClass') selectResourceClass: SelectResourceClassComponent;
 
-    form: FormGroup;
+    form: UntypedFormGroup;
 
     resourceClassDefs: ResourceClassDefinition[];
 
     selectedResClassIri: string;
 
-    constructor(@Inject(FormBuilder) private _fb: FormBuilder) {
+    constructor(@Inject(UntypedFormBuilder) private _fb: UntypedFormBuilder) {
     }
 
     ngOnInit() {

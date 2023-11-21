@@ -3,7 +3,7 @@ import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SelectOntologyComponent } from './select-ontology.component';
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { OntologiesMetadata, MockOntology } from '@dasch-swiss/dsp-js';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -25,11 +25,11 @@ class TestHostComponent implements OnInit {
 
     ontoMetadata: OntologiesMetadata;
 
-    form: FormGroup;
+    form: UntypedFormGroup;
 
     selectedOntoIri: string;
 
-    constructor(@Inject(FormBuilder) private _fb: FormBuilder) {
+    constructor(@Inject(UntypedFormBuilder) private _fb: UntypedFormBuilder) {
     }
 
     ngOnInit() {

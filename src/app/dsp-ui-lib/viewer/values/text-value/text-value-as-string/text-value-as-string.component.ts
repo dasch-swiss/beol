@@ -2,7 +2,7 @@ import { Component, Inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges }
 import { BaseValueComponent } from '../../base-value.component';
 import { ValueErrorStateMatcher } from '../../value-error-state-matcher';
 import { CreateTextValueAsString, ReadTextValueAsString, UpdateTextValueAsString } from '@dasch-swiss/dsp-js';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 // https://stackoverflow.com/questions/45661010/dynamic-nested-reactive-form-expressionchangedafterithasbeencheckederror
@@ -17,16 +17,16 @@ export class TextValueAsStringComponent extends BaseValueComponent implements On
 
     @Input() displayValue?: ReadTextValueAsString;
 
-    valueFormControl: FormControl;
-    commentFormControl: FormControl;
+    valueFormControl: UntypedFormControl;
+    commentFormControl: UntypedFormControl;
 
-    form: FormGroup;
+    form: UntypedFormGroup;
 
     valueChangesSubscription: Subscription;
     matcher = new ValueErrorStateMatcher();
     customValidators = [];
 
-    constructor(@Inject(FormBuilder) private _fb: FormBuilder) {
+    constructor(@Inject(UntypedFormBuilder) private _fb: UntypedFormBuilder) {
         super();
     }
 
@@ -42,9 +42,9 @@ export class TextValueAsStringComponent extends BaseValueComponent implements On
     ngOnInit() {
 
         // initialize form control elements
-        this.valueFormControl = new FormControl(null);
+        this.valueFormControl = new UntypedFormControl(null);
 
-        this.commentFormControl = new FormControl(null);
+        this.commentFormControl = new UntypedFormControl(null);
 
         this.valueChangesSubscription = this.commentFormControl.valueChanges.subscribe(
             data => {

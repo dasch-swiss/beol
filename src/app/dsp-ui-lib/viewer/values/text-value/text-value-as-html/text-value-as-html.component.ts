@@ -1,7 +1,7 @@
 import {Component, OnInit, Inject, Input, ElementRef} from '@angular/core';
 import {BaseValueComponent} from '../../base-value.component';
 import {ReadTextValueAsHtml} from '@dasch-swiss/dsp-js';
-import {FormControl, FormGroup, FormBuilder} from '@angular/forms';
+import {UntypedFormControl, UntypedFormGroup, FormBuilder} from '@angular/forms';
 import {Subscription} from 'rxjs';
 
 @Component({
@@ -13,10 +13,10 @@ export class TextValueAsHtmlComponent extends BaseValueComponent implements OnIn
 
   @Input() displayValue?: ReadTextValueAsHtml;
 
-  valueFormControl: FormControl;
-  commentFormControl: FormControl;
+  valueFormControl: UntypedFormControl;
+  commentFormControl: UntypedFormControl;
 
-  form: FormGroup;
+  form: UntypedFormGroup;
 
   valueChangesSubscription: Subscription;
 

@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { StringLiteral } from '@dasch-swiss/dsp-js';
 import { SessionService } from '../../../core/session.service';
@@ -81,9 +81,9 @@ export class StringLiteralInputComponent implements OnInit, OnChanges {
 
     @ViewChild('btnToSelectLanguage', { static: false }) btnToSelectLanguage: MatMenuTrigger;
 
-    form: FormGroup;
+    form: UntypedFormGroup;
 
-    constructor(private _fb: FormBuilder,
+    constructor(private _fb: UntypedFormBuilder,
                 private _sessionService: SessionService) {
 
         // set selected language, if it's not defined yet
@@ -112,7 +112,7 @@ export class StringLiteralInputComponent implements OnInit, OnChanges {
 
         // build the form
         this.form = this._fb.group({
-            text: new FormControl(
+            text: new UntypedFormControl(
                 {
                     value: '',
                     disabled: this.disabled // https://stackoverflow.com/a/47521965

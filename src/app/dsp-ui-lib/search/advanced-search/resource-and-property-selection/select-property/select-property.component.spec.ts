@@ -3,7 +3,7 @@ import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SelectPropertyComponent } from './select-property.component';
 import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
@@ -32,7 +32,7 @@ class TestHostComponent implements OnInit {
 
     @ViewChild('selectProp') selectProperty: SelectPropertyComponent;
 
-    form: FormGroup;
+    form: UntypedFormGroup;
 
     propertyDefs: ResourcePropertyDefinition[];
 
@@ -40,7 +40,7 @@ class TestHostComponent implements OnInit {
 
     topLevel: boolean;
 
-    constructor(@Inject(FormBuilder) private _fb: FormBuilder) {
+    constructor(@Inject(UntypedFormBuilder) private _fb: UntypedFormBuilder) {
     }
 
     ngOnInit() {
@@ -64,7 +64,7 @@ class TestHostComponent implements OnInit {
 })
 class TestSpecifyPropertyValueComponent implements OnInit {
 
-    @Input() formGroup: FormGroup;
+    @Input() formGroup: UntypedFormGroup;
 
     @Input() property: ResourcePropertyDefinition;
 

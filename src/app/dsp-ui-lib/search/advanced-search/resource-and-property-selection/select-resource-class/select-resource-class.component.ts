@@ -9,7 +9,7 @@ import {
     Output,
     SimpleChanges
 } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { ResourceClassDefinition } from '@dasch-swiss/dsp-js';
 import { Subscription } from 'rxjs';
 
@@ -23,7 +23,7 @@ const resolvedPromise = Promise.resolve(null);
 })
 export class SelectResourceClassComponent implements OnInit, OnChanges, OnDestroy {
 
-    @Input() formGroup: FormGroup;
+    @Input() formGroup: UntypedFormGroup;
 
     @Input() resourceClassDefinitions: ResourceClassDefinition[];
 
@@ -42,9 +42,9 @@ export class SelectResourceClassComponent implements OnInit, OnChanges, OnDestro
 
     ontologyChangesSubscription: Subscription;
 
-    form: FormGroup;
+    form: UntypedFormGroup;
 
-    constructor(@Inject(FormBuilder) private _fb: FormBuilder) {
+    constructor(@Inject(UntypedFormBuilder) private _fb: UntypedFormBuilder) {
     }
 
     ngOnInit(): void {

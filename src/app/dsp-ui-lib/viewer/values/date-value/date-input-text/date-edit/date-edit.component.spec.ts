@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { DateEditComponent } from './date-edit.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, ReactiveFormsModule } from '@angular/forms';
 import { KnoraDate } from '@dasch-swiss/dsp-js';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -30,11 +30,11 @@ class TestHostComponent implements OnInit {
 
     @ViewChild('dateEdit') dateEditComponent: DateEditComponent;
 
-    form: FormGroup;
+    form: UntypedFormGroup;
 
     calendar = 'JULIAN';
 
-    constructor(private _fb: FormBuilder) {
+    constructor(private _fb: UntypedFormBuilder) {
     }
 
     ngOnInit(): void {
@@ -61,11 +61,11 @@ class TestHostComponentNoValueRequiredComponent implements OnInit {
 
     @ViewChild('dateEdit') dateEditComponent: DateEditComponent;
 
-    form: FormGroup;
+    form: UntypedFormGroup;
 
     calendar = 'JULIAN';
 
-    constructor(private _fb: FormBuilder) {
+    constructor(private _fb: UntypedFormBuilder) {
     }
 
     ngOnInit(): void {

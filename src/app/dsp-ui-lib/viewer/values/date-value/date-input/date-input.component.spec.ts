@@ -2,7 +2,7 @@ import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DateInputComponent } from './date-input.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, ReactiveFormsModule } from '@angular/forms';
 import { KnoraDate, KnoraPeriod } from '@dasch-swiss/dsp-js';
 import { JDNDatepickerDirective } from '../../jdn-datepicker-directive/jdndatepicker.directive';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -32,9 +32,9 @@ class TestHostComponent implements OnInit {
 
     @ViewChild('dateInput') dateInputComponent: DateInputComponent;
 
-    form: FormGroup;
+    form: UntypedFormGroup;
 
-    constructor(private _fb: FormBuilder) {
+    constructor(private _fb: UntypedFormBuilder) {
     }
 
     ngOnInit(): void {
@@ -61,15 +61,15 @@ class NoValueRequiredTestHostComponent implements OnInit {
 
     @ViewChild('dateInput') dateInputComponent: DateInputComponent;
 
-    form: FormGroup;
+    form: UntypedFormGroup;
 
-    constructor(private _fb: FormBuilder) {
+    constructor(private _fb: UntypedFormBuilder) {
     }
 
     ngOnInit(): void {
 
         this.form = this._fb.group({
-            date: new FormControl(null)
+            date: new UntypedFormControl(null)
         });
 
     }

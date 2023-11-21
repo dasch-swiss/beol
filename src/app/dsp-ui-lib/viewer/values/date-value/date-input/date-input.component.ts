@@ -4,9 +4,9 @@ import { Component, DoCheck, ElementRef, HostBinding, Input, OnDestroy, OnInit, 
 import {
     AbstractControl,
     ControlValueAccessor,
-    FormBuilder,
-    FormControl,
-    FormGroup,
+    UntypedFormBuilder,
+    UntypedFormControl,
+    UntypedFormGroup,
     FormGroupDirective,
     NgControl,
     NgForm,
@@ -28,14 +28,14 @@ import { CalendarHeaderComponent } from '../calendar-header/calendar-header.comp
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class DateInputErrorStateMatcher implements ErrorStateMatcher {
-    isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    isErrorState(control: UntypedFormControl | null, form: FormGroupDirective | NgForm | null): boolean {
         const isSubmitted = form && form.submitted;
         return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
     }
 }
 
 /** If a period is defined, start and end date must have the same calendar */
-export function sameCalendarValidator(isPeriod: FormControl, endDate: FormControl): ValidatorFn {
+export function sameCalendarValidator(isPeriod: UntypedFormControl, endDate: UntypedFormControl): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
 
         if (isPeriod.value) {
@@ -53,7 +53,7 @@ export function sameCalendarValidator(isPeriod: FormControl, endDate: FormContro
 }
 
 /** If a period is defined, start date must be before end date */
-export function periodStartEndValidator(isPeriod: FormControl, endDate: FormControl): ValidatorFn {
+export function periodStartEndValidator(isPeriod: UntypedFormControl, endDate: UntypedFormControl): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
 
         if (isPeriod.value) {
@@ -97,7 +97,7 @@ export class DateInputComponent extends _MatInputMixinBase implements ControlVal
 
     static nextId = 0;
 
-    form: FormGroup;
+    form: UntypedFormGroup;
     stateChanges = new Subject<void>();
     @HostBinding() id = `dsp-date-input-${DateInputComponent.nextId++}`;
     focused = false;
@@ -106,9 +106,9 @@ export class DateInputComponent extends _MatInputMixinBase implements ControlVal
     matcher = new DateInputErrorStateMatcher();
 
     calendarHeaderComponent = CalendarHeaderComponent;
-    startDateControl: FormControl;
-    endDateControl: FormControl;
-    isPeriodControl: FormControl;
+    startDateControl: UntypedFormControl;
+    endDateControl: UntypedFormControl;
+    isPeriodControl: UntypedFormControl;
 
     @Input() valueRequiredValidator = true;
 
@@ -257,7 +257,7 @@ export class DateInputComponent extends _MatInputMixinBase implements ControlVal
     @Input() errorStateMatcher: ErrorStateMatcher;
 
     constructor(
-        fb: FormBuilder,
+        fb: UntypedFormBuilder,
         @Optional() @Self() public ngControl: NgControl,
         private _fm: FocusMonitor,
         private _elRef: ElementRef<HTMLElement>,
@@ -267,9 +267,9 @@ export class DateInputComponent extends _MatInputMixinBase implements ControlVal
 
         super(_defaultErrorStateMatcher, _parentForm, _parentFormGroup, ngControl);
 
-        this.endDateControl = new FormControl(null);
-        this.isPeriodControl = new FormControl(null);
-        this.startDateControl = new FormControl(null);
+        this.endDateControl = new UntypedFormControl(null);
+        this.isPeriodControl = new UntypedFormControl(null);
+        this.startDateControl = new UntypedFormControl(null);
 
         this.form = fb.group({
             dateStart: this.startDateControl,

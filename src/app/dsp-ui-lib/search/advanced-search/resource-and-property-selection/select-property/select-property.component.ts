@@ -1,5 +1,5 @@
 import { Component, Inject, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Cardinality, IHasProperty, ResourceClassDefinition, ResourcePropertyDefinition } from '@dasch-swiss/dsp-js';
 import { Subscription } from 'rxjs';
 import { SortingService } from '../../../../action/services/sorting.service';
@@ -17,7 +17,7 @@ const resolvedPromise = Promise.resolve(null);
 export class SelectPropertyComponent implements OnInit, OnDestroy {
 
     // parent FormGroup
-    @Input() formGroup: FormGroup;
+    @Input() formGroup: UntypedFormGroup;
 
     // index of the given property (unique)
     @Input() index: number;
@@ -53,7 +53,7 @@ export class SelectPropertyComponent implements OnInit, OnDestroy {
     // represents the currently selected property
     propertySelected: ResourcePropertyDefinition;
 
-    form: FormGroup;
+    form: UntypedFormGroup;
 
     // unique name for this property to be used in the parent FormGroup
     propIndex: string;
@@ -61,7 +61,7 @@ export class SelectPropertyComponent implements OnInit, OnDestroy {
     propertyChangesSubscription: Subscription;
 
     constructor(
-        @Inject(FormBuilder) private _fb: FormBuilder,
+        @Inject(UntypedFormBuilder) private _fb: UntypedFormBuilder,
         private _sortingService: SortingService) {
     }
 

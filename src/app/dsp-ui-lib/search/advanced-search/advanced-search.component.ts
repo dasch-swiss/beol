@@ -9,7 +9,7 @@ import {
     Output,
     ViewChild
 } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { ApiResponseError, Constants, KnoraApiConnection, OntologiesMetadata } from '@dasch-swiss/dsp-js';
 import { Subscription } from 'rxjs';
 import { NotificationService } from '../../action/services/notification.service';
@@ -43,7 +43,7 @@ export class AdvancedSearchComponent implements OnInit, OnDestroy, AfterViewChec
     ontologiesMetadata: OntologiesMetadata;
 
     // FormGroup (used as parent for child components)
-    form: FormGroup;
+    form: UntypedFormGroup;
 
     // form validation status
     formValid = false;
@@ -58,7 +58,7 @@ export class AdvancedSearchComponent implements OnInit, OnDestroy, AfterViewChec
     @ViewChild('resAndPropSel') resourceAndPropertySelection: ResourceAndPropertySelectionComponent;
 
     constructor(
-        @Inject(FormBuilder) private _fb: FormBuilder,
+        @Inject(UntypedFormBuilder) private _fb: UntypedFormBuilder,
         @Inject(DspApiConnectionToken) private _dspApiConnection: KnoraApiConnection,
         private _notification: NotificationService,
         private _gravsearchGenerationService: GravsearchGenerationService) {

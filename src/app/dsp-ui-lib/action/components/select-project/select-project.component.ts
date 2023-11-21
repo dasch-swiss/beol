@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { ApiResponseData, ApiResponseError, KnoraApiConnection, ProjectsResponse, ReadProject } from '@dasch-swiss/dsp-js';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -29,13 +29,13 @@ export class SelectProjectComponent implements OnInit {
     projects: ReadProject[];
 
     // form group
-    selectProjectForm: FormGroup;
-    projectNameFormControl: FormControl;
+    selectProjectForm: UntypedFormGroup;
+    projectNameFormControl: UntypedFormControl;
 
     constructor(
         @Inject(DspApiConnectionToken) private _dspApiConnection: KnoraApiConnection,
         private _sortingService: SortingService,
-        private _formBuilder: FormBuilder
+        private _formBuilder: UntypedFormBuilder
     ) {}
 
     ngOnInit(): void {
@@ -44,7 +44,7 @@ export class SelectProjectComponent implements OnInit {
         this.projects = [];
 
         // initialize form control element
-        this.projectNameFormControl = new FormControl(null);
+        this.projectNameFormControl = new UntypedFormControl(null);
 
         // get list of all projects
         this.getAllProjects();

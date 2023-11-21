@@ -1,6 +1,6 @@
 import { Component, Inject, Input, OnChanges, OnDestroy, ViewChild } from '@angular/core';
 import { Constants, ResourcePropertyDefinition } from '@dasch-swiss/dsp-js';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import {
     ComparisonOperator, ComparisonOperatorAndValue,
     Equals,
@@ -28,7 +28,7 @@ export class SpecifyPropertyValueComponent implements OnChanges, OnDestroy {
     Constants = Constants;
 
     // parent FormGroup
-    @Input() formGroup: FormGroup;
+    @Input() formGroup: UntypedFormGroup;
 
     @Input() topLevel: boolean;
 
@@ -49,7 +49,7 @@ export class SpecifyPropertyValueComponent implements OnChanges, OnDestroy {
 
     private _property: ResourcePropertyDefinition;
 
-    form: FormGroup;
+    form: UntypedFormGroup;
 
     // available comparison operators for the property
     comparisonOperators: Array<ComparisonOperator> = [];
@@ -62,7 +62,7 @@ export class SpecifyPropertyValueComponent implements OnChanges, OnDestroy {
 
     comparisonOperatorChangesSubscription: Subscription;
 
-    constructor(@Inject(FormBuilder) private _fb: FormBuilder) {
+    constructor(@Inject(UntypedFormBuilder) private _fb: UntypedFormBuilder) {
     }
 
     ngOnChanges(): void {

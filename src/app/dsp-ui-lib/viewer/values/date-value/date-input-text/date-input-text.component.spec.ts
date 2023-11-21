@@ -1,9 +1,9 @@
 import { Component, forwardRef, Input, OnInit, ViewChild } from '@angular/core';
 import {
     ControlValueAccessor,
-    FormBuilder,
-    FormControl,
-    FormGroup,
+    UntypedFormBuilder,
+    UntypedFormControl,
+    UntypedFormGroup,
     NG_VALUE_ACCESSOR,
     NgControl,
     ReactiveFormsModule
@@ -39,9 +39,9 @@ class TestHostComponent implements OnInit {
 
     @ViewChild('dateInputText') dateInputTextComponent: DateInputTextComponent;
 
-    form: FormGroup;
+    form: UntypedFormGroup;
 
-    constructor(private _fb: FormBuilder) {
+    constructor(private _fb: UntypedFormBuilder) {
     }
 
     ngOnInit(): void {
@@ -69,15 +69,15 @@ class NoValueRequiredTestHostComponent implements OnInit {
 
     @ViewChild('dateInputText') dateInputTextComponent: DateInputTextComponent;
 
-    form: FormGroup;
+    form: UntypedFormGroup;
 
-    constructor(private _fb: FormBuilder) {
+    constructor(private _fb: UntypedFormBuilder) {
     }
 
     ngOnInit(): void {
 
         this.form = this._fb.group({
-            date: new FormControl(null)
+            date: new UntypedFormControl(null)
         });
 
     }

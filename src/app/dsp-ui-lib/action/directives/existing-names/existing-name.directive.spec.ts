@@ -1,6 +1,6 @@
 import { ExistingNameDirective, existingNamesValidator } from './existing-name.directive';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, UntypedFormControl, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -38,7 +38,7 @@ class TestHostComponent implements OnInit {
         new RegExp('user')
     ];
 
-    form: FormGroup;
+    form: UntypedFormGroup;
 
     formErrors = {
         name: ''
@@ -51,7 +51,7 @@ class TestHostComponent implements OnInit {
         }
     };
 
-    constructor(private _formBuilder: FormBuilder) { }
+    constructor(private _formBuilder: UntypedFormBuilder) { }
 
     ngOnInit() {
         // create a list of existing names
@@ -64,7 +64,7 @@ class TestHostComponent implements OnInit {
 
         // build form
         this.form = this._formBuilder.group({
-            name: new FormControl({
+            name: new UntypedFormControl({
                 value: '', disabled: false
             }, [
                 Validators.required,

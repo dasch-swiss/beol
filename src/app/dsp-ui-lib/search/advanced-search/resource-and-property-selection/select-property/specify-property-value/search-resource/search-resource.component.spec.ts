@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { SearchResourceComponent } from './search-resource.component';
 import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
 import { SearchLinkValueComponent } from '../search-link-value/search-link-value.component';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ComparisonOperatorAndValue, GreaterThan, LinkedResource, PropertyWithValue, ValueLiteral } from '../operator';
 import { MockOntology, ResourcePropertyDefinition } from '@dasch-swiss/dsp-js';
@@ -23,7 +23,7 @@ class TestHostComponent implements OnInit {
 
     resClass: string;
 
-    constructor(@Inject(FormBuilder) private _fb: FormBuilder) {
+    constructor(@Inject(UntypedFormBuilder) private _fb: UntypedFormBuilder) {
     }
 
     ngOnInit() {
@@ -41,7 +41,7 @@ class TestHostComponent implements OnInit {
 })
 class TestResourceAndPropertySelectionComponent implements OnInit {
 
-    @Input() formGroup: FormGroup;
+    @Input() formGroup: UntypedFormGroup;
 
     @Input() activeOntology: string;
 
