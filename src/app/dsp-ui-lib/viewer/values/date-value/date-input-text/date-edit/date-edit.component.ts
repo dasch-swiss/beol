@@ -35,6 +35,7 @@ import { ValueService } from '../../../../services/value.service';
 const resolvedPromise = Promise.resolve(null);
 
 class MatInputBase {
+    readonly stateChanges = new Subject<void>();
     constructor(public _defaultErrorStateMatcher: ErrorStateMatcher,
                 public _parentForm: NgForm,
                 public _parentFormGroup: FormGroupDirective,
