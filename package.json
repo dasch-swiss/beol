@@ -26,7 +26,7 @@
     "@angular/router": "^14.3.0",
     "@ckeditor/ckeditor5-angular": "^1.2.3",
     "@dasch-swiss/dsp-js": "^6.2.2",
-    "angular-split": "^13.2.0",
+    "angular-split": "^14.1.0",
     "ckeditor5-custom-build": "github:dasch-swiss/ckeditor_custom_build",
     "core-js": "^3.6.5",
     "jdnconvertiblecalendar": "^0.0.6",
