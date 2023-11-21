@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { KnoraApiConfig } from '@dasch-swiss/dsp-js';
 import { DspApiConfigToken } from '../../core/core.module';
 import { SearchParams } from '../../viewer/views/list-view/list-view.component';
@@ -32,8 +32,8 @@ export class ExpertSearchComponent implements OnInit {
      */
     @Output() search = new EventEmitter<SearchParams>();
 
-    expertSearchForm: FormGroup;
-    queryFormControl: FormControl;
+    expertSearchForm: UntypedFormGroup;
+    queryFormControl: UntypedFormControl;
 
     iriBaseUrl = this.getIriBaseUrl();
 
@@ -54,12 +54,12 @@ CONSTRUCT {
     constructor(
         @Inject(DspApiConfigToken) private _dspApiConfig: KnoraApiConfig,
         private _searchParamsService: AdvancedSearchParamsService,
-        private _fb: FormBuilder
+        private _fb: UntypedFormBuilder
     ) { }
 
     ngOnInit(): void {
         // initialize the form with predefined Gravsearch query as example.
-        this.queryFormControl = new FormControl(this.defaultGravsearchQuery);
+        this.queryFormControl = new UntypedFormControl(this.defaultGravsearchQuery);
 
         this.expertSearchForm = this._fb.group({
             gravsearchquery: [

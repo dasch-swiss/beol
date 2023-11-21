@@ -9,7 +9,7 @@ import {
     Output,
     SimpleChanges
 } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import {
     CreateLinkValue,
     KnoraApiConnection,
@@ -47,9 +47,9 @@ export class LinkValueComponent extends BaseValueComponent implements OnInit, On
 
     resources: ReadResource[] = [];
     restrictToResourceClass: string;
-    valueFormControl: FormControl;
-    commentFormControl: FormControl;
-    form: FormGroup;
+    valueFormControl: UntypedFormControl;
+    commentFormControl: UntypedFormControl;
+    form: UntypedFormGroup;
 
     valueChangesSubscription: Subscription;
     labelChangesSubscription: Subscription;
@@ -57,7 +57,7 @@ export class LinkValueComponent extends BaseValueComponent implements OnInit, On
     customValidators = [resourceValidator];
 
     constructor(
-        @Inject(FormBuilder) private _fb: FormBuilder,
+        @Inject(UntypedFormBuilder) private _fb: UntypedFormBuilder,
         @Inject(DspApiConnectionToken) private _dspApiConnection: KnoraApiConnection) {
         super();
     }
@@ -111,9 +111,9 @@ export class LinkValueComponent extends BaseValueComponent implements OnInit, On
         this.restrictToResourceClass = this.parentResource.entityInfo.properties[linkType].objectType;
 
         // initialize form control elements
-        this.valueFormControl = new FormControl(null);
+        this.valueFormControl = new UntypedFormControl(null);
 
-        this.commentFormControl = new FormControl(null);
+        this.commentFormControl = new UntypedFormControl(null);
 
         // subscribe to any change on the comment and recheck validity
         this.valueChangesSubscription = this.commentFormControl.valueChanges.subscribe(

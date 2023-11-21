@@ -1,20 +1,21 @@
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { Component, DoCheck, ElementRef, HostBinding, Input, OnDestroy, Optional, Self } from '@angular/core';
-import { ControlValueAccessor, FormBuilder, FormControl, FormGroup, FormGroupDirective, NgControl, NgForm, Validators } from '@angular/forms';
+import { ControlValueAccessor, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, FormGroupDirective, NgControl, NgForm, Validators } from '@angular/forms';
 import { CanUpdateErrorState, ErrorStateMatcher, mixinErrorState } from '@angular/material/core';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { Subject } from 'rxjs';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class ColorPickerErrorStateMatcher implements ErrorStateMatcher {
-    isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    isErrorState(control: UntypedFormControl | null, form: FormGroupDirective | NgForm | null): boolean {
         const isSubmitted = form && form.submitted;
         return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
     }
 }
 
 class MatInputBase {
+    readonly stateChanges = new Subject<void>();
     constructor(
         public _defaultErrorStateMatcher: ErrorStateMatcher,
         public _parentForm: NgForm,
@@ -47,7 +48,7 @@ export class ColorPickerComponent extends _MatInputMixinBase implements ControlV
 
     @HostBinding('attr.aria-describedby') describedBy = '';
 
-    colorForm: FormGroup;
+    colorForm: UntypedFormGroup;
     stateChanges = new Subject<void>();
     focused = false;
     errorState = false;
@@ -121,7 +122,7 @@ export class ColorPickerComponent extends _MatInputMixinBase implements ControlV
     }
 
     constructor(
-        fb: FormBuilder,
+        fb: UntypedFormBuilder,
         @Optional() @Self() public ngControl: NgControl,
         private _fm: FocusMonitor,
         private _elRef: ElementRef<HTMLElement>,

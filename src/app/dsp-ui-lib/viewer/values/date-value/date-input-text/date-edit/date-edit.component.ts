@@ -17,9 +17,9 @@ import {
 } from '@angular/material/core';
 import {
     ControlValueAccessor,
-    FormBuilder,
-    FormControl,
-    FormGroup,
+    UntypedFormBuilder,
+    UntypedFormControl,
+    UntypedFormGroup,
     FormGroupDirective,
     NgControl,
     NgForm, Validators
@@ -35,6 +35,7 @@ import { ValueService } from '../../../../services/value.service';
 const resolvedPromise = Promise.resolve(null);
 
 class MatInputBase {
+    readonly stateChanges = new Subject<void>();
     constructor(public _defaultErrorStateMatcher: ErrorStateMatcher,
                 public _parentForm: NgForm,
                 public _parentFormGroup: FormGroupDirective,
@@ -59,13 +60,13 @@ export class DateEditComponent extends _MatInputMixinBase implements ControlValu
 
     @Input() valueRequiredValidator = true;
 
-    form: FormGroup;
+    form: UntypedFormGroup;
     stateChanges = new Subject<void>();
 
-    eraControl: FormControl;
-    yearControl: FormControl;
-    monthControl: FormControl;
-    dayControl: FormControl;
+    eraControl: UntypedFormControl;
+    yearControl: UntypedFormControl;
+    monthControl: UntypedFormControl;
+    dayControl: UntypedFormControl;
 
     months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
@@ -180,7 +181,7 @@ export class DateEditComponent extends _MatInputMixinBase implements ControlValu
         return !this.yearControl && !this.monthControl && !this.dayControl;
     }
 
-    constructor(fb: FormBuilder,
+    constructor(fb: UntypedFormBuilder,
                 @Optional() @Self() public ngControl: NgControl,
                 private _fm: FocusMonitor,
                 private _elRef: ElementRef<HTMLElement>,
@@ -197,16 +198,16 @@ export class DateEditComponent extends _MatInputMixinBase implements ControlValu
             this.ngControl.valueAccessor = this;
         }
 
-        this.eraControl = new FormControl(null);
+        this.eraControl = new UntypedFormControl(null);
 
-        this.yearControl = new FormControl({
+        this.yearControl = new UntypedFormControl({
             value: null,
             disabled: false
         });
 
-        this.monthControl = new FormControl({value: null, disabled: true});
+        this.monthControl = new UntypedFormControl({value: null, disabled: true});
 
-        this.dayControl = new FormControl({value: null, disabled: true});
+        this.dayControl = new UntypedFormControl({value: null, disabled: true});
 
         // recalculate days of month when era changes
         const eraChangesSubscription = this.eraControl.valueChanges.subscribe(

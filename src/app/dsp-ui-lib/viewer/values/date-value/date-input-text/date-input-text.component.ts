@@ -7,9 +7,9 @@ import {
 import {
     AbstractControl,
     ControlValueAccessor,
-    FormBuilder,
-    FormControl,
-    FormGroup,
+    UntypedFormBuilder,
+    UntypedFormControl,
+    UntypedFormGroup,
     FormGroupDirective,
     NgControl,
     NgForm,
@@ -25,7 +25,7 @@ import { KnoraDate, KnoraPeriod } from '@dasch-swiss/dsp-js';
 import { ValueService } from '../../../services/value.service';
 
 /** If a period is defined, start date must be before end date */
-export function periodStartEndValidator(isPeriod: FormControl, endDate: FormControl, valueService: ValueService): ValidatorFn {
+export function periodStartEndValidator(isPeriod: UntypedFormControl, endDate: UntypedFormControl, valueService: ValueService): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
 
         if (isPeriod.value && control.value !== null && endDate.value !== null) {
@@ -45,6 +45,7 @@ export function periodStartEndValidator(isPeriod: FormControl, endDate: FormCont
 }
 
 class MatInputBase {
+    readonly stateChanges = new Subject<void>();
     constructor(public _defaultErrorStateMatcher: ErrorStateMatcher,
                 public _parentForm: NgForm,
                 public _parentFormGroup: FormGroupDirective,
@@ -67,13 +68,13 @@ export class DateInputTextComponent extends _MatInputMixinBase implements Contro
 
     @Input() valueRequiredValidator = true;
 
-    form: FormGroup;
+    form: UntypedFormGroup;
     stateChanges = new Subject<void>();
 
-    isPeriodControl: FormControl;
-    calendarControl: FormControl;
-    startDate: FormControl;
-    endDate: FormControl;
+    isPeriodControl: UntypedFormControl;
+    calendarControl: UntypedFormControl;
+    startDate: UntypedFormControl;
+    endDate: UntypedFormControl;
 
     readonly focused = false;
 
@@ -169,7 +170,7 @@ export class DateInputTextComponent extends _MatInputMixinBase implements Contro
 
     @HostBinding() id = `dsp-date-input-text-${DateInputTextComponent.nextId++}`;
 
-    constructor(fb: FormBuilder,
+    constructor(fb: UntypedFormBuilder,
                 @Optional() @Self() public ngControl: NgControl,
                 private _fm: FocusMonitor,
                 private _elRef: ElementRef<HTMLElement>,
@@ -185,11 +186,11 @@ export class DateInputTextComponent extends _MatInputMixinBase implements Contro
             this.ngControl.valueAccessor = this;
         }
 
-        this.isPeriodControl = new FormControl(false); // TODO: if period, check if start is before end
-        this.calendarControl = new FormControl(null);
+        this.isPeriodControl = new UntypedFormControl(false); // TODO: if period, check if start is before end
+        this.calendarControl = new UntypedFormControl(null);
 
-        this.endDate = new FormControl(null);
-        this.startDate = new FormControl(null);
+        this.endDate = new UntypedFormControl(null);
+        this.startDate = new UntypedFormControl(null);
 
         const eraChangesSubscription = this.isPeriodControl.valueChanges.subscribe(
             isPeriod => {

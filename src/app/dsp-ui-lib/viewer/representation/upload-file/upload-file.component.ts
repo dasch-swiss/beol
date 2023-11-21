@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import {
     Constants,
     CreateFileValue,
@@ -20,7 +20,7 @@ const resolvedPromise = Promise.resolve(null);
 })
 export class UploadFileComponent implements OnInit {
 
-    @Input() parentForm?: FormGroup;
+    @Input() parentForm?: UntypedFormGroup;
 
     @Input() representation: string; // only StillImageRepresentation supported so far
     readonly fromLabels = {
@@ -28,13 +28,13 @@ export class UploadFileComponent implements OnInit {
         drag_drop: 'Drag and drop or click to upload'
     };
     file: File;
-    form: FormGroup;
-    fileControl: FormControl;
+    form: UntypedFormGroup;
+    fileControl: UntypedFormControl;
     isLoading = false;
     thumbnailUrl: string;
 
     constructor(
-        private readonly _fb: FormBuilder,
+        private readonly _fb: UntypedFormBuilder,
         private readonly _ns: NotificationService,
         private readonly _ufs: UploadFileService
     ) { }
@@ -128,7 +128,7 @@ export class UploadFileComponent implements OnInit {
      * Initializes form group
      */
     initializeForm(): void {
-        this.fileControl = new FormControl(null, Validators.required);
+        this.fileControl = new UntypedFormControl(null, Validators.required);
 
         this.fileControl.valueChanges.subscribe(
             val => {

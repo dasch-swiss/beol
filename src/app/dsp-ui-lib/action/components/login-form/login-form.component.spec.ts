@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -73,7 +73,7 @@ describe('LoginFormComponent', () => {
                 provide: DspApiConnectionToken,
                 useValue: dspConnSpy
             },
-            FormBuilder,
+            UntypedFormBuilder,
             SessionService
         ],
         imports: [

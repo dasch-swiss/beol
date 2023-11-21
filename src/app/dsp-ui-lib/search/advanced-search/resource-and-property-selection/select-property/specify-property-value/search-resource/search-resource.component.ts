@@ -1,5 +1,5 @@
 import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { LinkedResource, PropertyValue, PropertyWithValue, Value } from '../operator';
 import { ResourceAndPropertySelectionComponent } from '../../../resource-and-property-selection.component';
 import { Constants } from '@dasch-swiss/dsp-js';
@@ -15,17 +15,17 @@ const resolvedPromise = Promise.resolve(null);
 export class SearchResourceComponent implements OnInit, PropertyValue {
 
     // parent FormGroup
-    @Input() formGroup: FormGroup;
+    @Input() formGroup: UntypedFormGroup;
 
     @Input() restrictResourceClass: string;
 
     type = Constants.Resource;
 
-    form: FormGroup;
+    form: UntypedFormGroup;
 
     ontology: string;
 
-    constructor(@Inject(FormBuilder) private _fb: FormBuilder) {
+    constructor(@Inject(UntypedFormBuilder) private _fb: UntypedFormBuilder) {
     }
 
     // reference to the component that controls the resource class selection

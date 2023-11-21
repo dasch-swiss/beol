@@ -1,6 +1,6 @@
 /** Custom header component containing a calendar format switcher */
 import { JDNConvertibleCalendarDateAdapter } from 'jdnconvertiblecalendardateadapter';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { JDNConvertibleCalendar } from 'jdnconvertiblecalendar';
 import { MatCalendar, MatDatepickerContent } from '@angular/material/datepicker';
 import { DateAdapter } from '@angular/material/core';
@@ -16,11 +16,11 @@ export class CalendarHeaderComponent<D> implements OnInit, OnDestroy {
     constructor(private _calendar: MatCalendar<JDNConvertibleCalendar>,
         private _dateAdapter: DateAdapter<JDNConvertibleCalendar>,
         private _datepickerContent: MatDatepickerContent<JDNConvertibleCalendar>,
-        @Inject(FormBuilder) private _fb: FormBuilder) {
+        @Inject(UntypedFormBuilder) private _fb: UntypedFormBuilder) {
     }
 
-    form: FormGroup;
-    formControl: FormControl;
+    form: UntypedFormGroup;
+    formControl: UntypedFormControl;
     valueChangesSubscription: Subscription;
 
     // a list of supported calendars (Gregorian and Julian)
@@ -37,7 +37,7 @@ export class CalendarHeaderComponent<D> implements OnInit, OnDestroy {
             console.log('date adapter is expected to be an instance of JDNConvertibleCalendarDateAdapter');
         }
 
-        this.formControl = new FormControl(activeCal, Validators.required);
+        this.formControl = new UntypedFormControl(activeCal, Validators.required);
 
         // build a form for the calendar format selection
         this.form = this._fb.group({

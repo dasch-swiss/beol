@@ -1,5 +1,5 @@
 import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Constants } from '@dasch-swiss/dsp-js';
 import { JDNConvertibleCalendar } from 'jdnconvertiblecalendar';
 import { CalendarHeaderComponent } from '../../../../../../viewer/values/date-value/calendar-header/calendar-header.component';
@@ -16,16 +16,16 @@ const resolvedPromise = Promise.resolve(null);
 export class SearchDateValueComponent implements OnInit, OnDestroy, PropertyValue {
 
     // parent FormGroup
-    @Input() formGroup: FormGroup;
+    @Input() formGroup: UntypedFormGroup;
 
     type = Constants.DateValue;
 
-    form: FormGroup;
+    form: UntypedFormGroup;
 
     // custom header for the datepicker
     headerComponent = CalendarHeaderComponent;
 
-    constructor(@Inject(FormBuilder) private _fb: FormBuilder) {
+    constructor(@Inject(UntypedFormBuilder) private _fb: UntypedFormBuilder) {
     }
 
     ngOnInit() {
