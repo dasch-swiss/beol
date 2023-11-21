@@ -15,7 +15,7 @@ import {
     ValidatorFn,
     Validators
 } from '@angular/forms';
-import { CanUpdateErrorState, CanUpdateErrorStateCtor, ErrorStateMatcher, mixinErrorState } from '@angular/material/core';
+import { CanUpdateErrorState, ErrorStateMatcher, mixinErrorState } from '@angular/material/core';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { CalendarDate, CalendarPeriod, GregorianCalendarDate } from 'jdnconvertiblecalendar';
 import { Subject } from 'rxjs';
@@ -39,7 +39,7 @@ class MatInputBase {
         public _parentFormGroup: FormGroupDirective,
         public ngControl: NgControl) { }
 }
-const _MatInputMixinBase: CanUpdateErrorStateCtor & typeof MatInputBase = mixinErrorState(MatInputBase);
+const _MatInputMixinBase = mixinErrorState(MatInputBase);
 
 export class DateTime {
     /**

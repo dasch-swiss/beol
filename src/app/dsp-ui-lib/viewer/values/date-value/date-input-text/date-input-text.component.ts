@@ -1,7 +1,6 @@
 import { Component, DoCheck, ElementRef, HostBinding, Input, OnDestroy, OnInit, Optional, Self } from '@angular/core';
 import {
     CanUpdateErrorState,
-    CanUpdateErrorStateCtor,
     ErrorStateMatcher,
     mixinErrorState
 } from '@angular/material/core';
@@ -53,7 +52,7 @@ class MatInputBase {
     }
 }
 
-const _MatInputMixinBase: CanUpdateErrorStateCtor & typeof MatInputBase =
+const _MatInputMixinBase =
     mixinErrorState(MatInputBase);
 
 @Component({

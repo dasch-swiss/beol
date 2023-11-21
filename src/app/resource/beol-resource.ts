@@ -46,7 +46,7 @@ export abstract class BeolResource implements OnInit, OnDestroy {
 
     abstract iri: string;
     abstract resource: BeolCompoundResource;
-    abstract isLoading = true;
+    isLoading = true;
     abstract errorMessage: any;
     abstract incomingStillImageRepresentationCurrentOffset: number;
     abstract navigationSubscription: Subscription;
