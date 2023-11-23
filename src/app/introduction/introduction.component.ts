@@ -11,7 +11,7 @@ import {
 import { AppInitService, DspApiConnectionToken } from '../dsp-ui-lib/core';
 import { Subscription } from 'rxjs';
 import { BeolService } from '../services/beol.service';
-import {MatLegacySnackBar as MatSnackBar} from '@angular/material/legacy-snack-bar';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 declare let require: any;
 

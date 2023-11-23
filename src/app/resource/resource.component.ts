@@ -7,7 +7,7 @@ import { BeolService } from '../services/beol.service';
 import { DspApiConnectionToken } from '../dsp-ui-lib/core';
 import { Constants, KnoraApiConnection, ReadResource } from '@dasch-swiss/dsp-js';
 import { IncomingService } from '../services/incoming.service';
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'app-resource',

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MatLegacySnackBarModule as MatSnackBarModule } from '@angular/material/legacy-snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MathJaxDirective } from './mathjax.directive';
 import { Component, DebugElement, OnInit } from '@angular/core';
 import { By } from '@angular/platform-browser';

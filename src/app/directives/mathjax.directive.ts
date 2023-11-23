@@ -1,7 +1,7 @@
 import { Directive, ElementRef, HostListener, Input, OnChanges } from '@angular/core';
 import { Constants, ReadGeomValue, ReadLinkValue, ReadResource, ReadStillImageFileValue, ReadTextValueAsHtml } from '@dasch-swiss/dsp-js';
 import { BeolService } from '../services/beol.service';
-import { MatLegacySnackBar as MatSnackBar, MatLegacySnackBarConfig as MatSnackBarConfig } from '@angular/material/legacy-snack-bar';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { forkJoin } from 'rxjs';
 import { ReadResourceSequence } from '@dasch-swiss/dsp-js';
 

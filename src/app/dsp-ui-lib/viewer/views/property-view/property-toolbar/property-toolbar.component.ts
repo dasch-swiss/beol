@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, Output } from '@angular/core';
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import {
     ApiResponseData,
     ApiResponseError,

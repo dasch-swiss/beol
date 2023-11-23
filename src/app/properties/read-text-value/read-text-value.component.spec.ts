@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MatLegacySnackBarModule as MatSnackBarModule } from '@angular/material/legacy-snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ReadTextValueComponent } from './read-text-value.component';
 import { ReadTextValueAsHtmlComponent } from '../read-text-value-as-html/read-text-value-as-html.component';
 import { MathJaxDirective } from '../../directives/mathjax.directive';
