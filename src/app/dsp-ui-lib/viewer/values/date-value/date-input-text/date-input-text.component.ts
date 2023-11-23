@@ -16,7 +16,7 @@ import {
     ValidatorFn,
     Validators
 } from '@angular/forms';
-import { MatFormFieldControl } from '@angular/material/form-field';
+import { MatLegacyFormFieldControl as MatFormFieldControl } from '@angular/material/legacy-form-field';
 import { JDNConvertibleCalendar } from 'jdnconvertiblecalendar';
 import { Subject, Subscription } from 'rxjs';
 import { FocusMonitor } from '@angular/cdk/a11y';

@@ -20,7 +20,7 @@ import { BeolService } from '../../services/beol.service';
 import { BeolCompoundResource, BeolResource, PropertyValues, PropIriToNameMapping } from '../beol-resource';
 import { HttpClient } from '@angular/common/http';
 import * as BeolConstants from '../../beol-constants';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 
 class LetterProps implements PropertyValues {
     id: ReadTextValue[] = [];

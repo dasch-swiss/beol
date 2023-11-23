@@ -14,7 +14,7 @@ import { Region, StillImageComponent, StillImageRepresentation} from '../dsp-ui-
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { IncomingService } from '../services/incoming.service';
 import { BeolService } from '../services/beol.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 
 export class BeolCompoundResource {
 

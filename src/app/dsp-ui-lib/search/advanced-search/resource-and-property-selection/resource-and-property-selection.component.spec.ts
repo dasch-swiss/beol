@@ -10,7 +10,7 @@ import { MockOntology, ReadOntology, ResourceClassDefinition, ResourcePropertyDe
 import { of } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 import { By } from '@angular/platform-browser';
-import { MatButtonHarness } from '@angular/material/button/testing';
+import { MatLegacyButtonHarness as MatButtonHarness } from '@angular/material/legacy-button/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 
 /**

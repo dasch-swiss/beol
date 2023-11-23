@@ -4,12 +4,12 @@ import { SelectOntologyComponent } from './select-ontology.component';
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { OntologiesMetadata, MockOntology } from '@dasch-swiss/dsp-js';
 import { UntypedFormBuilder, UntypedFormGroup, ReactiveFormsModule } from '@angular/forms';
-import { MatSelectModule } from '@angular/material/select';
-import { MatOptionModule } from '@angular/material/core';
+import { MatLegacySelectModule as MatSelectModule } from '@angular/material/legacy-select';
+import { MatLegacyOptionModule as MatOptionModule } from '@angular/material/legacy-core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HarnessLoader } from '@angular/cdk/testing';
-import { MatSelectHarness } from '@angular/material/select/testing';
+import { MatLegacySelectHarness as MatSelectHarness } from '@angular/material/legacy-select/testing';
 
 /**
  * Test host component to simulate parent component.

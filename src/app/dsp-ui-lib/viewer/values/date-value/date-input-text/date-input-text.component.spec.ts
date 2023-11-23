@@ -11,18 +11,19 @@ import {
 import { KnoraDate, KnoraPeriod } from '@dasch-swiss/dsp-js';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { HarnessLoader } from '@angular/cdk/testing';
-import { MatFormFieldControl, MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatLegacyFormFieldControl as MatFormFieldControl, MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
+import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
+import { MatLegacyCheckboxModule as MatCheckboxModule } from '@angular/material/legacy-checkbox';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { DateInputTextComponent } from './date-input-text.component';
-import { ErrorStateMatcher, MatOptionModule } from '@angular/material/core';
+import { ErrorStateMatcher } from '@angular/material/core';
+import { MatLegacyOptionModule as MatOptionModule } from '@angular/material/legacy-core';
 import { Subject } from 'rxjs';
-import { MatSelectModule } from '@angular/material/select';
+import { MatLegacySelectModule as MatSelectModule } from '@angular/material/legacy-select';
 import { By } from '@angular/platform-browser';
-import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
-import { MatSelectHarness } from '@angular/material/select/testing';
+import { MatLegacyCheckboxHarness as MatCheckboxHarness } from '@angular/material/legacy-checkbox/testing';
+import { MatLegacySelectHarness as MatSelectHarness } from '@angular/material/legacy-select/testing';
 
 /**
  * Test host component to simulate parent component.

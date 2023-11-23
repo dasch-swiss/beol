@@ -14,7 +14,7 @@ import {
     Validators
 } from '@angular/forms';
 import { CanUpdateErrorState, ErrorStateMatcher, mixinErrorState } from '@angular/material/core';
-import { MatFormFieldControl } from '@angular/material/form-field';
+import { MatLegacyFormFieldControl as MatFormFieldControl } from '@angular/material/legacy-form-field';
 import { KnoraDate, KnoraPeriod } from '@dasch-swiss/dsp-js';
 import {
     CalendarDate,
