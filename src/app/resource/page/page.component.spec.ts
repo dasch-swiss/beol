@@ -8,7 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 import { MatLegacyListModule as MatListModule } from '@angular/material/legacy-list';
-import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-menu';
+import { MatMenuModule } from '@angular/material/menu';
 import { ReadTextValueComponent } from '../../properties/read-text-value/read-text-value.component';
 import { AppInitService, DspApiConnectionToken } from '../../dsp-ui-lib/core';
 import { DspViewerModule } from '../../dsp-ui-lib/viewer';
