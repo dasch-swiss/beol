@@ -3,7 +3,7 @@ import { MatLegacyAutocompleteModule as MatAutocompleteModule } from '@angular/m
 import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
-import { MatLegacyCheckboxModule as MatCheckboxModule } from '@angular/material/legacy-checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatLegacyChipsModule as MatChipsModule } from '@angular/material/legacy-chips';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';

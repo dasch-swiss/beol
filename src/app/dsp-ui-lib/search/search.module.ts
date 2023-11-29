@@ -12,7 +12,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatLegacyAutocompleteModule as MatAutocompleteModule } from '@angular/material/legacy-autocomplete';
 import { MatLegacySelectModule as MatSelectModule } from '@angular/material/legacy-select';
 import { MatLegacyOptionModule as MatOptionModule } from '@angular/material/legacy-core';
-import { MatLegacyCheckboxModule as MatCheckboxModule } from '@angular/material/legacy-checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { TextFieldModule } from '@angular/cdk/text-field';
 
 import { DspViewerModule } from '../viewer';

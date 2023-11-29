@@ -10,7 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatJDNConvertibleCalendarDateAdapterModule } from 'jdnconvertiblecalendardateadapter';
-import { MatLegacyCheckboxModule as MatCheckboxModule } from '@angular/material/legacy-checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CalendarDate, GregorianCalendarDate, CalendarPeriod, JulianCalendarDate } from 'jdnconvertiblecalendar';
 import { By } from '@angular/platform-browser';
 import { HarnessLoader } from '@angular/cdk/testing';

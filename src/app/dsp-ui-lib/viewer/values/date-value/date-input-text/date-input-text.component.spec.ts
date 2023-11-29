@@ -13,7 +13,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { MatLegacyFormFieldControl as MatFormFieldControl, MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
 import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
-import { MatLegacyCheckboxModule as MatCheckboxModule } from '@angular/material/legacy-checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { DateInputTextComponent } from './date-input-text.component';
