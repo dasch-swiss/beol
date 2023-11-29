@@ -56,7 +56,7 @@ import { LeibnizPortalDirective } from './directives/leibniz-portal.directive';
 
 import { HanCatalogueDirective } from './directives/han-catalogue.directive';
 import { BebbRouteComponent } from './bebb-route/bebb-route.component';
-import { MAT_LEGACY_DIALOG_DEFAULT_OPTIONS as MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/legacy-dialog';
+import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 
 import { TranscriptionComponent } from './resource/transcription/transcription.component';
 import { ManuscriptEntryComponent } from './resource/manuscript-entry/manuscript-entry.component';
