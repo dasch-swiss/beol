@@ -7,13 +7,13 @@ import { KnoraDate } from '@dasch-swiss/dsp-js';
 import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
 import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatLegacyRadioModule as MatRadioModule } from '@angular/material/legacy-radio';
+import { MatRadioModule } from '@angular/material/radio';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { MatLegacySelectModule as MatSelectModule } from '@angular/material/legacy-select';
 import { MatLegacyInputHarness as MatInputHarness } from '@angular/material/legacy-input/testing';
 import { MatLegacySelectHarness as MatSelectHarness } from '@angular/material/legacy-select/testing';
-import { MatLegacyRadioGroupHarness as MatRadioGroupHarness } from '@angular/material/legacy-radio/testing';
+import { MatRadioGroupHarness as MatRadioGroupHarness } from '@angular/material/radio/testing';
 
 /**
  * Test host component to simulate parent component.
