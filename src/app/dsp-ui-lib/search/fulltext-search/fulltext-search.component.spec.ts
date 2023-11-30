@@ -302,7 +302,7 @@ describe('FulltextSearchComponent', () => {
             projButtonNe.click();
             testHostFixture.detectChanges();
 
-            const projMenuPanelDe = projButtonDe.query(By.css('div.mat-menu-panel'));
+            const projMenuPanelDe = projButtonDe.query(By.css('div.dsp-project-filter-menu'));
             const projMenuPanelNe = projMenuPanelDe.nativeElement;
 
             expect(projMenuPanelNe).toBeDefined();
@@ -319,7 +319,7 @@ describe('FulltextSearchComponent', () => {
             projButtonNe.click();
             testHostFixture.detectChanges();
 
-            const projMenuPanelDe = projButtonDe.query(By.css('div.mat-menu-panel'));
+            const projMenuPanelDe = projButtonDe.query(By.css('div.dsp-project-filter-menu'));
             const projPanelItemDe = projMenuPanelDe.query(By.css('.project-item'));
             const projPanelItemNe = projPanelItemDe.nativeElement;
 
