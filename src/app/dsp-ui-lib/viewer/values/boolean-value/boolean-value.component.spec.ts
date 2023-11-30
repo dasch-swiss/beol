@@ -292,7 +292,7 @@ describe('BooleanValueComponent', () => {
       valueBooleanDebugElement = valueComponentDe.query(By.css('mat-checkbox'));
       valueBooleanNativeElement = valueBooleanDebugElement.nativeElement;
       checkboxEl = valueBooleanDebugElement.query(By.css('input[type="checkbox"]')).nativeElement;
-      checkboxLabel = valueBooleanDebugElement.query(By.css('span[class="mat-checkbox-label"]')).nativeElement;
+      checkboxLabel = valueBooleanDebugElement.query(By.css('label')).nativeElement;
 
       commentBooleanDebugElement = valueComponentDe.query(By.css('textarea.comment'));
       commentBooleanNativeElement = commentBooleanDebugElement.nativeElement;
