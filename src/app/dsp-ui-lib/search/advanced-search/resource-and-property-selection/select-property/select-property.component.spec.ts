@@ -17,7 +17,7 @@ import {
     ResourcePropertyDefinition
 } from '@dasch-swiss/dsp-js';
 import { MatLegacySelectHarness as MatSelectHarness } from '@angular/material/legacy-select/testing';
-import { MatLegacyCheckboxHarness as MatCheckboxHarness } from '@angular/material/legacy-checkbox/testing';
+import { MatCheckboxHarness as MatCheckboxHarness } from '@angular/material/checkbox/testing';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ComparisonOperatorAndValue, Equals, ValueLiteral } from './specify-property-value/operator';
 
