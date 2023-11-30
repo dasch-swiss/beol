@@ -1,7 +1,7 @@
 @import '../../../style/viewer';
 
 .read-mode-view .more-info,
-.form-fields-container .mat-form-field .more-info {
+.form-fields-container .mat-mdc-form-field .more-info {
     cursor: pointer;
     border: none;
     padding: 0em;
@@ -11,7 +11,7 @@
     color: #000000;
 }
 
-.form-fields-container .mat-form-field .more-info .mat-icon {
+.form-fields-container .mat-mdc-form-field .more-info .mat-icon {
     vertical-align: middle;
 }
 

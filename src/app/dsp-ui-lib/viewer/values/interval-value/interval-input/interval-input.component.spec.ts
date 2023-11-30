@@ -3,10 +3,10 @@ import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Interval, IntervalInputComponent } from './interval-input.component';
 import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Component, DebugElement, OnInit, ViewChild } from '@angular/core';
-import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
-import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
+import { MatInputModule } from '@angular/material/input';
 
 /**
  * Test host component to simulate parent component.
