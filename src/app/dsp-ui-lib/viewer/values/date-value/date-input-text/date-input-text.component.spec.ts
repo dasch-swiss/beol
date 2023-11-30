@@ -22,7 +22,7 @@ import { MatLegacyOptionModule as MatOptionModule } from '@angular/material/lega
 import { Subject } from 'rxjs';
 import { MatLegacySelectModule as MatSelectModule } from '@angular/material/legacy-select';
 import { By } from '@angular/platform-browser';
-import { MatLegacyCheckboxHarness as MatCheckboxHarness } from '@angular/material/legacy-checkbox/testing';
+import { MatCheckboxHarness as MatCheckboxHarness } from '@angular/material/checkbox/testing';
 import { MatLegacySelectHarness as MatSelectHarness } from '@angular/material/legacy-select/testing';
 
 /**
