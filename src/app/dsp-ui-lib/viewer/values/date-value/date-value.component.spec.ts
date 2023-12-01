@@ -6,7 +6,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl, ReactiveFormsModule
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatInputHarness } from '@angular/material/input/testing';
+import { MatLegacyInputHarness as MatInputHarness } from '@angular/material/legacy-input/testing';
 import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CreateDateValue, KnoraDate, KnoraPeriod, MockResource, ReadDateValue, UpdateDateValue } from '@dasch-swiss/dsp-js';

@@ -9,7 +9,7 @@ import { Constants, MockOntology, ResourcePropertyDefinition } from '@dasch-swis
 import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatSelectHarness } from '@angular/material/select/testing';
+import { MatSelectHarness as MatSelectHarness } from '@angular/material/select/testing';
 import { IRI, Value, ValueLiteral } from './operator';
 
 /**

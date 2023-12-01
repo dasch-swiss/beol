@@ -24,7 +24,6 @@
             </p>
         </section>
 
-
         <mat-divider></mat-divider>
 
         <section>
@@ -32,15 +31,15 @@
             <h2 mat-card-title>Leonhard Euler's correspondence with Goldbach</h2>
             <div class="leoo-section">
                 <div class="container">
-                    <div class="flex-container" fxFlex fxLayout="row wrap" fxLayout.sm="column" fxlayout.xs="column" fxFlexFill>
+                    <div fxFlex fxLayout="row wrap" fxLayout.sm="column" fxlayout.xs="column" fxFlexFill>
                         <div fxFlex routerLink="introduction/leoo/goldbach_preface">
-                            <mat-card class="intro-card" fxFlex>
-                                Preface
+                            <mat-card class="intro-card" appearance="outlined">
+                                <mat-card-content>Preface</mat-card-content>
                             </mat-card>
                         </div>
                         <div fxFlex routerLink="introduction/leoo/goldbach_abbreviations">
-                            <mat-card class="intro-card" fxFlex>
-                                List of Abbreviations
+                            <mat-card class="intro-card" appearance="outlined">
+                                <mat-card-content>List of Abbreviations</mat-card-content>
                             </mat-card>
                         </div>
                     </div>
@@ -48,23 +47,22 @@
 
                 <p fxLayout="column"><strong>Introduction</strong></p>
                 <div class="container">
-                    <div class="flex-container" fxFlex fxLayout="row wrap" fxLayout.sm="column" fxlayout.xs="column" fxFlexFill>
+                    <div fxFlex fxLayout="row wrap" fxLayout.sm="column" fxlayout.xs="column" fxFlexFill>
                         <div fxFlex routerLink="introduction/leoo/goldbach_introduction_1">
-                            <mat-card class="intro-card">
-                                Historical and biographical setting
+                            <mat-card class="intro-card" appearance="outlined">
+                                <mat-card-content>Historical and biographical setting</mat-card-content>
                             </mat-card>
                         </div>
                         <div fxFlex routerLink="introduction/leoo/goldbach_introduction_2">
-                            <mat-card class="intro-card">
-                                Main subjects of the correspondence
+                            <mat-card class="intro-card" appearance="outlined">
+                                <mat-card-content>Main subjects of the correspondence</mat-card-content>
                             </mat-card>
                         </div>
                         <div fxFlex routerLink="introduction/leoo/goldbach_introduction_3.1">
-                            <mat-card class="intro-card">
-                                Editing the Euler-Goldbach correspondence
+                            <mat-card class="intro-card" appearance="outlined">
+                                <mat-card-content>Editing the Euler-Goldbach correspondence</mat-card-content>
                             </mat-card>
                         </div>
-
                     </div>
                 </div>
 
@@ -75,51 +73,52 @@
             </div>
 
         </section>
+
         <mat-divider></mat-divider>
+
         <section>
             <!--<h3 mat-card-subtitle>Leonhardi Euleri Commercium Epistolicum (LECE)</h3>-->
             <h2 mat-card-title>Correspondance d'Euler avec Condorcet et Turgot</h2>
 
             <div class="leoo-section">
                 <div class="container">
-                <div class="flex-container" fxFlex fxLayout="row wrap" fxLayout.sm="column" fxlayout.xs="column" fxFlexFill>
-                    <div fxFlex routerLink="introduction/lece/CondorcetTurgot_preface">
-                        <mat-card class="intro-card" fxFlex>
-                            Préface
-                        </mat-card>
+                    <div fxFlex fxLayout="row wrap" fxLayout.sm="column" fxlayout.xs="column" fxFlexFill>
+                        <div fxFlex routerLink="introduction/lece/CondorcetTurgot_preface">
+                            <mat-card class="intro-card" appearance="outlined">
+                                <mat-card-content>Préface</mat-card-content>
+                            </mat-card>
+                        </div>
                     </div>
                 </div>
             </div>
-            </div>
             <p fxLayout="column"><strong>Introduction</strong></p>
             <div class="container">
-                <div class="flex-container" fxFlex fxLayout="row wrap" fxLayout.sm="column" fxlayout.xs="column" fxFlexFill>
+                <div fxFlex fxLayout="row wrap" fxLayout.sm="column" fxlayout.xs="column" fxFlexFill>
                     <div fxFlex routerLink="introduction/lece/CondorcetMJA_Introduction">
-                        <mat-card class="intro-card" fxFlex>
-                            Correspondance d'Euler avec Condorcet
+                        <mat-card class="intro-card" appearance="outlined">
+                            <mat-card-content>Correspondance d'Euler avec Condorcet</mat-card-content>
                         </mat-card>
                     </div>
                     <div fxFlex routerLink="introduction/lece/Turgot_Introduction">
-                        <mat-card class="intro-card" fxFlex>
-                            Correspondance d'Euler avec Turgot
+                        <mat-card class="intro-card" appearance="outlined">
+                            <mat-card-content>Correspondance d'Euler avec Turgot</mat-card-content>
                         </mat-card>
                     </div>
                 </div>
             </div>
             <div class="lece-section">
                 <app-correspondence [project]="'lece'"></app-correspondence>
-
             </div>
-
         </section>
+
         <mat-divider></mat-divider>
 
         <section>
             <h2 mat-card-title>Jacob Bernoulli's Scientific Notebook (Meditationes)</h2>
             <div>
-                <mat-card class="intro-card" fxFlex
+                <mat-card class="intro-card" appearance="outlined"
                           (click)="searchForManuscriptEntries('http://rdfh.ch/0801/HSmk8KWbQjy6YCqnBrwYgA')">
-                    Entries in the Meditationes
+                    <mat-card-content>Entries in the Meditationes</mat-card-content>
                 </mat-card>
             </div>
         </section>
@@ -133,22 +132,13 @@
         </section>
 
         <mat-divider></mat-divider>
+
         <section>
             <h2 mat-card-title>Third Party Projects</h2>
-            <span
-                fxLayout="row"
-                fxLayout.lt-md="column"
-                fxLayoutWrap
-                fxLayoutGap="0.5%"
-                fxLayoutAlign="center">
-
-                <app-correspondence [project]="'newton'"
-                    fxFlex="35%"></app-correspondence>
-
-                <app-correspondence [project]="'leibniz'"
-                    fxFlex="35%"></app-correspondence>
-
-            </span>
+            <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="1rem" fxLayoutAlign="space-around center">
+                <app-correspondence [project]="'newton'"></app-correspondence>
+                <app-correspondence [project]="'leibniz'"></app-correspondence>
+            </div>
         </section>
 
         <mat-divider></mat-divider>
@@ -161,6 +151,7 @@
         </section>
 
         <mat-divider></mat-divider>
+
         <section>
             <h3 mat-card-subtitle>Technical background</h3>
             <p>
@@ -188,7 +179,6 @@
                 The contents on our website are licensed under a <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
             </p>
         </section>
-
 
     </div>
 </div>

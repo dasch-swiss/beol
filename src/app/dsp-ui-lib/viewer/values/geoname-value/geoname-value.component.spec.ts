@@ -12,7 +12,7 @@ import { of } from 'rxjs';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
+import { MatAutocompleteHarness as MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
 
 
 

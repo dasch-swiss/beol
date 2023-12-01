@@ -7,7 +7,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatInputHarness } from '@angular/material/input/testing';
+import { MatLegacyInputHarness as MatInputHarness } from '@angular/material/legacy-input/testing';
 import { ValueLiteral } from '../operator';
 
 /**

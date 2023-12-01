@@ -5,7 +5,7 @@ import { Component, ViewChild } from '@angular/core';
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
+import { MatAutocompleteHarness as MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
 import { MatOptionModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';

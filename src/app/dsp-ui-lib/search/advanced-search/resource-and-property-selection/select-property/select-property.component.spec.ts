@@ -16,8 +16,8 @@ import {
     ResourceClassDefinition,
     ResourcePropertyDefinition
 } from '@dasch-swiss/dsp-js';
-import { MatSelectHarness } from '@angular/material/select/testing';
-import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
+import { MatSelectHarness as MatSelectHarness } from '@angular/material/select/testing';
+import { MatCheckboxHarness as MatCheckboxHarness } from '@angular/material/checkbox/testing';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ComparisonOperatorAndValue, Equals, ValueLiteral } from './specify-property-value/operator';
 

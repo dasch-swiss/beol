@@ -11,9 +11,9 @@ import { MatRadioModule } from '@angular/material/radio';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { MatSelectModule } from '@angular/material/select';
-import { MatInputHarness } from '@angular/material/input/testing';
-import { MatSelectHarness } from '@angular/material/select/testing';
-import { MatRadioGroupHarness } from '@angular/material/radio/testing';
+import { MatLegacyInputHarness as MatInputHarness } from '@angular/material/legacy-input/testing';
+import { MatSelectHarness as MatSelectHarness } from '@angular/material/select/testing';
+import { MatRadioGroupHarness as MatRadioGroupHarness } from '@angular/material/radio/testing';
 
 /**
  * Test host component to simulate parent component.

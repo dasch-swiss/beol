@@ -3,7 +3,8 @@ import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CalendarHeaderComponent } from './calendar-header.component';
 import { ACTIVE_CALENDAR, JDNConvertibleCalendarDateAdapter } from 'jdnconvertiblecalendardateadapter';
 import { MatSelectModule } from '@angular/material/select';
-import { DateAdapter, MatOptionModule } from '@angular/material/core';
+import { DateAdapter } from '@angular/material/core';
+import { MatOptionModule } from '@angular/material/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCalendar, MatDatepickerContent } from '@angular/material/datepicker';
 import { BehaviorSubject } from 'rxjs';
@@ -18,7 +19,7 @@ import {
 } from 'jdnconvertiblecalendar';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatSelectHarness } from '@angular/material/select/testing';
+import { MatSelectHarness as MatSelectHarness } from '@angular/material/select/testing';
 
 @Component({
   selector: `mat-calendar-header`,

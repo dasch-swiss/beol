@@ -37,17 +37,19 @@
   }
 }
 
-.grid-card .mat-card-header > div.mat-card-header-text {
+.grid-card {
   margin: 0 0 !important;
 }
 
 dsp-color-value {
 
-  .mat-form-field-flex,
+  .mat-mdc-form-field-flex,
   .color-picker-input {
     cursor: pointer !important;
   }
-
+  /*
+ TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.
+ */
   .mat-form-field-label span {
     display: block;
     padding: 8px 4px;
@@ -59,7 +61,7 @@ dsp-color-value {
 // string literal textarea: overwrite material styling !important
 .string-literal {
   &.short-text {
-    .mat-form-field-infix {
+    .mat-mdc-form-field-infix {
       margin-left: 12px;
     }
   }
@@ -73,13 +75,14 @@ dsp-color-value {
     }
 
     // textarea
-    .mat-form-field-wrapper {
+    .mat-mdc-form-field-subscript-wrapper {
       width: 100%;
-      .mat-form-field-flex {
+
+      .mat-mdc-form-field-flex {
         border-left: 1px solid rgba(0, 0, 0, 0.12);
         min-height: calc(4 * 36px + 2px);
 
-        .mat-form-field-infix {
+        .mat-mdc-form-field-infix {
           // negative values are not the best choice,
           // but with this margin-top the placeholder is at the
           // same position as in the short-text input

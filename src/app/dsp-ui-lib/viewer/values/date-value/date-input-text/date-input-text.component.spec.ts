@@ -17,12 +17,13 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { DateInputTextComponent } from './date-input-text.component';
-import { ErrorStateMatcher, MatOptionModule } from '@angular/material/core';
+import { ErrorStateMatcher } from '@angular/material/core';
+import { MatOptionModule } from '@angular/material/core';
 import { Subject } from 'rxjs';
 import { MatSelectModule } from '@angular/material/select';
 import { By } from '@angular/platform-browser';
-import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
-import { MatSelectHarness } from '@angular/material/select/testing';
+import { MatCheckboxHarness as MatCheckboxHarness } from '@angular/material/checkbox/testing';
+import { MatSelectHarness as MatSelectHarness } from '@angular/material/select/testing';
 
 /**
  * Test host component to simulate parent component.

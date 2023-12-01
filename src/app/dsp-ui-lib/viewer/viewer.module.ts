@@ -102,7 +102,7 @@ import { ResourceViewComponent } from './views/resource-view/resource-view.compo
         MultipleResourcesViewComponent
     ],
     imports: [
-        AngularSplitModule.forRoot(),
+        AngularSplitModule,
         CKEditorModule,
         ClipboardModule,
         ColorPickerModule,

@@ -9,7 +9,7 @@ import { MatOptionModule } from '@angular/material/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HarnessLoader } from '@angular/cdk/testing';
-import { MatSelectHarness } from '@angular/material/select/testing';
+import { MatSelectHarness as MatSelectHarness } from '@angular/material/select/testing';
 
 /**
  * Test host component to simulate parent component.

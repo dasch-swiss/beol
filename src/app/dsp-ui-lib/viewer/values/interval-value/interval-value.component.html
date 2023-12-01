@@ -5,7 +5,7 @@
 </span>
 <ng-template #showForm>
   <span [formGroup]="form">
-      <mat-form-field class="large-field child-value-component" floatLabel="never">
+      <mat-form-field class="large-field child-value-component">
         <dsp-interval-input #intervalInput [formControlName]="'value'" class="value" [errorStateMatcher]="matcher" [valueRequiredValidator]="valueRequiredValidator"></dsp-interval-input>
         <mat-error *ngIf="valueFormControl.hasError('valueNotChanged') &&
                    (valueFormControl.touched || valueFormControl.dirty)">

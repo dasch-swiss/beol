@@ -8,7 +8,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatInputModule } from '@angular/material/input';
 import { ValueLiteral } from '../operator';
-import { MatInputHarness } from '@angular/material/input/testing';
+import { MatLegacyInputHarness as MatInputHarness } from '@angular/material/legacy-input/testing';
 
 /**
  * Test host component to simulate parent component.

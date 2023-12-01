@@ -21,7 +21,7 @@
   margin-top: -2em;
 }
 
-.parent-value-component .child-value-component .mat-form-field-wrapper .mat-form-field-infix {
+.parent-value-component .child-value-component .mat-mdc-form-field-subscript-wrapper .mat-mdc-form-field-infix {
   border-top: 0em solid transparent;
 }
 
@@ -81,13 +81,10 @@
     box-shadow: #949494 1px 4px 5px 0px;
 
     .button-container {
-
-      button.mat-button-disabled {
-
+      button[disabled] {
         .mat-icon {
           color: #aaaaaa;
         }
-
       }
 
       button {
@@ -136,7 +133,7 @@
   grid-column-end: 3;
 }
 
-.mat-error {
+.mat-mdc-form-field-error {
   grid-row-start: 1;
   grid-row-end: auto;
   grid-column-start: 3;

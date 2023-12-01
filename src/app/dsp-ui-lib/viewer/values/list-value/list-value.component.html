@@ -35,7 +35,7 @@
 </span>
 <ng-template #showForm>
     <span [formGroup]="form">
-    <mat-form-field class="large-field child-value-component" *ngIf="mode === 'read'" floatLabel="never">
+    <mat-form-field class="large-field child-value-component" *ngIf="mode === 'read'">
             <input [formControlName]="'value'" class="value" type="text" placeholder="List value" matInput readonly>
     </mat-form-field>
     <mat-form-field class="large-field value-component-comment">

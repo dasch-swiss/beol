@@ -1,5 +1,6 @@
 // Include non-theme styles for core.
 @use '@angular/material' as mat;
+@include mat.all-component-typographies();
 @include mat.core();
 
 // Define the color palettes for the theme.
@@ -13,4 +14,6 @@ $warn: mat.define-palette(mat.$red-palette);
 $theme: mat.define-light-theme($primary, $accent, $warn);
 
 // Include all theme styles for the components.
+/* TODO(mdc-migration): Remove all-legacy-component-themes once all legacy components are migrated*/
+@include mat.all-legacy-component-themes($theme);
 @include mat.all-component-themes($theme);

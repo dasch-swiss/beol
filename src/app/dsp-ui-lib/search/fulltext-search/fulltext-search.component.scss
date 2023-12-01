@@ -102,7 +102,7 @@
     .dsp-previous-search-list {
       padding-bottom: 8px;
 
-      .mat-list-item {
+      .mat-mdc-list-item {
         .dsp-previous-search-item {
           cursor: pointer;
           padding: 12px !important;
@@ -280,7 +280,7 @@
 
     .mat-select-panel-wrap {
       margin-top: 20%;
-      .mat-select-panel {
+      .mat-mdc-select-panel {
         max-height: 100% !important;
       }
     }
