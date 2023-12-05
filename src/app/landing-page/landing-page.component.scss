@@ -19,6 +19,40 @@ section {
   padding: 24px 0 48px 0;
 }
 
+.biographies ul {
+  list-style-type: none;
+  display: grid;
+  padding-inline-start: 0;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-gap: 1rem;
+}
+
+.biographies img {
+  height: 160px;
+  width: 120px;
+}
+
+.biographies li {
+  display: flex;
+  flex-direction: row-reverse;
+  border: 1px solid #dfdfdf;
+  background-color: #F1F1F1;
+  align-items: center;
+  cursor: pointer;
+}
+
+.biographies li:hover {
+  background-color: rgba(20, 20, 20, 0.2);
+}
+
+li h3 {
+  flex-grow: 1;
+  text-align: center;
+  font-weight: normal;
+  margin-inline-start: 1rem;
+  margin-inline-end: 1rem;
+}
+
 .container-third-party-tiles {
   display: flex;
   justify-content: space-evenly;
