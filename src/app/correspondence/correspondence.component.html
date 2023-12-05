@@ -74,7 +74,7 @@
     <div *ngSwitchCase="'leibniz'">
         <div *ngFor="let thirdPartyProject of leibniz">
             <div class="portrait-container" (click)="searchForLeibnizCorrespondence()">
-                <img alt="Portrait of Gottfried Wilhelm Leibniz" src="assets/images/leibniz.jpeg" style="height: 160px; width: 120px;">
+                <img class="portrait-image" alt="Portrait of Gottfried Wilhelm Leibniz" src="assets/images/leibniz.jpeg">
                 <div class="portrait-text">{{thirdPartyProject.description}}</div>
             </div>
         </div>
