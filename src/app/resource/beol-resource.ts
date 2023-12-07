@@ -371,8 +371,6 @@ export abstract class BeolResource implements OnInit, OnDestroy {
 
     /**
      * Display message to confirm the copy of the citation link (ARK URL)
-     * @param message
-     * @param action
      */
     openARKURLSnackBar() {
         this.message = 'Copied to clipboard!';
