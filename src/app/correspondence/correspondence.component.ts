@@ -499,7 +499,7 @@ export class CorrespondenceComponent implements OnInit {
       *
       * @param gnd1 GND of the first correspondent.
       * @param gnd2 GND of the second correspondent.
-      * @param noTranslations indicates if translations should be excluded.
+      * @param showTranslation indicates if translations should be excluded.
       */
     searchForLeooCorrespondence(gnd1: string, gnd2: string, showTranslation: boolean = false) {
 
