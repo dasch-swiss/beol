@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Subscription} from 'rxjs';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { BeolService } from '../services/beol.service';
 
 @Component({
   selector: 'app-bibliography',
@@ -15,7 +16,12 @@ export class BibliographyComponent implements OnInit, OnDestroy{
 
     navigationSubscription: Subscription;
 
-    constructor(public location: Location, private _route: ActivatedRoute) {
+    constructor(
+        public location: Location,
+        private _router: Router,
+        private _route: ActivatedRoute,
+        private _beol: BeolService
+    ) {
         this.isLoading = false;
         this.props = {};
     }
@@ -30,5 +36,12 @@ export class BibliographyComponent implements OnInit, OnDestroy{
         if (this.navigationSubscription !== undefined) {
             this.navigationSubscription.unsubscribe();
         }
+    }
+
+    searchForManuscriptEntries(manuscriptIri: string) {
+
+        const gravsearch = this._beol.getEntriesForManuscript(manuscriptIri);
+
+        this._router.navigate(['/search/gravsearch/', gravsearch], { relativeTo: this._route });
     }
 }

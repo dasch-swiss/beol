@@ -24,11 +24,4 @@ export class LandingPageComponent implements OnInit {
         this._router.navigate(['/bibliography/', name], { relativeTo: this._route })
     }
 
-    searchForManuscriptEntries(manuscriptIri: string) {
-
-        const gravsearch = this._beol.getEntriesForManuscript(manuscriptIri);
-
-        this._router.navigate(['/search/gravsearch/', gravsearch], { relativeTo: this._route });
-    }
-
 }

@@ -15,6 +15,17 @@
 
         <div class="main-content">
             <h1 *ngIf="name">{{name}}</h1>
+
+            <section *ngIf="name === 'Jacob I Bernoulli'">
+                <h2 mat-card-title>Jacob Bernoulli's Scientific Notebook (Meditationes)</h2>
+                <div>
+                    <mat-card class="intro-card" appearance="outlined"
+                              (click)="searchForManuscriptEntries('http://rdfh.ch/0801/HSmk8KWbQjy6YCqnBrwYgA')">
+                        <mat-card-content>Entries in the Meditationes</mat-card-content>
+                    </mat-card>
+                </div>
+            </section>
+
         </div>
     </div>
 
