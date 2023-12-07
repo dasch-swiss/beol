@@ -23,12 +23,18 @@ import { BebbRouteComponent } from './bebb-route/bebb-route.component';
 import { TranscriptionComponent } from './resource/transcription/transcription.component';
 import { ManuscriptEntryComponent } from './resource/manuscript-entry/manuscript-entry.component';
 import { CommentComponent } from './resource/comment/comment.component';
+import { BibliographyComponent } from './bibliography/bibliography.component';
 
 
 const appRoutes: Routes = [
     {
         path: '',
         component: LandingPageComponent,
+    },
+    {
+        path: 'bibliography/:person',
+        component: BibliographyComponent,
+        pathMatch: 'full'
     },
     {
         path: 'introduction/:project/:id',

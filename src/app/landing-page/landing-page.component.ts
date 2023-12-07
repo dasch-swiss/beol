@@ -20,6 +20,10 @@ export class LandingPageComponent implements OnInit {
     ngOnInit() {
     }
 
+    openBibliography(name: string) {
+        this._router.navigate(['/bibliography/', name], { relativeTo: this._route })
+    }
+
     searchForManuscriptEntries(manuscriptIri: string) {
 
         const gravsearch = this._beol.getEntriesForManuscript(manuscriptIri);

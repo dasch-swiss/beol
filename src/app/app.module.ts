@@ -63,6 +63,7 @@ import { ManuscriptEntryComponent } from './resource/manuscript-entry/manuscript
 import { TeiLinkDirective } from './directives/tei-link.directive';
 import { CommentComponent } from './resource/comment/comment.component';
 import { HttpClientModule } from '@angular/common/http';
+import { BibliographyComponent } from './bibliography/bibliography.component';
 
 @NgModule({
     declarations: [
@@ -100,6 +101,7 @@ import { HttpClientModule } from '@angular/common/http';
         TeiLinkDirective,
         CommentComponent,
         PublishedLetterComponent,
+        BibliographyComponent,
     ],
     imports: [
         AppRouting,

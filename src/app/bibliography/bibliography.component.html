@@ -1,0 +1,21 @@
+<div class="full-size scroll-y-only">
+
+    <dsp-progress-indicator *ngIf="isLoading" [color]="'#D88958'"></dsp-progress-indicator>
+
+    <div *ngIf="!isLoading && props">
+
+        <div class="sidebar">
+
+            <button mat-stroked-button class="previousBtn" (click)="location.back()">
+                <mat-icon>arrow_back</mat-icon>
+                Previous
+            </button>
+
+        </div>
+
+        <div class="main-content">
+            <h1 *ngIf="name">{{name}}</h1>
+        </div>
+    </div>
+
+</div>
