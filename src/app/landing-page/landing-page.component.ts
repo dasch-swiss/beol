@@ -20,8 +20,8 @@ export class LandingPageComponent implements OnInit {
     ngOnInit() {
     }
 
-    openBibliography(name: string) {
-        this._router.navigate(['/bibliography/', name], { relativeTo: this._route })
+    openBiography(name: string) {
+        this._router.navigate(['/biography/', name], { relativeTo: this._route })
     }
 
 }

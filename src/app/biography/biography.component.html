@@ -1,0 +1,210 @@
+<div class="full-size scroll-y-only">
+
+    <dsp-progress-indicator *ngIf="isLoading" [color]="'#D88958'"></dsp-progress-indicator>
+
+    <div *ngIf="!isLoading && props">
+
+        <div class="sidebar">
+            <button mat-stroked-button class="previousBtn" (click)="location.back()">
+                <mat-icon>arrow_back</mat-icon>
+                Previous
+            </button>
+        </div>
+
+        <div class="main-content" [ngSwitch]="name">
+
+            <ng-container *ngSwitchCase="'Jacob I Bernoulli'">
+                <h1 *ngIf="name">{{name}}</h1>
+                <section class="biography">
+                    <h2>Biography</h2>
+                    <img src="assets/images/leibniz.jpeg" alt="portrait of Jacob I Bernoulli">
+                    <p>[...]</p>
+                </section>
+
+                <mat-divider></mat-divider>
+
+                <section>
+                    <h2>Diaries</h2>
+                    <mat-card class="intro-card" appearance="outlined"
+                                  (click)="searchForManuscriptEntries('http://rdfh.ch/0801/HSmk8KWbQjy6YCqnBrwYgA')">
+                        <mat-card-content>Meditationes</mat-card-content>
+                    </mat-card>
+                    <mat-card class="intro-card" appearance="outlined">
+                            <!--  TODO: calling searchForManuscriptEntries() with url of 'Reisbüchlein'  -->
+                        <mat-card-content>Reisbüchlein</mat-card-content>
+                    </mat-card>
+                </section>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'Daniel I Bernoulli'">
+                <h1 *ngIf="name">{{name}}</h1>
+                <section class="biography">
+                    <h2>Biography</h2>
+                    <img src="assets/images/leibniz.jpeg" alt="portrait of Daniel Bernoulli">
+                    <p>[...]</p>
+                </section>
+
+                <mat-divider></mat-divider>
+
+                <section>
+                    <p>Correspondence between
+                        <strong>{{correspondences_Daniel_I_Bernoulli.mainCorrespondent.name}}</strong> and
+                        <!-- select list to choose the recipient name (among one or several choices) -->
+                        <mat-form-field>
+                            <mat-select placeholder="Select Correspondent">
+                                <ng-container *ngFor="let section of correspondences_Daniel_I_Bernoulli.sections">
+                                    <mat-option *ngFor="let corr of section.correspondences" [value]="corr.correspondent2.name"
+                                                (click)="searchForCorrespondence(corr.correspondent1.gnd, corr.correspondent2.gnd)">
+                                        {{corr.correspondent2.name}}
+                                    </mat-option>
+                                </ng-container>
+                            </mat-select>
+                        </mat-form-field>
+                    </p>
+                </section>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'Johann I Bernoulli'">
+                <h1 *ngIf="name">{{name}}</h1>
+                <section class="biography">
+                    <h2>Biography</h2>
+                    <img src="assets/images/leibniz.jpeg" alt="portrait of Johann I Bernoulli">
+                    <p>[...]</p>
+                </section>
+
+                <mat-divider></mat-divider>
+
+                <section>
+                    <p>Correspondence between
+                        <strong>{{correspondences_Johann_I_Bernoulli.mainCorrespondent.name}}</strong> and
+                        <!-- select list to choose the recipient name (among one or several choices) -->
+                        <mat-form-field>
+                            <mat-select placeholder="Select Correspondent">
+                                <ng-container *ngFor="let section of correspondences_Johann_I_Bernoulli.sections">
+                                    <mat-option *ngFor="let corr of section.correspondences" [value]="corr.correspondent2.name"
+                                                (click)="searchForCorrespondence(corr.correspondent1.gnd, corr.correspondent2.gnd)">
+                                        {{corr.correspondent2.name}}
+                                    </mat-option>
+                                </ng-container>
+                            </mat-select>
+                        </mat-form-field>
+                    </p>
+                </section>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'Johann II Bernoulli'">
+                <h1 *ngIf="name">{{name}}</h1>
+                <section class="biography">
+                    <h2>Biography</h2>
+                    <img src="assets/images/leibniz.jpeg" alt="portrait of Johann II Bernoulli">
+                    <p>[...]</p>
+                </section>
+
+                <mat-divider></mat-divider>
+
+                <section>
+                    <p>Correspondence between
+                        <strong>{{correspondences_Johann_II_Bernoulli.mainCorrespondent.name}}</strong> and
+                        <!-- select list to choose the recipient name (among one or several choices) -->
+                        <mat-form-field>
+                            <mat-select placeholder="Select Correspondent">
+                                <ng-container *ngFor="let section of correspondences_Johann_II_Bernoulli.sections">
+                                    <mat-option *ngFor="let corr of section.correspondences" [value]="corr.correspondent2.name"
+                                                (click)="searchForCorrespondence(corr.correspondent1.gnd, corr.correspondent2.gnd)">
+                                        {{corr.correspondent2.name}}
+                                    </mat-option>
+                                </ng-container>
+                            </mat-select>
+                        </mat-form-field>
+                    </p>
+                </section>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'Nicolaus I Bernoulli'">
+                <h1 *ngIf="name">{{name}}</h1>
+                <section class="biography">
+                    <h2>Biography</h2>
+                    <img src="assets/images/leibniz.jpeg" alt="portrait of Nicolaus I Bernoulli">
+                    <p>[...]</p>
+                </section>
+
+                <mat-divider></mat-divider>
+
+                <section>
+                    <p>Correspondence between
+                        <strong>{{correspondences_Nicolaus_I_Bernoulli.mainCorrespondent.name}}</strong> and
+                        <!-- select list to choose the recipient name (among one or several choices) -->
+                        <mat-form-field>
+                            <mat-select placeholder="Select Correspondent">
+                                <ng-container *ngFor="let section of correspondences_Nicolaus_I_Bernoulli.sections">
+                                    <mat-option *ngFor="let corr of section.correspondences" [value]="corr.correspondent2.name"
+                                                (click)="searchForCorrespondence(corr.correspondent1.gnd, corr.correspondent2.gnd)">
+                                        {{corr.correspondent2.name}}
+                                    </mat-option>
+                                </ng-container>
+                            </mat-select>
+                        </mat-form-field>
+                    </p>
+                </section>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'Nicolaus II Bernoulli'">
+                <h1 *ngIf="name">{{name}}</h1>
+                <section class="biography">
+                    <h2>Biography</h2>
+                    <img src="assets/images/leibniz.jpeg" alt="portrait of Nicolaus II Bernoulli">
+                    <p>[...]</p>
+                </section>
+
+                <mat-divider></mat-divider>
+
+                <section>
+                    <p>Correspondence between
+                        <strong>{{correspondences_Nicolaus_II_Bernoulli.mainCorrespondent.name}}</strong> and
+                        <!-- select list to choose the recipient name (among one or several choices) -->
+                        <mat-form-field>
+                            <mat-select placeholder="Select Correspondent">
+                                <ng-container *ngFor="let section of correspondences_Nicolaus_II_Bernoulli.sections">
+                                    <mat-option *ngFor="let corr of section.correspondences" [value]="corr.correspondent2.name"
+                                                (click)="searchForCorrespondence(corr.correspondent1.gnd, corr.correspondent2.gnd)">
+                                        {{corr.correspondent2.name}}
+                                    </mat-option>
+                                </ng-container>
+                            </mat-select>
+                        </mat-form-field>
+                    </p>
+                </section>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'Jacob Hermann'">
+                <h1 *ngIf="name">{{name}}</h1>
+                <section class="biography">
+                    <h2>Biography</h2>
+                    <img src="assets/images/leibniz.jpeg" alt="portrait of Jacob Hermann">
+                    <p>[...]</p>
+                </section>
+
+                <mat-divider></mat-divider>
+
+                <section>
+                    <p>Correspondence between
+                        <strong>{{correspondences_Jacob_Hermann.mainCorrespondent.name}}</strong> and
+                        <!-- select list to choose the recipient name (among one or several choices) -->
+                        <mat-form-field>
+                            <mat-select placeholder="Select Correspondent">
+                                <ng-container *ngFor="let section of correspondences_Jacob_Hermann.sections">
+                                    <mat-option *ngFor="let corr of section.correspondences" [value]="corr.correspondent2.name"
+                                                (click)="searchForCorrespondence(corr.correspondent1.gnd, corr.correspondent2.gnd)">
+                                        {{corr.correspondent2.name}}
+                                    </mat-option>
+                                </ng-container>
+                            </mat-select>
+                        </mat-form-field>
+                    </p>
+                </section>
+            </ng-container>
+
+        </div>
+    </div>
+
+</div>

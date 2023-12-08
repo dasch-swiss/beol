@@ -1,12 +1,12 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { BibliographyComponent } from './bibliography.component';
+import { BiographyComponent } from './biography.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BeolService } from '../services/beol.service';
 import { AppInitService } from '../dsp-ui-lib/core';
 
 describe('BibliographyComponent', () => {
-    let component: BibliographyComponent;
-    let fixture: ComponentFixture<BibliographyComponent>;
+    let component: BiographyComponent;
+    let fixture: ComponentFixture<BiographyComponent>;
 
     beforeEach(waitForAsync(() => {
 
@@ -22,7 +22,7 @@ describe('BibliographyComponent', () => {
             imports: [
                 RouterTestingModule,
             ],
-            declarations: [BibliographyComponent],
+            declarations: [BiographyComponent],
             providers: [
                 { provide: BeolService, useValue: beolServiceSpy },
                 { provide: AppInitService, useValue: appInitServiceMock }
@@ -30,7 +30,7 @@ describe('BibliographyComponent', () => {
         })
             .compileComponents();
 
-        fixture = TestBed.createComponent(BibliographyComponent);
+        fixture = TestBed.createComponent(BiographyComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     }));

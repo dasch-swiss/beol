@@ -1,0 +1,13 @@
+img {
+  float: right;
+}
+
+.biography {
+  margin-block-end: 1.5rem;
+}
+
+.biography::after {
+  content: "";
+  clear: both;
+  display: table;
+}

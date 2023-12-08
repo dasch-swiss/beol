@@ -63,7 +63,7 @@ import { ManuscriptEntryComponent } from './resource/manuscript-entry/manuscript
 import { TeiLinkDirective } from './directives/tei-link.directive';
 import { CommentComponent } from './resource/comment/comment.component';
 import { HttpClientModule } from '@angular/common/http';
-import { BibliographyComponent } from './bibliography/bibliography.component';
+import { BiographyComponent } from './biography/biography.component';
 
 @NgModule({
     declarations: [
@@ -101,7 +101,7 @@ import { BibliographyComponent } from './bibliography/bibliography.component';
         TeiLinkDirective,
         CommentComponent,
         PublishedLetterComponent,
-        BibliographyComponent,
+        BiographyComponent,
     ],
     imports: [
         AppRouting,

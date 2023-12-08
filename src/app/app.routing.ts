@@ -23,7 +23,7 @@ import { BebbRouteComponent } from './bebb-route/bebb-route.component';
 import { TranscriptionComponent } from './resource/transcription/transcription.component';
 import { ManuscriptEntryComponent } from './resource/manuscript-entry/manuscript-entry.component';
 import { CommentComponent } from './resource/comment/comment.component';
-import { BibliographyComponent } from './bibliography/bibliography.component';
+import { BiographyComponent } from './biography/biography.component';
 
 
 const appRoutes: Routes = [
@@ -32,8 +32,8 @@ const appRoutes: Routes = [
         component: LandingPageComponent,
     },
     {
-        path: 'bibliography/:person',
-        component: BibliographyComponent,
+        path: 'biography/:person',
+        component: BiographyComponent,
         pathMatch: 'full'
     },
     {
