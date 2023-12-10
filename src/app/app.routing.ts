@@ -24,6 +24,7 @@ import { TranscriptionComponent } from './resource/transcription/transcription.c
 import { ManuscriptEntryComponent } from './resource/manuscript-entry/manuscript-entry.component';
 import { CommentComponent } from './resource/comment/comment.component';
 import { BiographyComponent } from './biography/biography.component';
+import { LeceLeooComponent } from './lece-leoo/lece-leoo.component';
 
 
 const appRoutes: Routes = [
@@ -42,6 +43,10 @@ const appRoutes: Routes = [
     {
         path: 'correspondence/:project',
         component: CorrespondenceComponent,
+    },
+    {
+        path: 'lece-leoo/:project',
+        component: LeceLeooComponent
     },
     {
         path: 'resource/:id',

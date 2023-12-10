@@ -2,7 +2,7 @@
 
     <dsp-progress-indicator *ngIf="isLoading" [color]="'#D88958'"></dsp-progress-indicator>
 
-    <div *ngIf="!isLoading && props">
+    <div *ngIf="!isLoading">
 
         <div class="sidebar">
             <button mat-stroked-button class="previousBtn" (click)="location.back()">
@@ -265,6 +265,20 @@
                                 </ng-container>
                             </mat-select>
                         </mat-form-field>
+                    </p>
+                    <p>
+                        <mat-card class="intro-card" appearance="outlined" (click)="openPage('lece')">
+                            <mat-card-content>
+                                <mat-card-title>Introduction</mat-card-title>
+                                Leonhard Euler's correspondence with Goldbach
+                            </mat-card-content>
+                        </mat-card>
+                        <mat-card class="intro-card" appearance="outlined" (click)="openPage('leoo')">
+                            <mat-card-content>
+                                <mat-card-title>Introduction</mat-card-title>
+                                Correspondance d'Euler avec Condorcet et Turgot
+                            </mat-card-content>
+                        </mat-card>
                     </p>
                 </section>
             </ng-container>

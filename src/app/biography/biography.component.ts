@@ -74,7 +74,6 @@ class CorrespondenceGroup {
 })
 export class BiographyComponent implements OnInit, OnDestroy{
     isLoading = true;
-    props: any;
     name: string;
     navigationSubscription: Subscription;
 
@@ -94,7 +93,6 @@ export class BiographyComponent implements OnInit, OnDestroy{
         private _beol: BeolService
     ) {
         this.isLoading = false;
-        this.props = {};
     }
 
     ngOnInit() {
@@ -459,6 +457,10 @@ export class BiographyComponent implements OnInit, OnDestroy{
                 new Correspondence(Condorcet, FussNI)
             ])]
         );
+    }
+
+    openPage(project: string) {
+        this._router.navigate(['/lece-leoo/', project], { relativeTo: this._route });
     }
 
     ngOnDestroy() {

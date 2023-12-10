@@ -64,6 +64,7 @@ import { TeiLinkDirective } from './directives/tei-link.directive';
 import { CommentComponent } from './resource/comment/comment.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BiographyComponent } from './biography/biography.component';
+import { LeceLeooComponent } from './lece-leoo/lece-leoo.component';
 
 @NgModule({
     declarations: [
@@ -102,6 +103,7 @@ import { BiographyComponent } from './biography/biography.component';
         CommentComponent,
         PublishedLetterComponent,
         BiographyComponent,
+        LeceLeooComponent,
     ],
     imports: [
         AppRouting,
