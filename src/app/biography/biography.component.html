@@ -269,6 +269,24 @@
                 </section>
             </ng-container>
 
+            <ng-container *ngSwitchCase="'Johann Albrecht Euler'">
+                <h1 *ngIf="name">{{name}}</h1>
+                <section class="biography">
+                    <h2>Biography</h2>
+                    <img src="assets/images/leibniz.jpeg" alt="portrait of Johann Albrecht Euler">
+                    <p>[...]</p>
+                </section>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'Nicolaus Fuss'">
+                <h1 *ngIf="name">{{name}}</h1>
+                <section class="biography">
+                    <h2>Biography</h2>
+                    <img src="assets/images/leibniz.jpeg" alt="portrait of Nicolaus Fuss">
+                    <p>[...]</p>
+                </section>
+            </ng-container>
+
         </div>
     </div>
 
