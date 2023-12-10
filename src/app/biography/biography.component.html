@@ -176,6 +176,24 @@
                 </section>
             </ng-container>
 
+            <ng-container *ngSwitchCase="'Johann III Bernoulli'">
+                <h1 *ngIf="name">{{name}}</h1>
+                <section class="biography">
+                    <h2>Biography</h2>
+                    <img src="assets/images/leibniz.jpeg" alt="portrait of Johann III Bernoulli">
+                    <p>[...]</p>
+                </section>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'Jacob II Bernoulli'">
+                <h1 *ngIf="name">{{name}}</h1>
+                <section class="biography">
+                    <h2>Biography</h2>
+                    <img src="assets/images/leibniz.jpeg" alt="portrait of Jacob II Bernoulli">
+                    <p>[...]</p>
+                </section>
+            </ng-container>
+
             <ng-container *ngSwitchCase="'Jacob Hermann'">
                 <h1 *ngIf="name">{{name}}</h1>
                 <section class="biography">
