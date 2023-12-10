@@ -33,8 +33,7 @@ const appRoutes: Routes = [
     },
     {
         path: 'biography/:person',
-        component: BiographyComponent,
-        pathMatch: 'full'
+        component: BiographyComponent
     },
     {
         path: 'introduction/:project/:id',
