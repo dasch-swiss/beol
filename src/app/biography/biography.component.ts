@@ -52,7 +52,19 @@ class CorrespondenceGroupWithSection {
         public panelOpenState: boolean = false) {
 
     }
+}
 
+/**
+ * Represents a group of correspondences.
+ */
+class CorrespondenceGroup {
+
+    constructor(
+        readonly mainCorrespondent: Correspondent,
+        readonly correspondences: Correspondence[],
+        readonly description: string = '',
+        public panelOpenState: boolean = false) {
+    }
 }
 
 @Component({
@@ -72,6 +84,8 @@ export class BiographyComponent implements OnInit, OnDestroy{
     correspondences_Nicolaus_I_Bernoulli: CorrespondenceGroupWithSection;
     correspondences_Nicolaus_II_Bernoulli: CorrespondenceGroupWithSection;
     correspondences_Jacob_Hermann: CorrespondenceGroupWithSection;
+    correspondences_Leonhard_Euler: CorrespondenceGroup;
+    correspondences_Condorcet: CorrespondenceGroupWithSection;
 
     constructor(
         public location: Location,
@@ -429,6 +443,21 @@ export class BiographyComponent implements OnInit, OnDestroy{
                     new Correspondence(Jacob_Hermann, Johannes_Scheuchzer)
                 ]
             )]
+        );
+
+        this.correspondences_Leonhard_Euler = new CorrespondenceGroup(Leonhard_Euler, [
+            new Correspondence(Leonhard_Euler, Condorcet),
+            new Correspondence(Leonhard_Euler, Turgot),
+            new Correspondence(Leonhard_Euler, Christian_Goldbach)
+        ]);
+
+        this.correspondences_Condorcet = new CorrespondenceGroupWithSection(Condorcet, [
+            new Section('Condorcet', [
+                new Correspondence(Condorcet, Leonhard_Euler),
+                new Correspondence(Condorcet, Johann_Albrecht_Euler),
+                new Correspondence(Condorcet, Lexell),
+                new Correspondence(Condorcet, FussNI)
+            ])]
         );
     }
 
