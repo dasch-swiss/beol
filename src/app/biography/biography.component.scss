@@ -1,9 +1,11 @@
-img {
-  float: right;
-}
-
 .biography {
   margin-block-end: 1.5rem;
+
+  img {
+    float: right;
+    height: 320px;
+    width: auto;
+  }
 }
 
 .biography::after {
