@@ -84,6 +84,7 @@ export class BiographyComponent implements OnInit, OnDestroy{
     correspondences_Nicolaus_II_Bernoulli: CorrespondenceGroupWithSection;
     correspondences_Jacob_Hermann: CorrespondenceGroupWithSection;
     correspondences_Leonhard_Euler: CorrespondenceGroup;
+    correspondences_Johann_Albrecht_Euler: CorrespondenceGroup;
     correspondences_Condorcet: CorrespondenceGroupWithSection;
 
     constructor(
@@ -447,6 +448,11 @@ export class BiographyComponent implements OnInit, OnDestroy{
             new Correspondence(Leonhard_Euler, Condorcet),
             new Correspondence(Leonhard_Euler, Turgot),
             new Correspondence(Leonhard_Euler, Christian_Goldbach)
+        ]);
+
+        this.correspondences_Johann_Albrecht_Euler = new CorrespondenceGroup(Johann_Albrecht_Euler, [
+            new Correspondence(Johann_Albrecht_Euler, Condorcet),
+            new Correspondence(Johann_Albrecht_Euler, Christian_Goldbach)
         ]);
 
         this.correspondences_Condorcet = new CorrespondenceGroupWithSection(Condorcet, [
