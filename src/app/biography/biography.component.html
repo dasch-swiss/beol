@@ -317,6 +317,24 @@
                     <img src="assets/images/nicolaus-fuss.jpg" alt="portrait of Nicolaus Fuss">
                     <p>[...]</p>
                 </section>
+
+                <mat-divider></mat-divider>
+
+                <section>
+                    <h2>Correspondence</h2>
+                    <p>Correspondence between
+                        <strong>{{correspondences_Niklaus_I_Fuss.mainCorrespondent.name}}</strong> and
+                        <!-- select list to choose the recipient name (among one or several choices) -->
+                        <mat-form-field>
+                            <mat-select placeholder="Select Correspondent">
+                                <mat-option *ngFor="let corr of correspondences_Niklaus_I_Fuss.correspondences" [value]="corr.correspondent2.name"
+                                            (click)="searchForCorrespondence(corr.correspondent1.gnd, corr.correspondent2.gnd)">
+                                    {{corr.correspondent2.name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </p>
+                </section>
             </ng-container>
 
             <!-- in case the name does not exist -->
