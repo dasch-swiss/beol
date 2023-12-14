@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, UrlSegment } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
 })
 export class LeceLeooComponent implements OnInit {
     isLoading = true;
-    project: string;
+    url: UrlSegment;
     navigationSubscription: Subscription;
 
     constructor(public location: Location, private _route: ActivatedRoute) {
@@ -18,9 +18,9 @@ export class LeceLeooComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.navigationSubscription = this._route.paramMap.subscribe((params: ParamMap) => {
-            this.project = params.get('project');
-        });
+        this.navigationSubscription = this._route.url.subscribe((url: UrlSegment[]) => {
+            this.url = url[0];
+        })
     }
 
     ngOnDestroy() {

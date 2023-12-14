@@ -45,7 +45,11 @@ const appRoutes: Routes = [
         component: CorrespondenceComponent,
     },
     {
-        path: 'lece-leoo/:project',
+        path: 'leooIVA_IV_intro',
+        component: LeceLeooComponent
+    },
+    {
+        path: 'lece_intro',
         component: LeceLeooComponent
     },
     {

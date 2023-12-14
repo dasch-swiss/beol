@@ -11,9 +11,9 @@
             </button>
         </div>
 
-        <div class="main-content" [ngSwitch]="project">
+        <div class="main-content" [ngSwitch]="url">
 
-            <ng-container *ngSwitchCase="'lece'">
+            <ng-container *ngSwitchCase="'leooIVA_IV_intro'">
                 <h1>Leonhardi Euleri Opera Omnia IVA/IV</h1>
 
                 <div class="row">
@@ -38,7 +38,7 @@
                 </div>
             </ng-container>
 
-            <ng-container *ngSwitchCase="'leoo'">
+            <ng-container *ngSwitchCase="'lece_intro'">
                 <h1>Leonhardi Euleri Commercium Epistolicum</h1>
                 <div class="row">
                     <mat-card class="intro-card" appearance="outlined" routerLink="/introduction/lece/CondorcetTurgot_preface">

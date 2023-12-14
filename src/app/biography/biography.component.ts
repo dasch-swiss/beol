@@ -459,10 +459,6 @@ export class BiographyComponent implements OnInit, OnDestroy{
         );
     }
 
-    openPage(project: string) {
-        this._router.navigate(['/lece-leoo/', project], { relativeTo: this._route });
-    }
-
     ngOnDestroy() {
         if (this.navigationSubscription !== undefined) {
             this.navigationSubscription.unsubscribe();
