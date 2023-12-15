@@ -37,9 +37,7 @@ export class LandingPageComponent implements OnInit {
      * Generate Gravsearch query to search for The Newton project Correspondence.
      */
     searchForNewtonCorrespondence() {
-
         const gravsearch: string = this._beol.searchForNewtonCorrespondence(0);
-
         this.submitQuery(gravsearch);
     }
 
@@ -47,9 +45,7 @@ export class LandingPageComponent implements OnInit {
      * * Generate Gravsearch query to search for Leibniz Correspondence.
      */
     searchForLeibnizCorrespondence() {
-
         const gravsearch: string = this._beol.searchForLeibnizCorrespondence(0);
-
         this.submitQuery(gravsearch);
     }
 
@@ -59,7 +55,6 @@ export class LandingPageComponent implements OnInit {
      * @param gravsearch the Gravsearch query to be executed.
      */
     private submitQuery(gravsearch: string) {
-
         this._router.navigate(['/search/gravsearch/', gravsearch], { relativeTo: this._route });
     }
 }
