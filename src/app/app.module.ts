@@ -41,7 +41,6 @@ import { PublishedLetterComponent } from './resource/publishedLetter/publishedLe
 // directives
 import { MathJaxDirective } from './directives/mathjax.directive';
 // Loads the application configuration file during application startup
-import { CorrespondenceComponent } from './correspondence/correspondence.component';
 import { ContactComponent } from './contact/contact.component';
 
 import { ReactiveFormsModule } from '@angular/forms';
@@ -82,7 +81,6 @@ import { LeceLeooComponent } from './lece-leoo/lece-leoo.component';
         LeibnizLetterComponent,
         ReadListValueComponent,
         ReadTextValueAsHtmlComponent,
-        CorrespondenceComponent,
         ContactComponent,
         MathJaxDirective,
         LeooRouteComponent,

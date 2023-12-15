@@ -10,7 +10,6 @@ import { PublisherComponent } from './resource/publisher/publisher.component';
 import { PublishedLetterComponent } from './resource/publishedLetter/publishedLetter.component';
 import { ResourceComponent } from './resource/resource.component';
 import { SimpleResourceComponent } from './resource/simpleResource/simpleResource.component';
-import { CorrespondenceComponent } from './correspondence/correspondence.component';
 import { ContactComponent } from './contact/contact.component';
 import { EndnoteComponent } from './resource/endnote/endnote.component';
 import { LeooRouteComponent } from './leoo-route/leoo-route.component';
@@ -39,10 +38,6 @@ const appRoutes: Routes = [
     {
         path: 'introduction/:project/:id',
         component: IntroductionComponent
-    },
-    {
-        path: 'correspondence/:project',
-        component: CorrespondenceComponent,
     },
     {
         path: 'leooIVA_IV_intro',
