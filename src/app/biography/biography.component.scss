@@ -6,6 +6,11 @@
     height: 320px;
     width: auto;
   }
+
+  .further-links {
+    list-style: none;
+    padding-inline-start: 0;
+  }
 }
 
 .biography::after {
