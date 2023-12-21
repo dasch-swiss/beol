@@ -2,8 +2,8 @@
     <div class="main-content without-sidebar">
 
         <section>
-            <h3 mat-card-subtitle>BEOL</h3>
-            <h1 mat-card-title>Bernoulli Euler Online</h1>
+            <h1 mat-card-title>BEOL</h1>
+            <h2>Bernoulli Euler Online</h2>
             <p>
                 The
                 <a target="_blank" href="https://bez.unibas.ch/de/projekte/bernoulli-euler-online/">Bernoulli-Euler Online (BEOL)</a> project is a
@@ -26,128 +26,84 @@
 
         <mat-divider></mat-divider>
 
-        <section>
-            <!--<h3 mat-card-subtitle>Leonhardi Euleri Opera Omnia (LEOO)</h3>-->
-            <h2 mat-card-title>Leonhard Euler's correspondence with Goldbach</h2>
-            <div class="leoo-section">
-                <div class="container">
-                    <div fxFlex fxLayout="row wrap" fxLayout.sm="column" fxlayout.xs="column" fxFlexFill>
-                        <div fxFlex routerLink="introduction/leoo/goldbach_preface">
-                            <mat-card class="intro-card" appearance="outlined">
-                                <mat-card-content>Preface</mat-card-content>
-                            </mat-card>
-                        </div>
-                        <div fxFlex routerLink="introduction/leoo/goldbach_abbreviations">
-                            <mat-card class="intro-card" appearance="outlined">
-                                <mat-card-content>List of Abbreviations</mat-card-content>
-                            </mat-card>
-                        </div>
-                    </div>
-                </div>
+        <section class="biographies">
+            <h3>Mathematicians from Basel</h3>
+            <ul>
+                <li (click)="openBiography('Jacob I Bernoulli')">
+                    <h4>Jacob I Bernoulli</h4>
+                    <img src="assets/images/jacob-I-bernoulli.jpg" alt="portrait of Jacob I Bernoulli">
+                </li>
+                <li (click)="openBiography('Johann I Bernoulli')">
+                    <h4>Johann I Bernoulli</h4>
+                    <img src="assets/images/johann-I-bernoulli.jpg" alt="portrait of Johann I Bernoulli">
+                </li>
+                <li (click)="openBiography('Nicolaus I Bernoulli')">
+                    <h4>Nicolaus I Bernoulli</h4>
+                    <img src="assets/images/placeholder.jpg" alt="placeholder portrait for Nicolaus I Bernoulli">
+                </li>
+                <li (click)="openBiography('Nicolaus II Bernoulli')">
+                    <h4>Nicolaus II Bernoulli</h4>
+                    <img src="assets/images/nicolaus-II-bernoulli.jpg" alt="portrait of Nicolaus II Bernoulli">
+                </li>
+                <li (click)="openBiography('Daniel I Bernoulli')">
+                    <h4>Daniel I Bernoulli</h4>
+                    <img src="assets/images/daniel-bernoulli.jpg" alt="portrait of Daniel Bernoulli">
+                </li>
+                <li (click)="openBiography('Johann II Bernoulli')">
+                    <h4>Johann II Bernoulli</h4>
+                    <img src="assets/images/johann-II-bernoulli.jpg" alt="portrait of Johann II Bernoulli">
+                </li>
+                <li (click)="openBiography('Johann III Bernoulli')">
+                    <h4>Johann III Bernoulli</h4>
+                    <img src="assets/images/johann-III-bernoulli.jpg" alt="portrait of Johann III Bernoulli">
+                </li>
+                <li (click)="openBiography('Jacob II Bernoulli')">
+                    <h4>Jacob II Bernoulli</h4>
+                    <img src="assets/images/jacob-II-bernoulli.jpg" alt="portrait of Jacob II Bernoulli">
+                </li>
+                <li (click)="openBiography('Jacob Hermann')">
+                    <h4>Jacob Hermann</h4>
+                    <img src="assets/images/jacob-hermann.jpg" alt="portrait of Jacob Hermann">
+                </li>
+                <li (click)="openBiography('Leonhard Euler')">
+                    <h4>Leonhard Euler</h4>
+                    <img src="assets/images/leonhard-euler.jpg" alt="portrait of Leonhard Euler">
+                </li>
+                <li (click)="openBiography('Johann Albrecht Euler')">
+                    <h4>Johann Albrecht Euler</h4>
+                    <img src="assets/images/johann-albrecht-euler.jpg" alt="portrait of Johann Albrecht Euler">
+                </li>
+                <li (click)="openBiography('Nicolaus Fuss')">
+                    <h4>Nicolaus Fuss</h4>
+                    <img src="assets/images/nicolaus-fuss.jpg" alt="portrait of Nicolaus Fuss">
+                </li>
+            </ul>
+        </section>
 
-                <p fxLayout="column"><strong>Introduction</strong></p>
-                <div class="container">
-                    <div fxFlex fxLayout="row wrap" fxLayout.sm="column" fxlayout.xs="column" fxFlexFill>
-                        <div fxFlex routerLink="introduction/leoo/goldbach_introduction_1">
-                            <mat-card class="intro-card" appearance="outlined">
-                                <mat-card-content>Historical and biographical setting</mat-card-content>
-                            </mat-card>
-                        </div>
-                        <div fxFlex routerLink="introduction/leoo/goldbach_introduction_2">
-                            <mat-card class="intro-card" appearance="outlined">
-                                <mat-card-content>Main subjects of the correspondence</mat-card-content>
-                            </mat-card>
-                        </div>
-                        <div fxFlex routerLink="introduction/leoo/goldbach_introduction_3.1">
-                            <mat-card class="intro-card" appearance="outlined">
-                                <mat-card-content>Editing the Euler-Goldbach correspondence</mat-card-content>
-                            </mat-card>
-                        </div>
-                    </div>
-                </div>
+        <mat-divider></mat-divider>
 
-            </div>
-
-            <div class="leoo-section">
-                <app-correspondence [project]="'leooIV'"></app-correspondence>
-            </div>
-
+        <section class="third-party-projects">
+            <h3>Third Party Projects</h3>
+            <ul>
+                <li (click)="searchForNewtonCorrespondence()">
+                    <h4>{{newton.description}}</h4>
+                    <img src="assets/images/newton.jpg" alt="Portrait of Isaac Newton">
+                </li>
+                <li (click)="searchForLeibnizCorrespondence()">
+                    <h4>{{leibniz.description}}</h4>
+                    <img src="assets/images/leibniz.jpeg" alt="Portrait of Gottfried Wilhelm Leibniz">
+                </li>
+            </ul>
         </section>
 
         <mat-divider></mat-divider>
 
         <section>
-            <!--<h3 mat-card-subtitle>Leonhardi Euleri Commercium Epistolicum (LECE)</h3>-->
-            <h2 mat-card-title>Correspondance d'Euler avec Condorcet et Turgot</h2>
-
-            <div class="leoo-section">
-                <div class="container">
-                    <div fxFlex fxLayout="row wrap" fxLayout.sm="column" fxlayout.xs="column" fxFlexFill>
-                        <div fxFlex routerLink="introduction/lece/CondorcetTurgot_preface">
-                            <mat-card class="intro-card" appearance="outlined">
-                                <mat-card-content>Préface</mat-card-content>
-                            </mat-card>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <p fxLayout="column"><strong>Introduction</strong></p>
-            <div class="container">
-                <div fxFlex fxLayout="row wrap" fxLayout.sm="column" fxlayout.xs="column" fxFlexFill>
-                    <div fxFlex routerLink="introduction/lece/CondorcetMJA_Introduction">
-                        <mat-card class="intro-card" appearance="outlined">
-                            <mat-card-content>Correspondance d'Euler avec Condorcet</mat-card-content>
-                        </mat-card>
-                    </div>
-                    <div fxFlex routerLink="introduction/lece/Turgot_Introduction">
-                        <mat-card class="intro-card" appearance="outlined">
-                            <mat-card-content>Correspondance d'Euler avec Turgot</mat-card-content>
-                        </mat-card>
-                    </div>
-                </div>
-            </div>
-            <div class="lece-section">
-                <app-correspondence [project]="'lece'"></app-correspondence>
-            </div>
-        </section>
-
-        <mat-divider></mat-divider>
-
-        <section>
-            <h2 mat-card-title>Jacob Bernoulli's Scientific Notebook (Meditationes)</h2>
-            <div>
-                <mat-card class="intro-card" appearance="outlined"
-                          (click)="searchForManuscriptEntries('http://rdfh.ch/0801/HSmk8KWbQjy6YCqnBrwYgA')">
-                    <mat-card-content>Entries in the Meditationes</mat-card-content>
-                </mat-card>
-            </div>
-        </section>
-
-        <mat-divider></mat-divider>
-
-        <section>
-            <!--<h3 mat-card-subtitle>BEBB</h3>-->
-            <h2 mat-card-title>Basler Edition der Bernoulli-Briefwechsel</h2>
-            <app-correspondence [project]="'bebb'"></app-correspondence>
-        </section>
-
-        <mat-divider></mat-divider>
-
-        <section>
-            <h2 mat-card-title>Third Party Projects</h2>
-            <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="1rem" fxLayoutAlign="space-around center">
-                <app-correspondence [project]="'newton'"></app-correspondence>
-                <app-correspondence [project]="'leibniz'"></app-correspondence>
-            </div>
-        </section>
-
-        <mat-divider></mat-divider>
-
-        <section>
-            <h2 mat-card-title>Visualizations</h2>
+            <h3>Visualizations</h3>
             <p>The BEOL and third party correspondence data are visualized as interactive 3D force-directed graphs which
                 are also available in WebVR format. You can explore the correspondence network interactively at
-                <a target="_blank" href="https://vis.beol.dasch.swiss/">vis.beol.dasch.swiss</a>.</p>
+                <a target="_blank" href="https://vis.beol.dasch.swiss/">vis.beol.dasch.swiss</a>.
+            </p>
         </section>
 
         <mat-divider></mat-divider>

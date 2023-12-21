@@ -1,17 +1,14 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { MaterialModule } from '../material-module';
-import { LandingPageComponent } from './landing-page.component';
+import { LeceLeooComponent } from './lece-leoo.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AppInitService } from '../dsp-ui-lib/core';
 import { BeolService } from '../services/beol.service';
+import { AppInitService } from '../dsp-ui-lib/core';
 
-describe('LandingPageComponent', () => {
-    let component: LandingPageComponent;
-    let fixture: ComponentFixture<LandingPageComponent>;
+describe('LeceLeooComponent', () => {
+    let component: LeceLeooComponent;
+    let fixture: ComponentFixture<LeceLeooComponent>;
 
     beforeEach(waitForAsync(() => {
-
         const appInitServiceMock = {
             config: {
                 ontologyIRI: 'http://0.0.0.0:3333'
@@ -22,11 +19,9 @@ describe('LandingPageComponent', () => {
 
         TestBed.configureTestingModule({
             imports: [
-                MaterialModule,
                 RouterTestingModule,
-                BrowserAnimationsModule
             ],
-            declarations: [LandingPageComponent],
+            declarations: [LeceLeooComponent],
             providers: [
                 { provide: BeolService, useValue: beolServiceSpy },
                 { provide: AppInitService, useValue: appInitServiceMock }
@@ -34,13 +29,10 @@ describe('LandingPageComponent', () => {
         })
             .compileComponents();
 
-    }));
-
-    beforeEach(() => {
-        fixture = TestBed.createComponent(LandingPageComponent);
+        fixture = TestBed.createComponent(LeceLeooComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
-    });
+    }));
 
     it('should create', () => {
         expect(component).toBeTruthy();

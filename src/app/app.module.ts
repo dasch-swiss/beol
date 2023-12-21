@@ -41,7 +41,6 @@ import { PublishedLetterComponent } from './resource/publishedLetter/publishedLe
 // directives
 import { MathJaxDirective } from './directives/mathjax.directive';
 // Loads the application configuration file during application startup
-import { CorrespondenceComponent } from './correspondence/correspondence.component';
 import { ContactComponent } from './contact/contact.component';
 
 import { ReactiveFormsModule } from '@angular/forms';
@@ -63,6 +62,8 @@ import { ManuscriptEntryComponent } from './resource/manuscript-entry/manuscript
 import { TeiLinkDirective } from './directives/tei-link.directive';
 import { CommentComponent } from './resource/comment/comment.component';
 import { HttpClientModule } from '@angular/common/http';
+import { BiographyComponent } from './biography/biography.component';
+import { LeceLeooComponent } from './lece-leoo/lece-leoo.component';
 
 @NgModule({
     declarations: [
@@ -80,7 +81,6 @@ import { HttpClientModule } from '@angular/common/http';
         LeibnizLetterComponent,
         ReadListValueComponent,
         ReadTextValueAsHtmlComponent,
-        CorrespondenceComponent,
         ContactComponent,
         MathJaxDirective,
         LeooRouteComponent,
@@ -100,6 +100,8 @@ import { HttpClientModule } from '@angular/common/http';
         TeiLinkDirective,
         CommentComponent,
         PublishedLetterComponent,
+        BiographyComponent,
+        LeceLeooComponent,
     ],
     imports: [
         AppRouting,

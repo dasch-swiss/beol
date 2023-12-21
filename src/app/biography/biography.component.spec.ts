@@ -1,14 +1,12 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { MaterialModule } from '../material-module';
-import { LandingPageComponent } from './landing-page.component';
+import { BiographyComponent } from './biography.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AppInitService } from '../dsp-ui-lib/core';
 import { BeolService } from '../services/beol.service';
+import { AppInitService } from '../dsp-ui-lib/core';
 
-describe('LandingPageComponent', () => {
-    let component: LandingPageComponent;
-    let fixture: ComponentFixture<LandingPageComponent>;
+describe('BibliographyComponent', () => {
+    let component: BiographyComponent;
+    let fixture: ComponentFixture<BiographyComponent>;
 
     beforeEach(waitForAsync(() => {
 
@@ -22,11 +20,9 @@ describe('LandingPageComponent', () => {
 
         TestBed.configureTestingModule({
             imports: [
-                MaterialModule,
                 RouterTestingModule,
-                BrowserAnimationsModule
             ],
-            declarations: [LandingPageComponent],
+            declarations: [BiographyComponent],
             providers: [
                 { provide: BeolService, useValue: beolServiceSpy },
                 { provide: AppInitService, useValue: appInitServiceMock }
@@ -34,13 +30,10 @@ describe('LandingPageComponent', () => {
         })
             .compileComponents();
 
-    }));
-
-    beforeEach(() => {
-        fixture = TestBed.createComponent(LandingPageComponent);
+        fixture = TestBed.createComponent(BiographyComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
-    });
+    }));
 
     it('should create', () => {
         expect(component).toBeTruthy();
