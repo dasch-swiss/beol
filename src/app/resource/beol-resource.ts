@@ -14,7 +14,6 @@ import { Region, StillImageComponent, StillImageRepresentation} from '../dsp-ui-
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { IncomingService } from '../services/incoming.service';
 import { BeolService } from '../services/beol.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 export class BeolCompoundResource {
 
@@ -58,15 +57,11 @@ export abstract class BeolResource implements OnInit, OnDestroy {
 
     abstract propIris: PropIriToNameMapping;
 
-    message: string; // message to show in the snackbar to confirm the copy of the ARK URL
-    action: string; // label for the snackbar action
-
     constructor(
         @Inject(DspApiConnectionToken) protected _dspApiConnection: KnoraApiConnection,
         protected _route: ActivatedRoute,
         protected _incomingService: IncomingService,
-        protected _beolService: BeolService,
-        protected _snackBar: MatSnackBar) {
+        protected _beolService: BeolService) {
     }
 
     /**
@@ -368,18 +363,4 @@ export abstract class BeolResource implements OnInit, OnDestroy {
                 }
             );
     }
-
-    /**
-     * Display message to confirm the copy of the citation link (ARK URL)
-     */
-    openARKURLSnackBar() {
-        this.message = 'Copied to clipboard!';
-        this.action = 'Citation Link';
-        this._snackBar.open(this.message, this.action, {
-            duration: 3000,
-            horizontalPosition: 'center',
-            verticalPosition: 'top'
-        });
-    }
-
 }

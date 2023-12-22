@@ -64,6 +64,7 @@ import { CommentComponent } from './resource/comment/comment.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BiographyComponent } from './biography/biography.component';
 import { LeceLeooComponent } from './lece-leoo/lece-leoo.component';
+import { ArkUrlDialogComponent } from './dialog/ark-url-dialog.component';
 
 @NgModule({
     declarations: [
@@ -102,6 +103,7 @@ import { LeceLeooComponent } from './lece-leoo/lece-leoo.component';
         PublishedLetterComponent,
         BiographyComponent,
         LeceLeooComponent,
+        ArkUrlDialogComponent
     ],
     imports: [
         AppRouting,
