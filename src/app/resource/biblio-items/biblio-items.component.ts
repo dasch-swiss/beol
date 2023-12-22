@@ -154,6 +154,7 @@ export class BiblioItemsComponent extends BeolResource {
     showIncomingRes(resIri, resType, res) {
         this._beolService.routeByResourceType(resType, resIri, res);
     }
+
     openDialog(arkURL: string) {
         this.dialog.open(ArkUrlDialogComponent, {
             hasBackdrop: true,

@@ -54,9 +54,7 @@ export class FigureComponent extends BeolResource {
         public location: Location,
         public dialog: MatDialog
     ) {
-
         super(_dspApiConnection, _route, _incomingService, _beolService);
-
     }
 
     initProps() {
