@@ -1,0 +1,62 @@
+@import "src/app/dsp-ui-lib/style/responsive";
+
+menu {
+  list-style: none;
+  margin-inline-start: 4rem;
+  margin-inline-end: 4rem;
+  padding-inline-start: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  .previousBtn {
+    margin-inline-start: 0!important;
+  }
+}
+
+main {
+  margin-inline-start: 4rem;
+  margin-inline-end: 4rem;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+
+  dsp-progress-indicator {
+    flex: 1;
+  }
+
+  section {
+    flex: 1;
+
+    .pagination {
+      list-style: none;
+      padding-inline-start: 0;
+      display: flex;
+      flex-direction: row;
+      //border: 1px solid black;
+      justify-content: space-between;
+
+      .next-btn {
+        flex-direction: row-reverse;
+      }
+    }
+  }
+
+  .transcription p {
+    border: 1px solid darkgray;
+  }
+}
+
+@media(max-width: map-get($grid-breakpoints, tablet)) {
+  menu {
+    list-style: none;
+    margin-inline-start: 2rem;
+    margin-inline-end: 2rem;
+  }
+
+  main {
+    flex-direction: column;
+    margin-inline-start: 2rem;
+    margin-inline-end: 2rem;
+  }
+}

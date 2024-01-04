@@ -24,6 +24,7 @@ class ManuscriptEntryProps implements PropertyValues {
 
     title: ReadTextValue[] = [];
     seqnum: ReadIntValue[] = [];
+    page: ReadLinkValue[] = [];
     manuscriptEntryOf: ReadLinkValue[] = [];
 
     [index: string]: ReadValue[];
@@ -44,9 +45,11 @@ export class ManuscriptEntryComponent extends BeolResource {
     errorMessage: any;
     dspConstants = Constants;
     navigationSubscription: Subscription;
+    isPartOfReisbuechlein: boolean;
 
     propIris: PropIriToNameMapping = {
         'title': this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#title',
+        'page': this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#hasPageValue',
         'seqnum': this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#seqnum',
         'manuscriptEntryOf': this._appInitService.config['ontologyIRI'] + '/ontology/0801/beol/v2#manuscriptEntryOfValue'
     };
@@ -64,7 +67,6 @@ export class ManuscriptEntryComponent extends BeolResource {
         public location: Location,
         public dialog: MatDialog
     ) {
-
         super(_dspApiConnection, _route, _incomingService, _beolService);
     }
 
@@ -77,6 +79,8 @@ export class ManuscriptEntryComponent extends BeolResource {
         this.props = props;
 
         this.getTranscriptions();
+
+        this.checkReisbuechlein();
     }
 
     private getTranscriptions() {
@@ -95,6 +99,10 @@ export class ManuscriptEntryComponent extends BeolResource {
             }
         );
 
+    }
+
+    private checkReisbuechlein() {
+        this.isPartOfReisbuechlein = this.props?.manuscriptEntryOf[0].linkedResourceIri === "http://rdfh.ch/0801/N1XIvGvYSBO1wODFfl0QjQ";
     }
 
     goToResource(resType: string, resIri: string, res) {

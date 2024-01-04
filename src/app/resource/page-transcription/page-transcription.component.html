@@ -1,0 +1,43 @@
+<menu>
+    <li>
+        <button mat-stroked-button class="previousBtn" (click)="location.back()">
+            <mat-icon>arrow_back</mat-icon>Previous
+        </button>
+    </li>
+    <li>
+        <button mat-stroked-button class="share-res" (click)="openDialog('http://0.0.0.0:3336/ark:/72163/1/0801/t0DN=IPHSti3u6kt_1bAnAy.20160720T152340842Z')">
+            <mat-icon>share</mat-icon>Citation Link
+        </button>
+    </li>
+</menu>
+
+<main>
+    <dsp-progress-indicator *ngIf="isLoading" [color]="'#D88958'"></dsp-progress-indicator>
+
+    <ng-container *ngIf="!isLoading">
+        <section class="page">
+            <h3>Page</h3>
+            <dsp-still-image #OSDViewer class="osd-viewer"></dsp-still-image>
+            <nav>
+                <ol class="pagination">
+                    <li>
+                        <button mat-button [disabled]="!previousPage" (click)="goToResource(previousPage?.type, previousPage?.id, previousPage)">
+                            < Previous Page
+                        </button>
+                    <li>
+                        <button mat-button [disabled]="!nextPage" (click)="goToResource(nextPage?.type, nextPage?.id, nextPage)">
+                            Next Page >
+                        </button>
+                    </li>
+                </ol>
+            </nav>
+        </section>
+
+        <section class="transcription">
+            <h3>Transcription</h3>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et urna ac risus cursus posuere non id lectus. Etiam id pharetra elit, eget malesuada elit. Sed eros justo, consequat vitae laoreet in, iaculis suscipit nibh. Ut semper finibus tincidunt. Donec ac interdum velit. Cras tristique tempus varius. Morbi ut enim consectetur, sodales dui ut, tincidunt magna. Vestibulum sagittis eu turpis ut gravida. Nam metus lectus, mollis sed leo eu, bibendum viverra diam. Pellentesque mollis iaculis turpis. Nunc lobortis in ligula quis tempor. Etiam in finibus ante, id pellentesque massa. Maecenas eget vehicula nunc, vel viverra nibh.
+            </p>
+        </section>
+    </ng-container>
+</main>
